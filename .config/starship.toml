@@ -7,7 +7,6 @@ $hostname\
 $localip\
 $shlvl\
 $singularity\
-$kubernetes\
 $directory\
 $vcsh\
 $fossil_branch\
@@ -76,7 +75,8 @@ $env_var\
 $crystal\
 $custom\
 $sudo\
-$time\
+$kubernetes\
+$time \
 $cmd_duration\
 $line_break\
 $jobs\
@@ -104,10 +104,17 @@ format = 'last command: [$duration](bold yellow)'
 [package]
 disabled = true
 
+[kubernetes]
+disabled = false
+
+[kubernetes.context_aliases]
+'kubernetes-admin-homelab-k8s@homelab-k8s' = 'homelab-k8s'
+'gke_(?P<env>tally-(?:stage|live))_.*' = 'gke-$env'
+
 # ---
 
 [aws]
-symbol = "  "
+symbol = " "
 
 [buf]
 symbol = " "
@@ -123,6 +130,11 @@ symbol = " "
 
 [golang]
 symbol = " "
+
+[gcloud]
+symbol = "󱇶 "
+format = 'on [$symbol$account(@$domain)(\($project\))]($style) '
+style = "bold yellow"
 
 [java]
 symbol = " "
