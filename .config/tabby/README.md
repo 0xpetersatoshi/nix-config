@@ -1,8 +1,9 @@
-# Creating Symbolic Link
+# Configuring Tabby Config Location
 
-This file has to be symbolic linked as there is currently no way to
-configure it's path.
+Currently, there is no way to change the config path in tabby. So in order to work around that, perform the following steps:
 
 ```bash
-ln -s ~/Library/Application\ Support/tabby/config.yaml ~/.config/tabby/config.yaml
+mkdir -p ~/.config/tabby
+mv ~/Library/Application\ Support/tabby/config.yaml ~/.config/tabby/config.yaml
+ln -s ~/.config/tabby/config.yaml ~/Library/Application\ Support/tabby/config.yaml
 ```
