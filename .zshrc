@@ -56,3 +56,7 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # https://github.com/zsh-users/zsh-autosuggestions
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+# For kitty key binding
+bindkey '\e[H' beginning-of-line
+bindkey '\e[F' end-of-line
+
