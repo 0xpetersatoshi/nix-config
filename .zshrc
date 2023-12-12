@@ -27,10 +27,6 @@ if [ -f '/usr/local/google-cloud-sdk/path.zsh.inc' ]; then . '/usr/local/google-
 # The next line enables shell command completion for gcloud.
 if [ -f '/usr/local/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/google-cloud-sdk/completion.zsh.inc'; fi
 
-### ----- Source kube-ps1 -----------------------------------
-source "/opt/homebrew/opt/kube-ps1/share/kube-ps1.sh"
-PS1='$(kube_ps1)'$PS1
-
 ### ---- Source other configs -----------------------------------
 [[ -f $ZSH/aliases.zsh ]] && source $ZSH/aliases.zsh
 [[ -f $ZSH/exports.zsh ]] && source $ZSH/exports.zsh
