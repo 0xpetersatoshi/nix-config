@@ -84,18 +84,16 @@ cask "fig"
 cask "font-hack-nerd-font"
 cask "ngrok"
 cask "snowflake-snowsql"
-mas "Canary Mail", id: 1236045954
+mas "1Password for Safari", id: 1569813296
+mas "Darkroom", id: 953286746
 mas "Disk Speed Test", id: 425264550
-mas "GarageBand", id: 682658836
-mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
 mas "Magnet", id: 441258766
-mas "NordVPN", id: 905953485
+mas "Microsoft Remote Desktop", id: 1295203466
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
+mas "Passepartout", id: 1433648537
 mas "Slack", id: 803453959
-mas "Spark", id: 1176895641
-mas "Tailscale", id: 1475387142
 mas "WireGuard", id: 1451685025
 vscode "2gua.rainbow-brackets"
 vscode "4ops.packer"
