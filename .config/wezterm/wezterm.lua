@@ -11,17 +11,17 @@ if wezterm.config_builder then
 end
 
 -- This is where you actually apply your config choices
-config.color_scheme = "Catppuccin Macchiato"
-config.font = wezterm.font("Hack", { weight = "Bold", italic = true })
---config.font = wezterm.font("JetBrains Mono", { weight = "Bold" })
+-- config.color_scheme = "Catppuccin Macchiato"
+-- config.font = wezterm.font("Hack Nerd Font Mono", { weight = "Bold", italic = false })
+config.font = wezterm.font("JetBrains Mono", { weight = "Bold", italic = false })
 config.font_size = 14.0
 
 -- 'Dark One Nuanced' theme ported from kitty theme
 config.colors = {
 	ansi = {
 		"#3f4451",
-		"#ffffff",
-		"#c8c8c8",
+		"#ed8796",
+		"#a6da95",
 		"#d19a66",
 		"#61afef",
 		"#c678dd",
@@ -40,14 +40,21 @@ config.colors = {
 	},
 	background = "#282c34",
 	foreground = "#abb2bf",
+	cursor_bg = '#a6da95'
 }
 
 config.enable_tab_bar = false
 
+-- window config
 config.macos_window_background_blur = 30
 config.window_background_opacity = 1.0
 config.window_decorations = "RESIZE"
 
+-- cursor config
+config.cursor_blink_rate = 750
+config.default_cursor_style = 'BlinkingBlock'
+
+-- keybindings
 config.keys = {
 	{ key = "f", mods = "CTRL", action = wezterm.action.ToggleFullScreen },
 }
