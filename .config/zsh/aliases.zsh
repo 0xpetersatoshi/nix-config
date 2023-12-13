@@ -11,3 +11,6 @@ alias kstage='bazelisk run //infra/clusters/tally-stage/us-east4-a:kubectl --'
 alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql
 [[ /opt/homebrew/bin/kubectl ]] && source <(kubectl completion zsh)
 
+# nvim
+alias vim=nvim
+
