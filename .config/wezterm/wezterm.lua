@@ -35,7 +35,43 @@ config.default_cursor_style = "BlinkingBlock"
 
 -- keybindings
 config.keys = {
-	{ key = "f", mods = "CTRL", action = wezterm.action.ToggleFullScreen },
+	-- CTRL bindings
+	{
+		key = "f",
+		mods = "CTRL",
+		action = wezterm.action.ToggleFullScreen
+	},
+	-- OPT bindings
+	-- Rebind OPT-Left, OPT-Right as ALT-b, ALT-f respectively to match Terminal.app behavior
+	{
+		key = 'LeftArrow',
+		mods = 'OPT',
+		action = wezterm.action.SendKey {
+			key = 'b',
+			mods = 'ALT',
+		},
+	},
+	{
+		key = 'RightArrow',
+		mods = 'OPT',
+		action = wezterm.action.SendKey {
+			key = 'f',
+			mods = 'ALT'
+		},
+	},
+	-- CMD bindings
+	-- Bind Cmd + Left to move the cursor to the beginning of the line
+	{
+		key = "LeftArrow",
+		mods = "CMD",
+		action = wezterm.action.SendString "\027[H",
+	},
+	-- Bind Cmd + Right to move the cursor to the end of the line
+	{
+		key = "RightArrow",
+		mods = "CMD",
+		action = wezterm.action.SendString "\027[F",
+	},
 }
 
 -- and finally, return the configuration to wezterm
