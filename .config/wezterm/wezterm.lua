@@ -13,7 +13,10 @@ end
 -- This is where you actually apply your config choices
 -- config.color_scheme = "Catppuccin Macchiato"
 -- config.font = wezterm.font("Hack Nerd Font Mono", { weight = "Bold", italic = false })
-config.font = wezterm.font("JetBrains Mono", { weight = "Bold", italic = false })
+config.font = wezterm.font_with_fallback {
+	{ family = "JetBrains Mono", weight = "Bold", italic = false },
+	"Apple Color Emoji",
+}
 config.font_size = 14.0
 
 -- 'Dark One Nuanced' theme ported from kitty theme
@@ -43,7 +46,8 @@ config.colors = {
 	cursor_bg = '#a6da95'
 }
 
-config.enable_tab_bar = false
+-- tab config
+config.hide_tab_bar_if_only_one_tab = true
 
 -- window config
 config.macos_window_background_blur = 30
