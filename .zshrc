@@ -38,3 +38,7 @@ eval "$(starship init zsh)"
 
 ### ---- Load conda -----------------------------------
 eval "$(conda "shell.$(basename "${SHELL}")" hook)"
+
+### ---- Load Zoxide -----------------------------------
+eval "$(zoxide init zsh)"
+
