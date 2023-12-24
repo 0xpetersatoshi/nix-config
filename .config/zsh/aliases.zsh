@@ -1,6 +1,7 @@
 # Aliases
 alias ll='eza --icons=always -l'
 alias ls='eza --icons=always'
+alias cat='bat'
 
 # Create an alias for staging gcloud.
 alias gstage='bazelisk run //:gcloud -- --project=tally-stage'
