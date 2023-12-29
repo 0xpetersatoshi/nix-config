@@ -1,7 +1,5 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
-local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help Tags" })
+vim.keymap.set("n", "<leader>cD", vim.lsp.buf.definition, { desc = "Code Definition" })
+vim.keymap.set("n", "<leader>cR", vim.lsp.buf.references, { desc = "Code References" })
