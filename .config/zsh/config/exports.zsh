@@ -37,3 +37,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # wezterm
 export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 
+# go
+export PATH=$PATH:$(go env GOPATH)/bin
+
