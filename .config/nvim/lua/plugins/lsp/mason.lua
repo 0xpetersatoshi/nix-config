@@ -3,6 +3,7 @@ return {
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "WhoIsSethDaniel/mason-tool-installer.nvim",
+    "neovim/nvim-lspconfig",
   },
   config = function()
     -- import mason
@@ -10,7 +11,7 @@ return {
 
     -- import mason-lspconfig
     local mason_lspconfig = require("mason-lspconfig")
-
+    local nvim_lspconfig = require("nvim-lspconfig")
     local mason_tool_installer = require("mason-tool-installer")
 
     -- enable mason and configure icons
@@ -33,6 +34,11 @@ return {
       automatic_installation = true, -- not the same as ensure_installed
     })
 
+    nvim_lspconfig.setup({
+      local lspconfig = require("lspconfig")
+      lspconfig.lua_ls.setup({})
+    })
+
     mason_tool_installer.setup({
       ensure_installed = {
         "prettier", -- prettier formatter
@@ -43,5 +49,5 @@ return {
         "eslint_d", -- js linter
       },
     })
-  end,
+  end
 }
