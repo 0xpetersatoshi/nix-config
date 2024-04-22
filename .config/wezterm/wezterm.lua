@@ -61,6 +61,39 @@ config.keys = {
 			mods = "ALT",
 		}),
 	},
+	-- Rebind OPT-HJKL to send to tmux for rezising panes
+	{
+		key = "h",
+		mods = "ALT",
+		action = act.SendKey({
+			key = "h",
+			mods = "ALT",
+		}),
+	},
+	{
+		key = "j",
+		mods = "ALT",
+		action = act.SendKey({
+			key = "j",
+			mods = "ALT",
+		}),
+	},
+	{
+		key = "k",
+		mods = "ALT",
+		action = act.SendKey({
+			key = "k",
+			mods = "ALT",
+		}),
+	},
+	{
+		key = "l",
+		mods = "ALT",
+		action = act.SendKey({
+			key = "l",
+			mods = "ALT",
+		}),
+	},
 	-- CMD bindings
 	-- Bind Cmd + Left to move the cursor to the beginning of the line
 	{
