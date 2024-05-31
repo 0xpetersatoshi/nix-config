@@ -10,6 +10,9 @@ return {
     { "hrsh7th/cmp-nvim-lsp" },
   },
   config = function()
+    vim.keymap.set("n", "<leader>cD", vim.lsp.buf.definition, { desc = "Code Definition" })
+    vim.keymap.set("n", "<leader>cR", vim.lsp.buf.references, { desc = "Code References" })
+    vim.keymap.set("n", "<leader>p", vim.lsp.buf.document_symbol, { desc = "Document Symbols" })
     require("mason").setup({
       ui = {
         border = "rounded",
