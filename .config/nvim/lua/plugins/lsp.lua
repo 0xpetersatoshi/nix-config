@@ -6,13 +6,14 @@ return {
     "williamboman/mason-lspconfig.nvim",
     { "j-hui/fidget.nvim", opts = {} },
     "folke/neodev.nvim",
-    { "b0o/schemastore.nvim" },
+    -- { "b0o/schemastore.nvim" },
     { "hrsh7th/cmp-nvim-lsp" },
   },
   config = function()
     vim.keymap.set("n", "<leader>cD", vim.lsp.buf.definition, { desc = "Code Definition" })
     vim.keymap.set("n", "<leader>cR", vim.lsp.buf.references, { desc = "Code References" })
     vim.keymap.set("n", "<leader>p", vim.lsp.buf.document_symbol, { desc = "Document Symbols" })
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { noremap = true, silent = true, desc = "Rename Symbol" })
     require("mason").setup({
       ui = {
         border = "rounded",

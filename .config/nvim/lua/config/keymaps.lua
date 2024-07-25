@@ -13,3 +13,5 @@ vim.api.nvim_set_keymap("n", "<M-S-h>", ":vertical resize -2<CR>", { noremap = t
 
 -- Map Option+Shift+K to increase window height
 vim.api.nvim_set_keymap("n", "<M-S-l>", ":vertical resize +2<CR>", { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap("i", "jj", "<Esc>", { noremap = false })

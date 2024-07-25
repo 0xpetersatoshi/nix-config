@@ -1,12 +1,12 @@
 return {
-  jsonls = {
-    settings = {
-      json = {
-        schema = require("schemastore").json.schemas(),
-        validate = { enable = true },
-      },
-    },
-  },
+  -- jsonls = {
+  --   settings = {
+  --     json = {
+  --       schema = require("schemastore").json.schemas(),
+  --       validate = { enable = true },
+  --     },
+  --   },
+  -- },
   terraformls = {
     cmd = { "terraform-ls" },
     arg = { "server" },
