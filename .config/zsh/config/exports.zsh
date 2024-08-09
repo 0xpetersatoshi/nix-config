@@ -21,14 +21,14 @@ export DBT_PROFILES_DIR=$HOME/.dbt
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # pnpm
-export PNPM_HOME="/Users/peter/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
 # bun completions
-[ -s "/Users/peter/.oh-my-zsh/completions/_bun" ] && source "/Users/peter/.oh-my-zsh/completions/_bun"
+[ -s "$HOME/.oh-my-zsh/completions/_bun" ] && source "$HOME/.oh-my-zsh/completions/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"

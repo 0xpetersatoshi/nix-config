@@ -17,4 +17,5 @@ alias snowsql=/Applications/SnowSQL.app/Contents/MacOS/snowsql
 
 # nvim
 alias vim=nvim
+alias v='nvim'
 
