@@ -43,8 +43,8 @@ return {
         map("gr", require("telescope.builtin").lsp_references, "Goto References")
         map("gi", require("telescope.builtin").lsp_implementations, "Goto Implementation")
         map("go", require("telescope.builtin").lsp_type_definitions, "Type Definition")
-        map("<leader>p", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
-        map("<leader>P", require("telescope.builtin").lsp_workspace_symbols, "Workspace Symbols")
+        map("<leader>cp", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
+        map("<leader>cP", require("telescope.builtin").lsp_workspace_symbols, "Workspace Symbols")
         map("<leader>Ps", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
 
         map("gl", vim.diagnostic.open_float, "Open Diagnostic Float")
