@@ -40,3 +40,5 @@ export PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 # go
 export PATH=$PATH:$(go env GOPATH)/bin
 
+export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
+export PATH="/Users/peter/.local/share/solana/install/active_release/bin:$PATH"
