@@ -1,4 +1,4 @@
-# .dotfiles
+# dotfiles
 
 This repo uses [`yadm`](https://yadm.io/) to manage dotfiles.
 
