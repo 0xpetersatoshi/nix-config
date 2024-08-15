@@ -37,10 +37,10 @@ config.default_cursor_style = "BlinkingBlock"
 
 -- keybindings
 config.keys = {
-	-- CTRL bindings
+	-- CMD + CTRL bindings
 	{
 		key = "f",
-		mods = "CTRL",
+		mods = "CMD|CTRL",
 		action = act.ToggleFullScreen,
 	},
 	-- OPT bindings
