@@ -1,6 +1,8 @@
 # One Password SSH Agent Config
 export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
+export PATH="$HOME/.local/bin:$PATH"
+
 export PATH="$HOME/.poetry/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
@@ -42,3 +44,7 @@ export PATH=$PATH:$(go env GOPATH)/bin
 
 export PATH=/Applications/SnowSQL.app/Contents/MacOS:$PATH
 export PATH="/Users/peter/.local/share/solana/install/active_release/bin:$PATH"
+
+# Obsidian
+# symlinked to $HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/vault" on macOS
+export OBSIDIAN_VAULT_PATH="$HOME/obsidian/vault"
