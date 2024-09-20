@@ -1,3 +1,5 @@
+local lspconfig = require("lspconfig")
+
 return {
   -- jsonls = {
   --   settings = {
@@ -45,7 +47,12 @@ return {
   gopls = {},
   pyright = {},
 
-  solidity_ls_nomicfoundation = {},
+  solidity = {
+    cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+    filetypes = { "solidity" },
+    root_dir = lspconfig.util.find_git_ancestor,
+    single_file_support = true,
+  },
   yamlls = {
     cmd = { "yaml-language-server", "--stdio" },
     filetypes = { "yaml" },
