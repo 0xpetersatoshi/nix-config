@@ -13,9 +13,10 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
-    vim.keymap.set("n", "<leader>go", function()
+    vim.keymap.set("n", "<leader>fo", function()
       local file = vim.fn.expand("<cfile>")
-      vim.cmd("edit " .. file)
+      local dir = vim.fn.expand("%:p:h")
+      vim.cmd("edit " .. vim.fn.fnameescape(dir .. "/" .. file))
     end, { buffer = true, desc = "Open file under cursor in new buffer" })
   end,
 })
@@ -24,9 +25,40 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
-    vim.keymap.set("n", "<leader>gv", function()
+    vim.keymap.set("n", "<leader>fv", function()
       local file = vim.fn.expand("<cfile>")
-      vim.cmd("vsplit " .. file)
+      local dir = vim.fn.expand("%:p:h")
+      vim.cmd("vsplit " .. vim.fn.fnameescape(dir .. "/" .. file))
     end, { buffer = true, desc = "Open file under cursor in vertical split" })
+  end,
+})
+
+-- Mapping to create a new empty buffer
+vim.keymap.set("n", "<leader>fn", ":enew<CR>", { desc = "Create new file" })
+
+-- Mapping to save to a specific path
+vim.keymap.set("n", "<leader>fs", function()
+  local path = vim.fn.input("Save as: ", vim.fn.expand("%:p:h") .. "/", "file")
+  if path ~= "" then
+    vim.cmd("write! " .. vim.fn.fnameescape(path))
+    print("File saved to " .. path)
+  else
+    print("Save canceled.")
+  end
+end, { desc = "Save file to specific path" })
+
+-- Mapping to open URL under cursor
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.keymap.set("n", "<leader>fu", function()
+      local url = vim.fn.expand("<cfile>")
+      if url:match("^https?://") then
+        local open_cmd = vim.fn.has("mac") == 1 and "open" or "xdg-open" -- Detects macOS or defaults to Linux
+        vim.fn.jobstart({ open_cmd, url }, { detach = true })
+      else
+        print("No valid URL under cursor")
+      end
+    end, { buffer = true, desc = "Open URL under cursor in browser" })
   end,
 })
