@@ -1,19 +1,23 @@
 # dotfiles
 
-This repo uses [`yadm`](https://yadm.io/) to manage dotfiles.
+This repo uses [`stow`](https://www.gnu.org/software/stow/) to manage dotfiles.
 
 ## Usage
 
-Navigate to `~/.conf` directory and use `yadm` as you would `git`:
+From the root of the repo, run:
 
 ```bash
-yadm status
+stow .
 ```
 
-```bash
-yadm add ~/.conf/some/dotfile
-```
+Optionally, you can run with the `-n` flag to preview changes before committing:
 
 ```bash
-yadm commit -m "commit message"
+stow -nv .
+```
+
+To remove symlinks, run:
+
+```bash
+stow -D .
 ```
