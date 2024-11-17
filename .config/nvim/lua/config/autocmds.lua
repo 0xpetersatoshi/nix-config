@@ -62,3 +62,21 @@ vim.api.nvim_create_autocmd("FileType", {
     end, { buffer = true, desc = "Open URL under cursor in browser" })
   end,
 })
+
+-- Run PyrightOrganizeImports on save
+local python = vim.api.nvim_create_augroup("PythonFormatting", { clear = true })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.py",
+  group = python,
+  callback = function()
+    -- Save current cursor position
+    local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+
+    -- Run PyrightOrganizeImports
+    vim.cmd("PyrightOrganizeImports")
+
+    -- Restore cursor position (in case the imports reorganization moved it)
+    vim.api.nvim_win_set_cursor(0, { row, col })
+  end,
+})
