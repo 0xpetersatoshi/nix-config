@@ -1,15 +1,7 @@
 local lspconfig = require("lspconfig")
-local util = require("lspconfig.util")
 
 return {
-  -- jsonls = {
-  --   settings = {
-  --     json = {
-  --       schema = require("schemastore").json.schemas(),
-  --       validate = { enable = true },
-  --     },
-  --   },
-  -- },
+  jsonls = {},
   terraformls = {
     cmd = { "terraform-ls" },
     arg = { "server" },
@@ -44,27 +36,14 @@ return {
   vimls = {
     filetypes = { "vim" },
   },
-  tsserver = {},
+  ts_ls = {},
   gopls = {},
   pyright = {
-    before_init = function(_, config)
-      local venv = vim.fn.trim(vim.fn.system("poetry env info --path"))
-      if vim.v.shell_error == 0 then
-        config.settings.python.pythonPath = venv .. "/bin/python"
-      else
-        print("Poetry environment not found. Using system Python.")
-      end
-    end,
-    root_dir = function(fname)
-      return util.root_pattern("pyproject.toml")(fname) or util.find_git_ancestor(fname)
-    end,
-    settings = {
-      python = {
-        analysis = {
-          autoSearchPaths = true,
-          useLibraryCodeForTypes = true,
-          diagnosticMode = "workspace",
-        },
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "workspace",
       },
     },
   },
