@@ -47,7 +47,6 @@ return {
       },
     },
   },
-  ruff_lsp = {},
 
   solidity = {
     cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
