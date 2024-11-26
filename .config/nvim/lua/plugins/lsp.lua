@@ -30,7 +30,7 @@ return {
     })
     require("lspconfig.ui.windows").default_options.border = "single"
 
-    require("neodev").setup()
+    -- require("neodev").setup()
 
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
@@ -96,7 +96,7 @@ return {
       update_in_insert = false,
       severity_sort = true,
       float = {
-        source = "always",
+        source = true,
         style = "minimal",
         border = "rounded",
         header = "",
