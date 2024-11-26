@@ -14,4 +14,11 @@ return {
     date_format = "%r", -- template for the date, check Date format section for more options
     virtual_text_column = 1, -- virtual text start column, check Start virtual text at column section for more options
   },
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "LazyFile",
+    opts = {
+      -- Configuration options go here
+    },
+  },
 }
