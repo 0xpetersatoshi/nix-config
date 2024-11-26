@@ -10,10 +10,13 @@ return {
     { "hrsh7th/cmp-nvim-lsp" },
   },
   config = function()
+    -- Key mappings
     vim.keymap.set("n", "<leader>cD", vim.lsp.buf.definition, { desc = "Code Definition" })
     vim.keymap.set("n", "<leader>cR", vim.lsp.buf.references, { desc = "Code References" })
     vim.keymap.set("n", "<leader>p", vim.lsp.buf.document_symbol, { desc = "Document Symbols" })
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { noremap = true, silent = true, desc = "Rename Symbol" })
+
+    -- Mason setup
     require("mason").setup({
       ui = {
         border = "rounded",
@@ -24,14 +27,25 @@ return {
         },
       },
     })
+
+    -- Load servers configuration
+    local servers = require("plugins.lsp.servers")
+
+    -- Mason-lspconfig setup
     require("mason-lspconfig").setup({
-      ensure_installed = vim.tbl_keys(require("plugins.lsp.servers")),
-      auto_install = true,
+      ensure_installed = vim.tbl_keys(servers),
+      automatic_installation = true,
     })
+
     require("lspconfig.ui.windows").default_options.border = "single"
 
     -- require("neodev").setup()
 
+    -- Setup capabilities
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+
+    -- LSP attach autocmd
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
       callback = function(event)
@@ -54,7 +68,7 @@ return {
 
         map("<leader>v", "<cmd>vsplit | lua vim.lsp.buf.definition()<cr>", "Goto Definition in Vertical Split")
 
-        -- Thank you teej
+        -- Document highlight setup
         -- https://github.com/nvim-lua/kickstart.nvim/blob/master/init.lua#L502
         local client = vim.lsp.get_client_by_id(event.data.client_id)
         if client and client.server_capabilities.documentHighlightProvider then
@@ -71,22 +85,15 @@ return {
       end,
     })
 
-    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-    -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-
-    local mason_lspconfig = require("mason-lspconfig")
-
-    mason_lspconfig.setup_handlers({
-      function(server_name)
-        require("lspconfig")[server_name].setup({
-          capabilities = capabilities,
-          settings = require("plugins.lsp.servers")[server_name],
-          filetypes = (require("plugins.lsp.servers")[server_name] or {}).filetypes,
-        })
-      end,
-    })
+    -- Server setup
+    for server_name, server_settings in pairs(servers) do
+      require("lspconfig")[server_name].setup({
+        capabilities = capabilities,
+        settings = server_settings.settings,
+        filetypes = server_settings.filetypes,
+        cmd = server_settings.cmd,
+      })
+    end
 
     vim.diagnostic.config({
       title = false,
