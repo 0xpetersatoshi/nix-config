@@ -4,7 +4,13 @@ This repo uses [`stow`](https://www.gnu.org/software/stow/) to manage dotfiles.
 
 ## Usage
 
-From the root of the repo, run:
+To link all the dotfiles in the [.config](./.config/) directory, run:
+
+```bash
+stow -t ~/.config .config
+```
+
+To link home level dotfiles, from the root of the repo, run:
 
 ```bash
 stow .

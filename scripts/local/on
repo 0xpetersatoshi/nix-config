@@ -1,0 +1,39 @@
+#!/bin/zsh
+
+# This script creates a new note in the Obsidian vault
+# and opens it in Neovim
+
+if [ -z "$1" ]; then
+  echo "Error: A file name must be set, e.g. on \"My note title\"."
+  exit 1
+fi
+
+file_name=$(echo "$1" | tr ' ' '-')
+formatted_file_name=$(date "+%Y-%m-%d")_${file_name}.md
+
+# Ensure obsidian vault exists
+if [ ! -d $OBSIDIAN_VAULT_PATH ]; then
+  echo "Error: Obsidian vault not found at $OBSIDIAN_VAULT_PATH."
+  exit 1
+fi
+
+# Ensure templates directorie exist
+if [ ! -d "$OBSIDIAN_VAULT_PATH/templates" ]; then
+  echo "Error: Templates directory not found at $OBSIDIAN_VAULT_PATH/templates."
+  exit 1
+fi
+
+# Create inbox directory if it doesn't exist
+if [ ! -d "$OBSIDIAN_VAULT_PATH/inbox" ]; then
+  mkdir "$OBSIDIAN_VAULT_PATH/inbox"
+fi
+
+# Create the new note from the template
+template_file="$OBSIDIAN_VAULT_PATH/templates/note_template.md"
+output_file="$OBSIDIAN_VAULT_PATH/inbox/${formatted_file_name}"
+
+# Replace placeholders in the template
+sed "s/\"{{date}}\"/$(date "+%Y-%m-%d")/g; s/\"{{title}}\"/$1/g" "$template_file" > "$output_file"
+
+# Open the new note in Neovim
+nvim "$output_file"

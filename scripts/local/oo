@@ -1,0 +1,21 @@
+#!/bin/zsh
+
+# This script opens the Obsidian vault in Neovim
+
+# Ensure obsidian vault exists
+if [ ! -d $OBSIDIAN_VAULT_PATH ]; then
+  echo "Error: Obsidian vault not found at $OBSIDIAN_VAULT_PATH."
+  exit 1
+fi
+
+if command -v nvim &> /dev/null; then
+  # Open obsidian vault in nvim
+  cd $OBSIDIAN_VAULT_PATH
+  nvim .
+else
+    echo "Neovim is not installed"
+    exit 1
+fi
+
+# Exit with success
+exit 0
