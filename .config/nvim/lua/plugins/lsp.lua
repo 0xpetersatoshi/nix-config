@@ -7,7 +7,7 @@ return {
     { "j-hui/fidget.nvim", opts = {} },
     "folke/neodev.nvim",
     -- { "b0o/schemastore.nvim" },
-    { "hrsh7th/cmp-nvim-lsp" },
+    -- { "hrsh7th/cmp-nvim-lsp" },
   },
   config = function()
     -- Key mappings
@@ -42,8 +42,9 @@ return {
     -- require("neodev").setup()
 
     -- Setup capabilities
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+    local capabilities = require("blink.cmp").get_lsp_capabilities()
+    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+    -- capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
     -- LSP attach autocmd
     vim.api.nvim_create_autocmd("LspAttach", {
