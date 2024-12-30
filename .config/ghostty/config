@@ -1,0 +1,12 @@
+# Font
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 14
+
+# Theme
+theme = catppuccin-macchiato
+
+# Cursor
+cursor-style = block
+
+# Terminal options
+copy-on-select = true
