@@ -6,3 +6,6 @@
 --  and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
+-- disable <Tab> mapping for codeium
+vim.g.codeium_no_map_tab = 1
