@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 
+# -- Catppuccin Macchiato --
 export WHITE=0xffffffff
+export BAR_COLOR=0xff24273a     # Base color (crust)
+export ITEM_BG_COLOR=0xff363a4f # Surface0 color
+export ACCENT_COLOR=0xff8aadf4  # Blue color
 
-# -- Teal Scheme --
-export BAR_COLOR=0xff001f30
-export ITEM_BG_COLOR=0xff003547
-export ACCENT_COLOR=0xff2cf9ed
+# -- Nord Theme --
+# export WHITE=0xffeceff4         # Nord Snow Storm (lighter)
+# export BAR_COLOR=0xff2e3440     # Nord Polar Night (darkest)
+# export ITEM_BG_COLOR=0xff3b4252 # Nord Polar Night (lighter variant)
+# export ACCENT_COLOR=0xff88c0d0  # Nord Frost (blue)
 
 # -- Gray Scheme --
 # export BAR_COLOR=0xff101314
