@@ -20,10 +20,7 @@ ITEM_DIR="$CONFIG_DIR/items"
 sketchybar --bar position=top \
   height=40 \
   blur_radius=30 \
-  color=$BAR_COLOR \
-  corner_radius=100 \
-  y_offset=3 \
-  margin=10
+  color=$BAR_COLOR
 
 ##### Changing Defaults #####
 # We now change some default values, which are applied to all further items.
@@ -58,8 +55,12 @@ sketchybar --default "${default[@]}"
 # We add some regular items to the left side of the bar, where
 # only the properties deviating from the current defaults need to be set
 
-source $ITEM_DIR/spaces.sh
+source $ITEM_DIR/aerospace.sh
 source $ITEM_DIR/front_app.sh
+
+##### Adding Left Side of Notch Items #####
+
+source $ITEM_DIR/weather.sh
 
 ##### Adding Right Side of Notch Items #####
 
