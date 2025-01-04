@@ -302,3 +302,12 @@ run = "move-node-to-workspace D"
 [[on-window-detected]]
 if.app-id = "com.tinyapp.TablePlus"
 run = "move-node-to-workspace Q"
+
+# Misc
+[[on-window-detected]]
+if.app-id = "com.linear"
+run = "move-node-to-workspace L"
+
+[[on-window-detected]]
+if.app-id = "com.apple.systempreferences"
+run = "layout floating"
