@@ -313,3 +313,7 @@ run = "move-node-to-workspace L"
 [[on-window-detected]]
 if.app-id = "com.apple.systempreferences"
 run = "layout floating"
+
+[[on-window-detected]]
+if.app-id = "com.raycast.macos"
+run = "layout floating"
