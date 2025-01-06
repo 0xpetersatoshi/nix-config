@@ -20,7 +20,7 @@ if [ -z $WEATHER_JSON ]; then
   return
 fi
 
-TEMPERATURE=$(echo $WEATHER_JSON | jq -r '.current_condition[0].temp_C')
+TEMPERATURE=$(echo $WEATHER_JSON | jq -r '.current_condition[0].FeelsLikeF')
 WEATHER_DESCRIPTION=$(echo $WEATHER_JSON | jq -r '.current_condition[0].weatherDesc[0].value' | sed 's/\(.\{25\}\).*/\1.../')
 MOON_PHASE=$(echo $WEATHER_JSON | jq -r '.weather[0].astronomy[0].moon_phase')
 
@@ -51,7 +51,7 @@ case ${MOON_PHASE} in
   ;;
 esac
 
-LABEL="$LOCATION  $TEMPERATURE℃ $WEATHER_DESCRIPTION"
+LABEL="$LOCATION  $TEMPERATURE􂧣 $WEATHER_DESCRIPTION"
 
 sketchybar --set $NAME \
   label="$LABEL" \
