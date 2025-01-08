@@ -2,7 +2,7 @@
 
 # -- Catppuccin Macchiato --
 export WHITE=0xffffffff
-export BAR_COLOR=0xff24273a     # Base color (crust)
+export BAR_COLOR=0xbf24273a
 export ITEM_BG_COLOR=0xff363a4f # Surface0 color
 export ACCENT_COLOR=0xff8aadf4  # Blue color
 
