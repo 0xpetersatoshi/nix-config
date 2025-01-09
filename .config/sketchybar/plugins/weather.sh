@@ -71,5 +71,4 @@ LABEL="$LOCATION  $TEMPERATURE􂧣 "
 sketchybar --set $NAME \
   label="$LABEL" \
   icon="$WEATHER_ICON" \
-  background.padding_right=${#LABEL}
 
