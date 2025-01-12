@@ -87,6 +87,20 @@ return {
           },
         },
       })
+
+      -- Add custom keymaps after setup
+      vim.keymap.set(
+        "n",
+        "<leader>cn",
+        ":CodeCompanionChat<CR>",
+        { silent = true, desc = "Open new CodeCompanion chat" }
+      )
+      vim.keymap.set(
+        "v",
+        "<leader>ca",
+        ":CodeCompanionChat Add<CR>",
+        { silent = true, desc = "Add selection to CodeCompanion chat" }
+      )
     end,
   },
 }
