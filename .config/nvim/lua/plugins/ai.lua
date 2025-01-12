@@ -53,31 +53,6 @@ return {
             roles = {
               llm = "Claude",
             },
-            -- TODO: not working as expected
-            -- keymaps = {
-            --   send = {
-            --     modes = {
-            --       n = "<leader>cs", -- Send in normal mode
-            --       v = "<leader>cs", -- Send in visual mode
-            --       i = { "<C-CR>", "<C-s>" }, -- Send in insert mode
-            --     },
-            --   },
-            --   completion = {
-            --     modes = {
-            --       i = "<C-x>",
-            --     },
-            --   },
-            --   close = {
-            --     modes = {
-            --       n = "<leader>cc", -- Close chat window
-            --     },
-            --   },
-            --   new = {
-            --     modes = {
-            --       n = "<leader>cn", -- Start new chat
-            --     },
-            --   },
-            -- },
           },
           inline = {
             adapter = "anthropic",
@@ -100,6 +75,12 @@ return {
         "<leader>ca",
         ":CodeCompanionChat Add<CR>",
         { silent = true, desc = "Add selection to CodeCompanion chat" }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>ca",
+        ":CodeCompanionActions<CR>",
+        { silent = true, desc = "Open CodeCompanion Actions Pallete" }
       )
     end,
   },
