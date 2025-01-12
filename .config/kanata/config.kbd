@@ -53,7 +53,7 @@
   ;; Layer toggle for navigation
   nav (layer-while-held navigation)
 
-  cap (tap-hold-press $tap-time $hold-time caps @nav)
+    cap (tap-hold-press $tap-time $hold-time esc @nav)
 
   ;; Layer toggle for f-row
   frow (layer-while-held f-row)
