@@ -1,13 +1,3 @@
-; TODO: need to resolve issue with 1password ssh signing not working on arch
-; [include]
-;     path = ~/.gitconfig-common
-;
-; [includeIf "os:Linux"]
-;     path = ~/.gitconfig-linux
-;
-; [includeIf "os:Darwin"]
-;     path = ~/.gitconfig-darwin
-
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
@@ -24,14 +14,6 @@
 
 [gpg]
 	format = ssh
-
-[gpg "ssh"]
-    ; TODO: figure out why this only works when hardcoded in this file
-    ; linux
-    program = "/opt/1Password/op-ssh-sign"
-    ; macos
-    ; program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
-
 
 [commit]
 	gpgsign = true
