@@ -69,6 +69,9 @@ bindkey '\e[H' beginning-of-line
 bindkey '\e[F' end-of-line
 
 eval "$(starship init zsh)"
-eval "$(conda "shell.$(basename "${SHELL}")" hook)"
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+
+if command -v conda 1>/dev/null 2>&1; then
+  eval "$(conda "shell.$(basename "${SHELL}")" hook)"
+fi
