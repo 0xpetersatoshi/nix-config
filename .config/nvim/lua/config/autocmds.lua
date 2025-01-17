@@ -51,7 +51,7 @@ end, { desc = "Save file to specific path" })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",
   callback = function()
-    vim.keymap.set("n", "<leader>fu", function()
+    vim.keymap.set("n", "<leader>ou", function()
       local url = vim.fn.expand("<cfile>")
       if url:match("^https?://") then
         local open_cmd = vim.fn.has("mac") == 1 and "open" or "xdg-open" -- Detects macOS or defaults to Linux
