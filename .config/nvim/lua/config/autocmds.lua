@@ -80,3 +80,21 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     vim.api.nvim_win_set_cursor(0, { row, col })
   end,
 })
+
+-- Set filetypes for specific file extensions
+
+-- gitconfig
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = ".gitconfig*",
+  callback = function()
+    vim.bo.filetype = "gitconfig"
+  end,
+})
+
+-- .env
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = ".env*",
+  callback = function()
+    vim.bo.filetype = "sh"
+  end,
+})
