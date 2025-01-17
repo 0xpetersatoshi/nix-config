@@ -1,58 +1,9 @@
-; TODO: need to resolve issue with 1password ssh signing not working on arch
-; [include]
-;     path = ~/.gitconfig-common
-;
-; [includeIf "os:Linux"]
-;     path = ~/.gitconfig-linux
-;
-; [includeIf "os:Darwin"]
-;     path = ~/.gitconfig-darwin
+[include]
+    path = ~/.gitconfig-common
 
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+[includeIf "gitdir:/home/**"]
+    path = ~/.gitconfig-linux
 
-[user]
-	name = 0xPeterSatoshi
-	email = 16406061+0xpetersatoshi@users.noreply.github.com
-	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFjoHku2U1i34uJWA6kODHU44QJCpQE7LHxYQgk382h
+[includeIf "gitdir:/Users/**"]
+    path = ~/.gitconfig-darwin
 
-[init]
-	defaultBranch = main
-
-[gpg]
-	format = ssh
-
-[gpg "ssh"]
-    ; TODO: figure out why this only works when hardcoded in this file
-    ; linux
-    program = "/opt/1Password/op-ssh-sign"
-    ; macos
-    ; program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
-
-
-[commit]
-	gpgsign = true
-
-[core]
-	editor = nvim
-  pager = delta
-
-[interactive]
-    diffFilter = delta --color-only
-
-[delta]
-    navigate = true    # use n and N to move between diff sections
-    light = false      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
-    line-numbers = true
-    side-by-side = true
-
-[merge]
-    conflictstyle = diff3
-
-[diff]
-    colorMoved = default
-[url "git@github.com:"]
-	insteadOf = https://github.com/
