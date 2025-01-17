@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 DOTFILES_DIR=$HOME/dotfiles
-OUTPUT_FILE=$DOTFILES_DIR/.config/brew/Brewfile
+OUTPUT_FILE=$DOTFILES_DIR/config/.config/brew/Brewfile
 
 # Ensure dotfiles and output file directories exist
 if [ ! -d $DOTFILES_DIR ]; then
@@ -9,8 +9,8 @@ if [ ! -d $DOTFILES_DIR ]; then
   exit 1
 fi
 
-if [ ! -d $DOTFILES_DIR/.config/brew ]; then
-  mkdir -p $DOTFILES_DIR/.config/brew
+if [ ! -d $DOTFILES_DIR/config/.config/brew ]; then
+  mkdir -p $DOTFILES_DIR/config/.config/brew
 fi
 
 echo "Updating $OUTPUT_FILE..."
