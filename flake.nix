@@ -15,6 +15,7 @@
       environment.systemPackages =
         [
           pkgs.nushell
+          pkgs.direnv
         ];
 
       security.pam.enableSudoTouchIdAuth = true;
