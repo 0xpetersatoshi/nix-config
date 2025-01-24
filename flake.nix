@@ -10,12 +10,6 @@
   outputs = inputs@{ self, nix-darwin, nixpkgs }:
   let
     configuration = { pkgs, ... }: rec {
-      # System Settings
-      systemSettings = {
-          system = "aarch64-darwin";
-          hostname = "nova";
-      };
-
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
@@ -39,13 +33,13 @@
       system.stateVersion = 5;
 
       # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = systemSettings.system;
+      nixpkgs.hostPlatform = "aarch64-darwin";
     };
   in
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
-    darwinConfigurations.systemSettings.hostname = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."nova" = nix-darwin.lib.darwinSystem {
       modules = [ configuration ];
     };
   };
