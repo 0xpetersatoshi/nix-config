@@ -50,6 +50,10 @@ return {
     },
   },
 
+  nixd = {
+    filetypes = { "nix" },
+  },
+
   graphql = {
     filetypes = { "graphql", "gql", "graphqls", "typescriptreact" },
   },
