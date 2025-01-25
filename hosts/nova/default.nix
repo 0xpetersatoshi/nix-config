@@ -5,7 +5,9 @@
         [
           pkgs.nushell
           pkgs.direnv
+          pkgs.nil
           pkgs.nixd
+          pkgs.statix
         ];
 
       security.pam.enableSudoTouchIdAuth = true;
