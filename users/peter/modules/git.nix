@@ -12,13 +12,37 @@
       enable = true;
       userName = inputs.userSettings.gitUsername;
       userEmail = inputs.userSettings.userEmail;
-      ignores = [ "*~" "*.swp" ];
+      ignores = [
+        "*~"
+        "*.swp"
+        ".DS_Store"
+      ];
       aliases = {
         ci = "commit";
       };
       extraConfig = {
         init.defaultBranch = "main";
-        # pull.rebase = "false";
+        core = {
+          editor = "nvim";
+        };
+        merge.conflictstyle = "diff3";
+        diff.colorMoved = "default";
+      };
+
+      lfs.enable = true;
+      signing = {
+        key = inputs.userSettings.gitSigningKey;
+        signByDefault = true;
+      };
+
+      delta = {
+        enable = true;
+        options = {
+          navigate = true;
+          light = false;
+          line-numbers = true;
+          side-by-side = true;
+        };
       };
     };
     lazygit.enable = true;
