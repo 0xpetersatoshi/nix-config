@@ -11,4 +11,8 @@
     # Programming
     uv
   ];
+
+  programs = {
+    btop.enable = true;
+  };
 }

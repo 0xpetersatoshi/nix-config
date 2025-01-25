@@ -1,11 +1,11 @@
-{ inputs, userSettings, ... }: {
+{ ... }@inputs: {
   imports = [
-    # ./modules
+    ./modules
     ./home-packages.nix
   ];
 
   home = {
-    username = userSettings.user;
-    stateVersion = userSettings.stateVersion;
+    username = inputs.userSettings.user;
+    stateVersion = inputs.userSettings.stateVersion;
   };
 }
