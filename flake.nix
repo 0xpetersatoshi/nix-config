@@ -2,14 +2,21 @@
   description = "nix-darwin system flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
-    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs-darwin }:
   let
-    configuration = { pkgs, ... }: rec {
+    systemSettings = {
+        system = "aarch64-darwin";
+        hostname = "nova";
+    };
+
+    configuration = { pkgs, systemSettings, ... }: rec {
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
@@ -34,14 +41,15 @@
       system.stateVersion = 5;
 
       # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "aarch64-darwin";
+      nixpkgs.hostPlatform = "${systemSettings.system}";
     };
   in
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
-    darwinConfigurations."nova" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."${systemSettings.hostname}" = nix-darwin.lib.darwinSystem {
       modules = [ configuration ];
+      specialArgs = { inherit systemSettings; };
     };
   };
 }

@@ -3,7 +3,7 @@
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-darwin"
         ]
       },
       "locked": {
@@ -21,13 +21,13 @@
         "type": "github"
       }
     },
-    "nixpkgs": {
+    "nixpkgs-darwin": {
       "locked": {
-        "lastModified": 1737604399,
-        "narHash": "sha256-6mhxTomwwim6OrUXnXzsbIEdNdUXPF4F2+sXf1MrXPw=",
+        "lastModified": 1737728197,
+        "narHash": "sha256-Ltd3Ov3awL2OWS69Dm+6dRLpm1UdMuvQzF9GgfOyz30=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "be24912af5998c5298b827d5304462e16d27215d",
+        "rev": "8e39f04b54a435f14b9c1d6a6caede0a0a9825b6",
         "type": "github"
       },
       "original": {
@@ -40,7 +40,7 @@
     "root": {
       "inputs": {
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs-darwin": "nixpkgs-darwin"
       }
     }
   },
