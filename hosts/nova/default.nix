@@ -8,6 +8,9 @@
           pkgs.nil
           pkgs.nixd
           pkgs.statix
+          # touch ID support in tmux
+          pkgs.pam-reattach
+          pkgs.reattach-to-user-namespace
         ];
 
       security.pam.enableSudoTouchIdAuth = true;
