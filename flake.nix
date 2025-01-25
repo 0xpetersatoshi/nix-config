@@ -2,31 +2,59 @@
   description = "nix-darwin system flake";
 
   inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/release-24.11";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
     nix-darwin = {
       url = "github:LnL7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs-darwin }:
+  outputs = inputs@{ ... }:
   let
     systemSettings = {
         system = "aarch64-darwin";
         hostname = "nova";
     };
+
+    userSettings = rec {
+        user = "peter";
+        home = /Users/${user};
+
+        gitUsername = "0xPeterSatoshi";
+        userEmail = "dev@ngml.me";
+
+        stateVersion = "24.11";
+    };
   in
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
-    darwinConfigurations."${systemSettings.hostname}" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."${systemSettings.hostname}" = inputs.nix-darwin.lib.darwinSystem {
       system = systemSettings.system;
       modules = [
-          ./hosts/${systemSettings.hostname}/default.nix
+          ./hosts/${systemSettings.hostname}
+
+          inputs.home-manager.darwinModules.home-manager {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.${userSettings.user} = import ./users/${userSettings.user}/home.nix;
+              extraSpecialArgs = {
+                  inherit inputs;
+                  inherit userSettings;
+              };
+            };
+          }
       ];
       specialArgs = {
           inherit inputs;
           inherit systemSettings;
+          inherit userSettings;
       };
     };
   };
