@@ -54,6 +54,14 @@ return {
     filetypes = { "nix" },
   },
 
+  nil_ls = {
+    filetypes = { "nix" },
+  },
+
+  statix = {
+    filetypes = { "nix" },
+  },
+
   graphql = {
     filetypes = { "graphql", "gql", "graphqls", "typescriptreact" },
   },
