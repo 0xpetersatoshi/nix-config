@@ -7,6 +7,13 @@ let
       tree = "eza --icons=always --tree";
       v = "nvim";
   };
+
+  homebrewInitExtra = ''
+    # Setup the brew package manager for GUI apps
+    if [[ -f "/opt/homebrew/bin/brew" ]] then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+  '';
 in
 
 {
@@ -18,6 +25,8 @@ in
       enableCompletion = true;
 
       initExtra = ''
+        ${if pkgs.stdenv.isDarwin then homebrewInitExtra else ""}
+
         # Completion styling
         zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
         zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
