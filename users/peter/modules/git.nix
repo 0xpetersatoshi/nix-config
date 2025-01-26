@@ -27,6 +27,8 @@
         };
         merge.conflictstyle = "diff3";
         diff.colorMoved = "default";
+        url."git@github.com:".insteadOf = "https://github.com/";
+        gpg.format = "ssh";
       };
 
       lfs.enable = true;
