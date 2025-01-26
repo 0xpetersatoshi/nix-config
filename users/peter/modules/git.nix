@@ -1,4 +1,4 @@
-{ ... }@inputs:
+{ pkgs, ... }@inputs:
 
 {
   home.shellAliases = {
@@ -33,6 +33,7 @@
       signing = {
         key = inputs.userSettings.gitSigningKey;
         signByDefault = true;
+        gpgPath = "${pkgs._1password-cli}/bin/op-ssh-sign";
       };
 
       delta = {

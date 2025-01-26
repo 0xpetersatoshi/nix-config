@@ -7,6 +7,7 @@
     # CLI utils
     btop
     delta
+    git
     zellij
 
     # Programming

@@ -1,8 +1,23 @@
-{ inputs, pkgs, systemSettings, userSettings, ... }: {
+{ inputs, pkgs, systemSettings, userSettings, ... }:
+
+{
+      nixpkgs.overlays = [
+        (final: prev: {
+          unstable = import inputs.nixpkgs-unstable {
+            system = prev.system;
+            config = {
+              allowUnfree = true;
+              allowBroken = true;
+            };
+          };
+        })
+      ];
+
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [
+          pkgs._1password-cli
           pkgs.nushell
           pkgs.direnv
           pkgs.nil
@@ -11,6 +26,12 @@
           # touch ID support in tmux
           pkgs.pam-reattach
           pkgs.reattach-to-user-namespace
+        ]
+
+        ++
+
+        [
+          pkgs.unstable._1password-gui
         ];
 
       services.nix-daemon.enable = true;
@@ -51,5 +72,8 @@
       system.stateVersion = 5;
 
       # The platform the configuration will be used on.
-      nixpkgs.hostPlatform = "${systemSettings.system}";
+      nixpkgs = {
+        config.allowUnfree = true;
+        hostPlatform = "${systemSettings.system}";
+      };
     }
