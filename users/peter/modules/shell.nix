@@ -1,5 +1,13 @@
 { pkgs, ... }:
 
+let
+  shellAliases = {
+      cat = "bat";
+      ll = "eza --icons=always -l";
+      tree = "eza --icons=always --tree";
+  };
+in
+
 {
   programs.zsh = {
     enable = true;
@@ -42,19 +50,32 @@
         };
       }
     ];
+
+    inherit shellAliases;
   };
 
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
+  programs = {
+    eza = {
+      enable = true;
+      enableBashIntegration = true;
+      enableNushellIntegration = true;
+      enableZshIntegration = true;
+      git = true;
+      icons = "auto";
+    };
 
-  programs.zoxide = {
-    enable = true;
-    enableBashIntegration = true;
-    enableNushellIntegration = true;
-    enableZshIntegration = true;
-    options = ["--cmd cd"];
+    fzf = {
+      enable = true;
+      enableZshIntegration = true;
+    };
+
+    zoxide = {
+      enable = true;
+      enableBashIntegration = true;
+      enableNushellIntegration = true;
+      enableZshIntegration = true;
+      options = ["--cmd cd"];
+    };
   };
 
   # Environment variables
