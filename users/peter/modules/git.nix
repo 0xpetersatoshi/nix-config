@@ -1,5 +1,11 @@
 { pkgs, ... }@inputs:
 
+let
+  gpgSSHPath = if pkgs.stdenv.isDarwin
+                    then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+                    else "${pkgs.unstable._1password-gui}/op-ssh-sign";
+in
+
 {
   home.shellAliases = {
     g = "git";
@@ -29,15 +35,13 @@
         diff.colorMoved = "default";
         url."git@github.com:".insteadOf = "https://github.com/";
         gpg.format = "ssh";
+        gpg."ssh".program = gpgSSHPath;
       };
 
       lfs.enable = true;
       signing = {
         key = inputs.userSettings.gitSigningKey;
         signByDefault = true;
-        gpgPath = if pkgs.stdenv.isDarwin
-                    then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-                    else "${pkgs.unstable._1password-gui}/op-ssh-sign";
       };
 
       delta = {
