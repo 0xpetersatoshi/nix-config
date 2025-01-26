@@ -8,6 +8,9 @@
     btop
     delta
     git
+    google-cloud-sdk
+    kubectl
+    kubectx
     zellij
 
     # Programming

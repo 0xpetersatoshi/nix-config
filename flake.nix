@@ -46,6 +46,7 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              backupFileExtension = ".bak";
               users.${userSettings.user} = import ./users/${userSettings.user}/home.nix;
               extraSpecialArgs = {
                   inherit inputs;
