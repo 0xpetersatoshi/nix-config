@@ -5,7 +5,6 @@
       environment.systemPackages =
         [
           pkgs._1password-cli
-          pkgs.nushell
           pkgs.direnv
           pkgs.nil
           pkgs.nixd
