@@ -33,6 +33,19 @@
 
         stateVersion = "24.11";
     };
+
+    overlays = [
+      (final: prev: {
+        unstable = import inputs.nixpkgs-unstable {
+          system = prev.system;
+          config = {
+            allowUnfree = true;
+            allowBroken = true;
+          };
+        };
+      })
+    ];
+
   in
   {
     # Build darwin flake using:
@@ -40,6 +53,10 @@
     darwinConfigurations."${systemSettings.hostname}" = inputs.nix-darwin.lib.darwinSystem {
       system = systemSettings.system;
       modules = [
+          ({ ... }: {
+            nixpkgs.overlays = overlays;
+          })
+
           ./hosts/${systemSettings.hostname}
 
           inputs.home-manager.darwinModules.home-manager {

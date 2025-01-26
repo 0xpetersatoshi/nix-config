@@ -1,19 +1,6 @@
 { inputs, pkgs, systemSettings, userSettings, ... }:
 
 {
-      nixpkgs.overlays = [
-        (final: prev: {
-          unstable = import inputs.nixpkgs-unstable {
-            system = prev.system;
-            config = {
-              allowUnfree = true;
-              allowBroken = true;
-            };
-          };
-        })
-      ];
-
-      # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
         [
@@ -26,11 +13,8 @@
           # touch ID support in tmux
           pkgs.pam-reattach
           pkgs.reattach-to-user-namespace
-        ]
-
-        ++
-
-        [
+ 
+          # Unstable
           pkgs.unstable._1password-gui
         ];
 

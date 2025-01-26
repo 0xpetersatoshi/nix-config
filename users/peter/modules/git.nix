@@ -33,7 +33,7 @@
       signing = {
         key = inputs.userSettings.gitSigningKey;
         signByDefault = true;
-        gpgPath = "${pkgs._1password-cli}/bin/op-ssh-sign";
+        gpgPath = "${pkgs.unstable._1password-gui}/op-ssh-sign";
       };
 
       delta = {
