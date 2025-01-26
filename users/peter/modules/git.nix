@@ -33,7 +33,9 @@
       signing = {
         key = inputs.userSettings.gitSigningKey;
         signByDefault = true;
-        gpgPath = "${pkgs.unstable._1password-gui}/op-ssh-sign";
+        gpgPath = if pkgs.stdenv.isDarwin
+                    then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+                    else "${pkgs.unstable._1password-gui}/op-ssh-sign";
       };
 
       delta = {

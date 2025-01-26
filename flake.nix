@@ -23,9 +23,8 @@
         hostname = "nova";
     };
 
-    userSettings = rec {
+    userSettings = {
         user = "peter";
-        home = /Users/${user};
 
         gitUsername = "0xPeterSatoshi";
         userEmail = "dev@ngml.me";

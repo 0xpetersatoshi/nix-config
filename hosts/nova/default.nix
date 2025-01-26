@@ -23,7 +23,9 @@
       # User settings
       users.users.${userSettings.user} = {
         name = userSettings.user;
-        home = userSettings.home;
+        home = if pkgs.stdenv.isDarwin
+                 then /Users/${userSettings.user}
+                 else /home/${userSettings.user};
       };
 
       # System preferences
