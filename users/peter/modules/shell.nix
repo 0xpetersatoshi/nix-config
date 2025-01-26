@@ -5,6 +5,7 @@ let
       cat = "bat";
       ll = "eza --icons=always -l";
       tree = "eza --icons=always --tree";
+      v = "nvim";
   };
 in
 
