@@ -51,6 +51,7 @@ in
           light = false;
           line-numbers = true;
           side-by-side = true;
+          options.syntax-theme = "catppuccin";
         };
       };
     };
