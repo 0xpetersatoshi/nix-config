@@ -81,6 +81,7 @@ in
     fzf = {
       enable = true;
       enableZshIntegration = true;
+      tmux.enableShellIntegration = true;
     };
 
     zoxide = {

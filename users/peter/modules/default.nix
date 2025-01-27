@@ -4,5 +4,6 @@
     ./git.nix
     ./shell.nix
     ./starship.nix
+    ./tmux.nix
   ];
 }
