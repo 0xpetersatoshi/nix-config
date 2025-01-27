@@ -13,16 +13,17 @@
       baseIndex = 1;
       sensibleOnTop = true;
 
-      plugins = with pkgs; [
-        tmuxPlugins.battery
-        tmuxPlugins.cpu
-        tmuxPlugins.fzf-tmux-url
-        tmuxPlugins.sensible
-        tmuxPlugins.vim-tmux-navigator
-        tmuxPlugins.yank
-        tmuxPlugins.better-mouse-mode
+      plugins = with pkgs.tmuxPlugins; [
+        battery
+        better-mouse-mode
+        cpu
+        fzf-tmux-url
+        sensible
+        vim-tmux-navigator
+        yank
+
         {
-          plugin = tmuxPlugins.catppuccin;
+          plugin = catppuccin;
           extraConfig = ''
             set -g @catppuccin_flavor 'macchiato' # or frappe, latte, mocha
             set -g @catppuccin_window_status_style "rounded"
@@ -37,6 +38,20 @@
             set -ag status-right "#{E:@catppuccin_status_session}"
             set -agF status-right "#{E:@catppuccin_status_battery}"
           '';
+        }
+
+        {
+          plugin = mkTmuxPlugin {
+            pluginName = "tmux-fzf";
+            version = "unstable-2025-01-26";
+            rtpFilePath = "main.tmux";
+            src = pkgs.fetchFromGitHub {
+              owner = "sainnhe";
+              repo = "tmux-fzf";
+              rev = "1547f18083ead1b235680aa5f98427ccaf5beb21";
+              sha256 = "dMqvr97EgtAm47cfYXRvxABPkDbpS0qHgsNXRVfa0IM=";
+            };
+          };
         }
       ];
 
