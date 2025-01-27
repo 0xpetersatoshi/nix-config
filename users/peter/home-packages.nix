@@ -13,11 +13,19 @@
     go-task
     kubectl
     kubectx
+    neofetch
     zellij
 
     # Programming
     go
     uv
+
+    # Unstable
+    unstable._1password-gui
+
+     # touch ID support in tmux
+    pam-reattach
+    reattach-to-user-namespace
   ];
 
   programs = {
