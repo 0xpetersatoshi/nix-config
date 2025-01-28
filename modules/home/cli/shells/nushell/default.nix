@@ -13,6 +13,7 @@ with lib.igloo; let
     ll = "eza --icons=always -l";
     tree = "eza --icons=always --tree";
     v = "nvim";
+    z = "zellij";
   };
 in {
   options.cli.shells.nushell = with types; {
