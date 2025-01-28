@@ -27,6 +27,8 @@
     };
 
     disko.url = "github:nix-community/disko/latest";
+
+    stylix.url = "github:danth/stylix";
   };
 
   outputs = inputs: let
@@ -54,10 +56,12 @@
       systems.modules = {
         darwin = with inputs; [
           sops-nix.darwinModules.sops
+          stylix.darwinModules.stylix
         ];
         nixos = with inputs; [
           disko.nixosModules.disko
           sops-nix.nixosModules.sops
+          stylix.nixosModules.stylix
         ];
       };
 
