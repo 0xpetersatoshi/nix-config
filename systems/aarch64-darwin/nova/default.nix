@@ -1,0 +1,26 @@
+{inputs, ...}: {
+  services.nix-daemon.enable = true;
+
+  # System preferences
+  system.defaults = {
+    dock = {
+      autohide = true;
+      orientation = "bottom";
+    };
+    finder = {
+      AppleShowAllExtensions = true;
+      FXRemoveOldTrashItems = true;
+      _FXShowPosixPathInTitle = true;
+    };
+    # Add more system preferences
+  };
+
+  security.pam.enableSudoTouchIdAuth = true;
+
+  # Set Git commit hash for darwin-version.
+  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
+
+  environment.systemPath = ["/opt/homebrew/bin"];
+
+  system.stateVersion = 5;
+}
