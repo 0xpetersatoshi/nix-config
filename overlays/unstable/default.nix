@@ -1,3 +1,9 @@
 {channels, ...}: final: prev: {
-  unstable = channels.nixpkgs-unstable;
+  unstable = import channels.nixpkgs-unstable {
+    system = prev.system;
+    config = {
+      allowUnfree = true;
+      allowBroken = true;
+    };
+  };
 }
