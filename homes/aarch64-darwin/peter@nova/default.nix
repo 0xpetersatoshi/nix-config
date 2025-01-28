@@ -1,17 +1,18 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [
-    google-cloud-sdk
-    kubectl
-    kubectx
-    neofetch
-
-    # Unstable
-    unstable._1password-gui
-
-    # touch ID support in tmux
-    pam-reattach
-    reattach-to-user-namespace
-  ];
+  # home.packages = with pkgs; [
+  #   google-cloud-sdk
+  #   kubectl
+  #   kubectx
+  #   neofetch
+  #
+  #   # Unstable
+  #   unstable._1password-gui
+  #
+  #   # touch ID support in tmux
+  #   pam-reattach
+  #   reattach-to-user-namespace
+  # ];
+  cli.programs.git.signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFjoHku2U1i34uJWA6kODHU44QJCpQE7LHxYQgk382h";
 
   roles = {
     common.enable = true;
