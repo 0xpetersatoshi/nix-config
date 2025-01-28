@@ -6,7 +6,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
 
-    nix-darwin = {
+    darwin = {
       url = "github:LnL7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
@@ -28,7 +28,13 @@
 
     disko.url = "github:nix-community/disko/latest";
 
-    stylix.url = "github:danth/stylix";
+    stylix.url = "github:danth/stylix/release-24.11";
+
+    catppuccin.url = "github:catppuccin/nix";
+
+    zjstatus = {
+      url = "github:dj95/zjstatus";
+    };
   };
 
   outputs = inputs: let
@@ -49,14 +55,17 @@
     lib.mkFlake {
       channels-config = {
         allowUnfree = true;
+        allowBroken = false;
       };
 
       overlays = [];
 
       systems.modules = {
         darwin = with inputs; [
+          home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
-          stylix.darwinModules.stylix
+          # TODO: import here instead of in modules
+          # stylix.darwinModules.stylix
         ];
         nixos = with inputs; [
           disko.nixosModules.disko
