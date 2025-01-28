@@ -54,6 +54,10 @@ in {
       golines
       gotools
       go-task
+
+      # python
+      uv
+      poetry
     ];
   };
 }
