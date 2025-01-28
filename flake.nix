@@ -1,5 +1,5 @@
 {
-  description = "nix-darwin system flake";
+  description = "Peter's Nix/NixOS Config";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/release-24.11";
@@ -10,72 +10,59 @@
       url = "github:LnL7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    snowfall-lib = {
+      url = "github:snowfallorg/lib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    disko.url = "github:nix-community/disko/latest";
+
   };
 
-  outputs = inputs@{ ... }:
-  let
-    systemSettings = {
-        system = "aarch64-darwin";
-        hostname = "nova";
-    };
+  outputs = inputs: let
+    lib = inputs.snowfall-lib.mkLib {
+      inherit inputs;
+      src = ./.;
 
-    userSettings = {
-        user = "peter";
-
-        gitUsername = "0xPeterSatoshi";
-        userEmail = "dev@ngml.me";
-        gitSigningKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFjoHku2U1i34uJWA6kODHU44QJCpQE7LHxYQgk382h";
-
-        stateVersion = "24.11";
-    };
-
-    overlays = [
-      (final: prev: {
-        unstable = import inputs.nixpkgs-unstable {
-          system = prev.system;
-          config = {
-            allowUnfree = true;
-            allowBroken = true;
-          };
+      snowfall = {
+        metadata = "igloo";
+        namespace = "igloo";
+        meta = {
+          name = "igloo";
+          title = "Igloo";
         };
-      })
-    ];
-
-  in
-  {
-    # Build darwin flake using:
-    # $ darwin-rebuild build --flake .#simple
-    darwinConfigurations."${systemSettings.hostname}" = inputs.nix-darwin.lib.darwinSystem {
-      system = systemSettings.system;
-      modules = [
-          ({ ... }: {
-            nixpkgs.overlays = overlays;
-          })
-
-          ./hosts/${systemSettings.hostname}
-
-          inputs.home-manager.darwinModules.home-manager {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = ".bak";
-              users.${userSettings.user} = import ./users/${userSettings.user}/home.nix;
-              extraSpecialArgs = {
-                  inherit inputs;
-                  inherit userSettings;
-              };
-            };
-          }
-      ];
-      specialArgs = {
-          inherit inputs;
-          inherit systemSettings;
-          inherit userSettings;
       };
     };
-  };
+
+  in
+    lib.mkFlake {
+      channels-config = {
+        allowUnfree = true;
+      };
+
+      overlays = [];
+
+      systems.modules = {
+        darwin = with inputs; [
+          sops-nix.darwinModules.sops
+        ];
+        nixos = with inputs; [
+          disko.nixosModules.disko
+          sops-nix.nixosModules.sops
+        ];
+      };
+
+      deploy = lib.mkDeploy { inherit (inputs) self; };
+    };
 }
