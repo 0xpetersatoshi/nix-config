@@ -17,7 +17,7 @@ in {
 
       settings = {
         theme = "catppuccin-mocha";
-        font-family = "${config.stylix.fonts.monospace.name}";
+        # font-family = "${config.stylix.fonts.monospace.name}";
         command = "zsh";
         gtk-titlebar = false;
         font-size = 14;
