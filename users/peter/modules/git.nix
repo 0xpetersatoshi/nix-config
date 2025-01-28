@@ -1,12 +1,9 @@
-{ pkgs, ... }@inputs:
-
-let
-  gpgSSHPath = if pkgs.stdenv.isDarwin
-                    then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-                    else "${pkgs.unstable._1password-gui}/op-ssh-sign";
-in
-
-{
+{pkgs, ...} @ inputs: let
+  gpgSSHPath =
+    if pkgs.stdenv.isDarwin
+    then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+    else "${pkgs.unstable._1password-gui}/op-ssh-sign";
+in {
   home.shellAliases = {
     g = "git";
     lg = "lazygit";
@@ -57,5 +54,4 @@ in
     };
     lazygit.enable = true;
   };
-
 }

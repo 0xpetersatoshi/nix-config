@@ -1,5 +1,5 @@
 {
-    homebrew = {
+  homebrew = {
     enable = false;
     onActivation = {
       autoUpdate = true;

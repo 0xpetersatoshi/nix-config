@@ -27,7 +27,6 @@
     };
 
     disko.url = "github:nix-community/disko/latest";
-
   };
 
   outputs = inputs: let
@@ -44,7 +43,6 @@
         };
       };
     };
-
   in
     lib.mkFlake {
       channels-config = {
@@ -63,6 +61,6 @@
         ];
       };
 
-      deploy = lib.mkDeploy { inherit (inputs) self; };
+      deploy = lib.mkDeploy {inherit (inputs) self;};
     };
 }

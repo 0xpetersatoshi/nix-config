@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
@@ -23,7 +23,7 @@
     # Unstable
     unstable._1password-gui
 
-     # touch ID support in tmux
+    # touch ID support in tmux
     pam-reattach
     reattach-to-user-namespace
   ];

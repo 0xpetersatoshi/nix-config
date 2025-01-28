@@ -1,11 +1,9 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   shellAliases = {
-      cat = "bat";
-      ll = "eza --icons=always -l";
-      tree = "eza --icons=always --tree";
-      v = "nvim";
+    cat = "bat";
+    ll = "eza --icons=always -l";
+    tree = "eza --icons=always --tree";
+    v = "nvim";
   };
 
   homebrewInitExtra = ''
@@ -14,9 +12,7 @@ let
       eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
   '';
-in
-
-{
+in {
   programs = {
     zsh = {
       enable = true;
@@ -25,7 +21,11 @@ in
       enableCompletion = true;
 
       initExtra = ''
-        ${if pkgs.stdenv.isDarwin then homebrewInitExtra else ""}
+        ${
+          if pkgs.stdenv.isDarwin
+          then homebrewInitExtra
+          else ""
+        }
 
         # Completion styling
         zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
