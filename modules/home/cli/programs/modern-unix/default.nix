@@ -33,6 +33,7 @@ in {
       hexyl
       jqp
       jnv
+      neovim
       ouch
       procs
       ripgrep
