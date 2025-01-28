@@ -20,6 +20,7 @@ in {
     cli = {
       # terminals.ghostty.enable = true;
       shells.zsh.enable = true;
+      shells.nushell.enable = true;
     };
 
     # programs = {
