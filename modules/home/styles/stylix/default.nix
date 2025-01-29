@@ -49,7 +49,7 @@ in {
         };
 
         sizes = {
-          terminal = 13;
+          terminal = 14;
           applications = 12;
         };
       };
