@@ -20,6 +20,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.file.".ssh/allowed_signers".text = "* ${cfg.signingKey}";
+
     programs.git = {
       enable = true;
       userName = cfg.username;
@@ -40,8 +42,13 @@ in {
         merge.conflictstyle = "diff3";
         diff.colorMoved = "default";
         url."git@github.com:".insteadOf = "https://github.com/";
-        gpg.format = "ssh";
-        gpg."ssh".program = sshProgramPath;
+        gpg = {
+          format = "ssh";
+          ssh = { 
+            program = sshProgramPath;
+            allowedSignersFile = "~/.ssh/allowed_signers";
+          };
+        };
       };
 
       lfs.enable = true;
