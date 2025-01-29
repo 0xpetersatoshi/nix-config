@@ -54,8 +54,7 @@
   in
     lib.mkFlake {
       channels-config = {
-        allowUnfree = true;
-        allowBroken = false;
+          allowUnfree = true;
       };
 
       overlays = [];
