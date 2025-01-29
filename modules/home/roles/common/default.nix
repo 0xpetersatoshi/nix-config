@@ -19,6 +19,8 @@ in {
 
     cli = {
       # terminals.ghostty.enable = true;
+      terminals.kitty.enable = true;
+      terminals.wezterm.enable = true;
       shells.zsh.enable = true;
       shells.nushell.enable = true;
     };
