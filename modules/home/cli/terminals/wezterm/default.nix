@@ -5,7 +5,6 @@
 }:
 with lib; let
   cfg = config.cli.terminals.wezterm;
-  inherit (config.lib.stylix) colors;
 in {
   options.cli.terminals.wezterm = {
     enable = mkEnableOption "enable wezterm terminal emulator";
@@ -29,17 +28,6 @@ in {
         if wezterm.config_builder then
         	config = wezterm.config_builder()
         end
-
-        -- color config
-        config.color_scheme = "Catppuccin Macchiato"
-
-        -- font config
-        -- config.font = wezterm.font("Hack Nerd Font Mono", { weight = "Bold", italic = false })
-        config.font = wezterm.font_with_fallback({
-        	{ family = "${config.stylix.fonts.monospace.name}", weight = "Bold", italic = false },
-        	"Apple Color Emoji",
-        })
-        config.font_size = 14
 
         -- tab config
         config.hide_tab_bar_if_only_one_tab = true
@@ -155,42 +143,6 @@ in {
         -- and finally, return the configuration to wezterm
         return config
       '';
-
-      # colorSchemes = {
-      #   stylix = {
-      #     ansi = [
-      #       "#${colors.base01}"
-      #       "#${colors.base08}"
-      #       "#${colors.base0B}"
-      #       "#${colors.base09}"
-      #       "#${colors.base0D}"
-      #       "#${colors.base0E}"
-      #       "#${colors.base0C}"
-      #       "#${colors.base05}"
-      #     ];
-      #     brights = [
-      #       "#${colors.base03}"
-      #       "#${colors.base08}"
-      #       "#${colors.base0B}"
-      #       "#${colors.base09}"
-      #       "#${colors.base0D}"
-      #       "#${colors.base0E}"
-      #       "#${colors.base0C}"
-      #       "#${colors.base07}"
-      #     ];
-      #     background = "#${colors.base00}";
-      #     foreground = "#${colors.base05}";
-      #     cursor_bg = "#${colors.base0B}";
-      #     cursor_border = "#${colors.base0B}";
-      #     cursor_fg = "#${colors.base00}";
-      #     compose_cursor = "#${colors.base08}";
-      #     selection_bg = "#${colors.base02}";
-      #     selection_fg = "#${colors.base05}";
-      #     scrollbar_thumb = "#${colors.base02}";
-      #     split = "#${colors.base02}";
-      #     visual_bell = "#${colors.base02}";
-      #   };
-      # };
     };
   };
 }
