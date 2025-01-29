@@ -31,7 +31,7 @@ in {
         end
 
         -- color config
-        config.color_scheme = "Catppuccin Mocha"
+        config.color_scheme = "Catppuccin Macchiato"
 
         -- font config
         -- config.font = wezterm.font("Hack Nerd Font Mono", { weight = "Bold", italic = false })

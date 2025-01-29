@@ -26,8 +26,6 @@ in {
         "super+left" = "send_text all \x1b[H";
         "super+right" = "send_text all \x1b[F";
       };
-
-      themeFile = "Catppuccin-Mocha";
     };
   };
 }
