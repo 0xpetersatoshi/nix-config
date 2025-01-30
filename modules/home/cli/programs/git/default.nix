@@ -44,7 +44,7 @@ in {
         url."git@github.com:".insteadOf = "https://github.com/";
         gpg = {
           format = "ssh";
-          ssh = { 
+          ssh = {
             program = sshProgramPath;
             allowedSignersFile = "~/.ssh/allowed_signers";
           };
