@@ -19,7 +19,10 @@ in {
 
     cli = {
       # NOTE: ghostty is currently broken for darwin
-      # terminals.ghostty.enable = true;
+      terminals.ghostty.enable =
+        if !pkgs.stdenv.isDarwin
+        then true
+        else false;
       terminals.kitty.enable = true;
       terminals.wezterm.enable = true;
       shells.zsh.enable = true;
@@ -35,10 +38,5 @@ in {
     # };
 
     styles.stylix.enable = true;
-
-    # TODO: move this to a separate module
-    home.packages = with pkgs; [
-      # keymapp
-    ];
   };
 }
