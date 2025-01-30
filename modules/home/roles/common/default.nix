@@ -18,6 +18,7 @@ in {
     # };
 
     cli = {
+      # NOTE: ghostty is currently broken for darwin
       # terminals.ghostty.enable = true;
       terminals.kitty.enable = true;
       terminals.wezterm.enable = true;
