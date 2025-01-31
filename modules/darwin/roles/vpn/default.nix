@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  namespace,
   ...
 }: let
   cfg = config.roles.vpn;
@@ -11,6 +12,6 @@ in {
 
   config = lib.mkIf cfg.enable {
     programs.guis.vpn.enable = true;
-    services.tailscale.enable = true;
+    services.${namespace}.tailscale.enable = true;
   };
 }

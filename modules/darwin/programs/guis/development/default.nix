@@ -14,6 +14,9 @@ in {
   config = mkIf cfg.enable {
     homebrew = {
       taps = [
+      ];
+
+      brews = [
         "xcodegen"
       ];
 

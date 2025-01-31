@@ -1,13 +1,15 @@
 {
   lib,
+  pkgs,
   config,
+  namespace,
   ...
 }:
 with lib;
 with lib.igloo; let
-  cfg = config.services.tailscale;
+  cfg = config.services.${namespace}.tailscale;
 in {
-  options.services.tailscale = with types; {
+  options.services.${namespace}.tailscale = with types; {
     enable = mkBoolOpt false "Whether or not to enable homebrew.";
   };
 
