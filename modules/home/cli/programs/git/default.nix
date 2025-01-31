@@ -22,6 +22,11 @@ in {
   config = mkIf cfg.enable {
     home.file.".ssh/allowed_signers".text = "* ${cfg.signingKey}";
 
+    home.packages = with pkgs; [
+      git-lfs
+      lazygit
+    ];
+
     programs.git = {
       enable = true;
       userName = cfg.username;
