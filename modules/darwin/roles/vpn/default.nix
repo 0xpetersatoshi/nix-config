@@ -11,5 +11,6 @@ in {
 
   config = lib.mkIf cfg.enable {
     programs.guis.vpn.enable = true;
+    services.tailscale.enable = true;
   };
 }

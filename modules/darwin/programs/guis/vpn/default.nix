@@ -14,7 +14,6 @@ in {
   config = mkIf cfg.enable {
     homebrew = {
       taps = [
-        "tailscale"
       ];
 
       casks = [
