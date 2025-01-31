@@ -19,10 +19,7 @@ in {
 
     cli = {
       # NOTE: ghostty is currently broken for darwin
-      terminals.ghostty.enable =
-        if !pkgs.stdenv.isDarwin
-        then true
-        else false;
+      terminals.ghostty.enable = !pkgs.stdenv.isDarwin;
       terminals.kitty.enable = true;
       terminals.wezterm.enable = true;
       shells.zsh.enable = true;
