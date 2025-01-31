@@ -64,6 +64,7 @@ brew "mas"
 brew "minikube"
 brew "openssl@1.1"
 brew "pngpaste"
+brew "poetry"
 brew "postgresql@14"
 brew "postgresql@16"
 brew "pyenv"
@@ -110,6 +111,7 @@ cask "karabiner-elements"
 cask "miniconda"
 cask "sf-symbols"
 cask "snowflake-snowsql"
+cask "yubico-authenticator"
 mas "1Password for Safari", id: 1569813296
 mas "AmorphousDiskMark", id: 1168254295
 mas "Darkroom", id: 953286746
