@@ -12,6 +12,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    homebrew.casks = [ "google-chrome" ];
+    homebrew.casks = ["google-chrome"];
   };
 }
