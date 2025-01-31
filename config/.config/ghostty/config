@@ -12,3 +12,8 @@ cursor-style = block
 
 # Terminal options
 copy-on-select = true
+
+# Background
+# background-opacity = 0.95
+# background-blur-radius = 20
+
