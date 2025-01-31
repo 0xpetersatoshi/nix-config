@@ -29,5 +29,12 @@
     # frequency = "monthly";
   };
 
+  roles = {
+    common.enable = true;
+    development.enable = true;
+    security.enable = true;
+    vpn.enable = true;
+  };
+
   system.stateVersion = 5;
 }
