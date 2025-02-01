@@ -12,7 +12,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    xdg.configFile."ghostty/config".source = ../../../../../dotfiles/ghostty/config;
+    xdg.configFile."ghostty/config".source = ./config;
 
     programs.ghostty = {
       # NOTE: this is currently broken on darwin
