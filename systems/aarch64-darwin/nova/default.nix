@@ -1,4 +1,8 @@
-{inputs, namespace, ...}: {
+{
+  inputs,
+  namespace,
+  ...
+}: {
   services.nix-daemon.enable = true;
 
   # System preferences
