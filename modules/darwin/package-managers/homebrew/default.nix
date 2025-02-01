@@ -37,6 +37,10 @@ in {
         "homebrew/bundle"
         "homebrew/services"
       ];
+
+      casks = [
+        "sf-symbols"
+      ];
     };
   };
 }
