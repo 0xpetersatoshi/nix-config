@@ -39,6 +39,7 @@
     common.enable = true;
     development.enable = true;
     security.enable = true;
+    social.enable = true;
     vpn.enable = true;
   };
 
