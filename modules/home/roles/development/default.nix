@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib; let
@@ -19,6 +20,10 @@ in {
       stateHome = config.home.homeDirectory + "/.local/state";
       dataHome = config.home.homeDirectory + "/.local/share";
     };
+
+    home.packages = with pkgs; [
+      alejandra
+    ];
 
     cli = {
       multiplexers.zellij.enable = true;
