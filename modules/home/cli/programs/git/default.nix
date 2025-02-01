@@ -21,6 +21,7 @@ in {
 
   config = mkIf cfg.enable {
     home.file.".ssh/allowed_signers".text = "* ${cfg.signingKey}";
+    xdg.configFile."lazygit/config.yml".text = '''';
 
     home.packages = with pkgs; [
       git-lfs
