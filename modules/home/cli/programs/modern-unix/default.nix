@@ -45,20 +45,6 @@ in {
       viddy
       xcp
       yq-go
-
-      # go
-      go
-      golangci-lint
-      air
-      templ
-      sqlc
-      golines
-      gotools
-      go-task
-
-      # python
-      uv
-      poetry
     ];
   };
 }
