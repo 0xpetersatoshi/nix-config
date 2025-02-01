@@ -27,6 +27,10 @@ in {
         starship.enable = true;
         zoxide.enable = true;
       };
+
+      languages = {
+        typescript.enable = true;
+      };
     };
   };
 }
