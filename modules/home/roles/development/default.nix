@@ -11,6 +11,15 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # TODO: find a better spot for this
+    xdg = {
+      enable = true;
+      cacheHome = config.home.homeDirectory + "/.local/cache";
+      configHome = config.home.homeDirectory + "/.config";
+      stateHome = config.home.homeDirectory + "/.local/state";
+      dataHome = config.home.homeDirectory + "/.local/share";
+    };
+
     cli = {
       multiplexers.zellij.enable = true;
       multiplexers.tmux.enable = true;
