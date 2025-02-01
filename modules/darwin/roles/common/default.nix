@@ -11,7 +11,6 @@ in {
 
   config = lib.mkIf cfg.enable {
     package-managers.homebrew.enable = true;
-    browsers.chrome.enable = true;
     programs.guis.common.enable = true;
   };
 }

@@ -6,10 +6,10 @@
 }:
 with lib;
 with lib.${namespace}; let
-  cfg = config.roles.social;
+  cfg = config.roles.music;
 in {
-  options.roles.social = with types; {
-    enable = mkBoolOpt false "Whether or not to enable social-focused guis.";
+  options.roles.music = with types; {
+    enable = mkBoolOpt false "Whether or not to enable music-focused guis.";
   };
 
   config = mkIf cfg.enable {
@@ -18,10 +18,7 @@ in {
       ];
 
       casks = [
-        "discord"
-        "signal"
-        "telegram"
-        "whatsapp"
+        "spotify"
       ];
 
       masApps = {

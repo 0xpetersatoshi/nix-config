@@ -17,6 +17,7 @@ in {
       ];
 
       casks = [
+        "protonvpn"
       ];
 
       masApps = {

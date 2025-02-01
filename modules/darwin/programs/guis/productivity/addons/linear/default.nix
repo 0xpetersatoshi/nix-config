@@ -6,10 +6,10 @@
 }:
 with lib;
 with lib.${namespace}; let
-  cfg = config.roles.social;
+  cfg = config.programs.guis.productivity.addons.linear;
 in {
-  options.roles.social = with types; {
-    enable = mkBoolOpt false "Whether or not to enable social-focused guis.";
+  options.programs.guis.productivity.addons.linear = with types; {
+    enable = mkBoolOpt false "Whether or not to enable linear app gui.";
   };
 
   config = mkIf cfg.enable {
@@ -18,10 +18,7 @@ in {
       ];
 
       casks = [
-        "discord"
-        "signal"
-        "telegram"
-        "whatsapp"
+        "linear-linear"
       ];
 
       masApps = {

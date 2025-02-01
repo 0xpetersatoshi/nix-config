@@ -33,11 +33,17 @@
     # frequency = "monthly";
   };
 
+  programs.guis.productivity.addons.linear.enable = true;
+
   services.${namespace}.sketchybar.enable = true;
 
   roles = {
+    browsers.enable = true;
     common.enable = true;
     development.enable = true;
+    disk-utilities.enable = true;
+    music.enable = true;
+    productivity.enable = true;
     security.enable = true;
     social.enable = true;
     vpn.enable = true;
