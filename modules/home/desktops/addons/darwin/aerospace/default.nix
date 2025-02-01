@@ -6,6 +6,8 @@
 }:
 with lib; let
   cfg = config.desktops.addons.darwin.aerospace;
+  inherit (config.lib.stylix) colors;
+
 in {
   options.desktops.addons.darwin.aerospace = {
     enable = mkEnableOption "Enable aerospace configuration";
@@ -22,8 +24,8 @@ in {
       # 'after-startup-command' is run after 'after-login-command'
       # Available commands : https://nikitabobko.github.io/AeroSpace/commands
       after-startup-command = [
-        'exec-and-forget ${pkgs.sketchybar}/bin/sketchybar',
-        'exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
+        'exec-and-forget ${pkgs.sketchybar}/bin/sketchybar --config ${config.xdg.configHome}/sketchybar/sketchybarrc',
+        'exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=${colors.base02} inactive_color=${colors.base0B} width=5.0',
       ]
 
       # Notify Sketchybar about workspace change
