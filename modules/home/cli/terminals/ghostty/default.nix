@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 with lib; let
@@ -11,9 +12,14 @@ in {
   };
 
   config = mkIf cfg.enable {
+    xdg.configFile."ghostty/config".source = ../../../../../dotfiles/ghostty/config;
+
     programs.ghostty = {
-      enable = true;
-      enableZshIntegration = true;
+      # NOTE: this is currently broken on darwin
+      # temporarily managed by homebrew but need the
+      # config file to be set above when enabled
+      enable = !pkgs.stdenv.isDarwin;
+      enableZshIntegration = !pkgs.stdenv.isDarwin;
     };
   };
 }
