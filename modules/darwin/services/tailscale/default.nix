@@ -10,7 +10,7 @@ with lib.igloo; let
   cfg = config.services.${namespace}.tailscale;
 in {
   options.services.${namespace}.tailscale = with types; {
-    enable = mkBoolOpt false "Whether or not to enable homebrew.";
+    enable = mkBoolOpt false "Whether or not to enable tailscale.";
   };
 
   config = mkIf cfg.enable {
