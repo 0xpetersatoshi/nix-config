@@ -57,6 +57,10 @@
         allowUnfree = true;
       };
 
+      home-manager = {
+        backupFileExtension = "hm.bak";
+      };
+
       overlays = [];
 
       systems.modules = {
