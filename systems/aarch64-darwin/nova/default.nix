@@ -1,4 +1,4 @@
-{inputs, ...}: {
+{inputs, namespace, ...}: {
   services.nix-daemon.enable = true;
 
   # System preferences
@@ -28,6 +28,8 @@
     # Change how often the garbage collector runs (default: weekly)
     # frequency = "monthly";
   };
+
+  services.${namespace}.sketchybar.enable = true;
 
   roles = {
     common.enable = true;
