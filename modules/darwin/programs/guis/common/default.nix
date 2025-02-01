@@ -17,6 +17,7 @@ in {
       ];
 
       casks = [
+        "karabiner-elements"
         "keymapp"
         "slack"
       ];
