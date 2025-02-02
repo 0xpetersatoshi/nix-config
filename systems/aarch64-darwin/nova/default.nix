@@ -42,6 +42,7 @@
     common.enable = true;
     development.enable = true;
     disk-utilities.enable = true;
+    gaming.enable = true;
     music.enable = true;
     productivity.enable = true;
     security.enable = true;
