@@ -13,6 +13,12 @@ in {
   config = lib.mkIf cfg.enable {
     # browsers.firefox.enable = true;
 
+    # TODO: find a better spot for this
+    home.sessionVariables = {
+      OBSIDIAN_VAULT_PATH = "$HOME/obsidian/vault";
+      EDITOR = "nvim";
+    };
+
     # system = {
     #   nix.enable = true;
     # };

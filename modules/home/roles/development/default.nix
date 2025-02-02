@@ -21,6 +21,13 @@ in {
       dataHome = config.home.homeDirectory + "/.local/share";
     };
 
+    # TODO: find a better spot for this
+    home.sessionPath = ["$HOME/.local/bin"];
+    home.file.".local/bin" = {
+      source = ../../../../scripts/bin;
+      recursive = true;
+    };
+
     # TODO: temporary until I create an nvim module
     xdg.configFile."nvim" = {
       source = ../../../../nvim;
