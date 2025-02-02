@@ -33,7 +33,10 @@
     # frequency = "monthly";
   };
 
-  programs.guis.productivity.addons.linear.enable = true;
+  programs.guis.productivity.addons = {
+    linear.enable = true;
+    tableplus.enable = true;
+  };
 
   services.${namespace}.sketchybar.enable = true;
 
