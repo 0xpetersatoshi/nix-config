@@ -1,52 +1,57 @@
-{ inputs, pkgs, systemSettings, userSettings, ... }:
-
 {
-      imports = [
-        ./system-packages.nix
-      ];
+  inputs,
+  pkgs,
+  systemSettings,
+  userSettings,
+  ...
+}: {
+  imports = [
+    ./system-packages.nix
+  ];
 
-      services.nix-daemon.enable = true;
+  services.nix-daemon.enable = true;
 
-      # User settings
-      users.users.${userSettings.user} = {
-        name = userSettings.user;
-        home = if pkgs.stdenv.isDarwin
-                 then /Users/${userSettings.user}
-                 else /home/${userSettings.user};
-      };
+  # User settings
+  users.users.${userSettings.user} = {
+    name = userSettings.user;
+    home =
+      if pkgs.stdenv.isDarwin
+      then /Users/${userSettings.user}
+      else /home/${userSettings.user};
+  };
 
-      # System preferences
-      system.defaults = {
-        dock = {
-          autohide = true;
-          orientation = "bottom";
-        };
-        finder = {
-          AppleShowAllExtensions = true;
-          FXRemoveOldTrashItems = true;
-          _FXShowPosixPathInTitle = true;
-        };
-        # Add more system preferences
-      };
+  # System preferences
+  system.defaults = {
+    dock = {
+      autohide = true;
+      orientation = "bottom";
+    };
+    finder = {
+      AppleShowAllExtensions = true;
+      FXRemoveOldTrashItems = true;
+      _FXShowPosixPathInTitle = true;
+    };
+    # Add more system preferences
+  };
 
-      security.pam.enableSudoTouchIdAuth = true;
+  security.pam.enableSudoTouchIdAuth = true;
 
-      # Necessary for using flakes on this system.
-      nix.settings.experimental-features = "nix-command flakes";
+  # Necessary for using flakes on this system.
+  nix.settings.experimental-features = "nix-command flakes";
 
-      # Enable alternative shell support in nix-darwin.
-      # programs.fish.enable = true;
+  # Enable alternative shell support in nix-darwin.
+  # programs.fish.enable = true;
 
-      # Set Git commit hash for darwin-version.
-      system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
+  # Set Git commit hash for darwin-version.
+  system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
 
-      # Used for backwards compatibility, please read the changelog before changing.
-      # $ darwin-rebuild changelog
-      system.stateVersion = 5;
+  # Used for backwards compatibility, please read the changelog before changing.
+  # $ darwin-rebuild changelog
+  system.stateVersion = 5;
 
-      # The platform the configuration will be used on.
-      nixpkgs = {
-        config.allowUnfree = true;
-        hostPlatform = "${systemSettings.system}";
-      };
-    }
+  # The platform the configuration will be used on.
+  nixpkgs = {
+    config.allowUnfree = true;
+    hostPlatform = "${systemSettings.system}";
+  };
+}
