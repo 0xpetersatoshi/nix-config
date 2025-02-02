@@ -42,6 +42,21 @@ in {
           else ""
         }
 
+        # Functions
+        _zellij_update_tabname() {
+            if [[ -n $ZELLIJ ]]; then
+                if [[ $PWD == $HOME ]]; then
+                    nohup zellij action rename-tab "~" >/dev/null 2>&1
+                else
+                    nohup zellij action rename-tab "$(basename $PWD)" >/dev/null 2>&1
+                fi
+            fi
+        }
+        # Add this to your precmd hooks to run before each prompt
+        autoload -Uz add-zsh-hook
+        add-zsh-hook precmd _zellij_update_tabname
+
+
         # Completion styling
         zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
         zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
