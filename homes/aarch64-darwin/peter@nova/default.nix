@@ -3,7 +3,6 @@
     google-cloud-sdk
     kubectl
     kubectx
-    neofetch
 
     # touch ID support in tmux
     pam-reattach

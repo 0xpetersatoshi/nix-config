@@ -13,6 +13,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    xdg.configFile."neofetch/config.conf".source = ./neofetch.conf;
+
     home.packages = with pkgs; [
       choose
       curlie
@@ -33,6 +35,7 @@ in {
       hexyl
       jqp
       jnv
+      neofetch
       neovim
       ouch
       procs
