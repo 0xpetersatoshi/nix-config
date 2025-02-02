@@ -1,5 +1,5 @@
 <h3 align="center">
- <img src="https://nixos.org/logo/nixos-logo-only-hires.png" height="20" /> NixOS Config for <a href="https://github.com/0xpetersatoshi">0xpetersatoshi</a>
+ <img src="https://nixos.org/logo/nixos-logo-only-hires.png" height="20" /> Nix Config for <a href="https://github.com/0xpetersatoshi">0xpetersatoshi</a>
 </h3>
 
 <p align="center">
