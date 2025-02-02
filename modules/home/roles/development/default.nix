@@ -38,6 +38,7 @@ in {
         git.enable = true;
         modern-unix.enable = true;
         network-tools.enable = true;
+        podman.enable = true;
         starship.enable = true;
         zoxide.enable = true;
       };

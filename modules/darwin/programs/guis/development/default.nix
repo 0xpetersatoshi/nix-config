@@ -17,11 +17,15 @@ in {
       ];
 
       brews = [
+        "podman"
+        "podman-compose"
+        "podman-tui"
         "xcodegen"
       ];
 
       casks = [
         "ghostty"
+        "podman-desktop"
       ];
 
       masApps = {
