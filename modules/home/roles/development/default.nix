@@ -41,6 +41,8 @@ in {
       alejandra
     ];
 
+    cloud.google.enable = true;
+
     cli = {
       multiplexers.zellij.enable = true;
       multiplexers.tmux.enable = true;
