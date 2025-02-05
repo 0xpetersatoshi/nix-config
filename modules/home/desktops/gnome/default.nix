@@ -15,7 +15,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    services.${namespace}.kdeconnect.enable = lib.mkForce false;
+    # services.${namespace}.kdeconnect.enable = lib.mkForce false;
 
     home.packages = with pkgs; [
       gnome-tweaks
@@ -83,7 +83,7 @@ in {
       };
 
       "com/github/stunkymonkey/nautilus-open-any-terminal" = {
-        terminal = "wezterm";
+        terminal = "ghostty";
       };
 
       "org/gnome/shell/keybindings/toggle-application-view" = {

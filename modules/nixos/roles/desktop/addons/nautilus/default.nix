@@ -47,7 +47,7 @@ in {
           remember-recent-files = false;
         };
         "com/github/stunkymonkey/nautilus-open-any-terminal" = {
-          terminal = "kitty";
+          terminal = "ghostty";
         };
       };
     };
