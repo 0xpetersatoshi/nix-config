@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }: {
   imports = [
@@ -8,7 +9,7 @@
     ./disks.nix
   ];
 
-  services.xserver.videDrivers = ["nvidia"];
+  services.xserver.videoDrivers = ["nvidia"];
 
   roles = {
     desktop = {
@@ -22,11 +23,8 @@
   networking.hostName = "nixbox";
 
   boot = {
-    kernelParams = [
-      "resume_offset=533760"
-    ];
     supportedFilesystems = lib.mkForce ["btrfs"];
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_zen;
     # resumeDevice = "/dev/disk/by-label/nixos";
   };
 
