@@ -16,34 +16,25 @@ in {
     programs.hyprlock = {
       enable = true;
       settings = {
-        # general = {
-        #   disable_loading_bar = true;
-        #   hide_cursor = true;
-        # };
-        #
-        # label = [
-        #   {
-        #     text = ''cmd[update:43200000] echo "$(date +"%A, %d %B %Y")"'';
-        #     font_size = 25;
-        #     position = {
-        #       x = -30;
-        #       y = -150;
-        #     };
-        #     halign = "right";
-        #     valign = "top";
-        #   }
-        #   {
-        #     text = ''cmd[update:30000] echo "$(date +"%R")"'';
-        #     font_size = 90;
-        #     position = {
-        #       x = -30;
-        #       y = 0;
-        #     };
-        #     halign = "right";
-        #     valign = "top";
-        #   }
-        # ];
+        general = {
+          disable_loading_bar = true;
+          grace = 10;
+          hide_cursor = true;
+          no_fade_in = false;
+        };
+
+        label = {
+          text = "$TIME";
+          font_size = 96;
+          font_family = "JetBrains Mono";
+          color = "rgba(235, 219, 178, 1.0)";
+          position = "0, 600";
+          halign = "center";
+          walign = "center";
+
+          shadow_passes = 1;
+        };
       };
-    };
+  };
   };
 }

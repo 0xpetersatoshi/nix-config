@@ -17,9 +17,9 @@ in {
     roles = {
       common.enable = true;
 
-      desktop.addons = {
-        nautilus.enable = true;
-      };
+      # desktop.addons = {
+      #   nautilus.enable = true;
+      # };
     };
 
     hardware = {

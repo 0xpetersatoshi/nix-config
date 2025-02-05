@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   config,
   ...
 }: {
@@ -16,6 +15,7 @@
       enable = true;
       addons = {
         hyprland.enable = true;
+        plasma.enable = true;
       };
     };
   };
@@ -23,7 +23,7 @@
   networking.hostName = "nixbox";
 
   boot = {
-    supportedFilesystems = lib.mkForce ["btrfs"];
+    # supportedFilesystems = lib.mkForce ["btrfs"];
     kernelPackages = pkgs.linuxPackages_zen;
     # resumeDevice = "/dev/disk/by-label/nixos";
   };

@@ -16,6 +16,15 @@ in {
       xwayland.enable = true;
 
       settings = {
+        "$mainMod" = "SUPER";
+        "$terminal" = "ghostty";
+        "$fileManager" = "dolphin";
+        "$menu" = "rofi";
+        "$browser" = "zen";
+        "$passwordManager" = "1password";
+        "$editor" = "nvim";
+        "$music" = "spotify";
+        monitor = ",preferred,auto,auto";
         input = {
           kb_layout = "us";
           touchpad = {
@@ -47,13 +56,12 @@ in {
         exec-once =
           [
             "dbus-update-activation-environment --systemd --all"
-            "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
+            # "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
             "${pkgs.kanshi}/bin/kanshi"
-            "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
+            "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
             "${pkgs.pyprland}/bin/pypr"
             "${pkgs.clipse}/bin/clipse -listen"
             "${pkgs.solaar}/bin/solaar -w hide"
-            "${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnect-indicator"
           ]
           ++ cfg.execOnceExtras;
       };

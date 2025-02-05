@@ -17,12 +17,14 @@ in {
 
     security = {
       yubikey.enable = true;
+      gnupg.enable = true;
     };
 
     system = {
       nix.enable = true;
       boot.enable = true;
       locale.enable = true;
+      zram.enable = true;
     };
     styles.stylix.enable = true;
   };

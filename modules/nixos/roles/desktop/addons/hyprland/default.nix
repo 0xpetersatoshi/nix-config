@@ -14,8 +14,13 @@ in {
 
   config = mkIf cfg.enable {
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
-    programs.hyprland.enable = true;
-    roles.desktop.addons.greetd.enable = true;
-    roles.desktop.addons.xdg-portal.enable = true;
+    programs.hyprland = {
+      enable = true;
+      withUWSM = true;
+    };
+
+    security.pam.services.hyprlock = {};
+    # roles.desktop.addons.greetd.enable = true;
+    # roles.desktop.addons.xdg-portal.enable = true;
   };
 }
