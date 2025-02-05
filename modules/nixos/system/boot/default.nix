@@ -33,11 +33,6 @@ in {
       # consoleLogLevel = lib.optionals cfg.plymouth 0;
       initrd.systemd.enable = true;
 
-      lanzaboote = mkIf cfg.secureBoot {
-        enable = true;
-        pkiBundle = "/etc/secureboot";
-      };
-
       loader = {
         efi = {
           canTouchEfiVariables = true;

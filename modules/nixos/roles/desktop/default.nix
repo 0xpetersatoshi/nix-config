@@ -13,7 +13,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
     roles = {
       common.enable = true;
@@ -28,10 +27,6 @@ in {
       bluetooth.enable = true;
       logitechMouse.enable = true;
       zsa.enable = true;
-    };
-
-    system = {
-      boot.plymouth = true;
     };
 
     user = {
