@@ -57,7 +57,7 @@ in {
           [
             "dbus-update-activation-environment --systemd --all"
             # "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
-            "${pkgs.kanshi}/bin/kanshi"
+            # "${pkgs.kanshi}/bin/kanshi"
             "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
             "${pkgs.pyprland}/bin/pypr"
             "${pkgs.clipse}/bin/clipse -listen"
