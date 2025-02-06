@@ -28,11 +28,11 @@ in the next section.
 nix-shell -p git
 
 # Clone
-git clone https://github.com/0xpetersatoshi/dotfiles.git
-cd dotfiles
+git clone https://github.com/0xpetersatoshi/nix-config.git
+cd nix-config
 
 # Linux
-sudo nixos-rebuild switch --flake .
+sudo nixos-rebuild switch --flake .#<hostname>
 
  # MacOS
 # On the first run, you'll need to install nix-darwin
