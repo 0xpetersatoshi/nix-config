@@ -19,7 +19,8 @@ in {
         "$mainMod" = "SUPER";
         "$terminal" = "ghostty";
         "$fileManager" = "dolphin";
-        "$menu" = "rofi";
+        "$menu" = "rofi -show drun -mode drun";
+        "$notificationsClient" = "swaync-client -t";
         "$browser" = "zen";
         "$passwordManager" = "1password";
         "$editor" = "nvim";
@@ -56,6 +57,7 @@ in {
             "dbus-update-activation-environment --systemd --all"
             # "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
             # "${pkgs.kanshi}/bin/kanshi"
+            "uwsm app -- ${pkgs.waybar}/bin/waybar"
             "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
             "${pkgs.pyprland}/bin/pypr"
             "${pkgs.clipse}/bin/clipse -listen"

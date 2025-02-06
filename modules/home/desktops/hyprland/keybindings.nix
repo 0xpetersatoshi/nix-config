@@ -42,6 +42,7 @@ with lib; let
     size_y=$(echo $slurp | cut -d " " -f 2 | cut -d x -f 2)
 
     # Keep the aspect ratio intact for PiP
+    #
     if grep "title: Picture-in-Picture" $windowinfo; then
     		old_size=$(grep "size: " $windowinfo | cut -d " " -f 2)
     		old_size_x=$(echo $old_size | cut -d , -f 1)
@@ -63,11 +64,13 @@ in {
       bind = [
         "SUPER, T, exec, $terminal"
         "SUPER, B, exec, $browser"
-        "SUPER, Space, exec, ${config.desktops.addons.rofi.package}/bin/rofi -show drun -mode drun"
+        "SUPER, Space, exec, $menu"
         "SUPER, Q, killactive,"
         "SUPER, F, Fullscreen,0"
         "SUPER, R, exec, ${resize}/bin/resize"
         "SUPER, G, togglefloating,"
+        "SUPER, N, exec, $notificationsClient"
+        "SUPER, P, exec, $passwordManager"
         "SUPER, V, exec, ${pkgs.pyprland}/bin/pypr toggle pwvucontrol"
         "SUPER_SHIFT, T, exec, ${pkgs.pyprland}/bin/pypr toggle term"
         ",XF86Launch5, exec,${pkgs.hyprlock}/bin/hyprlock"
