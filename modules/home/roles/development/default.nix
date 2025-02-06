@@ -42,6 +42,8 @@ in {
       gcc
       libgcc
       nil
+      nixd
+      statix
     ];
 
     cloud.google.enable = true;
