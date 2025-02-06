@@ -10,7 +10,7 @@ with lib.igloo; let
   sshProgramPath =
     if pkgs.stdenv.isDarwin
     then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-    else "${pkgs.unstable._1password-gui}/op-ssh-sign";
+    else "${config.guis.security._1password.package}/share/1password/op-ssh-sign";
 in {
   options.cli.programs.git = with types; {
     enable = mkBoolOpt false "Whether or not to enable git.";
