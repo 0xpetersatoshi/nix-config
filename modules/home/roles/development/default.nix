@@ -39,7 +39,9 @@ in {
 
     home.packages = with pkgs; [
       alejandra
+      gcc
       libgcc
+      nil
     ];
 
     cloud.google.enable = true;

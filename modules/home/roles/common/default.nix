@@ -11,7 +11,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    # browsers.firefox.enable = true;
+    # GUIs should be managed by homebrew on macOS
+    programs.firefox.enable = !pkgs.stdenv.isDarwin;
 
     # TODO: find a better spot for this
     home.sessionVariables = {
