@@ -23,6 +23,10 @@ in {
     # system = {
     #   nix.enable = true;
     # };
+    #
+    guis = {
+      security.enable = !pkgs.stdenv.isDarwin;
+    };
 
     cli = {
       terminals.ghostty.enable = true;
