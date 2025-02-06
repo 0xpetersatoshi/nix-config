@@ -12,7 +12,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    xdg.configFile."ghostty/config".source = ./config;
+    xdg.configFile."ghostty/config".source = mkForce ./config;
 
     programs.ghostty = {
       # NOTE: this is currently broken on darwin

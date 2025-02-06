@@ -26,7 +26,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    disko.url = "github:nix-community/disko/latest";
+    disko.url = "github:nix-community/disko";
 
     stylix.url = "github:danth/stylix/release-24.11";
 
@@ -34,6 +34,23 @@
 
     zjstatus = {
       url = "github:dj95/zjstatus";
+    };
+
+    # Hyprland
+
+    hypr-contrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprcursor = {
+      url = "github:hyprwm/Hyprcursor";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    pyprland = {
+      url = "github:hyprland-community/pyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -72,6 +89,7 @@
         ];
         nixos = with inputs; [
           disko.nixosModules.disko
+          home-manager.nixosModules.home-manager
           sops-nix.nixosModules.sops
           stylix.nixosModules.stylix
         ];
