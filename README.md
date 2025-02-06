@@ -21,7 +21,35 @@ Install nix (preferably) using the [Determinate Systems Installer](https://githu
 If running on MacOS, you'll need `nix-darwin` which won't initially be installed. Instructions for that are included
 in the next section.
 
-### Installing
+### Installation Methods
+
+#### Using nixos-anywhere
+
+> **NOTE**: The architecture of the target machine must match the architecture of the local machine for this option.
+
+1. Use netboot or the nix usb installer to initiate the installer on the target machine
+2. Run `passwd` to create new password for the installer user
+3. Copy public ssh keys to the installer user
+
+```{bash}
+mkdir -p ~/.ssh
+curl https://github.com/0xpetersatoshi.keys >> ~/.ssh/authorized_keys
+```
+
+4. Note the IP address of the target machine using `ip addr`
+5. Test connection from local machine:
+
+```{bash}
+ssh -i ~/.ssh/vms.pub -v nixos@<ip>
+```
+
+6. Run:
+
+```{bash}
+nix run github:nix-community/nixos-anywhere -- --flake '.#nixbox' -i ~/.ssh/vms.pub --target-host nixos@10.19.90.224
+```
+
+#### Using Nix on the Target Machine Directly
 
 ```bash
 # New machine without git
@@ -41,6 +69,25 @@ nix run nix-darwin -- switch --flake .
 # On subsequent runs, just run
 darwin-rebuild switch --flake .
 
+```
+
+### Configuring Disk Partitioning using Disko
+
+You can optionally use [disko](https://github.com/nix-community/disko/blob/master/docs/quickstart.md) to configure the disk
+partitioning by running:
+
+```{bash}
+sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount ./path/to/disko.nix
+```
+
+Then, to verify successful configuration, you can run the following commands:
+
+```{bash}
+mount | grep /mnt
+```
+
+```{bash}
+sudo fdisk -l /dev/sda
 ```
 
 ### Updating
