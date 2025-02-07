@@ -2,6 +2,7 @@
   config,
   lib,
   namespace,
+  pkgs,
   ...
 }:
 with lib;
@@ -19,6 +20,13 @@ in {
       "Extra options passed to users.users.<name>";
   };
 
+  environment.shells = with pkgs; [
+      zsh
+      nushell
+  ];
+
+
+
   config = {
     users.mutableUsers = false;
     users.users.${cfg.name} =
@@ -27,6 +35,7 @@ in {
         inherit (cfg) name initialPassword;
         home = "/home/${cfg.name}";
         group = "users";
+        shell = pkgs.zsh;
 
         # TODO: set in modules
         extraGroups =
