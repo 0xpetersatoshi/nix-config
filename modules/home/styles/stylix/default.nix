@@ -18,7 +18,7 @@ in {
     stylix = {
       enable = true;
       autoEnable = true;
-      polarity = "dark";
+      # polarity = "dark";
       base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
 
       # iconTheme = {
@@ -54,10 +54,7 @@ in {
         };
       };
 
-      image = pkgs.fetchurl {
-        url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/media/branch/master/png/gruvbox-dark-blue.png";
-        sha256 = "1jrmdhlcnmqkrdzylpq6kv9m3qsl317af3g66wf9lm3mz6xd6dzs";
-      };
+      image = ../../../../wallpaper/no-mans-sky.jpg;
     };
   };
 }
