@@ -45,11 +45,7 @@ in {
       homeManagerIntegration.followSystem = false;
       targets.nixvim.enable = false;
 
-      # image = pkgs.${namespace}.wallpapers.windows-error;
-      image = pkgs.fetchurl {
-        url = "https://codeberg.org/lunik1/nixos-logo-gruvbox-wallpaper/media/branch/master/png/gruvbox-dark-blue.png";
-        sha256 = "1jrmdhlcnmqkrdzylpq6kv9m3qsl317af3g66wf9lm3mz6xd6dzs";
-      };
+      image = ../../../../wallpaper/no-mans-sky.jpg;
 
       cursor = {
         name = "Bibata-Modern-Classic";

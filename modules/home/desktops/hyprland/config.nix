@@ -37,6 +37,7 @@ in {
           gaps_in = 3;
           gaps_out = 5;
           border_size = 3;
+          "col.active_border" = mkForce "rgb(${config.lib.stylix.colors.base0E})";
         };
 
         decoration = {
@@ -55,7 +56,7 @@ in {
         exec-once =
           [
             "dbus-update-activation-environment --systemd --all"
-            # "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
+            "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
             # "${pkgs.kanshi}/bin/kanshi"
             "${pkgs.waybar}/bin/waybar"
             "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
