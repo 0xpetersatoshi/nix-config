@@ -2,6 +2,7 @@
   config,
   lib,
   namespace,
+  pkgs,
   ...
 }:
 with lib;
@@ -34,5 +35,34 @@ in {
       hyprlock.enable = true;
       hypridle.enable = true;
     };
+
+    # Fixes tray icons: https://github.com/nix-community/home-manager/issues/2064#issuecomment-887300055
+    systemd.user.targets.tray = {
+      Unit = {
+        Description = "Home Manager System Tray";
+        Requires = ["graphical-session-pre.target"];
+      };
+    };
+
+    home.sessionVariables = {
+      MOZ_ENABLE_WAYLAND = 1;
+      QT_QPA_PLATFORM = "wayland;xcb";
+      LIBSEAT_BACKEND = "logind";
+    };
+
+    home.packages = with pkgs; [
+      mplayer
+      brightnessctl
+      xdg-utils
+      wl-clipboard
+      clipse
+      pamixer
+      playerctl
+
+      grimblast
+      slurp
+      sway-contrib.grimshot
+      satty
+    ];
   };
 }
