@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib; let
@@ -11,6 +12,11 @@ in {
   };
 
   config = mkIf cfg.enable {
+    environment.shells = with pkgs; [
+      zsh
+      nushell
+    ];
+
     hardware = {
       networking.enable = true;
     };

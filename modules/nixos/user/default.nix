@@ -20,14 +20,10 @@ in {
       "Extra options passed to users.users.<name>";
   };
 
-  environment.shells = with pkgs; [
-      zsh
-      nushell
-  ];
-
-
 
   config = {
+    programs.zsh.enable = true;
+
     users.mutableUsers = false;
     users.users.${cfg.name} =
       {
@@ -59,7 +55,7 @@ in {
     home-manager = {
       useGlobalPkgs = true;
       useUserPackages = true;
-      backupFileExtension = "backup";
+      backupFileExtension = "hm-backup";
     };
   };
 }
