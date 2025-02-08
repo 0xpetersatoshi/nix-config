@@ -18,8 +18,9 @@ in {
     stylix = {
       enable = true;
       autoEnable = true;
-      # polarity = "dark";
+      polarity = "dark";
       base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
+      image = ../../../../wallpaper/no-mans-sky.jpg;
 
       # iconTheme = {
       #   enable = true;
@@ -53,8 +54,6 @@ in {
           applications = 12;
         };
       };
-
-      image = ../../../../wallpaper/no-mans-sky.jpg;
     };
   };
 }

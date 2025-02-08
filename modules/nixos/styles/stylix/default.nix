@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  namespace,
   ...
 }: let
   cfg = config.styles.stylix;
