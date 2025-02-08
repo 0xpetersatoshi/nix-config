@@ -19,6 +19,7 @@ in {
       nodejs_23
       typescript
       typescript-language-server
+      yarn
     ];
   };
 }

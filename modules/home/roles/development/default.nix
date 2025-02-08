@@ -40,7 +40,7 @@ in {
     home.packages = with pkgs; [
       alejandra
       gcc
-      libgcc
+      # libgcc
       nil
       nixd
       statix
