@@ -20,6 +20,7 @@ in {
         "$terminal" = "ghostty";
         "$fileManager" = "dolphin";
         "$menu" = "rofi -show drun -mode drun";
+        "$windowSwitcher" = "rofi -show window";
         "$notificationsClient" = "swaync-client -t";
         "$browser" = "zen";
         "$passwordManager" = "1password";
