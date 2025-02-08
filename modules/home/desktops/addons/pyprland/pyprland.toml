@@ -8,7 +8,7 @@ class = "pwvucontrol"
 size = "50% 80%"
 
 [scratchpads.term]
+command = "ghostty"
 animation = "fromTop"
-command = "foot --class kitty-dropterm -e yazi"
-class = "kitty-dropterm"
-size = "75% 60%"
+class = "com.example.scratchpad"
+# size = "75% 60%"
