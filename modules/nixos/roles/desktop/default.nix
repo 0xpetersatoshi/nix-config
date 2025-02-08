@@ -13,6 +13,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
     roles = {
       common.enable = true;
