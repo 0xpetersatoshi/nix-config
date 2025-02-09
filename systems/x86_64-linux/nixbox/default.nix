@@ -10,7 +10,10 @@
 
   services.xserver.videoDrivers = ["nvidia"];
 
-  security._1password-gui.enable = true;
+  security = {
+    _1password-gui.enable = true;
+    kwallet.enable = true;
+  };
 
   roles = {
     desktop = {

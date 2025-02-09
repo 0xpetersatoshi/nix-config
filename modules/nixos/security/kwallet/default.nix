@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   namespace,
   ...
@@ -15,14 +14,9 @@ in {
 
   config = mkIf cfg.enable {
     security.pam.services = {
-    kwallet = {
-      name = "kwallet";
-      enableKwallet = true;
+      login = {
+        kwallet.enable = true;
+      };
     };
-
-    login = {
-      enableKwallet = true;
-    };
-  };
   };
 }
