@@ -23,10 +23,15 @@ in {
     # system = {
     #   nix.enable = true;
     # };
-    #
+
+    home.packages = with pkgs; [
+      _1password-cli
+    ];
+
     guis = {
       # NOTE: only enable on non-nixos linux systems
       security.enable = !pkgs.stdenv.isDarwin && (!lib.hasAttr "nixos" config);
+      browsers.zen.enable = !pkgs.stdenv.isDarwin;
     };
 
     cli = {

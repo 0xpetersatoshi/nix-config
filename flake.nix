@@ -52,6 +52,8 @@
       url = "github:hyprland-community/pyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    zen-browser.url = "github:0xpetersatoshi/zen-browser-flake";
   };
 
   outputs = inputs: let
