@@ -22,8 +22,9 @@ in {
     };
 
     security = {
-      yubikey.enable = true;
       gnupg.enable = true;
+      polkit.enable = true;
+      yubikey.enable = true;
     };
 
     system = {
