@@ -19,7 +19,7 @@ in {
       enable = true;
       autoEnable = true;
       polarity = "dark";
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
+      # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
       image = ../../../../wallpaper/no-mans-sky.jpg;
 
       # iconTheme = {

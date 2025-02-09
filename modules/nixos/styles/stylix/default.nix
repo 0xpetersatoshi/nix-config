@@ -39,7 +39,7 @@ in {
     stylix = {
       enable = true;
       autoEnable = true;
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
+      # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
       homeManagerIntegration.autoImport = false;
       homeManagerIntegration.followSystem = false;
       targets.nixvim.enable = false;
