@@ -26,6 +26,7 @@
 
   roles = {
     common.enable = true;
+    desktop.enable = true;
     development.enable = true;
   };
 

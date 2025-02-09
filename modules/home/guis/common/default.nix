@@ -16,9 +16,12 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
+      cava # audio visualizer
       foliate
+      keymapp
       pavucontrol
       pwvucontrol
+      spotify
     ];
   };
 }
