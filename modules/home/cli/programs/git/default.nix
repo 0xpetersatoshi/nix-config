@@ -2,15 +2,18 @@
   pkgs,
   config,
   lib,
+  namespace,
   ...
 }:
 with lib;
-with lib.igloo; let
+with lib.${namespace}; let
   cfg = config.cli.programs.git;
   sshProgramPath =
     if pkgs.stdenv.isDarwin
     then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-    else "${config.guis.security._1password.package}/share/1password/op-ssh-sign";
+    else if (lib.hasAttr "nixos" config)
+    then "${config.programs._1password-gui.package}/share/1password/op-ssh-sign"
+    else "${config.guis.security._1password-gui.package}/share/1password/op-ssh-sign";
 in {
   options.cli.programs.git = with types; {
     enable = mkBoolOpt false "Whether or not to enable git.";

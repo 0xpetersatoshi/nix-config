@@ -12,12 +12,12 @@ with types; let
 in {
   options.guis.security = {
     enable = mkEnableOption "Enable security guis";
-    _1password.package = mkPackageOpt pkgs.unstable._1password-gui "Package to use for password manager";
+    _1password-gui.package = mkPackageOpt pkgs.unstable._1password-gui "Package to use for password manager";
   };
 
   config = mkIf cfg.enable {
     home.packages = [
-      cfg._1password.package
+      cfg._1password-gui.package
       pkgs.yubioath-flutter
     ];
   };

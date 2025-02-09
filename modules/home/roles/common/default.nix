@@ -25,7 +25,8 @@ in {
     # };
     #
     guis = {
-      security.enable = !pkgs.stdenv.isDarwin;
+      # NOTE: only enable on non-nixos linux systems
+      security.enable = !pkgs.stdenv.isDarwin && (!lib.hasAttr "nixos" config);
     };
 
     cli = {
