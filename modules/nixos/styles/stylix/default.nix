@@ -42,7 +42,9 @@ in {
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
       homeManagerIntegration.autoImport = false;
       homeManagerIntegration.followSystem = false;
-      targets.nixvim.enable = false;
+      targets = {
+        nixvim.enable = false;
+      };
 
       image = ../../../../wallpaper/no-mans-sky.jpg;
 

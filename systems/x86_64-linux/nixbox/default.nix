@@ -76,6 +76,8 @@
     GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     WLR_NO_HARDWARE_CURSORS = "1";
+    # NOTE: stylix override
+    # QT_STYLE_OVERRIDE = "kvantum";
   };
 
   system.stateVersion = "24.11";

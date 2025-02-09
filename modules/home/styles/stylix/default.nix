@@ -21,6 +21,11 @@ in {
       polarity = "dark";
       # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
       image = ../../../../wallpaper/no-mans-sky.jpg;
+      # targets = {
+      #   kde = {
+      #     enable = true;
+      #   };
+      # };
 
       # iconTheme = {
       #   enable = true;
