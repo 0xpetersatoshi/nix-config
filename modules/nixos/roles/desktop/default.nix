@@ -15,6 +15,10 @@ in {
   config = mkIf cfg.enable {
     boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
+    # NOTE: enables portal definitions and DE provided configurations to get linked
+    # https://home-manager-options.extranix.com/?query=xdg.portal.enable&release=master
+    environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
+
     roles = {
       common.enable = true;
 

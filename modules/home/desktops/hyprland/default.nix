@@ -55,7 +55,6 @@ in {
     home.packages = with pkgs; [
       mplayer
       brightnessctl
-      xdg-utils
       wl-clipboard
       clipse
       pamixer

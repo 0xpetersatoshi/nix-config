@@ -26,6 +26,7 @@ in {
       dysk
       entr
       erdtree
+      fastfetch
       fd
       gdu
       gping

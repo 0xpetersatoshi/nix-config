@@ -21,6 +21,5 @@ in {
 
     security.pam.services.hyprlock = {};
     # roles.desktop.addons.greetd.enable = true;
-    # roles.desktop.addons.xdg-portal.enable = true;
   };
 }
