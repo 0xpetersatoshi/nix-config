@@ -18,7 +18,7 @@ in {
       ];
 
       casks = [
-        "logitech-options"
+        # "logitech-options"
         "obsidian"
         "proton-mail"
         "raycast"
