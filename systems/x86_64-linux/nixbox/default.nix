@@ -21,7 +21,7 @@
       enable = true;
       addons = {
         hyprland.enable = true;
-        plasma.enable = true;
+        kde.enable = true;
       };
     };
   };
