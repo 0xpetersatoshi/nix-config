@@ -31,6 +31,7 @@ in {
       audio.enable = true;
       bluetooth.enable = true;
       logitechMouse.enable = true;
+      storage.enable = true;
       zsa.enable = true;
     };
 
