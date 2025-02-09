@@ -16,10 +16,10 @@ in {
 
   config = mkIf cfg.enable {
     zramSwap = {
-    enable = true;
-    algorithm = "lz4";
-    memoryPercent = 100;
-    priority = 999;
-  };
+      enable = true;
+      algorithm = "lz4";
+      memoryPercent = 100;
+      priority = 999;
+    };
   };
 }

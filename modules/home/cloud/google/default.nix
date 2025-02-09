@@ -8,7 +8,7 @@
 with lib;
 with lib.${namespace}; let
   cfg = config.cloud.google;
-  gdk = pkgs.google-cloud-sdk.withExtraComponents( with pkgs.google-cloud-sdk.components; [
+  gdk = pkgs.google-cloud-sdk.withExtraComponents (with pkgs.google-cloud-sdk.components; [
     gke-gcloud-auth-plugin
   ]);
 in {
@@ -19,6 +19,6 @@ in {
   config = mkIf cfg.enable {
     home.packages = [
       gdk
-  ];
+    ];
   };
 }

@@ -14,13 +14,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-
     programs.ssh = {
       enable = true;
-    extraConfig = ''
-      Host *
-          IdentityAgent ${onePassPath}
-    '';
+      extraConfig = ''
+        Host *
+            IdentityAgent ${onePassPath}
+      '';
     };
   };
 }

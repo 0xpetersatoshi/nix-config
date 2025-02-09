@@ -20,7 +20,6 @@ in {
       "Extra options passed to users.users.<name>";
   };
 
-
   config = {
     programs.zsh.enable = true;
 
