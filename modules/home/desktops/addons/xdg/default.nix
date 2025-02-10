@@ -31,8 +31,12 @@ in {
       portal = {
         enable = true;
         extraPortals = with pkgs; [
+          xdg-desktop-portal-gtk
           xdg-desktop-portal-hyprland
+          libsForQt5.xdg-desktop-portal-kde
         ];
+        config.common.default = "*";
+        xdgOpenUsePortal = true;
       };
 
       mimeApps = {
@@ -48,36 +52,44 @@ in {
           # "image/jpeg" = ["org.gnome.Loupe.desktop"];
         };
         defaultApplications = {
-          "application/x-extension-htm" = "zen";
-          "application/x-extension-html" = "zen";
-          "application/x-extension-shtml" = "zen";
-          "application/x-extension-xht" = "zen";
-          "application/x-extension-xhtml" = "zen";
-          "application/xhtml+xml" = "zen";
-          "text/html" = "zen";
-          "x-scheme-handler/about" = "zen";
-          "x-scheme-handler/chrome" = ["chromium-browser.desktop"];
-          "x-scheme-handler/ftp" = "zen";
-          "x-scheme-handler/http" = "zen";
-          "x-scheme-handler/https" = "zen";
-          "x-scheme-handler/unknown" = "zen";
+          # Web
+          "text/html" = ["zen.desktop"];
+          "x-scheme-handler/http" = ["zen.desktop"];
+          "x-scheme-handler/https" = ["zen.desktop"];
+          "x-scheme-handler/chrome" = ["zen.desktop"];
+          "application/x-extension-htm" = ["zen.desktop"];
+          "application/x-extension-html" = ["zen.desktop"];
+          "application/x-extension-shtml" = ["zen.desktop"];
+          "application/xhtml+xml" = ["zen.desktop"];
+          "application/x-extension-xhtml" = ["zen.desktop"];
+          "application/x-extension-xht" = ["zen.desktop"];
 
-          # TODO: configure for kde
-          # "audio/*" = ["mpv.desktop"];
-          # "video/*" = ["org.gnome.Totem.desktop"];
-          # "video/mp4" = ["org.gnome.Totem.desktop"];
-          # "video/x-matroska" = ["org.gnome.Totem.desktop"];
-          # "image/*" = ["org.gnome.loupe.desktop"];
-          # "image/png" = ["org.gnome.loupe.desktop"];
-          # "image/jpg" = ["org.gnome.loupe.desktop"];
-          # "application/json" = ["gnome-text-editor.desktop"];
-          # "application/pdf" = "zen";
-          # "application/x-gnome-saved-search" = ["org.gnome.Nautilus.desktop"];
-          # "x-scheme-handler/discord" = ["discord.desktop"];
-          # "x-scheme-handler/spotify" = ["spotify.desktop"];
-          # "x-scheme-handler/tg" = ["telegramdesktop.desktop"];
-          # "application/toml" = "org.gnome.TextEditor.desktop";
-          # "text/plain" = "org.gnome.TextEditor.desktop";
+          # File manager
+          "inode/directory" = ["org.kde.dolphin.desktop"];
+          "x-scheme-handler/file" = ["org.kde.dolphin.desktop"];
+          "x-scheme-handler/about" = ["org.kde.dolphin.desktop"];
+
+          # Text
+          "text/plain" = ["nvim.desktop"];
+
+          # Images
+          "image/jpeg" = ["org.kde.gwenview.desktop"];
+          "image/png" = ["org.kde.gwenview.desktop"];
+          "image/gif" = ["org.kde.gwenview.desktop"];
+          "image/svg+xml" = ["org.kde.gwenview.desktop"];
+
+          # Archives
+          "application/zip" = ["org.kde.ark.desktop"];
+          "application/x-tar" = ["org.kde.ark.desktop"];
+          "application/x-compressed-tar" = ["org.kde.ark.desktop"];
+          "application/x-7z-compressed" = ["org.kde.ark.desktop"];
+          "application/x-rar" = ["org.kde.ark.desktop"];
+
+          # PDF
+          "application/pdf" = ["com.github.johnfactotum.Foliate.desktop"];
+
+          # Terminal
+          "application/x-terminal-emulator" = ["com.mitchellh.ghostty.desktop"];
         };
       };
 

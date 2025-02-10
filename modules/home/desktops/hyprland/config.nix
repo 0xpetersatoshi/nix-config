@@ -11,8 +11,11 @@ in {
     wayland.windowManager.hyprland = {
       enable = true;
 
-      systemd.enable = true;
-      systemd.enableXdgAutostart = true;
+      systemd = {
+        enable = true;
+        enableXdgAutostart = true;
+        variables = ["--all"];
+      };
       xwayland.enable = true;
 
       settings = {
