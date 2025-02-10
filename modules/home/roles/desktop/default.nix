@@ -11,8 +11,9 @@ in {
 
   config = lib.mkIf cfg.enable {
     desktops.addons = {
-      xdg.enable = true;
+      gtk.enable = true;
       qt.enable = true;
+      xdg.enable = true;
     };
 
     guis = {
