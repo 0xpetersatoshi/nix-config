@@ -10,7 +10,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    desktops.addons.xdg.enable = true;
+    desktops.addons = {
+      xdg.enable = true;
+      qt.enable = true;
+    };
 
     guis = {
       chat.enable = true;
