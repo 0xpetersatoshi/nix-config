@@ -36,7 +36,7 @@ in {
             libsForQt5.qtsvg # for sddm theme svg icons
             libsForQt5.qt5.qtwayland # wayland support for qt5
           ];
-          theme = "Candy";
+          theme = "catppuccin-sddm-corners";
           settings = {
             General = {
               GreeterEnvironment = "QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
@@ -59,7 +59,9 @@ in {
     };
 
     environment.systemPackages = with pkgs; [
+      catppuccin-sddm-corners
       sddm-candy
+
       libsForQt5.qt5.qtquickcontrols # for sddm theme ui elements
       libsForQt5.layer-shell-qt # for sddm theme wayland support
       libsForQt5.qt5.qtquickcontrols2 # for sddm theme ui elements
