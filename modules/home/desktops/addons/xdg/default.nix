@@ -33,7 +33,7 @@ in {
         extraPortals = with pkgs; [
           xdg-desktop-portal-gtk
           xdg-desktop-portal-hyprland
-          libsForQt5.xdg-desktop-portal-kde
+          kdePackages.xdg-desktop-portal-kde
         ];
         config.common.default = "*";
         xdgOpenUsePortal = true;
