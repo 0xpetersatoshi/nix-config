@@ -47,6 +47,7 @@ in {
       trash-cli
       tailspin
       viddy
+      wget
       xcp
       yq-go
     ];
