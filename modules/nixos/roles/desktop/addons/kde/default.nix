@@ -8,7 +8,6 @@
 with lib;
 with lib.${namespace}; let
   cfg = config.roles.desktop.addons.kde;
-  sddm-candy = pkgs.callPackage ../../../../../../themes/sddm/candy.nix {};
 in {
   options.roles.desktop.addons.kde = with types; {
     enable = mkBoolOpt false "Enable or disable KDE components";
@@ -27,16 +26,13 @@ in {
             enable = true;
             compositor = "kwin";
           };
-          package = pkgs.libsForQt5.sddm;
+          package = pkgs.kdePackages.sddm;
           extraPackages = with pkgs; [
-            libsForQt5.qt5.qtquickcontrols # for sddm theme ui elements
-            libsForQt5.layer-shell-qt # for sddm theme wayland support
-            libsForQt5.qt5.qtquickcontrols2 # for sddm theme ui elements
-            libsForQt5.qt5.qtgraphicaleffects # for sddm theme effects
-            libsForQt5.qtsvg # for sddm theme svg icons
-            libsForQt5.qt5.qtwayland # wayland support for qt5
+            kdePackages.qtsvg
+            kdePackages.qtmultimedia
+            kdePackages.qtvirtualkeyboard
           ];
-          theme = "catppuccin-sddm-corners";
+          theme = "sddm-astronaut-theme";
           settings = {
             General = {
               GreeterEnvironment = "QT_WAYLAND_SHELL_INTEGRATION=layer-shell";
@@ -59,24 +55,15 @@ in {
     };
 
     environment.systemPackages = with pkgs; [
-      catppuccin-sddm-corners
-      sddm-candy
-
-      libsForQt5.qt5.qtquickcontrols # for sddm theme ui elements
-      libsForQt5.layer-shell-qt # for sddm theme wayland support
-      libsForQt5.qt5.qtquickcontrols2 # for sddm theme ui elements
-      libsForQt5.qt5.qtgraphicaleffects # for sddm theme effects
-      libsForQt5.qtsvg # for sddm theme svg icons
-      libsForQt5.qt5.qtwayland # wayland support for qt5
+      (unstable.sddm-astronaut.override {
+        embeddedTheme = "pixel_sakura";
+        # themeConfig = {
+        #   FontSize = 20;
+        # };
+      })
 
       polkit_gnome # polkit gui
     ];
-
-    # qt = {
-    #   enable = true;
-    #   platformTheme = "qt5ct";
-    #   style = "kvantum";
-    # };
 
     programs.dconf.enable = true;
   };
