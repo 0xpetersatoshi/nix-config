@@ -12,7 +12,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     # GUIs should be managed by homebrew on macOS
-    programs.firefox.enable = !pkgs.stdenv.isDarwin;
+    programs.firefox.enable = pkgs.stdenv.isLinux;
 
     # TODO: find a better spot for this
     home.sessionVariables = {
@@ -31,7 +31,7 @@ in {
     guis = {
       # NOTE: only enable on non-nixos linux systems
       security.enable = !pkgs.stdenv.isDarwin && (!lib.hasAttr "nixos" config);
-      browsers.zen.enable = !pkgs.stdenv.isDarwin;
+      browsers.zen.enable = pkgs.stdenv.isLinux;
     };
 
     cli = {
@@ -50,6 +50,9 @@ in {
     #   sops.enable = true;
     # };
 
-    styles.stylix.enable = true;
+    styles = {
+      stylix.enable = true;
+      theming.enable = pkgs.stdenv.isLinux;
+    };
   };
 }
