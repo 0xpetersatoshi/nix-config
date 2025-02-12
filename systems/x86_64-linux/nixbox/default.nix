@@ -12,6 +12,12 @@
     kwalletAutoUnlock.enable = true;
   };
 
+  services = {
+    virtualisation = {
+      podman.enable = true;
+    };
+  };
+
   roles = {
     desktop = {
       enable = true;
