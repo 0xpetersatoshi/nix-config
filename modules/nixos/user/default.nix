@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  inputs,
   namespace,
   pkgs,
   ...
@@ -21,6 +22,8 @@ in {
   };
 
   config = {
+    nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+
     programs.zsh.enable = true;
 
     users.mutableUsers = false;
