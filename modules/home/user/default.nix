@@ -29,6 +29,9 @@ in {
       home = {
         homeDirectory = mkDefault cfg.home;
         username = mkDefault cfg.name;
+        sessionVariables = {
+          FLAKE = "$HOME/nix-config";
+        };
       };
     }
   ]);
