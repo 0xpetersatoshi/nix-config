@@ -2,11 +2,7 @@ local lspconfig = require("lspconfig")
 
 return {
   jsonls = {},
-  terraformls = {
-    cmd = { "terraform-ls" },
-    arg = { "server" },
-    filetypes = { "terraform", "tf", "terraform-vars" },
-  },
+  terraformls = {},
   lua_ls = {
     settings = {
       Lua = {
