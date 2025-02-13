@@ -25,6 +25,7 @@ in {
       lua-language-server
       markdownlint-cli2
       marksman
+      neovim
       nixd
       shfmt
       # TODO: need to find a solution for this as its not available in nixpkgs
