@@ -15,6 +15,7 @@ in {
 
   config = mkIf cfg.enable {
     xdg.configFile."zellij/config.kdl".source = ./config.kdl;
+    xdg.configFile."zellij/plugins/zellij-autolock.wasm".source = ./plugins/zellij-autolock.wasm;
     xdg.configFile."zellij/layouts/default.kdl".text = ''
       layout {
           swap_tiled_layout name="vertical" {
