@@ -15,14 +15,18 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      go
-      golangci-lint
       air
-      templ
-      sqlc
-      golines
-      gotools
+      delve
+      go
       go-task
+      golangci-lint
+      golangci-lint-langserver
+      golines
+      gopls
+      gotestsum
+      gotools
+      sqlc
+      templ
     ];
   };
 }

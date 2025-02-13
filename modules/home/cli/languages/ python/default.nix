@@ -17,9 +17,13 @@ in {
     home.packages = with pkgs; [
       poetry
       pyenv
-      python312Packages.pip
+      pyright
       python313
+      ruff
       uv
+
+      unstable.python313Packages.debugpy
+      unstable.python313Packages.pip
     ];
   };
 }

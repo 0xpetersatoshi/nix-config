@@ -16,6 +16,7 @@ in {
     home.packages = with pkgs; [
       bun
       deno
+      eslint
       nodejs_23
       typescript
       typescript-language-server
