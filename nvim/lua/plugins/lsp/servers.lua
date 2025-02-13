@@ -52,14 +52,12 @@ return {
 
   nixd = {
     filetypes = { "nix" },
-  },
-
-  nil_ls = {
-    filetypes = { "nix" },
-  },
-
-  statix = {
-    filetypes = { "nix" },
+    nixpkgs = {
+      expr = "import <nixpkgs> { }",
+    },
+    formatting = {
+      command = { "alejandra" }, -- or nixfmt or nixpkgs-fmt
+    },
   },
 
   graphql = {
