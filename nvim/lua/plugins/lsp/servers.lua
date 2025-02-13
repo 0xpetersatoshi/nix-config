@@ -37,7 +37,11 @@ return {
     filetypes = { "vim" },
   },
   ts_ls = {},
+
+  golangci_lint_ls = {},
+
   gopls = {},
+
   pyright = {
     settings = {
       python = {
@@ -51,12 +55,17 @@ return {
   },
 
   nixd = {
+    cmd = { "nixd" },
     filetypes = { "nix" },
-    nixpkgs = {
-      expr = "import <nixpkgs> { }",
-    },
-    formatting = {
-      command = { "alejandra" }, -- or nixfmt or nixpkgs-fmt
+    settings = {
+      nixd = {
+        nixpkgs = {
+          expr = "import <nixpkgs> { }",
+        },
+        formatting = {
+          command = { "alejandra" }, -- or nixfmt or nixpkgs-fmt
+        },
+      },
     },
   },
 

@@ -33,8 +33,8 @@ return {
 
     -- Mason-lspconfig setup
     require("mason-lspconfig").setup({
-      ensure_installed = vim.tbl_keys(servers),
-      automatic_installation = true,
+      -- ensure_installed = vim.tbl_keys(servers),
+      automatic_installation = false,
     })
 
     require("lspconfig.ui.windows").default_options.border = "single"
