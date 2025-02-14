@@ -28,27 +28,13 @@ in {
       recursive = true;
     };
 
-    # TODO: temporary until I create an nvim module
-    xdg.configFile."nvim" = {
-      source = ../../../../nvim;
-      recursive = true;
-    };
-
     # TODO: temporary until I create a kanata module
     xdg.configFile."kanata/config.kbd".source = ../../../../kanata/config.kbd;
-
-    home.packages = with pkgs; [
-      alejandra
-      gcc
-      # libgcc
-      nil
-      nixd
-      statix
-    ];
 
     cloud.google.enable = true;
 
     cli = {
+      editors.neovim.enable = true;
       multiplexers.zellij.enable = true;
       multiplexers.tmux.enable = true;
 

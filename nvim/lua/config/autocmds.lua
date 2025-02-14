@@ -63,22 +63,20 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Run PyrightOrganizeImports on save
-local python = vim.api.nvim_create_augroup("PythonFormatting", { clear = true })
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.py",
-  group = python,
-  callback = function()
-    -- Save current cursor position
-    local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-
-    -- Run PyrightOrganizeImports
-    vim.cmd("PyrightOrganizeImports")
-
-    -- Restore cursor position (in case the imports reorganization moved it)
-    vim.api.nvim_win_set_cursor(0, { row, col })
+-- Disable ruff hover in favor of Pyright
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client == nil then
+      return
+    end
+    if client.name == "ruff" then
+      -- Disable hover in favor of Pyright
+      client.server_capabilities.hoverProvider = false
+    end
   end,
+  desc = "LSP: Disable hover capability from Ruff",
 })
 
 -- Set filetypes for specific file extensions
@@ -96,5 +94,13 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = ".env*",
   callback = function()
     vim.bo.filetype = "sh"
+  end,
+})
+
+-- Disable diagnostics for .env
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = ".env*",
+  callback = function()
+    vim.diagnostic.enable(false)
   end,
 })

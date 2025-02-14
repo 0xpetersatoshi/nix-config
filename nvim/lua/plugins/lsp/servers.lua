@@ -2,11 +2,7 @@ local lspconfig = require("lspconfig")
 
 return {
   jsonls = {},
-  terraformls = {
-    cmd = { "terraform-ls" },
-    arg = { "server" },
-    filetypes = { "terraform", "tf", "terraform-vars" },
-  },
+  terraformls = {},
   lua_ls = {
     settings = {
       Lua = {
@@ -37,34 +33,45 @@ return {
     filetypes = { "vim" },
   },
   ts_ls = {},
+
+  golangci_lint_ls = {},
+
   gopls = {},
+
+  ruff = {},
+
   pyright = {
     settings = {
+      pyright = {
+        disableOrganizeImports = true,
+      },
       python = {
         analysis = {
-          autoSearchPaths = true,
-          useLibraryCodeForTypes = true,
-          diagnosticMode = "workspace",
+          ignore = { "*" },
         },
       },
     },
   },
 
   nixd = {
+    cmd = { "nixd" },
     filetypes = { "nix" },
+    settings = {
+      nixd = {
+        nixpkgs = {
+          expr = "import <nixpkgs> { }",
+        },
+        formatting = {
+          command = { "alejandra" }, -- or nixfmt or nixpkgs-fmt
+        },
+      },
+    },
   },
 
-  nil_ls = {
-    filetypes = { "nix" },
-  },
-
-  statix = {
-    filetypes = { "nix" },
-  },
-
-  graphql = {
-    filetypes = { "graphql", "gql", "graphqls", "typescriptreact" },
-  },
+  -- graphql = {
+  --   cmd = { "graphql-lsp", "server", "-m", "stream" },
+  --   filetypes = { "graphql", "gql", "graphqls", "typescriptreact" },
+  -- },
 
   solidity = {
     cmd = { "nomicfoundation-solidity-language-server", "--stdio" },

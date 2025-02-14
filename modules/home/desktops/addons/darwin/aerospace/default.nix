@@ -208,10 +208,10 @@ in {
       f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
       backspace = ['close-all-windows-but-current', 'mode main']
 
-      cmd-alt-h = ['join-with left', 'mode main']
-      cmd-alt-j = ['join-with down', 'mode main']
-      cmd-alt-k = ['join-with up', 'mode main']
-      cmd-alt-l = ['join-with right', 'mode main']
+      cmd-ctrl-h = ['join-with left', 'mode main']
+      cmd-ctrl-j = ['join-with down', 'mode main']
+      cmd-ctrl-k = ['join-with up', 'mode main']
+      cmd-ctrl-l = ['join-with right', 'mode main']
 
       # Automatically open apps in their respective workspaces
       # Terminal

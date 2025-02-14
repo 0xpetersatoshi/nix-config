@@ -37,7 +37,6 @@ in {
       jqp
       jnv
       neofetch
-      neovim
       ouch
       procs
       ripgrep

@@ -5,8 +5,27 @@ default_shell "zsh"
 copy_on_select true
 
 keybinds clear-defaults=true {
+    //// Keybindings specific to 'Normal' mode.
+    //normal {
+    //    // Intercept `Enter`.
+    //    bind "Enter" {
+    //        // Passthru `Enter`.
+    //        WriteChars "\u{000D}";
+    //        // Invoke autolock to immediately assess proper lock state.
+    //        // (This provides a snappier experience compared to
+    //        // solely relying on `reaction_seconds` to elapse.)
+    //        MessagePlugin "autolock" {};
+    //    }
+    //    //...
+    //}
     locked {
         bind "Ctrl g" { SwitchToMode "normal"; }
+     //   bind "Alt z" {
+     //       // Disable the autolock plugin.
+     //       MessagePlugin "autolock" {payload "disable";};
+     //       // Unlock Zellij.
+     //       SwitchToMode "Normal";
+     //   }
     }
     pane {
         bind "left" { MoveFocus "left"; }
@@ -233,6 +252,13 @@ keybinds clear-defaults=true {
     shared_among "session" "tmux" {
         bind "d" { Detach; }
     }
+    //// Keybindings shared across all modes.
+    //shared {
+    //    bind "Alt Shift z" {
+    //        // Enable the autolock plugin.
+    //        MessagePlugin "autolock" {payload "enable";};
+    //    }
+    //}
     tmux {
         bind "left" { MoveFocus "left"; SwitchToMode "normal"; }
         bind "down" { MoveFocus "down"; SwitchToMode "normal"; }
@@ -267,6 +293,32 @@ keybinds clear-defaults=true {
     }
 
     shared_except "locked" {
+        //bind "Alt z" {
+        //    // Disable the autolock plugin.
+        //    MessagePlugin "autolock" {payload "disable";};
+        //    // Lock Zellij.
+        //    SwitchToMode "Locked";
+        //}
+
+        //bind "Ctrl h" {
+        //    MoveFocusOrTab "Left";
+        //}
+        //bind "Ctrl l" {
+        //    MoveFocusOrTab "Right";
+        //}
+        //bind "Ctrl j" {
+        //    MoveFocus "Down";
+        //}
+        //bind "Ctrl k" {
+        //    MoveFocus "Up";
+        //}
+
+        // bind "Ctrl d" { HalfPageScrollDown; }
+        // bind "Ctrl u" { HalfPageScrollUp; }
+
+        // bind "Ctrl f" { PageScrollDown; }
+        // bind "Ctrl b" { PageScrollUp; }
+
         // NOTE: This is not working reliably when using external monitor
         //bind "Ctrl h" {
         //    MessagePlugin "https://github.com/hiasr/vim-zellij-navigator/releases/download/0.2.1/vim-zellij-navigator.wasm" {
@@ -359,6 +411,17 @@ plugins {
     welcome-screen location="zellij:session-manager" {
         welcome_screen true
     }
+    //autolock location="file:~/.config/zellij/plugins/zellij-autolock.wasm" {
+    //    // Enabled at start?
+    //    is_enabled true
+    //    // Lock when any open these programs open.
+    //    triggers "nvim|vim|git|fzf|zoxide|atuin"
+    //    // Reaction to input occurs after this many seconds. (default=0.3)
+    //    // (An existing scheduled reaction prevents additional reactions.)
+    //    reaction_seconds "0.3"
+    //    // Print to Zellij log? (default=false)
+    //    print_to_log true
+    //}
 }
 
 plugin_permissions {
@@ -368,3 +431,7 @@ plugin_permissions {
         run_commands true
     }
 }
+
+//load_plugins {
+//    autolock
+//}

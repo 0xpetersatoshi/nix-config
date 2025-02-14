@@ -16,9 +16,12 @@ in {
     home.packages = with pkgs; [
       bun
       deno
+      eslint
       nodejs_23
+      nodePackages.graphql-language-service-cli
       typescript
       typescript-language-server
+      vscode-js-debug
       yarn
     ];
   };
