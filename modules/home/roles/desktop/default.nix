@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   cfg = config.roles.desktop;
@@ -10,10 +11,15 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    desktops.addons.xdg.enable = true;
+    desktops.addons = {
+      gtk.enable = pkgs.stdenv.isLinux;
+      qt.enable = pkgs.stdenv.isLinux;
+      xdg.enable = pkgs.stdenv.isLinux;
+    };
 
     guis = {
-      chat.enable = true;
+      chat.enable = pkgs.stdenv.isLinux;
+      browsers.common.enable = pkgs.stdenv.isLinux;
     };
   };
 }

@@ -19,7 +19,12 @@ in {
       withUWSM = true;
     };
 
-    security.pam.services.hyprlock = {};
-    # roles.desktop.addons.greetd.enable = true;
+    security.pam.services = {
+      hyprlock = {};
+      swaylock = {};
+    };
+
+    # NOTE: handles input devices (i.e. touchpads) in Wayland compositors
+    services.libinput.enable = true;
   };
 }

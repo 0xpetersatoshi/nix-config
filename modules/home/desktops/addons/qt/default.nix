@@ -14,10 +14,10 @@ in {
   config = mkIf cfg.enable {
     qt = {
       enable = true;
-      platformTheme.name = "gtk";
+      platformTheme.name = "kde";
       style = {
         name = "adwaita-dark";
-        package = pkgs.adwaita-qt;
+        package = pkgs.adwaita-qt6;
       };
     };
   };

@@ -47,6 +47,7 @@ in {
         git.enable = true;
         modern-unix.enable = true;
         network-tools.enable = true;
+        nh.enable = true;
         podman.enable = true;
         # TODO: need to add more ssh host configs before overriding darwin config
         ssh.enable = !pkgs.stdenv.isDarwin;

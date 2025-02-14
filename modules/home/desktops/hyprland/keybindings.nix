@@ -82,7 +82,7 @@ in {
         "CONTROL,Print, exec,grimblast --notify copy screen"
         "SUPER,Print, exec,grimblast --notify copy window"
         "ALT,Print, exec,grimblast --notify copy area"
-        "ALT, Tab, exec, $windowSwitcher"
+        "SUPER, Tab, exec, $windowSwitcher"
         "SUPER,bracketleft, exec,grimblast --notify --cursor copysave area ~/Pictures/$(date \" + %Y-%m-%d \"T\"%H:%M:%S_no_watermark \").png"
         "SUPER,bracketright, exec, grimblast --notify --cursor copy area"
         "SUPER,h, movefocus,l"
