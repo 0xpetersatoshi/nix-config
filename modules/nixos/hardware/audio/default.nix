@@ -37,6 +37,7 @@ in {
     environment.systemPackages = with pkgs; [
       headsetcontrol
       headset-charge-indicator
+      pulseaudioFull
       pulsemixer
     ];
   };
