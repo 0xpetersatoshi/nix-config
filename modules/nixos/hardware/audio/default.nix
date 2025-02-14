@@ -15,6 +15,8 @@ in {
 
   config = mkIf cfg.enable {
     # services.pulseaudio.enable = false;
+    # NOTE: after experiencing some audio issues with select browsers
+    # this issue thread helped solve the issue: https://github.com/NixOS/nixpkgs/issues/271847#issuecomment-1894300156
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
