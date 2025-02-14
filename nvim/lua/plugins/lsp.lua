@@ -5,10 +5,9 @@ return {
     dependencies = {
       { "williamboman/mason.nvim", config = true },
       "williamboman/mason-lspconfig.nvim",
+      "mfussenegger/nvim-dap",
+      "jay-babu/mason-nvim-dap.nvim",
       { "j-hui/fidget.nvim", opts = {} },
-      "folke/neodev.nvim",
-      -- { "b0o/schemastore.nvim" },
-      -- { "hrsh7th/cmp-nvim-lsp" },
     },
     config = function()
       -- Key mappings
@@ -34,8 +33,26 @@ return {
 
       -- Mason-lspconfig setup
       require("mason-lspconfig").setup({
-        -- ensure_installed = vim.tbl_keys(servers),
-        automatic_installation = false,
+        automatic_installation = true,
+        -- Filter out servers that shouldn't be installed via Mason
+        ensure_installed = vim.tbl_filter(function(server)
+          -- Add servers that should be excluded from Mason installation
+          local excluded_servers = {
+            "nixd",
+            "graphql",
+          }
+          return not vim.tbl_contains(excluded_servers, server)
+        end, vim.tbl_keys(servers)),
+      })
+
+      -- Mason-nvim-dap setup
+      require("mason-nvim-dap").setup({
+        -- Enable automatic installation
+        automatic_installation = true,
+        ensure_installed = {
+          "js-debug-adapter", -- TODO: this isn't installing automatically
+          "debugpy",
+        },
       })
 
       require("lspconfig.ui.windows").default_options.border = "single"
