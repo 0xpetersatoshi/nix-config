@@ -45,6 +45,7 @@ in {
       tokei
       trash-cli
       tailspin
+      unzip
       viddy
       wget
       xcp
