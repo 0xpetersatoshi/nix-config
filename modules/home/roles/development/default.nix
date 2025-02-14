@@ -49,8 +49,7 @@ in {
         network-tools.enable = true;
         nh.enable = true;
         podman.enable = true;
-        # TODO: need to add more ssh host configs before overriding darwin config
-        ssh.enable = !pkgs.stdenv.isDarwin;
+        ssh.enable = true;
         starship.enable = true;
         zoxide.enable = true;
       };
