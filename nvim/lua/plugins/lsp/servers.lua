@@ -38,13 +38,16 @@ return {
 
   gopls = {},
 
+  ruff = {},
+
   pyright = {
     settings = {
+      pyright = {
+        disableOrganizeImports = true,
+      },
       python = {
         analysis = {
-          autoSearchPaths = true,
-          useLibraryCodeForTypes = true,
-          diagnosticMode = "workspace",
+          ignore = { "*" },
         },
       },
     },
