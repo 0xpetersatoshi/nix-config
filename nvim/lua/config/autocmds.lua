@@ -96,3 +96,11 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     vim.bo.filetype = "sh"
   end,
 })
+
+-- Disable diagnostics for .env
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = ".env*",
+  callback = function()
+    vim.diagnostic.enable(false)
+  end,
+})
