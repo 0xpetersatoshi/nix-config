@@ -34,8 +34,6 @@ return {
   },
   ts_ls = {},
 
-  golangci_lint_ls = {},
-
   gopls = {},
 
   ruff = {},
