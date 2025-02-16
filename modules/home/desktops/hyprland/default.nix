@@ -28,12 +28,10 @@ in {
 
     desktops.addons = {
       rofi.enable = true;
-      swaync.enable = true;
-      waybar.enable = true;
       wlogout.enable = true;
 
       pyprland.enable = true;
-      hyprpaper.enable = true;
+      hyprpanel.enable = true;
       hyprlock.enable = true;
       hypridle.enable = true;
     };
@@ -53,6 +51,7 @@ in {
     };
 
     home.packages = with pkgs; [
+      hyprpanel
       mplayer
       brightnessctl
       wl-clipboard

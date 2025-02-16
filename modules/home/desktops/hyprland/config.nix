@@ -62,12 +62,12 @@ in {
             "dbus-update-activation-environment --systemd --all"
             "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
             # "${pkgs.kanshi}/bin/kanshi"
-            "${pkgs.waybar}/bin/waybar"
             "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init"
             "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
             "${pkgs.pyprland}/bin/pypr"
             "${pkgs.clipse}/bin/clipse -listen"
             "${pkgs.solaar}/bin/solaar -w hide"
+            "${pkgs.hyprpanel}/bin/hyprpanel"
           ]
           ++ cfg.execOnceExtras;
       };

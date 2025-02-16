@@ -53,6 +53,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+
     zen-browser.url = "github:0xpetersatoshi/zen-browser-flake";
   };
 
@@ -80,7 +82,12 @@
         backupFileExtension = "hm.bak";
       };
 
-      overlays = [];
+      overlays = with inputs; [
+        hyprpanel.overlay
+      ];
+
+      # homes.modules = with inputs; [
+      # ];
 
       systems.modules = {
         darwin = with inputs; [

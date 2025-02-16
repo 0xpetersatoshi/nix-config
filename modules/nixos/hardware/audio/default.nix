@@ -30,13 +30,10 @@ in {
     };
     programs.noisetorch.enable = true;
 
-    services.udev.packages = with pkgs; [
-      headsetcontrol
+    services.udev.packages = [
     ];
 
     environment.systemPackages = with pkgs; [
-      headsetcontrol
-      headset-charge-indicator
       pulseaudioFull
       pulsemixer
     ];

@@ -69,7 +69,7 @@ in {
         "SUPER, F, Fullscreen,0"
         "SUPER, R, exec, ${resize}/bin/resize"
         "SUPER, G, togglefloating,"
-        "SUPER, N, exec, $notificationsClient"
+        "SUPER, N, exec, hyprpanel toggleWindow notificationsmenu"
         "SUPER, P, exec, $passwordManager"
         "SUPER, V, exec, ${pkgs.pyprland}/bin/pypr toggle pwvucontrol"
         "SUPER_SHIFT, T, exec, ${pkgs.pyprland}/bin/pypr toggle term"

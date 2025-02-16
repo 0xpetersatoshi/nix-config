@@ -2,10 +2,6 @@
   desktops = {
     hyprland = {
       enable = true;
-      execOnceExtras = [
-        "${pkgs.networkmanagerapplet}/bin/nm-applet"
-        "${pkgs.blueman}/bin/blueman-applet"
-      ];
     };
 
     addons.kde.enable = true;
