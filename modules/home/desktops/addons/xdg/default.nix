@@ -19,6 +19,12 @@ in {
       GTK2_RC_FILES = lib.mkForce "${config.xdg.configHome}/gtk-2.0/gtkrc";
     };
 
+    home.sessionPath = ["$HOME/.local/bin"];
+    home.file.".local/bin" = {
+      source = ../../../../scripts/bin;
+      recursive = true;
+    };
+
     home.packages = with pkgs; [
       xdg-utils
     ];
@@ -28,6 +34,9 @@ in {
       # TODO: currently only available on unstable channel
       # autostart.enable = true;
       cacheHome = config.home.homeDirectory + "/.local/cache";
+      configHome = config.home.homeDirectory + "/.config";
+      stateHome = config.home.homeDirectory + "/.local/state";
+      dataHome = config.home.homeDirectory + "/.local/share";
       portal = {
         enable = true;
         extraPortals = with pkgs; [
