@@ -21,6 +21,7 @@ in {
     home.packages = with pkgs; [
       jankyborders
       sketchybar
+      unstable.sketchybar-app-font
     ];
   };
 }
