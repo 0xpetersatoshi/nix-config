@@ -18,7 +18,6 @@ in {
       ];
 
       casks = [
-        "gog-galaxy"
         "steam"
       ];
 
