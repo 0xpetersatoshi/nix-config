@@ -3,8 +3,6 @@
   namespace,
   ...
 }: {
-  services.nix-daemon.enable = true;
-
   # System preferences
   system.defaults = {
     dock = {
@@ -26,12 +24,8 @@
 
   environment.systemPath = ["/opt/homebrew/bin"];
 
-  # Garbage collect the Nix store
-  nix.gc = {
-    automatic = true;
-    # Change how often the garbage collector runs (default: weekly)
-    # frequency = "monthly";
-  };
+  # Nix darwin options not compatible with determinate systems nix daemon
+  nix.enable = false;
 
   programs.guis.productivity.addons = {
     linear.enable = true;
