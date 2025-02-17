@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   namespace,
   ...
@@ -8,11 +9,49 @@
     dock = {
       autohide = true;
       orientation = "bottom";
+
+      # Hot corners
+      # Possible values:
+      #  0: no-op
+      #  2: Mission Control
+      #  3: Show application windows
+      #  4: Desktop
+      #  5: Start screen saver
+      #  6: Disable screen saver
+      #  7: Dashboard
+      # 10: Put display to sleep
+      # 11: Launchpad
+      # 12: Notification Center
+      # 13: Lock Screen
+      # 14: Quick Notes
+      wvous-bl-corner = 14;
+      wvous-br-corner = 4;
     };
     finder = {
-      AppleShowAllExtensions = true;
-      FXRemoveOldTrashItems = true;
       _FXShowPosixPathInTitle = true;
+      _FXSortFoldersFirst = true;
+      AppleShowAllExtensions = true;
+      AppleShowAllFiles = true;
+      CreateDesktop = false;
+      FXPreferredViewStyle = "Nlsv";
+      FXRemoveOldTrashItems = true;
+      QuitMenuItem = true;
+      ShowExternalHardDrivesOnDesktop = false;
+      ShowHardDrivesOnDesktop = false;
+      ShowMountedServersOnDesktop = false;
+      ShowPathbar = true;
+      ShowRemovableMediaOnDesktop = false;
+      ShowStatusBar = true;
+    };
+    NSGlobalDomain = {
+      _HIHideMenuBar = true;
+      InitialKeyRepeat = 10;
+      KeyRepeat = 2;
+    };
+    screencapture = {
+      disable-shadow = true;
+      location = "/Users/${config.${namespace}.user.name}/Pictures/screenshots/";
+      type = "png";
     };
     # Add more system preferences
   };
