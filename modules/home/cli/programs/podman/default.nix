@@ -32,5 +32,10 @@ in {
           podman-tui
         ]
       );
+
+    home.shellAliases = {
+      docker = "podman";
+      "docker-compose" = "podman-compose";
+    };
   };
 }
