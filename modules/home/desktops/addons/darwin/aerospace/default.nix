@@ -23,7 +23,7 @@ in {
       # 'after-startup-command' is run after 'after-login-command'
       # Available commands : https://nikitabobko.github.io/AeroSpace/commands
       after-startup-command = [
-        'exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=${colors.base02} inactive_color=${colors.base0B} width=5.0',
+        'exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=0xff${colors.base08} width=7.0',
       ]
 
       # Notify Sketchybar about workspace change
