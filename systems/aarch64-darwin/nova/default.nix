@@ -71,7 +71,10 @@
     tableplus.enable = true;
   };
 
-  services.${namespace}.sketchybar.enable = true;
+  services.${namespace} = {
+    kanata.enable = true;
+    sketchybar.enable = true;
+  };
 
   roles = {
     browsers.enable = true;

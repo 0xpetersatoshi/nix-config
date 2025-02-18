@@ -14,7 +14,7 @@ in {
     desktops.addons = {
       gtk.enable = pkgs.stdenv.isLinux;
       qt.enable = pkgs.stdenv.isLinux;
-      xdg.enable = pkgs.stdenv.isLinux;
+      xdg.enable = true;
     };
 
     guis = {

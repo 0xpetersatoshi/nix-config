@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 with lib; let
@@ -12,25 +11,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # TODO: find a better spot for this
-    xdg = {
-      enable = true;
-      cacheHome = config.home.homeDirectory + "/.local/cache";
-      configHome = config.home.homeDirectory + "/.config";
-      stateHome = config.home.homeDirectory + "/.local/state";
-      dataHome = config.home.homeDirectory + "/.local/share";
-    };
-
-    # TODO: find a better spot for this
-    home.sessionPath = ["$HOME/.local/bin"];
-    home.file.".local/bin" = {
-      source = ../../../../scripts/bin;
-      recursive = true;
-    };
-
-    # TODO: temporary until I create a kanata module
-    xdg.configFile."kanata/config.kbd".source = ../../../../kanata/config.kbd;
-
     cloud.google.enable = true;
 
     cli = {

@@ -14,7 +14,9 @@ steps needed to get Kanata working on macOS as well as how to have it run as a b
 sudo cargo install kanata --root /usr/local
 ```
 
-3. Create a kanata config file in `~/.config/kanata/config.kbd`. Here's a simple example for adding home row mods:
+3. **IMPORTANT**: You'll need to grant the `kanata` executable input monitoring privileges under System Settings >
+Privacy & Security > Input Monitoring.
+4. Create a kanata config file in `~/.config/kanata/config.kbd`. Here's a simple example for adding home row mods:
 
 ```
 ;; Basic home row mods example using QWERTY
