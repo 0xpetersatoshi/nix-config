@@ -14,14 +14,14 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.sessionVariables = {
+    home.sessionVariables = mkIf pkgs.stdenv.isLinux {
       HISTFILE = lib.mkForce "${config.xdg.stateHome}/bash/history";
       GTK2_RC_FILES = lib.mkForce "${config.xdg.configHome}/gtk-2.0/gtkrc";
     };
 
     home.sessionPath = ["$HOME/.local/bin"];
     home.file.".local/bin" = {
-      source = ../../../../scripts/bin;
+      source = ../../../../../scripts/bin;
       recursive = true;
     };
 
@@ -31,13 +31,7 @@ in {
 
     xdg = {
       enable = true;
-      # TODO: currently only available on unstable channel
-      # autostart.enable = true;
-      cacheHome = config.home.homeDirectory + "/.local/cache";
-      configHome = config.home.homeDirectory + "/.config";
-      stateHome = config.home.homeDirectory + "/.local/state";
-      dataHome = config.home.homeDirectory + "/.local/share";
-      portal = {
+      portal = mkIf pkgs.stdenv.isLinux {
         enable = true;
         extraPortals = with pkgs; [
           xdg-desktop-portal-gtk
@@ -48,7 +42,7 @@ in {
         xdgOpenUsePortal = true;
       };
 
-      mimeApps = {
+      mimeApps = mkIf pkgs.stdenv.isLinux {
         enable = true;
         associations.added = {
           # "video/mp4" = ["org.gnome.Totem.desktop"];
@@ -102,7 +96,7 @@ in {
         };
       };
 
-      userDirs = {
+      userDirs = mkIf pkgs.stdenv.isLinux {
         enable = true;
         createDirectories = true;
         extraConfig = {
