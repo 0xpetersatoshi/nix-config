@@ -34,7 +34,20 @@ return {
   },
   ts_ls = {},
 
-  gopls = {},
+  gopls = {
+    cmd = { "gopls" },
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true,
+        },
+        completeUnimported = true,
+        gofumpt = true,
+        staticcheck = true,
+      },
+    },
+  },
 
   ruff = {},
 
