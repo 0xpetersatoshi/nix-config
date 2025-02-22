@@ -39,7 +39,7 @@ return {
           -- Add servers that should be excluded from Mason installation
           local excluded_servers = {
             "nixd",
-            "graphql",
+            -- "graphql",
           }
           return not vim.tbl_contains(excluded_servers, server)
         end, vim.tbl_keys(servers)),

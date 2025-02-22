@@ -79,10 +79,10 @@ return {
     },
   },
 
-  -- graphql = {
-  --   cmd = { "graphql-lsp", "server", "-m", "stream" },
-  --   filetypes = { "graphql", "gql", "graphqls", "typescriptreact" },
-  -- },
+  graphql = {
+    cmd = { "graphql-lsp", "server", "-m", "stream" },
+    filetypes = { "graphql", "gql", "graphqls", "typescriptreact" },
+  },
 
   solidity = {
     cmd = { "nomicfoundation-solidity-language-server", "--stdio" },

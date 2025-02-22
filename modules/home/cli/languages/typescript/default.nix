@@ -18,6 +18,7 @@ in {
       deno
       eslint
       nodejs_23
+      nodePackages.graphql
       nodePackages.graphql-language-service-cli
       typescript
       typescript-language-server
