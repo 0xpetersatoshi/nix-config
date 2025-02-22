@@ -28,6 +28,19 @@ return {
         },
       })
 
+      -- Setup Mason directly for additional tools (formatters, linters, etc.)
+      local registry = require("mason-registry")
+      local ensure_installed = {
+        "stylua", -- Lua formatter
+        "prettierd",
+      }
+
+      for _, tool in ipairs(ensure_installed) do
+        if not registry.is_installed(tool) then
+          vim.cmd("MasonInstall " .. tool)
+        end
+      end
+
       -- Load servers configuration
       local servers = require("plugins.lsp.servers")
 
