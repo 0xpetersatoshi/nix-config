@@ -2,7 +2,7 @@ return {
   -- codeium
   {
     "Exafunction/codeium.vim",
-    enabled = true,
+    enabled = false,
     event = "BufEnter",
     config = function()
       -- Change '<C-g>' here to any keycode you like.
@@ -15,6 +15,7 @@ return {
   -- code companion
   {
     "olimorris/codecompanion.nvim",
+    enabled = false,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
@@ -82,6 +83,100 @@ return {
         ":CodeCompanionActions<CR>",
         { silent = true, desc = "Open CodeCompanion Actions Pallete" }
       )
+    end,
+  },
+  {
+    "yetone/avante.nvim",
+    enabled = true,
+    event = "VeryLazy",
+    lazy = false,
+    version = "*", -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+    opts = {
+      -- add any opts here
+      -- for example
+      provider = "claude",
+      claude = {
+        endpoint = "https://api.anthropic.com",
+        model = "claude-3-5-sonnet-20241022",
+        timeout = 30000, -- Timeout in milliseconds
+        temperature = 0,
+        max_tokens = 8000,
+      },
+    },
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = "make",
+    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    dependencies = {
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      "ibhagwan/fzf-lua", -- for file_selector provider fzf
+      "saghen/blink.cmp",
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
+    config = function()
+      -- Configure blink.cmp for avante.nvim
+      require("blink.cmp").setup({
+        compat = {
+          "avante_commands",
+          "avante_mentions",
+          "avante_files",
+        },
+        providers = {
+          avante_commands = {
+            name = "avante_commands",
+            module = "blink.compat.source",
+            score_offset = 90,
+            opts = {},
+          },
+          avante_files = {
+            name = "avante_files",
+            module = "blink.compat.source",
+            score_offset = 100,
+            opts = {},
+          },
+          avante_mentions = {
+            name = "avante_mentions",
+            module = "blink.compat.source",
+            score_offset = 1000,
+            opts = {},
+          },
+        },
+      })
+
+      -- Set file selector to something other than native (e.g., fzf)
+      require("avante").setup({
+        file_selector = {
+          provider = "fzf", -- or "telescope", "mini.pick", etc.
+          provider_opts = {},
+        },
+      })
     end,
   },
 }
