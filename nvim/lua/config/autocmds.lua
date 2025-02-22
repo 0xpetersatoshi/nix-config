@@ -1,7 +1,7 @@
 -- Autocmds are automatically loaded on the VeryLazy event
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
--- Disable autoformat for lua files
+-- Disable autoformat for yaml files
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "yaml" },
   callback = function()
@@ -94,13 +94,15 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = ".env*",
   callback = function()
     vim.bo.filetype = "sh"
+    -- Disable diagnostics for .env
+    vim.diagnostic.enable(false)
   end,
 })
 
--- Disable diagnostics for .env
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  pattern = ".env*",
+-- graphqlrc
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.graphqlrc",
   callback = function()
-    vim.diagnostic.enable(false)
+    vim.bo.filetype = "yaml"
   end,
 })
