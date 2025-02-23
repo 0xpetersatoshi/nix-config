@@ -33,6 +33,7 @@ return {
       local ensure_installed = {
         "stylua", -- Lua formatter
         "prettierd",
+        "codelldb", -- Rust, Zig, C, C++ debugger
       }
 
       for _, tool in ipairs(ensure_installed) do
@@ -149,6 +150,11 @@ return {
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
       end
     end,
+  },
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^5", -- Recommended
+    lazy = false, -- This plugin is already lazy
   },
   -- TODO: make this work
   { "cordx56/rustowl", dependencies = { "neovim/nvim-lspconfig" } },
