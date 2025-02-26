@@ -34,6 +34,7 @@ return {
         "stylua", -- Lua formatter
         "prettierd",
         "codelldb", -- Rust, Zig, C, C++ debugger
+        "nomicfoundation-solidity-language-server", -- Solidity LSP
       }
 
       for _, tool in ipairs(ensure_installed) do
