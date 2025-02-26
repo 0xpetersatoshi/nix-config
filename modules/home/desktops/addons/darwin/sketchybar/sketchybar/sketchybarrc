@@ -54,6 +54,7 @@ sketchybar --default "${default[@]}"
 # We add some regular items to the left side of the bar, where
 # only the properties deviating from the current defaults need to be set
 
+source $ITEM_DIR/apple.sh
 source $ITEM_DIR/aerospace.sh
 source $ITEM_DIR/front_app.sh
 
