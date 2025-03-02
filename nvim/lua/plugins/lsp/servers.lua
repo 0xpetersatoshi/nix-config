@@ -1,6 +1,7 @@
 local lspconfig = require("lspconfig")
 
 return {
+  clangd = {},
   jsonls = {},
   terraformls = {},
   lua_ls = {
