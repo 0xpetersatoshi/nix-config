@@ -26,6 +26,7 @@ in {
       casks = [
         "ghostty"
         "podman-desktop"
+        "visual-studio-code"
       ];
 
       masApps = {
