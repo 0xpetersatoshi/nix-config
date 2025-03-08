@@ -27,6 +27,7 @@ in {
       marksman
       neovim
       nixd
+      prettierd
       shfmt
       # TODO: need to find a solution for this as its not available in nixpkgs
       # npm install @nomicfoundation/solidity-language-server -g
