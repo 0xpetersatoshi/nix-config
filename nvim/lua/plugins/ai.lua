@@ -90,17 +90,34 @@ return {
     enabled = true,
     event = "VeryLazy",
     lazy = false,
-    version = "*", -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+    version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
     opts = {
       -- add any opts here
       -- for example
       provider = "claude",
       claude = {
         endpoint = "https://api.anthropic.com",
-        model = "claude-3-5-sonnet-20241022",
+        model = "claude-3-7-sonnet-latest",
+        api_key_name = "cmd:op read 'op://Private/anthropic-api-keys/avante' --no-newline",
         timeout = 30000, -- Timeout in milliseconds
         temperature = 0,
         max_tokens = 8000,
+      },
+
+      web_search_engine = {
+        provider = "tavily",
+        providers = {
+          tavily = {
+            api_key_name = "cmd:op read 'op://Private/tavily-api-keys/avante' --no-newline",
+            extra_request_body = {
+              include_answer = "basic",
+            },
+            ---@type WebSearchEngineProviderResponseBodyFormatter
+            format_response_body = function(body)
+              return body.answer, nil
+            end,
+          },
+        },
       },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`

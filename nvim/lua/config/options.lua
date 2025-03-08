@@ -9,3 +9,20 @@ vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 -- disable <Tab> mapping for codeium
 vim.g.codeium_no_map_tab = 1
+
+-- lazyvim
+-- LazyVim picker to use.
+-- Can be one of: telescope, fzf
+-- Leave it to "auto" to automatically use the picker
+-- enabled with `:LazyExtras`
+vim.g.lazyvim_picker = "fzf"
+
+-- LazyVim completion engine to use.
+-- Can be one of: nvim-cmp, blink.cmp
+-- Leave it to "auto" to automatically use the completion engine
+-- enabled with `:LazyExtras`
+vim.g.lazyvim_cmp = "blink.cmp"
+
+-- if the completion engine supports the AI source,
+-- use that instead of inline suggestions
+vim.g.ai_cmp = true
