@@ -17,7 +17,7 @@ in {
       enable = true;
       settings = {
         general = {
-          before_sleep_cmd = "loginctl lock-session";
+          before_sleep_cmd = "loginctl lock-session && hyprctl dispatch dpms off";
           after_sleep_cmd = "hyprctl dispatch dpms on";
           ignore_dbus_inhibit = false;
           lock_cmd = "pidof hyprlock || hyprlock";
@@ -40,7 +40,7 @@ in {
           }
           {
             timeout = 1200;
-            on-timeout = "sysemctl suspend";
+            on-timeout = "systemctl suspend";
           }
         ];
       };
