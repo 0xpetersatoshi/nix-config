@@ -60,37 +60,5 @@
     # QT_STYLE_OVERRIDE = "kvantum";
   };
 
-  environment.systemPackages = with pkgs; [
-    (writeShellScriptBin "safe-suspend" ''
-      # Keep only the keyboard's controller enabled
-      KEYBOARD_CONTROLLER="00:02.1"
-
-      # Disable all wake sources except the keyboard's controller and power button
-      for device in $(cat /proc/acpi/wakeup | grep enabled | awk '{print $1}'); do
-        # Get the PCI path for this device
-        PCI_PATH=$(grep "$device" /proc/acpi/wakeup | awk '{print $4}')
-
-        # Skip if it's the keyboard's controller
-        # if [[ "$PCI_PATH" == *"$KEYBOARD_CONTROLLER"* ]]; then
-        #   echo "Keeping $device enabled (has keyboard)"
-        #   continue
-        # fi
-
-        # Skip if it's the power button (if present)
-        if [[ "$device" == "PWRB" ]]; then
-          echo "Keeping power button enabled"
-          continue
-        fi
-
-        # Disable this wake source
-        echo "Disabling $device"
-        echo "$device" > /proc/acpi/wakeup
-      done
-
-      # Now suspend
-      systemctl suspend
-    '')
-  ];
-
   system.stateVersion = "24.11";
 }
