@@ -17,12 +17,14 @@ in {
       enable = true;
       settings = {
         general = {
-          before_sleep_cmd = "loginctl lock-session && hyprctl dispatch dpms off";
-          after_sleep_cmd = "hyprctl dispatch dpms on";
+          # Add a small delay before locking to ensure proper shutdown of processes before sleep
+          before_sleep_cmd = "hyprland-lock && sleep 0.1 && hyprctl dispatch dpms off";
+          # Add a delay after resuming to ensure lock screen is ready before input
+          after_sleep_cmd = "hyprland-unlock";
           ignore_dbus_inhibit = false;
-          lock_cmd = "pidof hyprlock || hyprlock";
+          # Ensure lock command is robust
+          lock_cmd = "hyprland-lock";
         };
-
         listener = [
           {
             timeout = 180;
