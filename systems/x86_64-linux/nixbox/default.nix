@@ -36,10 +36,18 @@
     # resumeDevice = "/dev/disk/by-label/nixos";
   };
 
-  hardware.drivers = {
-    enable = true;
-    hasAmdCpu = true;
-    hasNvidiaGpu = true;
+  hardware = {
+    drivers = {
+      enable = true;
+      hasAmdCpu = true;
+      hasNvidiaGpu = true;
+    };
+
+    suspend = {
+      enable = true;
+      hasAmdCpu = true;
+      hasNvidiaGpu = true;
+    };
   };
 
   environment.sessionVariables = {
