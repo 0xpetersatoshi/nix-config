@@ -60,7 +60,7 @@ nix-shell -p git
 git clone https://github.com/0xpetersatoshi/nix-config.git
 cd nix-config
 
-sudo nixos-rebuild switch --flake .#<hostname>
+sudo nixos-install --flake .#<hostname>
 ```
 
 On MacOS:
