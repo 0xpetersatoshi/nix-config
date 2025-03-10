@@ -46,23 +46,26 @@ ssh -i ~/.ssh/vms.pub -v nixos@<ip>
 6. Run:
 
 ```{bash}
-nix run github:nix-community/nixos-anywhere -- --flake '.#nixbox' -i ~/.ssh/vms.pub --target-host nixos@10.19.90.224
+nix run github:nix-community/nixos-anywhere -- --flake '.#<HOSTNAME>' -i ~/.ssh/vms.pub --target-host nixos@<IP_ADDRESS>
 ```
 
 #### Using Nix on the Target Machine Directly
+
+On NixOS:
 
 ```bash
 # New machine without git
 nix-shell -p git
 
-# Clone
 git clone https://github.com/0xpetersatoshi/nix-config.git
 cd nix-config
 
-# Linux
 sudo nixos-rebuild switch --flake .#<hostname>
+```
 
- # MacOS
+On MacOS:
+
+```bash
 # On the first run, you'll need to install nix-darwin
 nix run nix-darwin -- switch --flake .
 
@@ -71,7 +74,7 @@ darwin-rebuild switch --flake .
 
 ```
 
-### Configuring Disk Partitioning using Disko
+### Configuring Disk Partitioning on NixOS using Disko
 
 You can optionally use [disko](https://github.com/nix-community/disko/blob/master/docs/quickstart.md) to configure the disk
 partitioning by running:
@@ -90,6 +93,30 @@ mount | grep /mnt
 sudo fdisk -l /dev/sda
 ```
 
+## Usage
+
+### Applying latest home-manager or nixos configuration
+
+> *NOTE*: when using the [nh](https://github.com/viperML/nh) tool, set the `FLAKE` env var to the path of the nix config (i.e. `/home/peter/nix-config/`)
+
+On NixOS:
+
+```bash
+nh os switch
+```
+
+On Linux:
+
+```bash
+nh home switch
+```
+
+On MacOS:
+
+```bash
+darwin-rebuild switch --flake .
+```
+
 ### Updating
 
 ```bash
@@ -98,6 +125,9 @@ nix flake update
 
 # Run nixos-rebuild or darwin-rebuild to apply the changes
 darwin-rebuild switch --flake .
+
+# on NixOS
+# nh os switch
 ```
 
 ## Resources
