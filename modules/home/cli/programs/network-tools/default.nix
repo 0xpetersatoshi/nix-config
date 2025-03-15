@@ -13,11 +13,16 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      ethtool
-      tshark
-      termshark
-      kubeshark
-    ];
+    home.packages = with pkgs;
+      [
+        tshark
+        termshark
+        kubeshark
+      ]
+      ++ (
+        if pkgs.stdenv.isLinux
+        then [ethtool]
+        else []
+      );
   };
 }
