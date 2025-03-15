@@ -35,6 +35,11 @@ in {
       syntaxHighlighting.enable = true;
       enableCompletion = true;
 
+      # TODO: create a proper package for foundryup
+      envExtra = ''
+        export PATH="$PATH:${config.xdg.configHome}/.foundry/bin"
+      '';
+
       initExtra = ''
         ${
           if pkgs.stdenv.isDarwin
