@@ -22,9 +22,11 @@ in {
       golangci-lint
       golangci-lint-langserver
       golines
+      gomodifytags
       gopls
       gotestsum
       gotools
+      impl
       sqlc
       templ
     ];
