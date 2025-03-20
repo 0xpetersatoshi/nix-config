@@ -21,6 +21,7 @@ in {
       programs = {
         bat.enable = true;
         btop.enable = true;
+        build.enable = true;
         direnv.enable = true;
         eza.enable = true;
         fzf.enable = true;
