@@ -15,7 +15,8 @@
       podman.enable = true;
     };
     thermald.enable = true;
-    tlp.enable = true;
+    # conflicts with pkgs.power-profiles-daemon used by hyprpanel
+    # tlp.enable = true;
   };
 
   powerManagement.enable = true;
