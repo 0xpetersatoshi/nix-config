@@ -14,26 +14,26 @@
               type = "EFI";
               # This tells disko not to create or format this partition
               content.type = "filesystem";
-              content.format = false;
+              content.format = "vfat";
               content.mountpoint = "/boot";
             };
             microsoftReserved = {
               size = "16M"; # Use exact size from your system
               type = "8300"; # Regular Linux partition type as placeholder
               content.type = "filesystem";
-              content.format = false;
+              content.format = "ntfs";
             };
             windowsC = {
               size = "316.9G"; # Use exact size from your system
               type = "8300"; # Regular Linux partition type as placeholder
               content.type = "filesystem";
-              content.format = false;
+              content.format = "ntfs";
             };
             windowsRecovery = {
               size = "2G"; # Use exact size from your system
               type = "8300"; # Regular Linux partition type as placeholder
               content.type = "filesystem";
-              content.format = false;
+              content.format = "ntfs";
             };
             # New NixOS partition using remaining space
             nixos = {
