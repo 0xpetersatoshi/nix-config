@@ -14,6 +14,19 @@
 
 My NixOS, Darwin, and Nix Home Manager Config.
 
+<!--toc:start-->
+
+- [Getting Started](#getting-started)
+  - [Installation Methods](#installation-methods)
+    - [Using nixos-anywhere](#using-nixos-anywhere)
+    - [Using Nix on the Target Machine Directly](#using-nix-on-the-target-machine-directly)
+  - [Configuring Disk Partitioning on NixOS using Disko](#configuring-disk-partitioning-on-nixos-using-disko)
+- [Usage](#usage)
+  - [Applying latest home-manager or nixos configuration](#applying-latest-home-manager-or-nixos-configuration)
+  - [Updating](#updating)
+- [Resources](#resources)
+<!--toc:end-->
+
 ## Getting Started
 
 Install nix (preferably) using the [Determinate Systems Installer](https://github.com/DeterminateSystems/nix-installer).
@@ -97,7 +110,7 @@ sudo fdisk -l /dev/sda
 
 ### Applying latest home-manager or nixos configuration
 
-> *NOTE*: when using the [nh](https://github.com/viperML/nh) tool, set the `FLAKE` env var to the path of the nix config (i.e. `/home/peter/nix-config/`)
+> _NOTE_: when using the [nh](https://github.com/viperML/nh) tool, set the `FLAKE` env var to the path of the nix config (i.e. `/home/peter/nix-config/`)
 
 On NixOS:
 

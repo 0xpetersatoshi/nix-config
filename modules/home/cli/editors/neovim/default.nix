@@ -27,6 +27,7 @@ in {
       marksman
       neovim
       nixd
+      nodePackages.prettier
       prettierd
       shfmt
       igloo.solidity-language-server
