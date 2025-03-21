@@ -24,7 +24,7 @@
               content.format = "ntfs";
             };
             windowsC = {
-              size = "316.9G"; # Use exact size from your system
+              size = "317G"; # Use exact size from your system
               type = "8300"; # Regular Linux partition type as placeholder
               content.type = "filesystem";
               content.format = "ntfs";
