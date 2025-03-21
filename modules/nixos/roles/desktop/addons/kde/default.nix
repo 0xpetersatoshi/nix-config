@@ -26,12 +26,13 @@ in {
             enable = true;
             compositor = "kwin";
           };
-          package = pkgs.kdePackages.sddm;
+
           extraPackages = with pkgs; [
             kdePackages.qtsvg
             kdePackages.qtmultimedia
             kdePackages.qtvirtualkeyboard
           ];
+
           theme = "sddm-astronaut-theme";
           settings = {
             General = {
@@ -46,12 +47,9 @@ in {
         sessionPackages = [pkgs.hyprland];
       };
 
-      xserver = {
+      desktopManager.plasma6 = {
         enable = true;
-        desktopManager.plasma5 = {
-          enable = true;
-          useQtScaling = true;
-        };
+        enableQt5Integration = false;
       };
     };
 
