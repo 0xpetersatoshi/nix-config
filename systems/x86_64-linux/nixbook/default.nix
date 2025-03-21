@@ -51,7 +51,6 @@
 
     initrd.luks.devices = {
       "nixos-enc" = {
-        device = "/dev/disk/by-partlabel/nixos";
         allowDiscards = true;
         preLVM = true;
       };
