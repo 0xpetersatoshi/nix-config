@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{...}: {
   disko.devices = {
     disk = {
       nvme0 = {
@@ -28,7 +24,7 @@
               content.format = false;
             };
             windowsC = {
-              size = "317G"; # Use exact size from your system
+              size = "316.9G"; # Use exact size from your system
               type = "8300"; # Regular Linux partition type as placeholder
               content.type = "filesystem";
               content.format = false;
