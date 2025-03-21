@@ -47,6 +47,14 @@
       "i915.enable_fbc=1" # Framebuffer Compression
       "i915.enable_guc=2" # GuC/HuC firmware loading
     ];
+
+    initrd.luks.devices = {
+      "nixos-enc" = {
+        device = "/dev/disk/by-partlabel/nixos";
+        allowDiscards = true;
+        preLVM = true;
+      };
+    };
   };
 
   hardware = {
