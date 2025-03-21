@@ -11,7 +11,7 @@
             # and setting their createMbr to false
             ESP = {
               size = "260M"; # Use exact size from your system
-              type = "EFI";
+              type = "EF00";
               # This tells disko not to create or format this partition
               content.type = "filesystem";
               content.format = "vfat";
