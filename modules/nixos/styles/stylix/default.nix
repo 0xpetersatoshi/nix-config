@@ -8,6 +8,11 @@
 in {
   options.styles.stylix = {
     enable = lib.mkEnableOption "Enable stylix";
+    wallpaperPath = lib.mkOption {
+      type = lib.types.path;
+      default = ../../../../wallpaper/ultrawide/winter_in_the_desert_illustration-wallpaper-5120x2160.jpg;
+      description = "Path to the wallpaper image to use with stylix";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -46,7 +51,7 @@ in {
         nixvim.enable = false;
       };
 
-      image = ../../../../wallpaper/no-mans-sky.jpg;
+      image = cfg.wallpaperPath;
 
       cursor = {
         name = "Bibata-Modern-Classic";

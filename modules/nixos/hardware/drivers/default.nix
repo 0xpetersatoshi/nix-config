@@ -14,6 +14,7 @@ in {
     enable = mkBoolOpt false "Enable or disable hardware drivers based on available hardware";
     hasAmdCpu = mkBoolOpt false "Whether or not the system has an AMD CPU";
     hasIntelCpu = mkBoolOpt false "Whether or not the system has an Intel CPU";
+    hasIntelGpu = mkBoolOpt false "Whether or not the system has an Intel GPU";
     hasAmdGpu = mkBoolOpt false "Whether or not the system has an AMD GPU";
     hasNvidiaGpu = mkBoolOpt false "Whether or not the system has an Nvidia GPU";
     hasOlderIntelCpu = mkBoolOpt false "Whether or not the system has an older Intel CPU";
@@ -32,7 +33,9 @@ in {
 
             # Nvidia GPU packages
             (lib.optional cfg.hasNvidiaGpu nvidia-vaapi-driver)
-            (lib.optional cfg.hasNvidiaGpu libva-vdpau-driver)
+
+            # Nvidia/Intel shared GPU packages
+            (lib.optional (cfg.hasNvidiaGpu || cfg.hasIntelGpu) libva-vdpau-driver)
 
             # Intel Cpu packages
             (lib.optional cfg.hasIntelCpu intel-media-driver)
@@ -47,8 +50,8 @@ in {
             # AMD GPU packages
             (lib.optional cfg.hasAmdGpu amdvlk)
 
-            # Nvidia GPU packages
-            (lib.optional cfg.hasNvidiaGpu libva-vdpau-driver)
+            # Nvidia/Intel shared GPU packages
+            (lib.optional (cfg.hasNvidiaGpu || cfg.hasIntelGpu) libva-vdpau-driver)
 
             # Intel Cpu packages
             (lib.optional cfg.hasIntelCpu intel-media-driver)
@@ -155,10 +158,16 @@ in {
       ]
       ++ lib.optionals cfg.hasNvidiaGpu [
         nvidia-vaapi-driver
-        libva-vdpau-driver
-        vulkan-tools
         vulkan-loader
         vulkan-validation-layers
+      ]
+      ++ lib.optionals cfg.hasIntelGpu [
+        intel-gpu-tools
+        libva-utils
+      ]
+      ++ lib.optionals (cfg.hasNvidiaGpu || cfg.hasIntelGpu) [
+        libva-vdpau-driver
+        vulkan-tools
       ];
   };
 }
