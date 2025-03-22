@@ -63,6 +63,7 @@
       hasIntelGpu = true;
     };
     enableAllFirmware = true;
+    input-devices.touchpad.enable = true;
   };
 
   styles.stylix.wallpaperPath = ../../../wallpaper/standard/astronaut-3-2912x1632.png;
