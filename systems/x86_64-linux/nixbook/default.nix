@@ -38,19 +38,14 @@
   networking.hostName = "nixbook";
 
   boot = {
-    # supportedFilesystems = lib.mkForce ["btrfs"];
     kernelPackages = pkgs.unstable.linuxPackages_zen;
-    # resumeDevice = "/dev/disk/by-label/nixos";
-
-    # TODO: add iGPU device id
-    # kernelParams = ["i915.force_probe=<device ID>"];
-    # kernelParams = ["intel_idle.max_cstate=1"];
 
     # Additional power saving features
     kernelParams = [
       "i915.enable_psr=1" # Panel Self Refresh
       "i915.enable_fbc=1" # Framebuffer Compression
       "i915.enable_guc=2" # GuC/HuC firmware loading
+      "i915.force_probe=00:02.0"
     ];
 
     initrd.luks.devices = {

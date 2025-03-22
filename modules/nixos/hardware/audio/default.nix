@@ -34,6 +34,7 @@ in {
     ];
 
     environment.systemPackages = with pkgs; [
+      alsa-ucm-conf
       pulseaudioFull
       pulsemixer
     ];
