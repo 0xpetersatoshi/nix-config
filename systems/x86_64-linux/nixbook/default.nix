@@ -14,6 +14,10 @@
     virtualisation = {
       podman.enable = true;
     };
+    keyboard.kanata = {
+      enable = true;
+      configFile = ../../../dotfiles/kanata/linux.config.kbd;
+    };
     thermald.enable = true;
     # conflicts with pkgs.power-profiles-daemon used by hyprpanel
     # tlp.enable = true;

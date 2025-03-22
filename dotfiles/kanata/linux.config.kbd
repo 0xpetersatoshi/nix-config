@@ -1,0 +1,61 @@
+;; Kanata configuration with home row mods, vim-style navigation layer, and media keys
+;;(defcfg
+;;  process-unmapped-keys yes
+;;  linux-dev /dev/input/by-path/platform-i8042-serio-0-event-kbd
+;;)
+
+;; define keys that will be modified (all keys still processed)
+(defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  caps  a    s    d    f    h    j    k    l    ;
+  lctl rmet
+)
+
+;; default/base layer modifications always active
+(deflayer base
+    _    mute    vold    volu    -    brdn    brup    -    -    -    -    -    -
+  @cap  @a   @s   @d   @f   h    @j   @k   @l    @scln
+  lctl @fn
+)
+
+;; shifted layer activated by holding CAPS lock
+(deflayer navigation
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _     _    _    _    _    left    down     up    right     _
+  _    _
+)
+
+(deflayer f-row
+    _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+    caps  _    _    _    _    _    _    _    _    _
+    _    _
+)
+
+(defvar
+  tap-time 200
+  hold-time 200
+)
+
+;; remapping between physical keys and functionality
+(defalias
+  ;; Home row mods
+  a (tap-hold $tap-time $hold-time a lmet)
+  s (tap-hold $tap-time $hold-time s lalt)
+  d (tap-hold $tap-time $hold-time d lctl)
+  f (tap-hold $tap-time $hold-time f lsft)
+  j (tap-hold $tap-time $hold-time j rsft)
+  k (tap-hold $tap-time $hold-time k rctl)
+  l (tap-hold $tap-time $hold-time l ralt)
+  scln (tap-hold $tap-time $hold-time ; rmet)
+
+  ;; Layer toggle for navigation
+  nav (layer-while-held navigation)
+
+    cap (tap-hold-press $tap-time $hold-time esc @nav)
+
+  ;; Layer toggle for f-row
+  frow (layer-while-held f-row)
+
+  fn (tap-hold-press $tap-time $hold-time rmet @frow)
+)
+
