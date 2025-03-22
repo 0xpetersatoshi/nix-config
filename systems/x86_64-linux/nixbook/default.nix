@@ -38,14 +38,28 @@
   networking.hostName = "nixbook";
 
   boot = {
-    kernelPackages = pkgs.unstable.linuxPackages_zen;
+    kernelPackages = pkgs.unstable.linuxPackages_latest;
+
+    # Only specify the essential modules
+    initrd.kernelModules = [
+      # Just the core modules - let the system figure out dependencies
+      "snd-sof-pci-intel-lnl" # Lunar Lake specific module
+    ];
+
+    kernelModules = [
+      "snd-sof-pci-intel-lnl" # Lunar Lake specific module
+      "btusb" # Bluetooth support
+    ];
 
     # Additional power saving features
     kernelParams = [
       "i915.enable_psr=1" # Panel Self Refresh
       "i915.enable_fbc=1" # Framebuffer Compression
-      "i915.enable_guc=2" # GuC/HuC firmware loading
-      "i915.force_probe=00:02.0"
+      "i915.enable_guc=3" # GuC/HuC firmware loading
+      "i915.force_probe=all"
+
+      # Audio-specific parameters
+      "snd_intel_dspcfg.dsp_driver=1"
     ];
 
     initrd.luks.devices = {
@@ -64,6 +78,13 @@
     };
     enableAllFirmware = true;
     input-devices.touchpad.enable = true;
+
+    bluetooth.package = pkgs.unstable.bluez;
+
+    firmware = with pkgs; [
+      unstable.sof-firmware
+      unstable.linux-firmware
+    ];
   };
 
   styles.stylix.wallpaperPath = ../../../wallpaper/standard/astronaut-3-2912x1632.png;

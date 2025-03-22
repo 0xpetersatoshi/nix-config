@@ -34,9 +34,12 @@ in {
     ];
 
     environment.systemPackages = with pkgs; [
-      alsa-ucm-conf
-      pulseaudioFull
+      alsa-tools
+      alsa-utils
+      # pulseaudioFull
       pulsemixer
+      unstable.alsa-ucm-conf
+      unstable.sof-firmware
     ];
   };
 }
