@@ -30,11 +30,22 @@ in {
         "$editor" = "nvim";
         "$music" = "spotify";
         monitor = ",preferred,auto,auto";
+
         input = {
           kb_layout = "us";
+          repeat_delay = 200;
           touchpad = {
             disable_while_typing = false;
+            natural_scroll = true;
+            scroll_factor = 0.15;
+            tap-and-drag = true;
           };
+        };
+
+        gestures = {
+          workspace_swipe = true;
+          workspace_swipe_create_new = false;
+          workspace_swipe_forever = true;
         };
 
         general = {
