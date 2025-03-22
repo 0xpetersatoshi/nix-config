@@ -64,6 +64,12 @@ in {
       polkit_gnome # polkit gui
     ];
 
-    programs.dconf.enable = true;
+    programs = {
+      dconf.enable = true;
+      kdeconnect = {
+        enable = true;
+        package = lib.mkForce pkgs.kdePackages.kdeconnect-kde;
+      };
+    };
   };
 }
