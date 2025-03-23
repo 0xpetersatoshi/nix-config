@@ -33,10 +33,13 @@ in {
     services.udev.packages = [
     ];
 
-    environment.systemPackages = with pkgs; [
-      alsa-ucm-conf
-      pulseaudioFull
-      pulsemixer
-    ];
+    environment = {
+      systemPackages = with pkgs; [
+        alsa-tools
+        alsa-utils
+        # pulseaudioFull
+        pulsemixer
+      ];
+    };
   };
 }

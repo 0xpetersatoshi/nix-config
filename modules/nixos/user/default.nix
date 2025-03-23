@@ -22,7 +22,19 @@ in {
   };
 
   config = {
-    nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+    nix = {
+      nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+
+      # Enable automatic garbage collection
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 7d";
+      };
+
+      # Optimize store to remove unused dependencies
+      settings.auto-optimise-store = true;
+    };
 
     programs.zsh.enable = true;
 
