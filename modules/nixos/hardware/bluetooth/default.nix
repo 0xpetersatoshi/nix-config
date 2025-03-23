@@ -27,5 +27,9 @@ in {
         };
       };
     };
+
+    environment.systemPackages = with pkgs; [
+      bluez-tools
+    ];
   };
 }
