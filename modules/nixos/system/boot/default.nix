@@ -26,6 +26,9 @@ in {
 
         systemd-boot = {
           enable = true;
+
+          # Limit the number of generations kept in the boot menu
+          configurationLimit = 3;
         };
       };
     };
