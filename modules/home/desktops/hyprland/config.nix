@@ -24,8 +24,8 @@ in {
         "$fileManager" = "dolphin";
         "$menu" = "rofi -show drun -mode drun";
         "$windowSwitcher" = "rofi -show window";
-        "$notificationsClient" = "swaync-client -t";
-        "$browser" = "zen";
+        # "$notificationsClient" = "swaync-client -t";
+        "$browser" = "brave";
         "$passwordManager" = "1password";
         "$editor" = "nvim";
         "$music" = "spotify";
@@ -71,7 +71,7 @@ in {
         exec-once =
           [
             "dbus-update-activation-environment --systemd --all"
-            "systemctl --user import-environment QT_QPA_PLATFORMTHEME"
+            "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME"
             # "${pkgs.kanshi}/bin/kanshi"
             "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init"
             "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"

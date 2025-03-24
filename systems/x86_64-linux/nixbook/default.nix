@@ -105,7 +105,6 @@ in {
       LIBVA_DRIVER_NAME = "iHD"; # Use intel-media-driver
       MOZ_X11_EGL = "1"; # Enable hardware acceleration in Firefox
       VDPAU_DRIVER = "va_gl"; # VDPAU through VAAPI
-      XDG_SESSION_TYPE = "wayland";
       WLR_NO_HARDWARE_CURSORS = "1";
     };
   };

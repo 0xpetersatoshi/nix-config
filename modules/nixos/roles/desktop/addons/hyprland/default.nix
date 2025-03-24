@@ -26,5 +26,10 @@ in {
 
     # NOTE: handles input devices (i.e. touchpads) in Wayland compositors
     services.libinput.enable = true;
+
+    environment.etc."xdg/xdg-desktop-portal/portals.conf".text = ''
+      [preferred]
+      default=hyprland
+    '';
   };
 }

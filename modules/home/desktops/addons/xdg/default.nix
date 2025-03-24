@@ -15,6 +15,9 @@ in {
 
   config = mkIf cfg.enable {
     home.sessionVariables = mkIf pkgs.stdenv.isLinux {
+      XDG_CURRENT_DESKTOP = "Hyprland";
+      XDG_SESSION_DESKTOP = "Hyprland";
+      XDG_SESSION_TYPE = "wayland";
       HISTFILE = lib.mkForce "${config.xdg.stateHome}/bash/history";
       GTK2_RC_FILES = lib.mkForce "${config.xdg.configHome}/gtk-2.0/gtkrc";
     };
@@ -34,11 +37,11 @@ in {
       portal = mkIf pkgs.stdenv.isLinux {
         enable = true;
         extraPortals = with pkgs; [
-          xdg-desktop-portal-gtk
           xdg-desktop-portal-hyprland
+          xdg-desktop-portal-gtk
           kdePackages.xdg-desktop-portal-kde
         ];
-        config.common.default = "*";
+        config.common.default = "hyprland";
         xdgOpenUsePortal = true;
       };
 
@@ -56,16 +59,16 @@ in {
         };
         defaultApplications = {
           # Web
-          "text/html" = ["zen.desktop"];
-          "x-scheme-handler/http" = ["zen.desktop"];
-          "x-scheme-handler/https" = ["zen.desktop"];
-          "x-scheme-handler/chrome" = ["zen.desktop"];
-          "application/x-extension-htm" = ["zen.desktop"];
-          "application/x-extension-html" = ["zen.desktop"];
-          "application/x-extension-shtml" = ["zen.desktop"];
-          "application/xhtml+xml" = ["zen.desktop"];
-          "application/x-extension-xhtml" = ["zen.desktop"];
-          "application/x-extension-xht" = ["zen.desktop"];
+          "text/html" = ["brave-browser.desktop"];
+          "x-scheme-handler/http" = ["brave-browser.desktop"];
+          "x-scheme-handler/https" = ["brave-browser.desktop"];
+          "x-scheme-handler/chrome" = ["brave-browser.desktop"];
+          "application/x-extension-htm" = ["brave-browser.desktop"];
+          "application/x-extension-html" = ["brave-browser.desktop"];
+          "application/x-extension-shtml" = ["brave-browser.desktop"];
+          "application/xhtml+xml" = ["brave-browser.desktop"];
+          "application/x-extension-xhtml" = ["brave-browser.desktop"];
+          "application/x-extension-xht" = ["brave-browser.desktop"];
 
           # File manager
           "inode/directory" = ["org.kde.dolphin.desktop"];
