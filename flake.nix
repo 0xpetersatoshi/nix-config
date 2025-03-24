@@ -55,7 +55,10 @@
 
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
 
-    zen-browser.url = "github:0xpetersatoshi/zen-browser-flake";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = inputs: let
