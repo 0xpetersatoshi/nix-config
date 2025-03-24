@@ -8,6 +8,8 @@
 with lib;
 with lib.${namespace}; let
   cfg = config.desktops.addons.hyprlock;
+  # Access the hasNvidiaGpu option from a shared location
+  hasNvidiaGpu = config.hardware.drivers.hasNvidiaGpu or false;
 
   # Define script names as variables
   unlockScriptName = "hyprland-unlock";
@@ -109,15 +111,18 @@ in {
     };
 
     # Add the helper scripts and dependencies
-    home.packages = with pkgs; [
-      xdotool
-      jq
-      unlockScript
-      lockScript
-    ];
+    home.packages = with pkgs;
+      [
+        xdotool
+        jq
+      ]
+      ++ (optionals hasNvidiaGpu [
+        unlockScript
+        lockScript
+      ]);
 
     # Create systemd user service
-    systemd.user.services = {
+    systemd.user.services = mkIf hasNvidiaGpu {
       hyprland-resume-fix = {
         Unit = {
           Description = "Fix Hyprland/Hyprlock after resume";
