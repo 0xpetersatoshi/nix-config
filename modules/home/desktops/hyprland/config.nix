@@ -34,6 +34,7 @@ in {
         input = {
           kb_layout = "us";
           repeat_delay = 200;
+          natural_scroll = true;
           touchpad = {
             disable_while_typing = false;
             natural_scroll = true;
