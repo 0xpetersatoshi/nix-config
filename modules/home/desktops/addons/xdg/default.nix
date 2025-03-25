@@ -18,6 +18,8 @@ in {
       XDG_CURRENT_DESKTOP = "Hyprland";
       XDG_SESSION_DESKTOP = "Hyprland";
       XDG_SESSION_TYPE = "wayland";
+      # Ensure XDG_DATA_DIRS includes both system and user application directories
+      XDG_DATA_DIRS = "$XDG_DATA_DIRS:${config.home.profileDirectory}/share:/run/current-system/sw/share";
       HISTFILE = lib.mkForce "${config.xdg.stateHome}/bash/history";
       GTK2_RC_FILES = lib.mkForce "${config.xdg.configHome}/gtk-2.0/gtkrc";
     };
@@ -41,34 +43,42 @@ in {
           xdg-desktop-portal-gtk
           kdePackages.xdg-desktop-portal-kde
         ];
-        config.common.default = "hyprland";
-        xdgOpenUsePortal = true;
+        config = {
+          common.default = "kde";
+          hyprland.default = ["kde" "gtk"];
+          # Explicitly set the portal implementation for specific interfaces
+          kde = {
+            default = ["kde" "gtk"];
+            "org.freedesktop.impl.portal.FileChooser" = "kde";
+            "org.freedesktop.impl.portal.AppChooser" = "kde";
+          };
+        };
+        # Set to false to use the native xdg-open implementation
+        xdgOpenUsePortal = false;
       };
 
       mimeApps = mkIf pkgs.stdenv.isLinux {
         enable = true;
         associations.added = {
-          # "video/mp4" = ["org.gnome.Totem.desktop"];
-          # "video/quicktime" = ["org.gnome.Totem.desktop"];
-          # "video/webm" = ["org.gnome.Totem.desktop"];
-          # "video/x-matroska" = ["org.gnome.Totem.desktop"];
-          # "image/gif" = ["org.gnome.Loupe.desktop"];
-          # "image/png" = ["org.gnome.Loupe.desktop"];
-          # "image/jpg" = ["org.gnome.Loupe.desktop"];
-          # "image/jpeg" = ["org.gnome.Loupe.desktop"];
+          # Add these associations to ensure they're registered
+          "image/jpeg" = ["org.kde.gwenview.desktop"];
+          "image/png" = ["org.kde.gwenview.desktop"];
+          "image/gif" = ["org.kde.gwenview.desktop"];
+          "image/svg+xml" = ["org.kde.gwenview.desktop"];
+          "application/pdf" = ["com.github.johnfactotum.Foliate.desktop"];
         };
         defaultApplications = {
           # Web
-          "text/html" = ["brave-browser.desktop"];
-          "x-scheme-handler/http" = ["brave-browser.desktop"];
-          "x-scheme-handler/https" = ["brave-browser.desktop"];
-          "x-scheme-handler/chrome" = ["brave-browser.desktop"];
-          "application/x-extension-htm" = ["brave-browser.desktop"];
-          "application/x-extension-html" = ["brave-browser.desktop"];
-          "application/x-extension-shtml" = ["brave-browser.desktop"];
-          "application/xhtml+xml" = ["brave-browser.desktop"];
-          "application/x-extension-xhtml" = ["brave-browser.desktop"];
-          "application/x-extension-xht" = ["brave-browser.desktop"];
+          "text/html" = ["microsoft-edge.desktop"];
+          "x-scheme-handler/http" = ["microsoft-edge.desktop"];
+          "x-scheme-handler/https" = ["microsoft-edge.desktop"];
+          "x-scheme-handler/chrome" = ["microsoft-edge.desktop"];
+          "application/x-extension-htm" = ["microsoft-edge.desktop"];
+          "application/x-extension-html" = ["microsoft-edge.desktop"];
+          "application/x-extension-shtml" = ["microsoft-edge.desktop"];
+          "application/xhtml+xml" = ["microsoft-edge.desktop"];
+          "application/x-extension-xhtml" = ["microsoft-edge.desktop"];
+          "application/x-extension-xht" = ["microsoft-edge.desktop"];
 
           # File manager
           "inode/directory" = ["org.kde.dolphin.desktop"];
