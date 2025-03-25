@@ -20,9 +20,9 @@ in {
       unstable.kdePackages.kcalc
       unstable.morgen
       unstable.obsidian
-      unstable.protonmail-desktop
+      protonmail-desktop
       unstable.qalculate-gtk
-      unstable.thunderbird
+      thunderbird
       unstable.zoom-us
     ];
   };
