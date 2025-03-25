@@ -34,5 +34,9 @@ return {
 
     -- disable this to avoid template format being auto-formatted with different properties
     disable_frontmatter = true,
+
+    picker = {
+      name = "fzf-lua",
+    },
   },
 }
