@@ -29,9 +29,10 @@ in {
     ];
 
     guis = {
-      # NOTE: only enable on non-nixos linux systems
+      # NOTE: only enable on non-nixos linux systems as these apps are managed in nixos modules
       security.enable = !pkgs.stdenv.isDarwin && (!lib.hasAttr "nixos" config);
       browsers.zen.enable = pkgs.stdenv.isLinux;
+      productivity.enable = pkgs.stdenv.isLinux;
     };
 
     cli = {
