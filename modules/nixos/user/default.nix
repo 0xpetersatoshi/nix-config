@@ -59,6 +59,7 @@ in {
             "tty"
             "plugdev"
             "podman"
+            "docker"
             "kvm"
             "libvirtd"
           ]

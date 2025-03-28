@@ -14,9 +14,15 @@ in {
     cloud.google.enable = true;
 
     cli = {
-      editors.neovim.enable = true;
-      multiplexers.zellij.enable = true;
-      multiplexers.tmux.enable = true;
+      editors = {
+        neovim.enable = true;
+        sql.enable = true;
+      };
+
+      multiplexers = {
+        zellij.enable = true;
+        tmux.enable = true;
+      };
 
       programs = {
         bat.enable = true;

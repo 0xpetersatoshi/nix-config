@@ -34,8 +34,8 @@ in {
       );
 
     home.shellAliases = {
-      docker = "podman";
-      "docker-compose" = "podman-compose";
+      # docker = "podman";
+      # "docker-compose" = "podman-compose";
     };
   };
 }

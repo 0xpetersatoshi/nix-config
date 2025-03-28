@@ -39,7 +39,8 @@ in {
 
   services = {
     virtualisation = {
-      podman.enable = true;
+      docker.enable = true;
+      podman.enable = false;
     };
     keyboard.kanata = {
       enable = true;
