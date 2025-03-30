@@ -58,6 +58,8 @@ in {
       zsa.enable = true;
     };
 
+    services.vpn.tailscale.enable = true;
+
     user = {
       name = "peter";
       initialPassword = "1";
