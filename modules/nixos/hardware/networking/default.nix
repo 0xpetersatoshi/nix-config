@@ -13,10 +13,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # networking.firewall = {
-    #   enable = true;
-    # };
-    networking.networkmanager.enable = true;
+    networking = {
+      firewall.enable = true;
+      networkmanager.enable = true;
+    };
     # environment.persistence."/persist".directories = [
     #   "/etc/NetworkManager"
     # ];
