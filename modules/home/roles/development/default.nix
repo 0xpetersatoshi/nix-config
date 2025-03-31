@@ -48,5 +48,7 @@ in {
         typescript.enable = true;
       };
     };
+
+    guis.development.enable = true;
   };
 }
