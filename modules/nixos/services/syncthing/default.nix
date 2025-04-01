@@ -16,6 +16,10 @@ in {
     services = {
       syncthing = {
         enable = true;
+        user = config.user.name;
+        group = "users";
+        dataDir = "/home/${config.user.name}";
+        configDir = "/home/${config.user.name}/.config/syncthing";
         openDefaultPorts = true;
         overrideDevices = false;
         overrideFolders = false;
