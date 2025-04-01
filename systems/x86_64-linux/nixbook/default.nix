@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  namespace,
+  ...
+}: let
   # Fix sound
   custom-alsa-ucm-conf = pkgs.fetchFromGitHub {
     owner = "alsa-project";
@@ -41,6 +45,9 @@ in {
     virtualisation = {
       docker.enable = true;
       podman.enable = false;
+    };
+    ${namespace} = {
+      syncthing.enable = true;
     };
     keyboard.kanata = {
       enable = true;
