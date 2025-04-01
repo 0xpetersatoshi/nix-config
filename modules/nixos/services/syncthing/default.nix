@@ -17,6 +17,8 @@ in {
       syncthing = {
         enable = true;
         openDefaultPorts = true;
+        overrideDevices = false;
+        overrideFolders = false;
       };
     };
   };
