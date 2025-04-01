@@ -16,10 +16,17 @@ in {
   };
 
   config = mkIf cfg.enable {
-    programs._1password-gui = {
-      enable = true;
-      package = cfg.package-gui;
-      polkitPolicyOwners = [config.user.name];
+    programs = {
+      _1password-gui = {
+        enable = true;
+        package = cfg.package-gui;
+        polkitPolicyOwners = [config.user.name];
+      };
+
+      _1password = {
+        enable = true;
+        package = pkgs.unstable._1password-cli;
+      };
     };
   };
 }

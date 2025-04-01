@@ -2,8 +2,10 @@
   lib,
   pkgs,
   config,
+  namespace,
   ...
-}: let
+}:
+with lib; let
   cfg = config.roles.common;
 in {
   options.roles.common = {
@@ -24,8 +26,9 @@ in {
     #   nix.enable = true;
     # };
 
-    home.packages = with pkgs; [
-      _1password-cli
+    home.packages = lib.mkIf (!lib.hasAttr "nixos" config) [
+      # install as service instead on NixOS
+      pkgs._1password-cli
     ];
 
     guis = {
