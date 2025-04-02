@@ -58,6 +58,15 @@ with lib; let
     hyprctl dispatch moveactive exact $pos_x $pos_y
     hyprctl dispatch resizeactive exact $size_x $size_y
   '';
+
+  increaseBrightnessCommand =
+    if cfg.hasLunarLakeCPU
+    then "${pkgs.light}/bin/light -A 5"
+    else "${pkgs.brightnessctl}/bin/brightnessctl +5%";
+  decreaseBrightnessCommand =
+    if cfg.hasLunarLakeCPU
+    then "${pkgs.light}/bin/light -U 5"
+    else "${pkgs.brightnessctl}/bin/brightnessctl -5%";
 in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
@@ -74,8 +83,8 @@ in {
         "SUPER, P, exec, $passwordManager"
         "SUPER, V, exec, ${pkgs.pyprland}/bin/pypr toggle pwvucontrol"
         "SUPER_SHIFT, T, exec, ${pkgs.pyprland}/bin/pypr toggle term"
-        ",XF86Launch5, exec,${pkgs.hyprlock}/bin/hyprlock"
-        ",XF86Launch4, exec,${pkgs.hyprlock}/bin/hyprlock"
+        ",XF86ScreenSaver, exec,${pkgs.hyprlock}/bin/hyprlock"
+        ",XF86Calculator, exec, ${pkgs.kdePackages.kcalc}/bin/kcalc"
         "SUPER,backspace, exec,${pkgs.hyprlock}/bin/hyprlock"
         "CTRL_SUPER,backspace, exec,wlogout --column-spacing 50 --row-spacing 50"
         ",Print, exec,grimblast --notify copysave area"
@@ -130,8 +139,8 @@ in {
         "SUPERSHIFT,u, movetoworkspace,special"
       ];
       bindi = [
-        ",XF86MonBrightnessUp, exec, ${pkgs.brightnessctl}/bin/brightnessctl +5%"
-        ",XF86MonBrightnessDown, exec, ${pkgs.brightnessctl}/bin/brightnessctl -5%"
+        ",XF86MonBrightnessUp, exec, ${increaseBrightnessCommand}"
+        ",XF86MonBrightnessDown, exec, ${decreaseBrightnessCommand}"
         ",XF86AudioRaiseVolume, exec, ${pkgs.pamixer}/bin/pamixer -i 5"
         ",XF86AudioLowerVolume, exec, ${pkgs.pamixer}/bin/pamixer -d 5"
         ",XF86AudioMute, exec, ${pkgs.pamixer}/bin/pamixer --toggle-mute"

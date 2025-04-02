@@ -15,6 +15,7 @@ in {
   options.desktops.hyprland = {
     enable = mkEnableOption "Enable hyprland window manager";
     execOnceExtras = mkOpt (listOf str) [] "Extra programs to exec once";
+    hasLunarLakeCPU = mkBoolOpt false "Whether or not the system has an Intel Lunar Lake CPU";
   };
 
   config = mkIf cfg.enable {
@@ -58,6 +59,8 @@ in {
       clipse
       pamixer
       playerctl
+      light
+      kdePackages.kcalc
 
       grimblast
       slurp

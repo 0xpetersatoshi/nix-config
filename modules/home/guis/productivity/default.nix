@@ -17,7 +17,6 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       unstable.dbeaver-bin
-      unstable.kdePackages.kcalc
       unstable.morgen
       unstable.obsidian
       protonmail-desktop

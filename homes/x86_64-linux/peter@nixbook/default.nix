@@ -2,6 +2,7 @@
   desktops = {
     hyprland = {
       enable = true;
+      hasLunarLakeCPU = true;
     };
 
     addons.kde.enable = true;
