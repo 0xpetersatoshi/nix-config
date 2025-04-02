@@ -6,29 +6,17 @@
 
 ;; define keys that will be modified (all keys still processed)
 (defsrc
-  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
-  caps  a    s    d    f    h    j    k    l    ;
-  lctl rmet
+  caps  a    s    d    f    g    h    j    k    l    ;
 )
 
 ;; default/base layer modifications always active
 (deflayer base
-    _    mute    vold    volu    -    brdn    brup    -    -    -    -    -    -
-  @cap  @a   @s   @d   @f   h    @j   @k   @l    @scln
-  lctl @fn
+  @cap  @a   @s   @d   @f   @g    h    @j   @k   @l    @scln
 )
 
 ;; shifted layer activated by holding CAPS lock
 (deflayer navigation
-  _    _    _    _    _    _    _    _    _    _    _    _    _
-  _     _    _    _    _    left    down     up    right     _
-  _    _
-)
-
-(deflayer f-row
-    _    f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
-    caps  _    _    _    _    _    _    _    _    _
-    _    _
+  _     _    _    _    _    _    left    down     up    right     _
 )
 
 (defvar
@@ -50,12 +38,12 @@
 
   ;; Layer toggle for navigation
   nav (layer-while-held navigation)
+  g (tap-hold $tap-time $hold-time g @nav)
 
-    cap (tap-hold-press $tap-time $hold-time esc @nav)
-
-  ;; Layer toggle for f-row
-  frow (layer-while-held f-row)
-
-  fn (tap-hold-press $tap-time $hold-time rmet @frow)
+  ;; Caps Lock with double-tap for actual Caps Lock
+  cap (tap-dance 200 (
+        (macro esc)
+        (macro caps)
+	))
 )
 
