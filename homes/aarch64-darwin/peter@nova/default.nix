@@ -23,6 +23,8 @@
     desktop.enable = true;
   };
 
+  styles.stylix.theme = "tokyo-night-storm";
+
   igloo.user = {
     enable = true;
     name = "peter";

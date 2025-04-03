@@ -5,7 +5,7 @@ font-style = bold
 font-size = 14
 
 # Theme
-theme = catppuccin-macchiato
+theme = tokyonight_moon
 
 # Cursor
 cursor-style = block

@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib; let
@@ -49,6 +50,6 @@ in {
       };
     };
 
-    guis.development.enable = true;
+    guis.development.enable = pkgs.stdenv.isLinux;
   };
 }
