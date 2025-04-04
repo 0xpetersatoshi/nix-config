@@ -10,7 +10,7 @@ with lib; let
     #!/usr/bin/env bash
 
     if grep open /proc/acpi/button/lid/LID0/state; then
-    		hyprctl keyword monitor "eDP-1, 2880x1800@120, 0x0, 1"
+    		hyprctl keyword monitor "eDP-1, 2880x1800@120, 0x0, 1.25"
     else
     		if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
     				hyprctl keyword monitor "eDP-1, disable"
