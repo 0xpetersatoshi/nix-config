@@ -101,7 +101,10 @@ in {
     ];
   };
 
-  styles.stylix.wallpaperPath = ../../../wallpaper/standard/astronaut-3-2912x1632.png;
+  styles.stylix = {
+    wallpaperPath = ../../../wallpaper/standard/astronaut-3-2912x1632.png;
+    theme = "tokyo-night-storm";
+  };
 
   system = {
     stateVersion = "24.11";
