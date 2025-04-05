@@ -551,4 +551,78 @@ return {
       { "<leader>xT", "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
     },
   },
+
+  -- disable flash
+  { "folke/flash.nvim", enabled = false, optional = true },
+
+  -- easily jump to any location and enhanced f/t motions for Leap
+  {
+    "ggandor/flit.nvim",
+    enabled = true,
+    keys = function()
+      ---@type LazyKeysSpec[]
+      local ret = {}
+      for _, key in ipairs { "f", "F", "t", "T" } do
+        ret[#ret + 1] = { key, mode = { "n", "x", "o" } }
+      end
+      return ret
+    end,
+    opts = { labeled_modes = "nx" },
+  },
+  {
+    "ggandor/leap.nvim",
+    enabled = true,
+    keys = {
+      { "s", mode = { "n", "x", "o" }, desc = "Leap Forward to" },
+      { "S", mode = { "n", "x", "o" }, desc = "Leap Backward to" },
+      { "gs", mode = { "n", "x", "o" }, desc = "Leap from Windows" },
+    },
+    config = function(_, opts)
+      local leap = require "leap"
+      for k, v in pairs(opts) do
+        leap.opts[k] = v
+      end
+      leap.add_default_mappings(true)
+      vim.keymap.del({ "x", "o" }, "x")
+      vim.keymap.del({ "x", "o" }, "X")
+    end,
+  },
+
+  -- rename surround mappings from gs to gz to prevent conflict with leap
+  {
+    "echasnovski/mini.surround",
+    enabled = true,
+    opts = {
+      mappings = {
+        add = "gza", -- Add surrounding in Normal and Visual modes
+        delete = "gzd", -- Delete surrounding
+        find = "gzf", -- Find surrounding (to the right)
+        find_left = "gzF", -- Find surrounding (to the left)
+        highlight = "gzh", -- Highlight surrounding
+        replace = "gzr", -- Replace surrounding
+        update_n_lines = "gzn", -- Update `n_lines`
+      },
+    },
+    keys = function(_, keys)
+      -- Populate the keys based on the user's options
+      local opts = util.opts "mini.surround"
+      local mappings = {
+        { "gz", "", desc = "+surround" },
+        { opts.mappings.add, desc = "Add Surrounding", mode = { "n", "v" } },
+        { opts.mappings.delete, desc = "Delete Surrounding" },
+        { opts.mappings.find, desc = "Find Right Surrounding" },
+        { opts.mappings.find_left, desc = "Find Left Surrounding" },
+        { opts.mappings.highlight, desc = "Highlight Surrounding" },
+        { opts.mappings.replace, desc = "Replace Surrounding" },
+        { opts.mappings.update_n_lines, desc = "Update `MiniSurround.config.n_lines`" },
+      }
+      mappings = vim.tbl_filter(function(m)
+        return m[1] and #m[1] > 0
+      end, mappings)
+      return vim.list_extend(mappings, keys)
+    end,
+  },
+
+  -- makes some plugins dot-repeatable like leap
+  { "tpope/vim-repeat", event = "VeryLazy" },
 }
