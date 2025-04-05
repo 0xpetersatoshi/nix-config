@@ -16,6 +16,11 @@ in {
     enable = mkEnableOption "Enable hyprland window manager";
     execOnceExtras = mkOpt (listOf str) [] "Extra programs to exec once";
     hasLunarLakeCPU = mkBoolOpt false "Whether or not the system has an Intel Lunar Lake CPU";
+    monitor = lib.mkOption {
+      type = lib.types.str;
+      default = ",preferred,auto,auto";
+      description = "Hyprland monitor configuration settings";
+    };
   };
 
   config = mkIf cfg.enable {
