@@ -49,7 +49,7 @@ in {
       # };
     };
 
-    hardware = {
+    hardware.${namespace} = {
       audio.enable = true;
       bluetooth.enable = true;
       logitechMouse.enable = true;

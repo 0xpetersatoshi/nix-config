@@ -7,9 +7,9 @@
 }:
 with lib;
 with lib.${namespace}; let
-  cfg = config.hardware.audio;
+  cfg = config.hardware.${namespace}.audio;
 in {
-  options.hardware.audio = with types; {
+  options.hardware.${namespace}.audio = with types; {
     enable = mkBoolOpt false "Enable or disable hardware audio support";
   };
 

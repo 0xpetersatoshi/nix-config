@@ -6,9 +6,9 @@
 }:
 with lib;
 with lib.${namespace}; let
-  cfg = config.hardware.power;
+  cfg = config.hardware.${namespace}.power;
 in {
-  options.hardware.power = with types; {
+  options.hardware.${namespace}.power = with types; {
     enable = mkBoolOpt false "Enable or disable hardware power support";
   };
 

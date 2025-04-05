@@ -6,9 +6,9 @@
 }:
 with lib;
 with lib.${namespace}; let
-  cfg = config.hardware.storage;
+  cfg = config.hardware.${namespace}.storage;
 in {
-  options.hardware.storage = with types; {
+  options.hardware.${namespace}.storage = with types; {
     enable = mkBoolOpt false "Enable or disable hardware storage support";
   };
 

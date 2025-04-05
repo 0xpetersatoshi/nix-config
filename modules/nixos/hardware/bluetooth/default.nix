@@ -1,12 +1,14 @@
 {
   config,
   lib,
+  namespace,
+  pkgs,
   ...
 }:
 with lib; let
-  cfg = config.hardware.bluetoothctl;
+  cfg = config.hardware.${namespace}.bluetooth;
 in {
-  options.hardware.bluetoothctl = {
+  options.hardware.${namespace}.bluetooth = {
     enable = mkEnableOption "Enable bluetooth service and packages";
   };
 
@@ -15,7 +17,7 @@ in {
     hardware = {
       bluetooth = {
         enable = true;
-        powerOnBoot = false;
+        powerOnBoot = true;
         settings = {
           General = {
             Enable = "Source,Sink,Media,Socket";

@@ -6,9 +6,9 @@
 }:
 with lib;
 with lib.${namespace}; let
-  cfg = config.hardware.zsa;
+  cfg = config.hardware.${namespace}.zsa;
 in {
-  options.hardware.zsa = with types; {
+  options.hardware.${namespace}.zsa = with types; {
     enable = mkBoolOpt false "Enable ZSA Keyboard";
   };
 

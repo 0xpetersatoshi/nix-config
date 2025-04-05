@@ -7,9 +7,9 @@
 }:
 with lib;
 with lib.${namespace}; let
-  cfg = config.hardware.logitechMouse;
+  cfg = config.hardware.${namespace}.logitechMouse;
 in {
-  options.hardware.logitechMouse = with types; {
+  options.hardware.${namespace}.logitechMouse = with types; {
     enable = mkBoolOpt false "Enable logitech mouse hardware for their mice";
   };
 
