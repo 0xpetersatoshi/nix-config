@@ -22,15 +22,9 @@ in {
       displayManager = {
         sddm = {
           enable = true;
-          wayland = {
-            enable = true;
-            compositor = "kwin";
-          };
 
           extraPackages = with pkgs; [
-            kdePackages.qtsvg
             kdePackages.qtmultimedia
-            kdePackages.qtvirtualkeyboard
           ];
 
           theme = "sddm-astronaut-theme";
@@ -62,11 +56,22 @@ in {
       })
     ];
 
+    security.pam.services = {
+      sddm = {
+        kwallet = {
+          enable = true;
+          package = pkgs.kdePackages.kwallet-pam;
+        };
+        text = ''
+          auth     optional     ${pkgs.kdePackages.kwallet-pam}/lib/security/pam_kwallet5.so
+          session  optional     ${pkgs.kdePackages.kwallet-pam}/lib/security/pam_kwallet5.so auto_start
+        '';
+      };
+    };
+
     programs = {
-      dconf.enable = true;
       kdeconnect = {
         enable = true;
-        package = lib.mkForce pkgs.kdePackages.kdeconnect-kde;
       };
     };
   };

@@ -29,7 +29,7 @@ in {
         "$passwordManager" = "1password";
         "$editor" = "nvim";
         "$music" = "spotify";
-        monitor = ",preferred,auto,auto";
+        monitor = cfg.monitor;
 
         input = {
           kb_layout = "us";

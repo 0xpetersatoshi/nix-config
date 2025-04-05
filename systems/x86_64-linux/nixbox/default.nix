@@ -9,7 +9,6 @@
   security = {
     _1password-browser-integration.enable = true;
     _1password-gui.enable = true;
-    kwalletAutoUnlock.enable = true;
   };
 
   services = {
