@@ -60,8 +60,6 @@ in {
         #   FontSize = 20;
         # };
       })
-
-      polkit_gnome # polkit gui
     ];
 
     programs = {
