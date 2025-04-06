@@ -14,6 +14,11 @@ return {
               formatting = {
                 command = { "alejandra" }, -- or nixfmt or nixpkgs-fmt
               },
+              options = {
+                nixos = {
+                  expr = "(builtins.getFlake (toString ~/nix-config)).nixosConfigurations.nixbook.options",
+                },
+              },
             },
           },
         },
