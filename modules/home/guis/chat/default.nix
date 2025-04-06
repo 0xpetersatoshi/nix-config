@@ -20,6 +20,7 @@ in {
       slack
       telegram-desktop
       whatsapp-for-linux
+      signal-desktop
     ];
   };
 }
