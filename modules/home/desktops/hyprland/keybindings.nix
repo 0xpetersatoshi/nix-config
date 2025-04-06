@@ -6,19 +6,6 @@
 }:
 with lib; let
   cfg = config.desktops.hyprland;
-  laptop_lid_switch = pkgs.writeShellScriptBin "laptop_lid_switch" ''
-    #!/usr/bin/env bash
-
-    if grep open /proc/acpi/button/lid/LID0/state; then
-    		hyprctl keyword monitor ${config.desktops.hyprland.monitor}
-    else
-    		if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
-    				hyprctl keyword monitor "eDP-1, disable"
-    		else
-    				systemctl suspend
-    		fi
-    fi
-  '';
 
   resize = pkgs.writeShellScriptBin "resize" ''
     #!/usr/bin/env bash
@@ -137,6 +124,8 @@ in {
         "SUPERSHIFT,j, swapwindow,d"
         "SUPER,u, togglespecialworkspace"
         "SUPERSHIFT,u, movetoworkspace,special"
+        "SUPER, F7, exec, hyprctl keyword monitor \"${cfg.multiMonitor.laptopMonitor},disable\""
+        "SUPER SHIFT, F7, exec, hyprctl keyword monitor \"${cfg.multiMonitor.laptopMonitor},${cfg.multiMonitor.laptopResolution},1280x2160,${toString cfg.multiMonitor.laptopScale}\""
       ];
       bindi = [
         ",XF86MonBrightnessUp, exec, ${increaseBrightnessCommand}"
@@ -150,9 +139,14 @@ in {
         ",XF86AudioPlay, exec,playerctl play-pause"
         ",XF86AudioStop, exec,playerctl stop"
       ];
-      bindl = [
-        ",switch:Lid Switch, exec, ${laptop_lid_switch}/bin/laptop_lid_switch"
-      ];
+      bindl = mkIf cfg.enable (
+        [
+          # Other bindings...
+        ]
+        ++ (optionals cfg.multiMonitor.enable [
+          ",switch:Lid Switch, exec, ${cfg.multiMonitor.monitorScript}/bin/handle-monitors"
+        ])
+      );
       binde = [
         "SUPERALT, h, resizeactive, -20 0"
         "SUPERALT, l, resizeactive, 20 0"

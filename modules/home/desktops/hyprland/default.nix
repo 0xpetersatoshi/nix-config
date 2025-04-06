@@ -21,6 +21,44 @@ in {
       default = ",preferred,auto,auto";
       description = "Hyprland monitor configuration settings";
     };
+    multiMonitor = {
+      enable = mkEnableOption "Enable multi-monitor support";
+      laptopMonitor = mkOption {
+        type = types.str;
+        default = "eDP-1";
+        description = "Identifier for the laptop monitor";
+      };
+      externalMonitor = mkOption {
+        type = types.str;
+        default = "DP-1";
+        description = "Identifier for the external monitor";
+      };
+      laptopResolution = mkOption {
+        type = types.str;
+        default = "2880x1800@120";
+        description = "Resolution for laptop monitor";
+      };
+      externalResolution = mkOption {
+        type = types.str;
+        default = "5120x2160@72";
+        description = "Resolution for external monitor";
+      };
+      laptopScale = mkOption {
+        type = types.float;
+        default = 1.5;
+        description = "Scale factor for laptop monitor";
+      };
+      externalScale = mkOption {
+        type = types.float;
+        default = 1.0;
+        description = "Scale factor for external monitor";
+      };
+      monitorScript = mkOption {
+        type = types.package;
+        description = "Script for handling monitor connections";
+        internal = true;
+      };
+    };
   };
 
   config = mkIf cfg.enable {
@@ -57,6 +95,7 @@ in {
     };
 
     home.packages = with pkgs; [
+      acpi
       hyprpanel
       mplayer
       brightnessctl
