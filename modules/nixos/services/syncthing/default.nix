@@ -2,6 +2,7 @@
   config,
   lib,
   namespace,
+  pkgs,
   ...
 }:
 with lib;
@@ -25,5 +26,9 @@ in {
         overrideFolders = false;
       };
     };
+
+    environment.systemPackages = with pkgs; [
+      syncthingtray
+    ];
   };
 }
