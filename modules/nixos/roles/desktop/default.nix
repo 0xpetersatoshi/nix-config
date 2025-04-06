@@ -54,6 +54,7 @@ in {
       bluetooth.enable = true;
       logitechMouse.enable = true;
       power.enable = true;
+      printing.enable = true;
       storage.enable = true;
       zsa.enable = true;
     };

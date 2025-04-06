@@ -15,7 +15,6 @@
     virtualisation = {
       podman.enable = true;
     };
-    printing.enable = true;
   };
 
   roles = {

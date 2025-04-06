@@ -52,7 +52,6 @@ in {
       enable = true;
       configFile = ../../../dotfiles/kanata/linux.config.kbd;
     };
-    printing.enable = true;
     thermald.enable = true;
     # conflicts with pkgs.power-profiles-daemon used by hyprpanel
     # tlp.enable = true;
