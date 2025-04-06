@@ -47,6 +47,12 @@ in {
       };
     };
 
+    systemd.services.display-manager = {
+      serviceConfig = {
+        KeyringMode = "inherit";
+      };
+    };
+
     environment.systemPackages = with pkgs; [
       (unstable.sddm-astronaut.override {
         embeddedTheme = "pixel_sakura";
@@ -61,11 +67,17 @@ in {
         kwallet = {
           enable = true;
           package = pkgs.kdePackages.kwallet-pam;
+          forceRun = true;
         };
         text = ''
           auth     optional     ${pkgs.kdePackages.kwallet-pam}/lib/security/pam_kwallet5.so
           session  optional     ${pkgs.kdePackages.kwallet-pam}/lib/security/pam_kwallet5.so auto_start
         '';
+      };
+
+      ${config.user.name}.kwallet = {
+        enable = true;
+        package = pkgs.kdePackages.kwallet-pam;
       };
     };
 
