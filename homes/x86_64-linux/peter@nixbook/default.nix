@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   desktops = {
     hyprland = {
       enable = true;
@@ -35,6 +39,8 @@
     wallpaperPath = ../../../wallpaper/standard/astronaut-3-2912x1632.png;
     theme = "tokyo-night-storm";
   };
+
+  stylix.targets.hyprpaper.enable = lib.mkForce false;
 
   home.stateVersion = "24.11";
 }
