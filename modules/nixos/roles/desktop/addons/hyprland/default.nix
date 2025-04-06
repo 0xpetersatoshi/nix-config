@@ -2,6 +2,7 @@
   config,
   lib,
   namespace,
+  pkgs,
   ...
 }:
 with lib;
@@ -26,5 +27,13 @@ in {
 
     # NOTE: handles input devices (i.e. touchpads) in Wayland compositors
     services.libinput.enable = true;
+    services.xserver.windowManager.fvwm2.gestures = true;
+
+    environment.systemPackages = with pkgs; [
+      libinput
+      libinput-gestures
+      wmctrl
+      xdotool
+    ];
   };
 }
