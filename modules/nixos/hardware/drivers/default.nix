@@ -127,6 +127,7 @@ in {
         []
         ++ (optionals cfg.hasAmdCpu ["kvm-amd"])
         ++ (optionals (cfg.hasIntelCpu || cfg.hasOlderIntelCpu) ["kvm-intel"])
+        ++ (optionals cfg.hasIntelGpu ["xe"])
         ++ (optionals cfg.hasAmdGpu ["amdgpu"])
         ++ (optionals cfg.hasNvidiaGpu [
           "nvidia"
