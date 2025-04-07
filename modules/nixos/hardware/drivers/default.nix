@@ -169,6 +169,10 @@ in {
       ++ lib.optionals (cfg.hasNvidiaGpu || cfg.hasIntelGpu) [
         libva-vdpau-driver
         vulkan-tools
+      ]
+      ++ [
+        glxinfo
+        mpv
       ];
   };
 }
