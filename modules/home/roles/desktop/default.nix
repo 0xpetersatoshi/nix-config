@@ -21,5 +21,8 @@ in {
       chat.enable = pkgs.stdenv.isLinux;
       browsers.common.enable = pkgs.stdenv.isLinux;
     };
+
+    # allows using Bluetooth headset buttons to control media player
+    services.mpris-proxy.enable = true;
   };
 }
