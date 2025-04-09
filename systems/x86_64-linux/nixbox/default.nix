@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  namespace,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
@@ -13,7 +17,12 @@
 
   services = {
     virtualisation = {
-      podman.enable = true;
+      docker.enable = true;
+      podman.enable = false;
+    };
+
+    ${namespace} = {
+      syncthing.enable = true;
     };
   };
 
@@ -27,7 +36,10 @@
     };
   };
 
-  styles.stylix.wallpaperPath = ../../../wallpaper/ultrawide/sci_fi_architecture_building_beach-wallpaper-3440x1440.jpg;
+  styles.stylix = {
+    wallpaperPath = ../../../wallpaper/ultrawide/sci_fi_architecture_building_beach-wallpaper-3440x1440.jpg;
+    theme = "tokyo-night-storm";
+  };
 
   networking.hostName = "nixbox";
 
@@ -43,6 +55,8 @@
       hasAmdCpu = true;
       hasNvidiaGpu = true;
     };
+
+    enableAllFirmware = true;
 
     suspend = {
       enable = true;

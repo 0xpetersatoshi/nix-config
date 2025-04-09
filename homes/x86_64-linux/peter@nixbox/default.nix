@@ -1,10 +1,18 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   desktops = {
     hyprland = {
       enable = true;
     };
 
-    addons.kde.enable = true;
+    addons = {
+      hyprpanel = {
+        wallpaperPath = ../../../wallpaper/ultrawide/sci_fi_architecture_building_beach-wallpaper-3440x1440.jpg;
+      };
+    };
   };
 
   home.packages = with pkgs; [
@@ -18,6 +26,8 @@
 
   cli.programs.git.signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFjoHku2U1i34uJWA6kODHU44QJCpQE7LHxYQgk382h";
 
+  guis.browsers.msedge.enable = true;
+
   roles = {
     common.enable = true;
     desktop.enable = true;
@@ -29,7 +39,12 @@
     name = "peter";
   };
 
-  styles.stylix.wallpaperPath = ../../../wallpaper/ultrawide/sci_fi_architecture_building_beach-wallpaper-3440x1440.jpg;
+  styles.stylix = {
+    wallpaperPath = ../../../wallpaper/ultrawide/sci_fi_architecture_building_beach-wallpaper-3440x1440.jpg;
+    theme = "tokyo-night-storm";
+  };
+
+  stylix.targets.hyprpaper.enable = lib.mkForce false;
 
   home.stateVersion = "24.11";
 }
