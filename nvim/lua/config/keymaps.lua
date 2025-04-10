@@ -126,13 +126,18 @@ map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 -- Jump to the definition of the word under your cursor.
 --  This is where a variable was first declared, or where a function is defined, etc.
 --  To jump back, press <C-t>.
-map("n", "gd", "<cmd>FzfLua lsp_definitions     jump1=true ignore_current_line=true<cr>", { desc = "Goto Definition" })
+map(
+  "n",
+  "gd",
+  "<cmd>FzfLua lsp_definitions     jump1=true ignore_current_line=true<cr>",
+  { desc = "[G]oto [D]efinition" }
+)
 -- Find references for the word under your cursor.
 map(
   "n",
   "gr",
   "<cmd>FzfLua lsp_references      jump1=true ignore_current_line=true<cr>",
-  { desc = "References", nowait = true }
+  { desc = "[G]oto [R]eferences", nowait = true }
 )
 -- Jump to the implementation of the word under your cursor.
 --  Useful when your language has ways of declaring types without an actual implementation.
@@ -140,13 +145,13 @@ map(
   "n",
   "gI",
   "<cmd>FzfLua lsp_implementations jump1=true ignore_current_line=true<cr>",
-  { desc = "Goto Implementation" }
+  { desc = "[G]oto [I]mplementation" }
 )
 map(
   "n",
   "gy",
   "<cmd>FzfLua lsp_typedefs        jump1=true ignore_current_line=true<cr>",
-  { desc = "Goto T[y]pe Definition" }
+  { desc = "[G]oto T[y]pe Definition" }
 )
 
 -- diagnostic
