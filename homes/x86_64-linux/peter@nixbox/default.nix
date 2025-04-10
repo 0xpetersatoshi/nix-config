@@ -28,6 +28,25 @@
 
   guis.browsers.msedge.enable = true;
 
+  programs.hyprpanel.settings = lib.mkForce {
+    layout = {
+      "bar.layouts" = {
+        "0" = {
+          left = ["dashboard" "workspaces" "windowtitle"];
+          middle = ["clock"];
+          right = [
+            "volume"
+            "network"
+            "bluetooth"
+            "systray"
+            "media"
+            "notifications"
+          ];
+        };
+      };
+    };
+  };
+
   roles = {
     common.enable = true;
     desktop.enable = true;
