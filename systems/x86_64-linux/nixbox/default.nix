@@ -45,7 +45,7 @@
 
   boot = {
     # supportedFilesystems = lib.mkForce ["btrfs"];
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.unstable.linuxPackages_zen;
     # resumeDevice = "/dev/disk/by-label/nixos";
   };
 
