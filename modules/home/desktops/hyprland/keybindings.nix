@@ -57,6 +57,7 @@ with lib; let
 in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
+      "$pypr" = "${pkgs.pyprland}/bin/pypr";
       bind = [
         "SUPER, T, exec, $terminal"
         "SUPER, B, exec, $browser"
@@ -68,8 +69,8 @@ in {
         "SUPER, G, togglefloating,"
         "SUPER, N, exec, hyprpanel toggleWindow notificationsmenu"
         "SUPER, P, exec, $passwordManager"
-        "SUPER, V, exec, ${pkgs.pyprland}/bin/pypr toggle pwvucontrol"
-        "SUPER_SHIFT, T, exec, ${pkgs.pyprland}/bin/pypr toggle term"
+        "SUPER, V, exec, $pypr toggle pwvucontrol"
+        "SUPER_SHIFT, T, exec, $pypr toggle term"
         ",XF86ScreenSaver, exec,${pkgs.hyprlock}/bin/hyprlock"
         ",XF86Calculator, exec, ${pkgs.kdePackages.kcalc}/bin/kcalc"
         "SUPER,backspace, exec,${pkgs.hyprlock}/bin/hyprlock"

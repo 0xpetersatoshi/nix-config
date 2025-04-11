@@ -48,6 +48,7 @@ in {
 
       settings = {
         scalingPriority = "gdk";
+
         theme = {
           bar = {
             floating = true;
@@ -60,23 +61,31 @@ in {
               background_opacity = 65;
             };
           };
+
           matugen = true;
           matugen_settings = {
             scheme_type = "fruit-salad";
             variation = "standard_1";
           };
         };
+
         bar = {
           launcher.autoDetectIcon = true;
           workspaces = {
-            show_icons = true;
-            show_numbered = false;
+            show_icons = false;
+            show_numbered = true;
+            numbered_active_indicator = "highlight";
             showWsIcons = false;
             showApplicationIcons = false;
             workspaceMask = false;
+            ignored = "-98";
           };
         };
+
         wallpaper.image = "~/.local/share/hyprpanel/wallpapers/wallpaper.jpg";
+
+        notifications.position = "top right";
+
         menus = {
           clock = {
             time = {
@@ -87,6 +96,7 @@ in {
             powermenu.avatar.image = "~/.local/share/hyprpanel/avatars/avatar.jpg";
           };
         };
+
         layout = {
           "bar.layouts" = {
             "0" = {

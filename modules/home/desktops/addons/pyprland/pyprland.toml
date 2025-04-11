@@ -4,11 +4,19 @@ plugins = ["scratchpads"]
 [scratchpads.pwvucontrol]
 animation = "fromTop"
 command = "pwvucontrol"
-class = "pwvucontrol"
+class = "com.saivert.pwvucontrol"
 size = "50% 80%"
+workspace = "special:scratch_pwvucontrol"
+allow_special_workspaces = true
+unfocus = "hide"
+lazy = true
 
 [scratchpads.term]
 command = "ghostty"
-animation = "fromTop"
-class = "com.example.scratchpad"
-# size = "75% 60%"
+animation = "fromRight"
+class = "com.mitchellh.ghostty"
+workspace = "special:scratch_term"
+allow_special_workspaces = true
+unfocus = "hide"
+lazy = true
+

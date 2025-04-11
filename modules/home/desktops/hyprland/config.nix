@@ -31,6 +31,15 @@ in {
         "$music" = "spotify";
         monitor = mkIf (!cfg.multiMonitor.enable) cfg.monitor;
 
+        # Create persistent workspaces
+        workspace = [
+          "1, persistent:true"
+          "2, persistent:true"
+          "3, persistent:true"
+          "4, persistent:true"
+          "5, persistent:true"
+        ];
+
         input = {
           kb_layout = "us";
           repeat_delay = 200;
@@ -82,6 +91,7 @@ in {
             "${pkgs.syncthingtray}/bin/syncthingtray --wait"
             "${pkgs.solaar}/bin/solaar -w hide"
             "${pkgs.hyprpanel}/bin/hyprpanel"
+            "hyprctl dispatch workspace 1"
           ]
           ++ cfg.execOnceExtras;
       };
