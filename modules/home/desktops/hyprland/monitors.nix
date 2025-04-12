@@ -63,18 +63,18 @@ in {
       ];
 
       # Default workspaces
-      workspace = [
-        "1,monitor:${cfg.multiMonitor.externalMonitor},default:true"
-        "2,monitor:${cfg.multiMonitor.externalMonitor}"
-        "3,monitor:${cfg.multiMonitor.externalMonitor}"
-        "4,monitor:${cfg.multiMonitor.externalMonitor}"
-        "5,monitor:${cfg.multiMonitor.externalMonitor}"
-        "6,monitor:${cfg.multiMonitor.laptopMonitor},default:true"
-        "7,monitor:${cfg.multiMonitor.laptopMonitor}"
-        "8,monitor:${cfg.multiMonitor.laptopMonitor}"
-        "9,monitor:${cfg.multiMonitor.laptopMonitor}"
-        "10,monitor:${cfg.multiMonitor.laptopMonitor}"
-      ];
+      # workspace = [
+      #   "1,monitor:${cfg.multiMonitor.externalMonitor},default:true"
+      #   "2,monitor:${cfg.multiMonitor.externalMonitor}"
+      #   "3,monitor:${cfg.multiMonitor.externalMonitor}"
+      #   "4,monitor:${cfg.multiMonitor.externalMonitor}"
+      #   "5,monitor:${cfg.multiMonitor.externalMonitor}"
+      #   "6,monitor:${cfg.multiMonitor.laptopMonitor},default:true"
+      #   "7,monitor:${cfg.multiMonitor.laptopMonitor}"
+      #   "8,monitor:${cfg.multiMonitor.laptopMonitor}"
+      #   "9,monitor:${cfg.multiMonitor.laptopMonitor}"
+      #   "10,monitor:${cfg.multiMonitor.laptopMonitor}"
+      # ];
 
       # Add to exec-once
       exec-once = mkIf cfg.multiMonitor.enable [
