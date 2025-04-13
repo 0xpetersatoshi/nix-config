@@ -33,6 +33,7 @@ in {
         eza.enable = true;
         fzf.enable = true;
         git.enable = true;
+        hardware.enable = true;
         modern-unix.enable = true;
         network-tools.enable = true;
         nh.enable = true;
