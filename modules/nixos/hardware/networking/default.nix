@@ -14,7 +14,13 @@ in {
 
   config = mkIf cfg.enable {
     networking = {
-      firewall.enable = true;
+      firewall = {
+        enable = true;
+        # allow SMB traffic
+        allowedTCPPorts = [139 445];
+        # allow NetBIOS name resolution
+        allowedUDPPorts = [137 138];
+      };
       networkmanager.enable = true;
     };
     # environment.persistence."/persist".directories = [
