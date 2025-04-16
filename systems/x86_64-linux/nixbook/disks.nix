@@ -7,6 +7,38 @@
         content = {
           type = "gpt";
           partitions = {
+            # Preserve existing Windows partitions by explicitly defining them
+            # and setting their createMbr to false
+            EFI = {
+              size = "2G";
+              type = "EF00";
+              # This tells disko not to create or format this partition
+              content.type = "filesystem";
+              content.format = "vfat";
+              content.mountpoint = "/boot";
+            };
+
+            microsoftReserved = {
+              size = "16M";
+              type = "8300"; # Regular Linux partition type as placeholder
+              content.type = "filesystem";
+              content.format = "ntfs";
+            };
+
+            windowsC = {
+              size = "500G"; # Use exact size from your system
+              type = "8300"; # Regular Linux partition type as placeholder
+              content.type = "filesystem";
+              content.format = "ntfs";
+            };
+
+            windowsRecovery = {
+              size = "642M";
+              type = "8300"; # Regular Linux partition type as placeholder
+              content.type = "filesystem";
+              content.format = "ntfs";
+            };
+
             nixos = {
               start = "502G";
               end = "+1T";
