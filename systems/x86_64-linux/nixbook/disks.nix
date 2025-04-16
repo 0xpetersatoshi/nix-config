@@ -1,70 +1,86 @@
-{...}: {
+{
   disko.devices = {
     disk = {
-      nvme0 = {
+      main = {
         type = "disk";
-        device = "/dev/nvme0n1";
+        device = "/dev/disk/by-id/nvme-Corsair_MP600_MICRO_AA4GB506003BK9";
         content = {
           type = "gpt";
           partitions = {
-            # Preserve existing Windows partitions by explicitly defining them
-            # and setting their createMbr to false
-            ESP = {
-              size = "260M"; # Use exact size from your system
-              type = "EF00";
-              # This tells disko not to create or format this partition
-              content.type = "filesystem";
-              content.format = "vfat";
-              content.mountpoint = "/boot";
-            };
-            microsoftReserved = {
-              size = "16M"; # Use exact size from your system
-              type = "8300"; # Regular Linux partition type as placeholder
-              content.type = "filesystem";
-              content.format = "ntfs";
-            };
-            windowsC = {
-              size = "317G"; # Use exact size from your system
-              type = "8300"; # Regular Linux partition type as placeholder
-              content.type = "filesystem";
-              content.format = "ntfs";
-            };
-            windowsRecovery = {
-              size = "2G"; # Use exact size from your system
-              type = "8300"; # Regular Linux partition type as placeholder
-              content.type = "filesystem";
-              content.format = "ntfs";
-            };
-            # New NixOS partition using remaining space
             nixos = {
-              size = "100%"; # Use remaining space
+              start = "502G";
+              end = "+1T";
               content = {
                 type = "luks";
-                name = "nixos-enc";
-                settings.allowDiscards = true;
-                passwordFile = "/tmp/secret.key"; # Temporary file for installation
+                name = "nixos-root";
+                # disable settings.keyFile if you want to use interactive password entry
+                #passwordFile = "/tmp/secret.key"; # Interactive
+                settings = {
+                  allowDiscards = true;
+                  # disable to use interactive password entry
+                  keyFile = "/tmp/secret.key";
+                };
+                # additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
                 content = {
                   type = "btrfs";
-                  extraArgs = ["-L" "nixos"];
+                  extraArgs = ["-L" "nixos" "-f"];
                   subvolumes = {
-                    "@" = {
+                    "/root" = {
                       mountpoint = "/";
                       mountOptions = ["compress=zstd" "noatime"];
                     };
-                    "@home" = {
+                    "/home" = {
                       mountpoint = "/home";
                       mountOptions = ["compress=zstd" "noatime"];
                     };
-                    "@nix" = {
+                    "/nix" = {
                       mountpoint = "/nix";
                       mountOptions = ["compress=zstd" "noatime"];
                     };
-                    "@swap" = {
+                    "/swap" = {
                       mountpoint = "/.swapvol";
                       mountOptions = ["noatime"];
-                      swap = {
-                        swapfile.size = "4G"; # Adjust based on your needs
-                      };
+                      swap.swapfile.size = "1G";
+                    };
+                  };
+                };
+              };
+            };
+
+            archlinux = {
+              start = "after:nixos";
+              end = "100%";
+              content = {
+                type = "luks";
+                name = "archlinux-root";
+                # disable settings.keyFile if you want to use interactive password entry
+                #passwordFile = "/tmp/secret.key"; # Interactive
+                settings = {
+                  allowDiscards = true;
+                  # disable to use interactive password entry
+                  keyFile = "/tmp/secret.key";
+                };
+                # additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
+                content = {
+                  type = "btrfs";
+                  extraArgs = ["-L" "archlinux" "-f"];
+                  subvolumes = {
+                    "/root" = {
+                      mountpoint = "/";
+                      mountOptions = ["compress=zstd" "noatime"];
+                    };
+                    "/home" = {
+                      mountpoint = "/home";
+                      mountOptions = ["compress=zstd" "noatime"];
+                    };
+                    "/nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = ["compress=zstd" "noatime"];
+                    };
+                    "/swap" = {
+                      mountpoint = "/.swapvol";
+                      mountOptions = ["noatime"];
+                      swap.swapfile.size = "1G";
                     };
                   };
                 };

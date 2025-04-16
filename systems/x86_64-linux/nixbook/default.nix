@@ -76,8 +76,10 @@ in {
   boot = {
     kernelPackages = pkgs.unstable.linuxPackages_latest;
 
+    loader.efi.efiSysMountPoint = "/boot/efi"; # Mount point for the EFI partition
+
     initrd.luks.devices = {
-      "nixos-enc" = {
+      "nixos-root" = {
         allowDiscards = true;
         preLVM = true;
       };
