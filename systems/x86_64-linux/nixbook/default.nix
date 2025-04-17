@@ -32,7 +32,6 @@
 in {
   imports = [
     ./hardware-configuration.nix
-    ./disks.nix
   ];
 
   security = {
@@ -75,16 +74,7 @@ in {
 
   boot = {
     kernelPackages = pkgs.unstable.linuxPackages_latest;
-
-    loader.efi.efiSysMountPoint = "/boot/efi"; # Mount point for the EFI partition
-
-    initrd.luks.devices = {
-      "nixos-root" = {
-        device = "/dev/disk/by-uuid/6ff16ca1-0e28-4afc-b61b-e3bcc78b8ec6";
-        allowDiscards = true;
-        preLVM = true;
-      };
-    };
+    loader.efi.efiSysMountPoint = "/boot";
   };
 
   hardware = {
