@@ -32,7 +32,6 @@
 in {
   imports = [
     ./hardware-configuration.nix
-    ./disks.nix
   ];
 
   security = {
@@ -75,13 +74,7 @@ in {
 
   boot = {
     kernelPackages = pkgs.unstable.linuxPackages_latest;
-
-    initrd.luks.devices = {
-      "nixos-enc" = {
-        allowDiscards = true;
-        preLVM = true;
-      };
-    };
+    loader.efi.efiSysMountPoint = "/boot";
   };
 
   hardware = {
