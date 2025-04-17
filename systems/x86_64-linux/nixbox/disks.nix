@@ -8,8 +8,7 @@
           type = "gpt";
           partitions = {
             nixos = {
-              start = "750G";
-              end = "+1T";
+              size = "1500G";
               content = {
                 type = "luks";
                 name = "nixos-root";
@@ -48,8 +47,7 @@
             };
 
             archlinux = {
-              start = "after:nixos";
-              end = "100%";
+              size = "100%";
               content = {
                 type = "luks";
                 name = "archlinux-root";
