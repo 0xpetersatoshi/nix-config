@@ -10,25 +10,6 @@
     rev = "f293b3149b8b370fed70eb83025410ddaee8a9cf";
     hash = "sha256-SEAizUiMbSN7iEsHoiDEJkBFdaVPyi/t2YN7Jao22iw=";
   };
-
-  # Custom Intel Bluetooth firmware package
-  custom-intel-bt-firmware = pkgs.stdenv.mkDerivation {
-    name = "custom-intel-bt-firmware";
-
-    src = pkgs.fetchgit {
-      url = "https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git";
-      rev = "47bc8a2407426274d099607d5af419cb616d9209"; # Specific commit with the firmware
-      hash = "sha256-V581DtceoFuY/GP4eTcq+aACUd+WY+SdtuDUX8UHB+4=";
-    };
-
-    installPhase = ''
-      mkdir -p $out/lib/firmware/intel
-      cp intel/ibt-0190-0291-usb.sfi $out/lib/firmware/intel/
-      cp intel/ibt-0190-0291-usb.ddc $out/lib/firmware/intel/
-      cp intel/ibt-0190-0291-pci.sfi $out/lib/firmware/intel/
-      cp intel/ibt-0190-0291-pci.ddc $out/lib/firmware/intel/
-    '';
-  };
 in {
   imports = [
     ./hardware-configuration.nix
@@ -91,7 +72,6 @@ in {
     firmware = with pkgs; [
       unstable.sof-firmware
       unstable.linux-firmware
-      custom-intel-bt-firmware
     ];
   };
 
