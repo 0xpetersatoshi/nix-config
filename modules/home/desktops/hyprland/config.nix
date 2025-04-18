@@ -25,7 +25,7 @@ in {
         "$menu" = "rofi -show drun -mode drun";
         "$windowSwitcher" = "rofi -show window";
         # "$notificationsClient" = "swaync-client -t";
-        "$browser" = "microsoft-edge";
+        "$browser" = "brave";
         "$passwordManager" = "1password";
         "$editor" = "nvim";
         "$music" = "spotify";
