@@ -69,16 +69,16 @@ in {
         };
         defaultApplications = {
           # Web
-          "text/html" = ["microsoft-edge.desktop"];
-          "x-scheme-handler/http" = ["microsoft-edge.desktop"];
-          "x-scheme-handler/https" = ["microsoft-edge.desktop"];
-          "x-scheme-handler/chrome" = ["microsoft-edge.desktop"];
-          "application/x-extension-htm" = ["microsoft-edge.desktop"];
-          "application/x-extension-html" = ["microsoft-edge.desktop"];
-          "application/x-extension-shtml" = ["microsoft-edge.desktop"];
-          "application/xhtml+xml" = ["microsoft-edge.desktop"];
-          "application/x-extension-xhtml" = ["microsoft-edge.desktop"];
-          "application/x-extension-xht" = ["microsoft-edge.desktop"];
+          "text/html" = ["brave-browser.desktop"];
+          "x-scheme-handler/http" = ["brave-browser.desktop"];
+          "x-scheme-handler/https" = ["brave-browser.desktop"];
+          "x-scheme-handler/chrome" = ["brave-browser.desktop"];
+          "application/x-extension-htm" = ["brave-browser.desktop"];
+          "application/x-extension-html" = ["brave-browser.desktop"];
+          "application/x-extension-shtml" = ["brave-browser.desktop"];
+          "application/xhtml+xml" = ["brave-browser.desktop"];
+          "application/x-extension-xhtml" = ["brave-browser.desktop"];
+          "application/x-extension-xht" = ["brave-browser.desktop"];
 
           # File manager
           "inode/directory" = ["org.kde.dolphin.desktop"];
