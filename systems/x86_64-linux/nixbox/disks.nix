@@ -28,7 +28,7 @@
                 settings = {
                   allowDiscards = true;
                   # disable to use interactive password entry
-                  keyFile = "/tmp/secret.key";
+                  # keyFile = "/tmp/secret.key";
                 };
                 # additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
                 content = {
