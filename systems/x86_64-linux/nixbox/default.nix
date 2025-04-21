@@ -34,6 +34,7 @@
         kde.enable = true;
       };
     };
+    gaming.enable = true;
   };
 
   styles.stylix = {
