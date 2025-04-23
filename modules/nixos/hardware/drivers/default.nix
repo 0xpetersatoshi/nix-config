@@ -158,13 +158,13 @@ in {
         amdvlk
       ]
       ++ lib.optionals cfg.hasNvidiaGpu [
+        nvtopPackages.nvidia
         nvidia-vaapi-driver
         vulkan-loader
         vulkan-validation-layers
       ]
       ++ lib.optionals cfg.hasIntelGpu [
         intel-gpu-tools
-        libva-utils
       ]
       ++ lib.optionals (cfg.hasNvidiaGpu || cfg.hasIntelGpu) [
         libva-vdpau-driver
@@ -172,7 +172,9 @@ in {
       ]
       ++ [
         glxinfo
+        libva-utils
         mpv
+        vdpauinfo
       ];
   };
 }
