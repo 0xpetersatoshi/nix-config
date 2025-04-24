@@ -26,25 +26,36 @@ in {
       graphics = {
         enable = true;
         enable32Bit = true;
-        extraPackages = pkgs.lib.flatten (
-          with pkgs; [
-            # AMD GPU packages
-            (lib.optional cfg.hasAmdGpu amdvlk)
-
-            # Nvidia GPU packages
-            (lib.optional cfg.hasNvidiaGpu nvidia-vaapi-driver)
-
-            # Nvidia/Intel shared GPU packages
-            (lib.optional (cfg.hasNvidiaGpu || cfg.hasIntelGpu) libva-vdpau-driver)
-
-            # Intel Cpu packages
-            (lib.optional cfg.hasIntelCpu intel-media-driver)
-            (lib.optional cfg.hasOlderIntelCpu intel-vaapi-driver)
-
-            # Mesa
-            (lib.optional needsMesa mesa)
+        extraPackages = with pkgs;
+        # AMD GPU packages
+          lib.optionals cfg.hasAmdGpu [
+            amdvlk
           ]
-        );
+          # Nvidia GPU packages
+          ++ lib.optionals cfg.hasNvidiaGpu [
+            nvidia-vaapi-driver
+          ]
+          # Nvidia/Intel shared GPU packages
+          ++ lib.optionals (cfg.hasNvidiaGpu || cfg.hasIntelGpu) [
+            libva-vdpau-driver
+          ]
+          # Intel GPU packages
+          ++ lib.optionals cfg.hasIntelGpu [
+            vpl-gpu-rt
+            libvpl
+            libvdpau-va-gl
+          ]
+          # Intel Cpu packages
+          ++ lib.optionals cfg.hasIntelCpu [
+            intel-media-driver
+          ]
+          ++ lib.optionals cfg.hasOlderIntelCpu [
+            intel-vaapi-driver
+          ]
+          # Mesa
+          ++ lib.optionals needsMesa [
+            mesa
+          ];
         extraPackages32 = pkgs.lib.flatten (
           with pkgs; [
             # AMD GPU packages
@@ -165,6 +176,7 @@ in {
       ]
       ++ lib.optionals cfg.hasIntelGpu [
         intel-gpu-tools
+        nvtopPackages.intel
       ]
       ++ lib.optionals (cfg.hasNvidiaGpu || cfg.hasIntelGpu) [
         libva-vdpau-driver

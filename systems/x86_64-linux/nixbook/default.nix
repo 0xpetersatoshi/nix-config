@@ -87,6 +87,7 @@ in {
   environment = {
     sessionVariables = {
       ALSA_CONFIG_UCM2 = "${custom-alsa-ucm-conf}/ucm2";
+      ANV_VIDEO_DECODE = "1";
       LIBVA_DRIVER_NAME = "iHD"; # Use intel-media-driver
       WLR_DRM_DEVICES = "/dev/dri/by-path/pci-0000:00:02.0-card";
       MOZ_X11_EGL = "1"; # Enable hardware acceleration in Firefox
