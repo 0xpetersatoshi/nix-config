@@ -22,6 +22,10 @@ in {
       displayManager = {
         sddm = {
           enable = true;
+          wayland = {
+            enable = true;
+            # compositor = "kwin";
+          };
 
           extraPackages = with pkgs; [
             kdePackages.qtmultimedia
