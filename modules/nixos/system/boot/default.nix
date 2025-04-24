@@ -13,6 +13,12 @@ in {
     enable = mkBoolOpt false "Whether or not to enable booting.";
     plymouth = mkBoolOpt false "Whether or not to enable plymouth boot splash.";
     secureBoot = mkBoolOpt false "Whether or not to enable secure boot.";
+
+    nixConfigurationLimit = lib.mkOption {
+      type = lib.types.int;
+      default = 3;
+      description = "Number of NixOS generations kept in the boot menu";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -27,8 +33,7 @@ in {
         systemd-boot = {
           enable = true;
 
-          # Limit the number of generations kept in the boot menu
-          configurationLimit = 3;
+          configurationLimit = cfg.nixConfigurationLimit;
         };
       };
     };

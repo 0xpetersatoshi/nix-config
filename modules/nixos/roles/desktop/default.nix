@@ -32,15 +32,6 @@ in {
       desktop-file-utils
     ];
 
-    # Make sure the MIME database is properly updated
-    system.activationScripts.updateMimeDatabase = {
-      text = ''
-        echo "Updating MIME database..."
-        ${pkgs.shared-mime-info}/bin/update-mime-database /run/current-system/sw/share/mime
-      '';
-      deps = [];
-    };
-
     roles = {
       common.enable = true;
 

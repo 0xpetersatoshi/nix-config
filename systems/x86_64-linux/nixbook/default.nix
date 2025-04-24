@@ -81,6 +81,7 @@ in {
   };
 
   system = {
+    boot.nixConfigurationLimit = 5;
     stateVersion = "24.11";
   };
 
