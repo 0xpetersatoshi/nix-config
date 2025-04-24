@@ -30,6 +30,7 @@ in {
         # AMD GPU packages
           lib.optionals cfg.hasAmdGpu [
             amdvlk
+            rocmPackages.clr.icd
           ]
           # Nvidia GPU packages
           ++ lib.optionals cfg.hasNvidiaGpu [
@@ -183,6 +184,7 @@ in {
         vulkan-tools
       ]
       ++ [
+        clinfo
         glxinfo
         libva-utils
         mpv

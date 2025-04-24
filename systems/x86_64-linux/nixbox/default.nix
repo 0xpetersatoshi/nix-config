@@ -54,6 +54,7 @@
     drivers = {
       enable = true;
       hasAmdCpu = true;
+      hasAmdGpu = true;
       hasNvidiaGpu = true;
     };
 
@@ -67,13 +68,18 @@
   };
 
   environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "nvidia";
-    GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    GBM_BACKEND = "nvidia-drm";
+    LIBVA_DRIVER_NAME = "radeonsi";
+    VDPAU_DRIVER = "radeonsi";
+    WLR_DRM_DEVICES = "/dev/dri/card0:/dev/dri/card1";
     WLR_NO_HARDWARE_CURSORS = "1";
     # NOTE: stylix override
     # QT_STYLE_OVERRIDE = "kvantum";
   };
 
-  system.stateVersion = "24.11";
+  system = {
+    boot.nixConfigurationLimit = 5;
+    stateVersion = "24.11";
+  };
 }
