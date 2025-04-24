@@ -14,7 +14,6 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      unstable.harlequin
       unstable.lazysql
       unstable.atlas
     ];
