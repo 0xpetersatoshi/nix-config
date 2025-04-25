@@ -9,6 +9,7 @@
       hasLunarLakeCPU = true;
       monitor = "eDP-1, highrr, auto, 1.5";
       multiMonitor.enable = true;
+      drmDevices = "/dev/dri/by-path/pci-0000:00:02.0-card";
       execOnceExtras = [
         "${pkgs.libinput-gestures}/bin/libinput-gestures &"
       ];

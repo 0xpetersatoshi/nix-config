@@ -9,6 +9,12 @@ with lib;
 with lib.${namespace}; let
   cfg = config.hardware.drivers;
   needsMesa = cfg.hasAmdGpu || cfg.hasIntelCpu || cfg.hasOlderIntelCpu;
+  videoDrivers =
+    if (cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu)
+    then "nvidia"
+    else if ((cfg.hasAmdCpu && cfg.hasIntegratedGpu) || cfg.hasAmdGpu)
+    then "amdgpu"
+    else "modesetting";
 in {
   options.hardware.drivers = with types; {
     enable = mkBoolOpt false "Enable or disable hardware drivers based on available hardware";
@@ -22,23 +28,21 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # Load drivers for Xorg and Wayland
+    # services.xserver.videoDrivers = [videoDrivers];
+
     # NOTE: config mostly taken from: https://github.com/richen604/hydenix/blob/main/hosts/nixos/drivers.nix
     hardware = {
       graphics = {
         enable = true;
         enable32Bit = true;
         extraPackages = with pkgs;
-        # AMD GPU packages
-          lib.optionals cfg.hasAmdGpu [
-            amdvlk
-            rocmPackages.clr.icd
-          ]
-          # Nvidia GPU packages
-          ++ lib.optionals (cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu) [
+        # Nvidia GPU packages
+          lib.optionals (cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu) [
             nvidia-vaapi-driver
           ]
           # Nvidia/Intel shared GPU packages
-          ++ lib.optionals (cfg.hasNvidiaGpu || cfg.hasIntelGpu) [
+          ++ lib.optionals ((cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu) || cfg.hasIntelGpu) [
             libva-vdpau-driver
           ]
           # Intel GPU packages
@@ -53,10 +57,6 @@ in {
           ]
           ++ lib.optionals cfg.hasOlderIntelCpu [
             intel-vaapi-driver
-          ]
-          # Mesa
-          ++ lib.optionals needsMesa [
-            mesa
           ];
         extraPackages32 = pkgs.lib.flatten (
           with pkgs; [
@@ -64,14 +64,11 @@ in {
             (lib.optional cfg.hasAmdGpu amdvlk)
 
             # Nvidia/Intel shared GPU packages
-            (lib.optional (cfg.hasNvidiaGpu || cfg.hasIntelGpu) libva-vdpau-driver)
+            (lib.optional ((cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu) || cfg.hasIntelGpu) libva-vdpau-driver)
 
             # Intel Cpu packages
             (lib.optional cfg.hasIntelCpu intel-media-driver)
             (lib.optional cfg.hasOlderIntelCpu intel-vaapi-driver)
-
-            # Mesa
-            (lib.optional needsMesa mesa)
           ]
         );
       };
@@ -130,6 +127,12 @@ in {
           };
         };
       };
+
+      amdgpu = mkIf cfg.hasAmdGpu {
+        opencl.enable = true;
+        initrd.enable = true;
+        amdvlk.enable = true;
+      };
     };
 
     # Boot configuration for GPU support
@@ -171,11 +174,7 @@ in {
 
     # Environment packages for GPU support
     environment.systemPackages = with pkgs;
-      lib.optionals needsMesa [
-        mesa
-      ]
-      ++ lib.optionals cfg.hasAmdGpu [
-        amdvlk
+      lib.optionals cfg.hasAmdGpu [
         radeontop
         vulkan-tools
         vulkan-loader
@@ -183,14 +182,12 @@ in {
       ]
       ++ lib.optionals cfg.hasNvidiaGpu [
         nvtopPackages.nvidia
-        vulkan-loader
-        vulkan-validation-layers
       ]
       ++ lib.optionals cfg.hasIntelGpu [
         intel-gpu-tools
         nvtopPackages.intel
       ]
-      ++ lib.optionals (cfg.hasNvidiaGpu || cfg.hasIntelGpu) [
+      ++ lib.optionals ((cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu) || cfg.hasIntelGpu) [
         libva-vdpau-driver
         vulkan-tools
       ]

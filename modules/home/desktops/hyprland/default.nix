@@ -16,6 +16,11 @@ in {
     enable = mkEnableOption "Enable hyprland window manager";
     execOnceExtras = mkOpt (listOf str) [] "Extra programs to exec once";
     hasLunarLakeCPU = mkBoolOpt false "Whether or not the system has an Intel Lunar Lake CPU";
+    drmDevices = lib.mkOption {
+      type = lib.types.str;
+      default = "/dev/dri/card0";
+      description = "The device(s) to set for the WLR_DRM_DEVICES env var";
+    };
     monitor = lib.mkOption {
       type = lib.types.str;
       default = ",preferred,auto,auto";

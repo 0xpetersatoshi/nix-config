@@ -6,6 +6,8 @@
   desktops = {
     hyprland = {
       enable = true;
+      # AMD iGPU
+      drmDevices = "/dev/dri/by-path/pci-0000:11:00.0-card";
     };
 
     addons = {
