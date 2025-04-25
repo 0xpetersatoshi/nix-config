@@ -18,6 +18,7 @@ in {
     hasAmdGpu = mkBoolOpt false "Whether or not the system has an AMD GPU";
     hasNvidiaGpu = mkBoolOpt false "Whether or not the system has an Nvidia GPU";
     hasOlderIntelCpu = mkBoolOpt false "Whether or not the system has an older Intel CPU";
+    hasIntegratedGpu = mkBoolOpt false "Wether the system has an iGPU";
   };
 
   config = mkIf cfg.enable {
@@ -33,7 +34,7 @@ in {
             rocmPackages.clr.icd
           ]
           # Nvidia GPU packages
-          ++ lib.optionals cfg.hasNvidiaGpu [
+          ++ lib.optionals (cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu) [
             nvidia-vaapi-driver
           ]
           # Nvidia/Intel shared GPU packages
@@ -95,7 +96,7 @@ in {
 
           # Fine-grained power management. Turns off GPU when not in use.
           # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-          finegrained = false;
+          finegrained = cfg.hasIntegratedGpu;
         };
 
         # Use the NVidia open source kernel module (not to be confused with the
@@ -104,8 +105,9 @@ in {
         # supported GPUs is at:
         # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
         # Only available from driver 515.43.04+
-        # Currently alpha-quality/buggy, so false is currently the recommended setting.
-        open = false;
+        # The open driver is recommended by nvidia now, see
+        # https://download.nvidia.com/XFree86/Linux-x86_64/565.57.01/README/kernel_open.html
+        open = true;
 
         # Enable the Nvidia settings menu,
         # accessible via `nvidia-settings`.
@@ -119,6 +121,14 @@ in {
         # Note: Forcing a full composition pipeline has been reported to reduce the performance of some OpenGL applications and
         # may produce issues in WebGL. It also drastically increases the time the driver needs to clock down after load.
         forceFullCompositionPipeline = false;
+
+        # If this is enabled, then the bus IDs of the NVIDIA and Intel/AMD GPUs have to be specified
+        prime = {
+          offload = {
+            enable = cfg.hasIntegratedGpu;
+            enableOffloadCmd = cfg.hasIntegratedGpu;
+          };
+        };
       };
     };
 
@@ -155,6 +165,7 @@ in {
       extraModprobeConfig = pkgs.lib.mkIf cfg.hasNvidiaGpu ''
         options nvidia-drm modeset=1
         options nvidia NVreg_PreserveVideoMemoryAllocations=1
+        options nvidia NVreg_UsePageAttributeTable=1
       '';
     };
 
@@ -164,14 +175,14 @@ in {
         mesa
       ]
       ++ lib.optionals cfg.hasAmdGpu [
+        amdvlk
+        radeontop
         vulkan-tools
         vulkan-loader
         vulkan-validation-layers
-        amdvlk
       ]
       ++ lib.optionals cfg.hasNvidiaGpu [
         nvtopPackages.nvidia
-        nvidia-vaapi-driver
         vulkan-loader
         vulkan-validation-layers
       ]

@@ -56,6 +56,12 @@
       hasAmdCpu = true;
       hasAmdGpu = true;
       hasNvidiaGpu = true;
+      hasIntegratedGpu = true;
+    };
+
+    nvidia.prime = {
+      amdgpuBusId = "PCI:11:0:0";
+      nvidiaBusId = "PCI:1:0:0";
     };
 
     enableAllFirmware = true;
@@ -68,14 +74,20 @@
   };
 
   environment.sessionVariables = {
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    GBM_BACKEND = "nvidia-drm";
+    # Use AMD for video acceleration
     LIBVA_DRIVER_NAME = "radeonsi";
     VDPAU_DRIVER = "radeonsi";
-    WLR_DRM_DEVICES = "/dev/dri/card0:/dev/dri/card1";
-    WLR_NO_HARDWARE_CURSORS = "1";
-    # NOTE: stylix override
-    # QT_STYLE_OVERRIDE = "kvantum";
+
+    # For Chromium-based browsers
+    DISABLE_ACCELERATED_VIDEO_DECODE = "0";
+    DISABLE_ACCELERATED_VIDEO_ENCODE = "0";
+
+    # Set primary GPU for rendering
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia"; # For NVIDIA as primary 3D renderer
+    GBM_BACKEND = "nvidia-drm";
+
+    # Use proper Chromium flags instead
+    CHROMIUM_FLAGS = "--enable-features=VaapiVideoDecoder,VaapiVideoEncoder --disable-features=UseChromeOSDirectVideoDecoder --use-gl=egl --ozone-platform=wayland --ignore-gpu-blocklist";
   };
 
   system = {

@@ -31,6 +31,12 @@ in {
         "$music" = "spotify";
         monitor = mkIf (!cfg.multiMonitor.enable) cfg.monitor;
 
+        # Add environment variables here
+        env = [
+          "WLR_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1"
+          "WLR_NO_HARDWARE_CURSORS,1"
+        ];
+
         # Create persistent workspaces
         workspace = [
           "1, default:true persistent:true"
