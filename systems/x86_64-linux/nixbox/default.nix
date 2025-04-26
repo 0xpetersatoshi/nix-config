@@ -67,7 +67,7 @@
     enableAllFirmware = true;
 
     suspend = {
-      enable = true;
+      enable = false;
       hasAmdCpu = true;
       hasNvidiaGpu = true;
     };

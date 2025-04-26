@@ -35,6 +35,7 @@ in {
         env = [
           "WLR_DRM_DEVICES,${cfg.drmDevices}"
           "WLR_NO_HARDWARE_CURSORS,1"
+          "ELECTRON_OZONE_PLATFORM_HINT,auto"
         ];
 
         # Create persistent workspaces
