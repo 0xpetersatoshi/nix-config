@@ -8,12 +8,6 @@
 with lib;
 with lib.${namespace}; let
   cfg = config.hardware.drivers;
-  # videoDrivers =
-  #   if (cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu)
-  #   then "nvidia"
-  #   else if ((cfg.hasAmdCpu && cfg.hasIntegratedGpu) || cfg.hasAmdGpu)
-  #   then "amdgpu"
-  #   else "modesetting";
 in {
   options.hardware.drivers = with types; {
     enable = mkBoolOpt false "Enable or disable hardware drivers based on available hardware";
@@ -24,24 +18,18 @@ in {
     hasNvidiaGpu = mkBoolOpt false "Whether or not the system has an Nvidia GPU";
     hasOlderIntelCpu = mkBoolOpt false "Whether or not the system has an older Intel CPU";
     hasIntegratedGpu = mkBoolOpt false "Wether the system has an iGPU";
+    vulkanEnabled = mkBoolOpt false "Wether to enable vulkan support for AMD GPUs";
   };
 
   config = mkIf cfg.enable {
     # Load drivers for Xorg and Wayland
-    # services.xserver.videoDrivers = [videoDrivers];
 
-    # NOTE: config mostly taken from: https://github.com/richen604/hydenix/blob/main/hosts/nixos/drivers.nix
     hardware = {
       graphics = {
         enable = true;
         enable32Bit = true;
         extraPackages = with pkgs;
-        # Nvidia GPU packages
-          lib.optionals (cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu) [
-            nvidia-vaapi-driver
-          ]
-          # Nvidia/Intel shared GPU packages
-          ++ lib.optionals ((cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu) || cfg.hasIntelGpu) [
+          lib.optionals ((cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu) || cfg.hasIntelGpu) [
             libva-vdpau-driver
           ]
           # Intel GPU packages
@@ -127,7 +115,7 @@ in {
       amdgpu = mkIf cfg.hasAmdGpu {
         opencl.enable = true;
         initrd.enable = true;
-        # amdvlk.enable = true;
+        amdvlk.enable = cfg.vulkanEnabled;
       };
     };
 
@@ -136,34 +124,20 @@ in {
       # Kernel parameters
       kernelParams = with pkgs.lib;
         []
-        ++ (optionals cfg.hasAmdCpu ["amd_pstate=active"])
-        ++ (optionals cfg.hasAmdGpu [
-          "radeon.si_support=0"
-          "amdgpu.si_support=1"
-        ])
-        ++ (optionals cfg.hasNvidiaGpu ["nvidia-drm.modeset=1"]);
+        ++ (optionals cfg.hasAmdCpu ["amd_pstate=active"]);
 
       # Kernel modules
       kernelModules = with pkgs.lib;
         []
-        ++ (optionals cfg.hasAmdCpu ["kvm-amd"])
-        ++ (optionals (cfg.hasIntelCpu || cfg.hasOlderIntelCpu) ["kvm-intel"])
         ++ (optionals cfg.hasIntelGpu ["xe"])
-        ++ (optionals cfg.hasAmdGpu ["amdgpu"])
-        ++ (optionals cfg.hasNvidiaGpu [
-          "nvidia"
-          "nvidia_drm"
-          "nvidia_modeset"
-        ]);
+        ++ (optionals cfg.hasAmdGpu ["amdgpu"]);
 
       # Module blacklisting
       blacklistedKernelModules = with pkgs.lib;
-        [] ++ (optionals cfg.hasAmdGpu ["radeon"]) ++ (optionals cfg.hasNvidiaGpu ["nouveau"]);
+        [] ++ (optionals cfg.hasAmdGpu ["radeon"]);
 
       # Extra modprobe config for Nvidia
       extraModprobeConfig = pkgs.lib.mkIf cfg.hasNvidiaGpu ''
-        options nvidia_drm modeset=1
-        options nvidia NVreg_PreserveVideoMemoryAllocations=1
         options nvidia NVreg_UsePageAttributeTable=1
       '';
     };
@@ -172,6 +146,9 @@ in {
     environment.systemPackages = with pkgs;
       lib.optionals cfg.hasAmdGpu [
         radeontop
+      ]
+      ++ lib.optionals cfg.vulkanEnabled [
+        vulkan-tools
       ]
       ++ lib.optionals cfg.hasNvidiaGpu [
         nvtopPackages.nvidia

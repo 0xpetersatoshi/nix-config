@@ -6,8 +6,8 @@
   desktops = {
     hyprland = {
       enable = true;
-      # AMD iGPU
-      drmDevices = "/dev/dri/by-path/pci-0000:11:00.0-card";
+      # Nvidia GPU
+      drmDevices = "/dev/dri/by-path/pci-0000:01:00.0-card";
     };
 
     addons = {
@@ -58,6 +58,9 @@
     common.enable = true;
     desktop.enable = true;
     development.enable = true;
+    gaming = {
+      enable = true;
+    };
   };
 
   igloo.user = {
