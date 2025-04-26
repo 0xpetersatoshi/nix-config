@@ -30,6 +30,7 @@ in {
     environment.systemPackages = with pkgs; [
       shared-mime-info
       desktop-file-utils
+      mpv
     ];
 
     roles = {

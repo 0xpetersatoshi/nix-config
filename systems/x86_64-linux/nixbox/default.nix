@@ -8,7 +8,7 @@
     ./disks.nix
   ];
 
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = ["amdgpu" "nvidia" "modeset"];
 
   security = {
     _1password-browser-integration.enable = true;

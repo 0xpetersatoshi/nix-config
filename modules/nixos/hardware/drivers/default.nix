@@ -8,13 +8,12 @@
 with lib;
 with lib.${namespace}; let
   cfg = config.hardware.drivers;
-  needsMesa = cfg.hasAmdGpu || cfg.hasIntelCpu || cfg.hasOlderIntelCpu;
-  videoDrivers =
-    if (cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu)
-    then "nvidia"
-    else if ((cfg.hasAmdCpu && cfg.hasIntegratedGpu) || cfg.hasAmdGpu)
-    then "amdgpu"
-    else "modesetting";
+  # videoDrivers =
+  #   if (cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu)
+  #   then "nvidia"
+  #   else if ((cfg.hasAmdCpu && cfg.hasIntegratedGpu) || cfg.hasAmdGpu)
+  #   then "amdgpu"
+  #   else "modesetting";
 in {
   options.hardware.drivers = with types; {
     enable = mkBoolOpt false "Enable or disable hardware drivers based on available hardware";
@@ -60,9 +59,6 @@ in {
           ];
         extraPackages32 = pkgs.lib.flatten (
           with pkgs; [
-            # AMD GPU packages
-            (lib.optional cfg.hasAmdGpu amdvlk)
-
             # Nvidia/Intel shared GPU packages
             (lib.optional ((cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu) || cfg.hasIntelGpu) libva-vdpau-driver)
 
@@ -131,7 +127,7 @@ in {
       amdgpu = mkIf cfg.hasAmdGpu {
         opencl.enable = true;
         initrd.enable = true;
-        amdvlk.enable = true;
+        # amdvlk.enable = true;
       };
     };
 
@@ -166,7 +162,7 @@ in {
 
       # Extra modprobe config for Nvidia
       extraModprobeConfig = pkgs.lib.mkIf cfg.hasNvidiaGpu ''
-        options nvidia-drm modeset=1
+        options nvidia_drm modeset=1
         options nvidia NVreg_PreserveVideoMemoryAllocations=1
         options nvidia NVreg_UsePageAttributeTable=1
       '';
@@ -176,9 +172,6 @@ in {
     environment.systemPackages = with pkgs;
       lib.optionals cfg.hasAmdGpu [
         radeontop
-        vulkan-tools
-        vulkan-loader
-        vulkan-validation-layers
       ]
       ++ lib.optionals cfg.hasNvidiaGpu [
         nvtopPackages.nvidia
@@ -195,7 +188,6 @@ in {
         clinfo
         glxinfo
         libva-utils
-        mpv
         vdpauinfo
       ];
   };
