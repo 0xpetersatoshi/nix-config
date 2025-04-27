@@ -23,7 +23,7 @@ in {
     };
     monitor = lib.mkOption {
       type = lib.types.str;
-      default = ",preferred,auto,auto";
+      default = ",preferred,auto,1";
       description = "Hyprland monitor configuration settings";
     };
     multiMonitor = {
