@@ -71,6 +71,14 @@
     xserver.videoDrivers = ["amdgpu" "modeset"];
   };
 
+  services.${namespace}.ollama = {
+    enable = true;
+    loadModels = [
+      "deepseek-r1:32b"
+    ];
+    rocmOverrideGfx = "11.0.0";
+  };
+
   system = {
     boot.nixConfigurationLimit = 5;
     stateVersion = "24.11";
