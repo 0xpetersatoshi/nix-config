@@ -26,6 +26,7 @@ in {
       podman.enable = false;
     };
     ${namespace} = {
+      localsend.enable = true;
       syncthing.enable = true;
     };
     keyboard.kanata = {
