@@ -34,6 +34,7 @@ in {
         fzf.enable = true;
         git.enable = true;
         hardware.enable = true;
+        kubernetes.enable = true;
         modern-unix.enable = true;
         network-tools.enable = true;
         nh.enable = true;
