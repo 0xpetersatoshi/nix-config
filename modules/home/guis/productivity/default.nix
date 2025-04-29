@@ -16,6 +16,7 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
+      beekeeper-studio
       unstable.dbeaver-bin
       unstable.morgen
       unstable.obsidian
