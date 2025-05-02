@@ -100,6 +100,7 @@ in {
             "${pkgs.hyprpanel}/bin/hyprpanel"
             "hyprctl dispatch workspace 1"
           ]
+          ++ lib.optionals config.desktops.addons.kde.enable ["${kdePackages.plasma-nm}/bin/nm-tray"]
           ++ cfg.execOnceExtras;
       };
     };

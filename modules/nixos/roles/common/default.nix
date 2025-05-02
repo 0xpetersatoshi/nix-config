@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  namespace,
   pkgs,
   ...
 }:
@@ -19,6 +20,10 @@ in {
 
     hardware = {
       networking.enable = true;
+    };
+
+    hardware.${namespace} = {
+      firmware.enable = true;
     };
 
     security = {

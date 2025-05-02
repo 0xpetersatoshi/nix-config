@@ -21,6 +21,7 @@ in {
       kdePackages.kde-cli-tools # KDE command line tools
       kdePackages.kdegraphics-thumbnailers # KDE graphics file thumbnails
       kdePackages.kimageformats # Additional image format plugins for KDE
+      kdePackages.plasma-nm # Applet for managing network connections
       kdePackages.qtimageformats # imageformats for Qt6
       kdePackages.qtwayland # Qt6 Wayland integration
       kdePackages.qtsvg # SVG support for Qt6

@@ -10,6 +10,17 @@ with lib; let
 in {
   options.hardware.${namespace}.bluetooth = {
     enable = mkEnableOption "Enable bluetooth service and packages";
+    settings = lib.mkOption {
+      type = lib.types.attrs;
+      default = {
+        Enable = "Source,Sink,Media,Socket";
+        Experimental = true;
+        FastConnectable = true;
+        JustWorksRepairing = "always";
+        MultiProfile = "multiple";
+      };
+      description = "Default bluetooth settings";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -19,13 +30,7 @@ in {
         enable = true;
         powerOnBoot = true;
         settings = {
-          General = {
-            Enable = "Source,Sink,Media,Socket";
-            Experimental = true;
-            FastConnectable = true;
-            JustWorksRepairing = "always";
-            MultiProfile = "multiple";
-          };
+          General = cfg.settings;
         };
       };
     };
