@@ -64,6 +64,7 @@ in {
       enable = true;
       hasIntelCpu = true;
       hasIntelGpu = true;
+      useUnstableMesa = true;
     };
     enableAllFirmware = true;
     input-devices.touchpad.enable = true;
