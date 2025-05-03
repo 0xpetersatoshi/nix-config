@@ -29,16 +29,11 @@
   };
 
   hardware = {
-    amdgpu = {
-      opencl.enable = true;
-      amdvlk.enable = true;
-    };
-    graphics.enable = true;
     drivers = {
-      enable = false;
+      enable = true;
       hasAmdCpu = true;
       hasAmdGpu = true;
-      useUnstableMesa = true;
+      useUnstableMesa = false;
       vulkanEnabled = true;
     };
     enableAllFirmware = true;

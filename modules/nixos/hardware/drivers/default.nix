@@ -117,7 +117,6 @@ in {
 
       amdgpu = mkIf cfg.hasAmdGpu {
         opencl.enable = true;
-        initrd.enable = true;
         amdvlk.enable = cfg.vulkanEnabled;
       };
     };
