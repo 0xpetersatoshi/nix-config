@@ -87,19 +87,6 @@
     # tlp.enable = true;
   };
 
-  # hardware.${namespace} = {
-  #   asus = {
-  #     enable = true;
-  #   };
-  #
-  #   bluetooth.settings = {
-  #     Experimental = true;
-  #     FastConnectable = true;
-  #     JustWorksRepairing = "always";
-  #     MultiProfile = "multiple";
-  #   };
-  # };
-
   styles.stylix = {
     wallpaperPath = ../../../wallpaper/standard/astronaut-4-2912x1632.png;
     theme = "tokyo-night-storm";
