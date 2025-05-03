@@ -93,7 +93,11 @@
   };
 
   system = {
-    boot.nixConfigurationLimit = 5;
+    boot = {
+      nixConfigurationLimit = 5;
+      secureBoot = true;
+    };
+
     stateVersion = "24.11";
   };
 

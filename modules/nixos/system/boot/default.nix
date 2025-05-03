@@ -2,6 +2,7 @@
   config,
   lib,
   namespace,
+  pkgs,
   ...
 }: let
   inherit (lib) mkIf;
@@ -25,17 +26,29 @@ in {
     boot = {
       initrd.systemd.enable = true;
 
+      lanzaboote = mkIf cfg.secureBoot {
+        enable = true;
+        pkiBundle = "/etc/secureboot";
+      };
+
       loader = {
         efi = {
           canTouchEfiVariables = true;
         };
 
+        # Lanzaboote currently replaces the systemd-boot module.
         systemd-boot = {
-          enable = true;
+          enable = !cfg.secureBoot;
 
           configurationLimit = cfg.nixConfigurationLimit;
         };
       };
     };
+
+    environment.systemPackages = with pkgs;
+    # For debugging and troubleshooting Secure Boot.
+      lib.optionals
+      cfg.secureBoot
+      [sbctl];
   };
 }

@@ -21,6 +21,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     sops-nix = {
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -105,6 +110,7 @@
         nixos = with inputs; [
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
+          lanzaboote.nixosModules.lanzaboote
           sops-nix.nixosModules.sops
           stylix.nixosModules.stylix
         ];
