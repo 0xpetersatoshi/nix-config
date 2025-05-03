@@ -96,6 +96,7 @@
     boot = {
       nixConfigurationLimit = 5;
       secureBoot = true;
+      luksDevicePaths = ["/dev/nvme0n1p2"];
     };
 
     stateVersion = "24.11";
