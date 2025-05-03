@@ -6,6 +6,7 @@
   desktops = {
     hyprland = {
       enable = true;
+      drmDevices = "/dev/dri/card1";
       execOnceExtras = [
         "${pkgs.libinput-gestures}/bin/libinput-gestures &"
       ];

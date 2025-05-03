@@ -15,7 +15,7 @@
       #
       # https://community.frame.work/t/fedora-kde-becomes-suddenly-slow/58459
       # https://gitlab.freedesktop.org/drm/amd/-/issues/3647
-      "amdgpu.dcdebugmask=0x10"
+      "amdgpu.dcdebugmask=0x600"
     ];
     loader.efi.efiSysMountPoint = "/boot";
   };
@@ -29,8 +29,13 @@
   };
 
   hardware = {
+    amdgpu = {
+      opencl.enable = true;
+      amdvlk.enable = true;
+    };
+    graphics.enable = true;
     drivers = {
-      enable = true;
+      enable = false;
       hasAmdCpu = true;
       hasAmdGpu = true;
       useUnstableMesa = true;
@@ -69,6 +74,7 @@
   };
 
   services = {
+    xserver.videoDrivers = ["modesetting"];
     virtualisation = {
       docker.enable = true;
       podman.enable = false;
@@ -107,5 +113,11 @@
   system = {
     boot.nixConfigurationLimit = 5;
     stateVersion = "24.11";
+  };
+
+  systemd.user.services.plasma-kwin_wayland = {
+    environment = {
+      KWIN_DRM_DISABLE_TRIPLE_BUFFERING = "1";
+    };
   };
 }
