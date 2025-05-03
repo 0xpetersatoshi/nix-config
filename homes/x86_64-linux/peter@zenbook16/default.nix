@@ -6,10 +6,17 @@
   desktops = {
     hyprland = {
       enable = true;
+      monitor = "eDP-1, highrr, auto, 1.25";
       drmDevices = "/dev/dri/card1";
       execOnceExtras = [
         "${pkgs.libinput-gestures}/bin/libinput-gestures &"
       ];
+    };
+
+    addons = {
+      hyprpanel = {
+        wallpaperPath = ../../../wallpaper/standard/astronaut-4-2912x1632.png;
+      };
     };
   };
 
