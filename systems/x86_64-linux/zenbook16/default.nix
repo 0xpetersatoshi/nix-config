@@ -74,7 +74,7 @@
   };
 
   services = {
-    xserver.videoDrivers = ["modesetting"];
+    xserver.videoDrivers = ["amdgpu"];
     virtualisation = {
       docker.enable = true;
       podman.enable = false;
