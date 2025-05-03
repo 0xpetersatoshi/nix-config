@@ -13,9 +13,9 @@
       # There seems to be an issue with panel self-refresh (PSR) that
       # causes hangs for users.
       #
-      # https://community.frame.work/t/fedora-kde-becomes-suddenly-slow/58459
-      # https://gitlab.freedesktop.org/drm/amd/-/issues/3647
-      "amdgpu.dcdebugmask=0x600"
+      # Disables PSR2-SU due to issue that causes random freezing/hanging
+      # More info can be found here: https://wiki.archlinux.org/title/ASUS_Zenbook_UM5606#Panel_Self_Refresh
+      "amdgpu.dcdebugmask=0x200"
     ];
     loader.efi.efiSysMountPoint = "/boot";
   };
