@@ -67,11 +67,6 @@
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-
-    jovian = {
-      url = "github:Jovian-Experiments/Jovian-NixOS";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
 
   outputs = inputs: let
@@ -118,7 +113,6 @@
           lanzaboote.nixosModules.lanzaboote
           sops-nix.nixosModules.sops
           stylix.nixosModules.stylix
-          jovian.nixosModules.default
         ];
       };
 

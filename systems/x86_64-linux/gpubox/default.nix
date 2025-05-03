@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   namespace,
   ...
@@ -43,27 +42,13 @@
     bluetooth.enable = true;
   };
 
-  jovian = {
-    hardware = {
-      has.amd.gpu = true;
-      amd.gpu.enableBacklightControl = false;
-    };
-    steam = {
-      updater.splash = "steamos";
-      enable = true;
-      autoStart = true;
-      user = config.user.name;
-      desktopSession = "plasma";
-    };
-    steamos = {
-      useSteamOSConfig = true;
-    };
-  };
-
   networking.hostName = "gpubox";
 
   roles = {
-    gaming.enable = true;
+    gaming = {
+      enable = true;
+      bootToSteamDeck = true;
+    };
   };
 
   services = {
