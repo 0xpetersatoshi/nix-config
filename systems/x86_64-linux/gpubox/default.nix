@@ -33,13 +33,14 @@
       hasAmdCpu = true;
       hasAmdGpu = true;
       vulkanEnabled = true;
+      useUnstableMesa = true;
     };
 
     enableAllFirmware = true;
   };
 
   hardware.${namespace} = {
-    audio.enable = true;
+    audio.enable = false;
     bluetooth.enable = true;
   };
 
