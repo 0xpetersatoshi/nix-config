@@ -29,7 +29,7 @@
 
   jovian = {
     decky-loader = {
-      enable = false;
+      enable = true;
     };
     hardware = {
       has.amd.gpu = true;
@@ -53,7 +53,6 @@
       hasAmdCpu = true;
       hasAmdGpu = true;
       vulkanEnabled = true;
-      useUnstableMesa = true;
     };
 
     enableAllFirmware = true;
