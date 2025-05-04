@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   namespace,
   ...
@@ -27,6 +26,26 @@
     ];
   };
 
+  jovian = {
+    decky-loader = {
+      enable = true;
+    };
+    hardware = {
+      has.amd.gpu = true;
+      amd.gpu.enableBacklightControl = false;
+    };
+    steam = {
+      updater.splash = "steamos";
+      enable = true;
+      autoStart = true;
+      user = "peter";
+      desktopSession = "plasma";
+    };
+    steamos = {
+      useSteamOSConfig = true;
+    };
+  };
+
   hardware = {
     drivers = {
       enable = true;
@@ -50,7 +69,6 @@
     common.enable = true;
     gaming = {
       enable = true;
-      bootToSteamDeck = true;
     };
   };
 
@@ -71,6 +89,4 @@
     boot.nixConfigurationLimit = 5;
     stateVersion = "24.11";
   };
-
-  users.users.peter.isNormalUser = lib.mkForce false;
 }
