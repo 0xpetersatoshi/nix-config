@@ -70,6 +70,7 @@
     common.enable = true;
     gaming = {
       enable = true;
+      gamescopeEnabled = false;
     };
   };
 
