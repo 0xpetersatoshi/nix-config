@@ -69,4 +69,9 @@
     boot.nixConfigurationLimit = 5;
     stateVersion = "24.11";
   };
+
+  user = {
+    name = "peter";
+    initialPassword = "1";
+  };
 }
