@@ -115,15 +115,12 @@
         darwin = with inputs; [
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
-          # TODO: import here instead of in modules
-          # stylix.darwinModules.stylix
         ];
         nixos = with inputs; [
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           lanzaboote.nixosModules.lanzaboote
           sops-nix.nixosModules.sops
-          stylix.nixosModules.stylix
           jovian.nixosModules.default
         ];
       };
