@@ -70,5 +70,5 @@
     stateVersion = "24.11";
   };
 
-  users.users.peter.isNormalUser = true;
+  users.users.peter.isNormalUser = false;
 }
