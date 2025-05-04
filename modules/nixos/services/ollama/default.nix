@@ -21,7 +21,12 @@ in {
       default = null;
       description = "The value for HSA_OVERRIDE_GFX_VERSION";
     };
-    loadModels = mkOpt (listOf str) [] "List of default models to download";
+    loadModels = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = "List of default models to download";
+      example = ["deepseek-r1:32b"];
+    };
   };
 
   config = mkIf cfg.enable {
