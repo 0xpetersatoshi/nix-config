@@ -38,7 +38,7 @@ in {
         group = "users";
         openFirewall = true;
         loadModels = cfg.loadModels;
-        acceleration = cfg.acceleration;
+        acceleration = cfg.accelerationType;
         rocmOverrideGfx = cfg.rocmOverrideGfx;
       };
     };
