@@ -6,7 +6,6 @@
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
-    ../../../modules/nixos/user/default.nix
   ];
 
   boot = {
@@ -94,5 +93,10 @@
     locale.enable = true;
     zram.enable = true;
     stateVersion = "24.11";
+  };
+
+  user = {
+    name = "peter";
+    initialPassword = "1";
   };
 }
