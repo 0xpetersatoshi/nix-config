@@ -34,7 +34,7 @@ in {
       ollama = {
         enable = true;
         user = config.user.name;
-        home = users.users.${config.user.name}.home;
+        home = "/home/${config.user.name}";
         openFirewall = true;
         loadModels = cfg.loadModels;
         acceleration = cfg.acceleration;
