@@ -1,10 +1,4 @@
 {...}: {
-  roles = {
-    gaming = {
-      enable = true;
-    };
-  };
-
   igloo.user = {
     enable = true;
     name = "peter";

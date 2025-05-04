@@ -66,7 +66,6 @@
   networking.hostName = "gpubox";
 
   roles = {
-    common.enable = true;
     gaming = {
       enable = true;
       gamescopeEnabled = false;
@@ -87,7 +86,13 @@
   };
 
   system = {
-    boot.nixConfigurationLimit = 5;
+    boot = {
+      enable = true;
+      nixConfigurationLimit = 5;
+    };
+    nix.enable = true;
+    locale.enable = true;
+    zram.enable = true;
     stateVersion = "24.11";
   };
 
