@@ -1,15 +1,11 @@
-{channels, ...}: final: prev: {
-  # Override Python packages to use newer aiohttp
-  python312 = prev.python312.override {
-    packageOverrides = pyFinal: pyPrev: {
-      aiohttp = channels.nixpkgs-unstable.python312.pkgs.aiohttp;
-    };
+{...}: final: prev: {
+  # Create a fixed version of decky-loader that works with the available aiohttp
+  decky-loader = prev.decky-loader.override {
+    python3 = prev.python312;
+    pythonPackages = prev.python312Packages;
   };
 
-  # Also override python3 which might be used
-  python3 = prev.python3.override {
-    packageOverrides = pyFinal: pyPrev: {
-      aiohttp = channels.nixpkgs-unstable.python3.pkgs.aiohttp;
-    };
-  };
+  # Alternative approach: disable decky-loader in the package set
+  # This will make it unavailable, forcing Jovian to use a different approach
+  # decky-loader = null;
 }
