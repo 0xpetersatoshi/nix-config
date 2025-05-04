@@ -69,4 +69,6 @@
     boot.nixConfigurationLimit = 5;
     stateVersion = "24.11";
   };
+
+  users.users.peter.isNormalUser = true;
 }
