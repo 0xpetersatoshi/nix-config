@@ -7,7 +7,7 @@
 
   igloo.user = {
     enable = true;
-    name = "peter";
+    name = "decky";
   };
 
   home.stateVersion = "24.11";
