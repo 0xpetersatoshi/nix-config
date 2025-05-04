@@ -95,6 +95,4 @@
     zram.enable = true;
     stateVersion = "24.11";
   };
-
-  users.users.peter.isNormalUser = lib.mkForce false;
 }
