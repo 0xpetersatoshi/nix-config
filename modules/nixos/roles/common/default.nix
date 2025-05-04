@@ -39,6 +39,5 @@ in {
       locale.enable = true;
       zram.enable = true;
     };
-    styles.stylix.enable = true;
   };
 }

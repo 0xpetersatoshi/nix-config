@@ -45,6 +45,7 @@
   networking.hostName = "gpubox";
 
   roles = {
+    common.enable = true;
     gaming = {
       enable = true;
       bootToSteamDeck = true;
