@@ -38,7 +38,7 @@
       updater.splash = "steamos";
       enable = true;
       autoStart = true;
-      user = "decky";
+      user = "peter";
       desktopSession = "plasma";
     };
     steamos = {
