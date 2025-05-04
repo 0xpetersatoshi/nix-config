@@ -9,7 +9,7 @@
   ];
 
   boot = {
-    kernelPackages = pkgs.unstable.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_zen;
     initrd.kernelModules = ["nvidia"];
   };
 

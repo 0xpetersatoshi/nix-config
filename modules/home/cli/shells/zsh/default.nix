@@ -40,7 +40,7 @@ in {
         export PATH="$PATH:${config.xdg.configHome}/.foundry/bin"
       '';
 
-      initExtra = ''
+      initContent = ''
         ${
           if pkgs.stdenv.isDarwin
           then homebrewInitExtra

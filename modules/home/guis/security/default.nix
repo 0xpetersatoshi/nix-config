@@ -12,7 +12,7 @@ with types; let
 in {
   options.guis.security = {
     enable = mkEnableOption "Enable security guis";
-    _1password-gui.package = mkPackageOpt pkgs.unstable._1password-gui "Package to use for password manager";
+    _1password-gui.package = mkPackageOpt pkgs._1password-gui "Package to use for password manager";
   };
 
   config = mkIf cfg.enable {

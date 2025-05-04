@@ -19,7 +19,6 @@ in {
     hasOlderIntelCpu = mkBoolOpt false "Whether or not the system has an older Intel CPU";
     hasIntegratedGpu = mkBoolOpt false "Wether the system has an iGPU";
     vulkanEnabled = mkBoolOpt false "Wether to enable vulkan support for AMD GPUs";
-    useUnstableMesa = mkBoolOpt false "Whether to use the unstable version of Mesa drivers";
   };
 
   config = mkIf cfg.enable {
@@ -28,8 +27,6 @@ in {
     hardware = {
       graphics = {
         enable = true;
-        package = mkIf cfg.useUnstableMesa (lib.mkForce pkgs.unstable.mesa);
-        package32 = mkIf cfg.useUnstableMesa (lib.mkForce pkgs.unstable.pkgsi686Linux.mesa);
         enable32Bit = true;
         extraPackages = with pkgs;
           lib.optionals ((cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu) || cfg.hasIntelGpu) [

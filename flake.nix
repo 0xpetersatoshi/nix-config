@@ -2,8 +2,7 @@
   description = "Peter's Nix/NixOS Config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/release-24.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
 
     darwin = {
@@ -12,7 +11,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -23,7 +22,7 @@
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     sops-nix = {
@@ -33,7 +32,10 @@
 
     disko.url = "github:nix-community/disko";
 
-    stylix.url = "github:danth/stylix/release-24.11";
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     catppuccin.url = "github:catppuccin/nix";
 
@@ -65,7 +67,7 @@
 
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -87,6 +89,10 @@
     lib.mkFlake {
       channels-config = {
         allowUnfree = true;
+
+        permittedInsecurePackages = [
+          "beekeeper-studio-5.1.5"
+        ];
       };
 
       home-manager = {

@@ -14,7 +14,7 @@ in {
   config = mkIf cfg.enable {
     qt = {
       enable = true;
-      platformTheme.name = "kde";
+      platformTheme.name = "kde6";
       style = {
         name = "adwaita-dark";
         package = pkgs.adwaita-qt6;

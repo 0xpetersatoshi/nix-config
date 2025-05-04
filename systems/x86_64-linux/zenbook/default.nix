@@ -55,7 +55,7 @@ in {
   networking.hostName = "zenbook";
 
   boot = {
-    kernelPackages = pkgs.unstable.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     loader.efi.efiSysMountPoint = "/boot";
   };
 
@@ -64,16 +64,15 @@ in {
       enable = true;
       hasIntelCpu = true;
       hasIntelGpu = true;
-      useUnstableMesa = true;
     };
     enableAllFirmware = true;
     input-devices.touchpad.enable = true;
 
-    bluetooth.package = pkgs.unstable.bluez;
+    bluetooth.package = pkgs.bluez;
 
     firmware = with pkgs; [
-      unstable.sof-firmware
-      unstable.linux-firmware
+      sof-firmware
+      linux-firmware
     ];
   };
 
