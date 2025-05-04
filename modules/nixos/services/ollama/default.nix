@@ -2,7 +2,6 @@
   config,
   lib,
   namespace,
-  pkgs,
   ...
 }:
 with lib;
@@ -42,9 +41,5 @@ in {
         rocmOverrideGfx = cfg.rocmOverrideGfx;
       };
     };
-
-    environment.systemPackages = with pkgs; [
-      ollamatray
-    ];
   };
 }
