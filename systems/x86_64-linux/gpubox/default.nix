@@ -98,5 +98,6 @@
   user = {
     name = "peter";
     initialPassword = "1";
+    isNormalUser = true;
   };
 }
