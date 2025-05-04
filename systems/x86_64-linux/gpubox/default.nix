@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   namespace,
   ...
@@ -7,6 +6,7 @@
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
+    ../../../modules/nixos/user/default.nix
   ];
 
   boot = {
