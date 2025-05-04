@@ -29,7 +29,7 @@
 
   jovian = {
     decky-loader = {
-      enable = true;
+      enable = false;
     };
     hardware = {
       has.amd.gpu = true;
