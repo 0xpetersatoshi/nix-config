@@ -22,8 +22,8 @@ in {
       ruff
       uv
 
-      unstable.python313Packages.debugpy
-      unstable.python313Packages.pip
+      python313Packages.debugpy
+      python313Packages.pip
     ];
   };
 }

@@ -55,7 +55,7 @@ in {
   networking.hostName = "nixbook";
 
   boot = {
-    kernelPackages = pkgs.unstable.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     loader.efi.efiSysMountPoint = "/boot";
   };
 
@@ -68,11 +68,11 @@ in {
     enableAllFirmware = true;
     input-devices.touchpad.enable = true;
 
-    bluetooth.package = pkgs.unstable.bluez;
+    bluetooth.package = pkgs.bluez;
 
     firmware = with pkgs; [
-      unstable.sof-firmware
-      unstable.linux-firmware
+      sof-firmware
+      linux-firmware
     ];
   };
 

@@ -58,7 +58,7 @@ in {
     };
 
     environment.systemPackages = with pkgs; [
-      (unstable.sddm-astronaut.override {
+      (sddm-astronaut.override {
         embeddedTheme = "pixel_sakura";
         # themeConfig = {
         #   FontSize = 20;

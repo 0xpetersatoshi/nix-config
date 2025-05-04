@@ -72,7 +72,7 @@ in {
         };
         monospace = {
           name = "JetBrains Mono";
-          package = pkgs.unstable.nerd-fonts.jetbrains-mono;
+          package = pkgs.nerd-fonts.jetbrains-mono;
         };
         sansSerif = {
           name = "Noto Sans";

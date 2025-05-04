@@ -8,7 +8,7 @@
   ];
 
   boot = {
-    kernelPackages = pkgs.unstable.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       # There seems to be an issue with panel self-refresh (PSR) that
       # causes hangs for users.
@@ -33,17 +33,16 @@
       enable = true;
       hasAmdCpu = true;
       hasAmdGpu = true;
-      useUnstableMesa = false;
       vulkanEnabled = true;
     };
     enableAllFirmware = true;
     input-devices.touchpad.enable = true;
 
-    bluetooth.package = pkgs.unstable.bluez;
+    bluetooth.package = pkgs.bluez;
 
     firmware = with pkgs; [
-      unstable.sof-firmware
-      unstable.linux-firmware
+      sof-firmware
+      linux-firmware
     ];
   };
 
