@@ -30,7 +30,7 @@ in {
         homeDirectory = mkDefault cfg.home;
         username = mkDefault cfg.name;
         sessionVariables = {
-          FLAKE = "$HOME/nix-config";
+          NH_FLAKE = "$HOME/nix-config";
         };
       };
     }

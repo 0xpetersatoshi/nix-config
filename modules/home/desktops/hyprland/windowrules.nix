@@ -8,9 +8,9 @@ with lib; let
 in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
-      windowrule = [
-        "float, bitwarden"
-      ];
+      # windowrule = [
+      #   "float, bitwarden"
+      # ];
 
       windowrulev2 = [
         "idleinhibit fullscreen, class:^(firefox)$"

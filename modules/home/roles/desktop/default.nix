@@ -13,7 +13,8 @@ in {
   config = lib.mkIf cfg.enable {
     desktops.addons = {
       gtk.enable = pkgs.stdenv.isLinux;
-      qt.enable = pkgs.stdenv.isLinux;
+      # NOTE: conflicts with stylix when enabled simultaneously
+      qt.enable = pkgs.stdenv.isLinux && !config.styles.stylix.enable;
       xdg.enable = true;
     };
 

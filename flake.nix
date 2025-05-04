@@ -11,7 +11,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -32,7 +32,10 @@
 
     disko.url = "github:nix-community/disko";
 
-    stylix.url = "github:danth/stylix/release-24.11";
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     catppuccin.url = "github:catppuccin/nix";
 
@@ -86,6 +89,10 @@
     lib.mkFlake {
       channels-config = {
         allowUnfree = true;
+
+        permittedInsecurePackages = [
+          "beekeeper-studio-5.1.5"
+        ];
       };
 
       home-manager = {
