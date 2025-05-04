@@ -41,6 +41,7 @@ in {
 
     users.mutableUsers = false;
     users.users.${cfg.name} =
+      lib.mkForce
       {
         isNormalUser = cfg.isNormalUser;
         inherit (cfg) name initialPassword;
