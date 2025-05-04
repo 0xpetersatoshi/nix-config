@@ -125,8 +125,6 @@
           sops-nix.nixosModules.sops
           stylix.nixosModules.stylix
           jovian.nixosModules.default
-          # import necessary unstable modules
-          ./modules/unstable/default.nix
         ];
       };
 
