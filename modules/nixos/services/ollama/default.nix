@@ -35,6 +35,7 @@ in {
         enable = true;
         user = config.user.name;
         home = "/home/${config.user.name}";
+        group = "users";
         openFirewall = true;
         loadModels = cfg.loadModels;
         acceleration = cfg.acceleration;
