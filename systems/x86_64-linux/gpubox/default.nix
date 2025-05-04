@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   namespace,
   ...
@@ -70,5 +71,5 @@
     stateVersion = "24.11";
   };
 
-  users.users.peter.isNormalUser = false;
+  users.users.peter.isNormalUser = lib.mkForce false;
 }
