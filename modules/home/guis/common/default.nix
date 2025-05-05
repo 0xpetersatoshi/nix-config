@@ -22,6 +22,7 @@ in {
       pavucontrol
       pwvucontrol
       spotify
+      vlc
     ];
   };
 }
