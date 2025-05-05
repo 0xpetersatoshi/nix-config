@@ -8,6 +8,96 @@
 with lib;
 with lib.${namespace}; let
   cfg = config.desktops.addons.xdg;
+
+  browser = ["brave-browser.desktop"];
+  pdfApp = ["com.github.johnfactotum.Foliate.desktop"];
+  fileManager = ["org.kde.dolphin.desktop"];
+  editor = ["nvim.desktop"];
+  archivesApp = ["org.kde.ark.desktop"];
+  terminal = ["com.mitchellh.ghostty.desktop"];
+  mail = ["thunderbird.desktop"];
+  image = ["org.kde.gwenview.desktop"];
+  video = ["vlc.desktop"];
+
+  # XDG MIME types
+  associations = {
+    "application/json" = editor;
+    "application/pdf" = pdfApp;
+    "application/rss+xml" = editor;
+
+    "application/x-arj" = archivesApp;
+    "application/x-bzip" = archivesApp;
+    "application/x-bzip-compressed-tar" = archivesApp;
+    "application/x-compress" = archivesApp;
+    "application/x-compressed-tar" = archivesApp;
+    "application/x-extension-htm" = browser;
+    "application/x-extension-html" = browser;
+    "application/x-extension-ics" = mail;
+    "application/x-extension-m4a" = video;
+    "application/x-extension-mp4" = video;
+    "application/x-extension-shtml" = browser;
+    "application/x-extension-xht" = browser;
+    "application/x-extension-xhtml" = browser;
+    "application/x-flac" = video;
+    "application/x-gzip" = archivesApp;
+    "application/x-lha" = archivesApp;
+    "application/x-lhz" = archivesApp;
+    "application/x-lzop" = archivesApp;
+    "application/x-matroska" = video;
+    "application/x-netshow-channel" = video;
+    "application/x-quicktime-media-link" = video;
+    "application/x-quicktimeplayer" = video;
+    "application/x-rar" = archivesApp;
+    "application/x-shellscript" = editor;
+    "application/x-smil" = video;
+    "application/x-tar" = archivesApp;
+    "application/x-tarz" = archivesApp;
+    "application/x-zoo" = archivesApp;
+    "application/xhtml+xml" = browser;
+    "application/xml" = editor;
+    "application/zip" = archivesApp;
+    "audio/*" = video;
+    "image/*" = image;
+    "image/bmp" = image;
+    "image/gif" = image;
+    "image/jpeg" = image;
+    "image/jpg" = image;
+    "image/pjpeg" = image;
+    "image/png" = image;
+    "image/tiff" = image;
+    "image/x-icb" = image;
+    "image/x-ico" = image;
+    "image/x-pcx" = image;
+    "image/x-portable-anymap" = image;
+    "image/x-portable-bitmap" = image;
+    "image/x-portable-graymap" = image;
+    "image/x-portable-pixmap" = image;
+    "image/x-xbitmap" = image;
+    "image/x-xpixmap" = image;
+    "image/x-xwindowdump" = image;
+    "inode/directory" = fileManager;
+    "message/rfc822" = mail;
+    "text/*" = editor;
+    "text/calendar" = mail;
+    "text/html" = browser;
+    "text/plain" = editor;
+    "video/*" = video;
+    "x-scheme-handler/about" = browser;
+    "x-scheme-handler/chrome" = browser;
+    "x-scheme-handler/discord" = ["discord.desktop"];
+    "x-scheme-handler/etcher" = ["balena-etcher-electron.desktop"];
+    "x-scheme-handler/ftp" = browser;
+    "x-scheme-handler/http" = browser;
+    "x-scheme-handler/https" = browser;
+    "x-scheme-handler/mailto" = mail;
+    "x-scheme-handler/mid" = mail;
+    "x-scheme-handler/terminal" = terminal;
+    "x-scheme-handler/tg" = ["org.telegram.desktop"];
+    "x-scheme-handler/unknown" = browser;
+    "x-scheme-handler/webcal" = mail;
+    "x-scheme-handler/webcals" = mail;
+    "x-www-browser" = browser;
+  };
 in {
   options.desktops.addons.xdg = with types; {
     enable = mkBoolOpt false "manage xdg config";
@@ -36,6 +126,8 @@ in {
 
     xdg = {
       enable = true;
+      cacheHome = config.home.homeDirectory + "/.local/cache";
+
       portal = mkIf pkgs.stdenv.isLinux {
         enable = true;
         extraPortals = with pkgs; [
@@ -44,8 +136,32 @@ in {
           xdg-desktop-portal-gtk
         ];
         config = {
-          common.default = "kde";
-          hyprland.default = ["kde" "gtk"];
+          common = {
+            default = "kde";
+
+            "org.freedesktop.impl.portal.Access" = "kde";
+            "org.freedesktop.impl.portal.Account" = "kde";
+            "org.freedesktop.impl.portal.AppChooser" = "kde";
+            "org.freedesktop.impl.portal.DynamicLauncher" = "kde";
+            "org.freedesktop.impl.portal.Email" = "kde";
+            "org.freedesktop.impl.portal.FileChooser" = "kde";
+            "org.freedesktop.impl.portal.Lockdown" = "kde";
+            "org.freedesktop.impl.portal.Notification" = "kde";
+            "org.freedesktop.impl.portal.Print" = "kde";
+            "org.freedesktop.impl.portal.Screencast" = "kde";
+            "org.freedesktop.impl.portal.Screenshot" = "kde";
+            # "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
+            # "org.freedesktop.impl.portal.Background" = "gnome";
+            # "org.freedesktop.impl.portal.Clipboard" = "gnome";
+            # "org.freedesktop.impl.portal.InputCapture" = "gnome";
+            # "org.freedesktop.impl.portal.RemoteDesktop" = "gnome";
+          };
+          hyprland = {
+            default = ["hyprland" "kde" "gtk"];
+            "org.freedesktop.impl.portal.Screencast" = "hyprland";
+            "org.freedesktop.impl.portal.FileChooser" = "kde";
+            "org.freedesktop.impl.portal.AppChooser" = "kde";
+          };
           # Explicitly set the portal implementation for specific interfaces
           kde = {
             default = ["kde" "gtk"];
@@ -54,59 +170,13 @@ in {
           };
         };
         # Set to false to use the native xdg-open implementation
-        xdgOpenUsePortal = false;
+        xdgOpenUsePortal = true;
       };
 
       mimeApps = mkIf pkgs.stdenv.isLinux {
         enable = true;
-        associations.added = {
-          # Add these associations to ensure they're registered
-          "image/jpeg" = ["org.kde.gwenview.desktop"];
-          "image/png" = ["org.kde.gwenview.desktop"];
-          "image/gif" = ["org.kde.gwenview.desktop"];
-          "image/svg+xml" = ["org.kde.gwenview.desktop"];
-          "application/pdf" = ["com.github.johnfactotum.Foliate.desktop"];
-        };
-        defaultApplications = {
-          # Web
-          "text/html" = ["brave-browser.desktop"];
-          "x-scheme-handler/http" = ["brave-browser.desktop"];
-          "x-scheme-handler/https" = ["brave-browser.desktop"];
-          "x-scheme-handler/chrome" = ["brave-browser.desktop"];
-          "application/x-extension-htm" = ["brave-browser.desktop"];
-          "application/x-extension-html" = ["brave-browser.desktop"];
-          "application/x-extension-shtml" = ["brave-browser.desktop"];
-          "application/xhtml+xml" = ["brave-browser.desktop"];
-          "application/x-extension-xhtml" = ["brave-browser.desktop"];
-          "application/x-extension-xht" = ["brave-browser.desktop"];
-
-          # File manager
-          "inode/directory" = ["org.kde.dolphin.desktop"];
-          "x-scheme-handler/file" = ["org.kde.dolphin.desktop"];
-          "x-scheme-handler/about" = ["org.kde.dolphin.desktop"];
-
-          # Text
-          "text/plain" = ["nvim.desktop"];
-
-          # Images
-          "image/jpeg" = ["org.kde.gwenview.desktop"];
-          "image/png" = ["org.kde.gwenview.desktop"];
-          "image/gif" = ["org.kde.gwenview.desktop"];
-          "image/svg+xml" = ["org.kde.gwenview.desktop"];
-
-          # Archives
-          "application/zip" = ["org.kde.ark.desktop"];
-          "application/x-tar" = ["org.kde.ark.desktop"];
-          "application/x-compressed-tar" = ["org.kde.ark.desktop"];
-          "application/x-7z-compressed" = ["org.kde.ark.desktop"];
-          "application/x-rar" = ["org.kde.ark.desktop"];
-
-          # PDF
-          "application/pdf" = ["com.github.johnfactotum.Foliate.desktop"];
-
-          # Terminal
-          "application/x-terminal-emulator" = ["com.mitchellh.ghostty.desktop"];
-        };
+        associations.added = associations;
+        defaultApplications = associations;
       };
 
       userDirs = mkIf pkgs.stdenv.isLinux {

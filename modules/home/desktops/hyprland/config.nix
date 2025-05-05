@@ -35,6 +35,8 @@ in {
         env = [
           "WLR_DRM_DEVICES,${cfg.drmDevices}"
           "WLR_NO_HARDWARE_CURSORS,1"
+          # https://bbs.archlinux.org/viewtopic.php?pid=2167673#p2167673
+          "XDG_MENU_PREFIX,plasma-"
         ];
 
         # Create persistent workspaces
