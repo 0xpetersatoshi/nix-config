@@ -6,7 +6,6 @@
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
-    ./stylix-fix.nix
   ];
 
   boot = {

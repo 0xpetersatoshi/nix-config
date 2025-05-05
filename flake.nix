@@ -37,10 +37,7 @@
 
     disko.url = "github:nix-community/disko";
 
-    stylix = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    stylix.url = "github:danth/stylix";
 
     catppuccin.url = "github:catppuccin/nix";
 
@@ -122,6 +119,7 @@
           lanzaboote.nixosModules.lanzaboote
           sops-nix.nixosModules.sops
           jovian.nixosModules.default
+          stylix.nixosModules.stylix
         ];
       };
 
