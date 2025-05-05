@@ -46,6 +46,12 @@ in {
     enable = mkBoolOpt false "Whether or not to enable booting.";
     plymouth = mkBoolOpt false "Whether or not to enable plymouth boot splash.";
     secureBoot = mkBoolOpt false "Whether or not to enable secure boot.";
+    secureBootKeysPath = lib.mkOption {
+      type = lib.types.str;
+      default = "/etc/secureboot";
+      description = "The path where the secure boot keys can be found";
+      example = "/var/lib/sbctl";
+    };
     nixConfigurationLimit = lib.mkOption {
       type = lib.types.int;
       default = 3;
@@ -67,7 +73,7 @@ in {
 
       lanzaboote = mkIf cfg.secureBoot {
         enable = true;
-        pkiBundle = "/etc/secureboot";
+        pkiBundle = cfg.secureBootKeysPath;
       };
 
       loader = {
