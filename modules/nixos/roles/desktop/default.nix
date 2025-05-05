@@ -51,7 +51,14 @@ in {
       zsa.enable = true;
     };
 
-    services.vpn.tailscale.enable = true;
+    services = {
+      ${namespace} = {
+        localsend.enable = true;
+        syncthing.enable = true;
+      };
+
+      vpn.tailscale.enable = true;
+    };
 
     styles.stylix.enable = true;
   };

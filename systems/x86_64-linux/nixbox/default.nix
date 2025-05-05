@@ -61,10 +61,6 @@
     };
 
     xserver.videoDrivers = ["nvidia" "modeset"];
-
-    ${namespace} = {
-      syncthing.enable = true;
-    };
   };
 
   styles.stylix = {
