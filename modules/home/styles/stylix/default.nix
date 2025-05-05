@@ -2,21 +2,13 @@
   lib,
   pkgs,
   config,
-  inputs,
   ...
 }: let
   cfg = config.styles.stylix;
 in {
-  imports = with inputs; [
-    stylix.homeManagerModules.stylix
-  ];
   options.styles.stylix = {
     enable = lib.mkEnableOption "Enable stylix";
-    wallpaperPath = lib.mkOption {
-      type = lib.types.path;
-      default = ../../../../wallpaper/ultrawide/winter_in_the_desert_illustration-wallpaper-5120x2160.jpg;
-      description = "Path to the wallpaper image to use with stylix";
-    };
+
     theme = lib.mkOption {
       type = lib.types.str;
       default = "catppuccin-macchiato";
@@ -32,12 +24,11 @@ in {
       # to view/list themes: `nix build nixpkgs#base16-schemes && cd result && tree .`
       # gallery also available here: https://tinted-theming.github.io/tinted-gallery/
       base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.theme}.yaml";
-      image = cfg.wallpaperPath;
-      # targets = {
-      #   kde = {
-      #     enable = true;
-      #   };
-      # };
+
+      targets = {
+        gtk.enable = !config.desktops.addons.gtk.enable;
+        qt.enable = !config.desktops.addons.qt.enable;
+      };
 
       # iconTheme = {
       #   enable = true;
@@ -47,6 +38,12 @@ in {
       #   };
       #   dark = "Papirus-Dark";
       # };
+
+      cursor = {
+        name = "Bibata-Modern-Classic";
+        package = pkgs.bibata-cursors;
+        size = 24;
+      };
 
       fonts = {
         emoji = {

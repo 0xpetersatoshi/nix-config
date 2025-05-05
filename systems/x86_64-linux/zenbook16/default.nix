@@ -87,7 +87,6 @@
   };
 
   styles.stylix = {
-    wallpaperPath = ../../../wallpaper/standard/astronaut-4-2912x1632.png;
     theme = "tokyo-night-storm";
   };
 
