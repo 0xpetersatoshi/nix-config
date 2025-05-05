@@ -40,7 +40,6 @@ in {
   options.roles.gaming = with types; {
     enable = mkBoolOpt false "Enable the gaming suite";
     bootToSteamDeck = mkBoolOpt false "Enable booting into steam deck-like environment";
-    gamescopeEnabled = mkBoolOpt true "Enable gamescope";
   };
 
   config = mkIf cfg.enable {
@@ -57,7 +56,7 @@ in {
     programs = {
       gamemode.enable = true;
       gamescope = {
-        enable = cfg.gamescopeEnabled;
+        enable = true;
         capSysNice = true;
       };
       steam = {

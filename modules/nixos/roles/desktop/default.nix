@@ -54,10 +54,5 @@ in {
     services.vpn.tailscale.enable = true;
 
     styles.stylix.enable = true;
-
-    user = {
-      name = "peter";
-      initialPassword = "1";
-    };
   };
 }

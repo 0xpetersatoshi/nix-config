@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   namespace,
   ...
@@ -26,26 +27,6 @@
     ];
   };
 
-  jovian = {
-    decky-loader = {
-      enable = true;
-    };
-    hardware = {
-      has.amd.gpu = true;
-      amd.gpu.enableBacklightControl = false;
-    };
-    steam = {
-      updater.splash = "steamos";
-      enable = true;
-      autoStart = true;
-      user = "deck";
-      desktopSession = "plasma";
-    };
-    steamos = {
-      useSteamOSConfig = true;
-    };
-  };
-
   hardware = {
     drivers = {
       enable = true;
@@ -54,22 +35,21 @@
       vulkanEnabled = true;
     };
 
-    networking.enable = true;
-
     enableAllFirmware = true;
   };
 
   hardware.${namespace} = {
-    audio.enable = false;
+    audio.enable = true;
     bluetooth.enable = true;
   };
 
   networking.hostName = "gpubox";
 
   roles = {
+    common.enable = true;
     gaming = {
       enable = true;
-      gamescopeEnabled = false;
+      bootToSteamDeck = true;
     };
   };
 
@@ -87,19 +67,9 @@
   };
 
   system = {
-    boot = {
-      enable = true;
-      nixConfigurationLimit = 5;
-    };
-    nix.enable = true;
-    locale.enable = true;
-    zram.enable = true;
+    boot.nixConfigurationLimit = 5;
     stateVersion = "24.11";
   };
 
-  user = {
-    name = "peter";
-    initialPassword = "1";
-    isNormalUser = true;
-  };
+  users.users.peter.isNormalUser = lib.mkForce false;
 }

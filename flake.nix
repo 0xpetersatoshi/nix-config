@@ -25,11 +25,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    jovian = {
-      url = "github:Jovian-Experiments/Jovian-NixOS";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sops-nix = {
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,7 +32,10 @@
 
     disko.url = "github:nix-community/disko";
 
-    stylix.url = "github:danth/stylix";
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     catppuccin.url = "github:catppuccin/nix";
 
@@ -112,13 +110,14 @@
         darwin = with inputs; [
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
+          # TODO: import here instead of in modules
+          # stylix.darwinModules.stylix
         ];
         nixos = with inputs; [
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager
           lanzaboote.nixosModules.lanzaboote
           sops-nix.nixosModules.sops
-          jovian.nixosModules.default
           stylix.nixosModules.stylix
         ];
       };
