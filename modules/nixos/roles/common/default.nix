@@ -39,10 +39,5 @@ in {
       locale.enable = true;
       zram.enable = true;
     };
-
-    user = {
-      name = "peter";
-      initialPassword = "1";
-    };
   };
 }

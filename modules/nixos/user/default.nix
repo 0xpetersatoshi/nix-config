@@ -15,6 +15,7 @@ in {
     initialPassword =
       mkOpt str "1"
       "The initial password to use";
+    isNormalUser = mkBoolOpt true "Whether the user is a normal user";
     extraGroups = mkOpt (listOf str) [] "Groups for the user to be assigned.";
     extraOptions =
       mkOpt attrs {}
@@ -40,8 +41,9 @@ in {
 
     users.mutableUsers = false;
     users.users.${cfg.name} =
+      lib.mkForce
       {
-        isNormalUser = true;
+        isNormalUser = cfg.isNormalUser;
         inherit (cfg) name initialPassword;
         home = "/home/${cfg.name}";
         group = "users";
