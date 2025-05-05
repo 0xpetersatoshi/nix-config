@@ -54,6 +54,8 @@
       vulkanEnabled = true;
     };
 
+    networking.enable = true;
+
     enableAllFirmware = true;
   };
 
