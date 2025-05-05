@@ -2,10 +2,14 @@
   lib,
   pkgs,
   config,
+  inputs,
   ...
 }: let
   cfg = config.styles.stylix;
 in {
+  imports = with inputs; [
+    stylix.homeManagerModules.stylix
+  ];
   options.styles.stylix = {
     enable = lib.mkEnableOption "Enable stylix";
     wallpaperPath = lib.mkOption {
