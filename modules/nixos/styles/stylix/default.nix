@@ -1,15 +1,11 @@
 {
   lib,
-  inputs,
   pkgs,
   config,
   ...
 }: let
   cfg = config.styles.stylix;
 in {
-  imports = [
-    inputs.stylix.nixosModules.stylix
-  ];
   options.styles.stylix = {
     enable = lib.mkEnableOption "Enable stylix";
     wallpaperPath = lib.mkOption {
