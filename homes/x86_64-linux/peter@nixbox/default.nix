@@ -63,13 +63,18 @@
     };
   };
 
-  igloo.user = {
-    enable = true;
-    name = "peter";
-  };
+  igloo = {
+    user = {
+      enable = true;
+      name = "peter";
+    };
 
-  styles.stylix = {
-    theme = "tokyo-night-storm";
+    theme = {
+      stylix = {
+        enable = true;
+        theme = "tokyo-night-storm";
+      };
+    };
   };
 
   stylix.targets.hyprpaper.enable = lib.mkForce false;

@@ -55,7 +55,6 @@ in {
     # };
 
     styles = {
-      stylix.enable = true;
       theming.enable = pkgs.stdenv.isLinux;
     };
   };

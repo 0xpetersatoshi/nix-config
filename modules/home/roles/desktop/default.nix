@@ -13,8 +13,6 @@ in {
   config = lib.mkIf cfg.enable {
     desktops.addons = {
       # NOTE: conflicts with stylix when gtk/qt enabled simultaneously
-      gtk.enable = pkgs.stdenv.isLinux && !config.styles.stylix.enable;
-      qt.enable = pkgs.stdenv.isLinux && !config.styles.stylix.enable;
       xdg.enable = true;
     };
 
@@ -25,5 +23,12 @@ in {
 
     # allows using Bluetooth headset buttons to control media player
     services.mpris-proxy.enable = true;
+
+    igloo = {
+      theme = {
+        gtk.enable = lib.mkDefault pkgs.stdenv.hostPlatform.isLinux;
+        qt.enable = lib.mkDefault pkgs.stdenv.hostPlatform.isLinux;
+      };
+    };
   };
 }
