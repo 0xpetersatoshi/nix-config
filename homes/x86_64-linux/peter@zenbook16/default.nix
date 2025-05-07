@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   desktops = {
     hyprland = {
       enable = true;
@@ -15,7 +11,7 @@
 
     addons = {
       hyprpanel = {
-        wallpaperPath = ../../../wallpaper/standard/astronaut-4-2912x1632.png;
+        wallpaperPath = ../../../wallpaper/standard/astronaut-5-2912x1632.jpg;
       };
     };
   };
@@ -43,12 +39,6 @@
     enable = true;
     name = "peter";
   };
-
-  styles.stylix = {
-    theme = "tokyo-night-storm";
-  };
-
-  stylix.targets.hyprpaper.enable = lib.mkForce false;
 
   home.stateVersion = "24.11";
 }
