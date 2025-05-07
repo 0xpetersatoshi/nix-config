@@ -1,12 +1,15 @@
-{
-  pkgs,
-  namespace,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
   ];
+
+  igloo = {
+    theme.stylix = {
+      enable = true;
+      theme = "tokyo-night-storm";
+    };
+  };
 
   boot = {
     kernelPackages = pkgs.linuxPackages_zen;
@@ -61,10 +64,6 @@
     };
 
     xserver.videoDrivers = ["nvidia" "modeset"];
-  };
-
-  styles.stylix = {
-    theme = "tokyo-night-storm";
   };
 
   system = {

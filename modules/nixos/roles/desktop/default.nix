@@ -33,12 +33,14 @@ in {
       mpv
     ];
 
+    igloo = {
+      theme = {
+        stylix.enable = pkgs.stdenv.isLinux;
+      };
+    };
+
     roles = {
       common.enable = true;
-
-      # desktop.addons = {
-      #   nautilus.enable = true;
-      # };
     };
 
     hardware.${namespace} = {
@@ -59,7 +61,5 @@ in {
 
       vpn.tailscale.enable = true;
     };
-
-    styles.stylix.enable = true;
   };
 }

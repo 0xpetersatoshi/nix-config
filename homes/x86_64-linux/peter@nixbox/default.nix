@@ -12,7 +12,7 @@
 
     addons = {
       hyprpanel = {
-        wallpaperPath = ../../../wallpaper/ultrawide/beautiful_winter_night_landscape-wallpaper-5120x2160.jpg;
+        wallpaperPath = ../../../wallpaper/ultrawide/sci_fi_architecture_building_beach-wallpaper-3440x1440.jpg;
       };
     };
   };
@@ -63,16 +63,12 @@
     };
   };
 
-  igloo.user = {
-    enable = true;
-    name = "peter";
+  igloo = {
+    user = {
+      enable = true;
+      name = "peter";
+    };
   };
-
-  styles.stylix = {
-    theme = "tokyo-night-storm";
-  };
-
-  stylix.targets.hyprpaper.enable = lib.mkForce false;
 
   home.stateVersion = "24.11";
 }

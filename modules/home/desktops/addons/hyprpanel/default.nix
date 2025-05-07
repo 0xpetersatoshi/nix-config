@@ -82,7 +82,10 @@ in {
           };
         };
 
-        wallpaper.image = "~/.local/share/hyprpanel/wallpapers/wallpaper.jpg";
+        wallpaper = {
+          enable = true;
+          image = "~/.local/share/hyprpanel/wallpapers/wallpaper.jpg";
+        };
 
         notifications.position = "top right";
 
