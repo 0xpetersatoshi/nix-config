@@ -26,8 +26,7 @@ in {
 
     igloo = {
       theme = {
-        gtk.enable = lib.mkDefault pkgs.stdenv.hostPlatform.isLinux;
-        qt.enable = lib.mkDefault pkgs.stdenv.hostPlatform.isLinux;
+        stylix.enable = pkgs.stdenv.isLinux;
       };
     };
   };

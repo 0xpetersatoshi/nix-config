@@ -66,10 +66,6 @@
     xserver.videoDrivers = ["nvidia" "modeset"];
   };
 
-  styles.stylix = {
-    theme = "tokyo-night-storm";
-  };
-
   system = {
     boot = {
       nixConfigurationLimit = 5;
