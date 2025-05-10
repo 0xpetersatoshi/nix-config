@@ -1,13 +1,9 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   desktops = {
     hyprland = {
       enable = true;
       hasLunarLakeCPU = true;
-      monitor = "eDP-1, highrr, auto, 1.5";
+      monitor = "eDP-1, highrr, auto, 1.25";
       execOnceExtras = [
         "${pkgs.libinput-gestures}/bin/libinput-gestures &"
       ];
@@ -37,12 +33,6 @@
     enable = true;
     name = "peter";
   };
-
-  styles.stylix = {
-    theme = "tokyo-night-storm";
-  };
-
-  stylix.targets.hyprpaper.enable = lib.mkForce false;
 
   home.stateVersion = "24.11";
 }

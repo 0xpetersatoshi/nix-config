@@ -25,10 +25,7 @@ in {
       docker.enable = true;
       podman.enable = false;
     };
-    ${namespace} = {
-      localsend.enable = true;
-      syncthing.enable = true;
-    };
+
     keyboard.kanata = {
       enable = true;
       configFile = ../../../dotfiles/kanata/linux.config.kbd;
@@ -87,10 +84,6 @@ in {
       JustWorksRepairing = "always";
       MultiProfile = "multiple";
     };
-  };
-
-  styles.stylix = {
-    theme = "tokyo-night-storm";
   };
 
   system = {
