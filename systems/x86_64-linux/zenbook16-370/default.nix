@@ -84,7 +84,7 @@
   system = {
     boot = {
       nixConfigurationLimit = 5;
-      secureBoot = true;
+      secureBoot = false;
       luksDevicePaths = ["/dev/nvme0n1p2"];
     };
 
