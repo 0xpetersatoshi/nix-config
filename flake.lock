@@ -790,6 +790,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-stable_2": {
+      "locked": {
+        "lastModified": 1746895748,
+        "narHash": "sha256-olHYjaw9Rh/Pa+UQ4QZHf6+qqdVhxI0744D8Q4g0oiI=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "90840ace9ecb4da8f6ec8aaee6a989ef31db7767",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "release-24.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1744868846,
@@ -964,6 +980,7 @@
         "lanzaboote": "lanzaboote",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-darwin": "nixpkgs-darwin",
+        "nixpkgs-stable": "nixpkgs-stable_2",
         "pyprland": "pyprland",
         "snowfall-lib": "snowfall-lib",
         "sops-nix": "sops-nix",
