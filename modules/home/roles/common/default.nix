@@ -2,10 +2,8 @@
   lib,
   pkgs,
   config,
-  namespace,
   ...
-}:
-with lib; let
+}: let
   cfg = config.roles.common;
 in {
   options.roles.common = {
@@ -21,10 +19,6 @@ in {
       OBSIDIAN_VAULT_PATH = "$HOME/obsidian/vault";
       EDITOR = "nvim";
     };
-
-    # system = {
-    #   nix.enable = true;
-    # };
 
     home.packages = lib.mkIf (!lib.hasAttr "nixos" config) [
       # install as service instead on NixOS
@@ -45,14 +39,6 @@ in {
       shells.zsh.enable = true;
       shells.nushell.enable = true;
     };
-
-    # programs = {
-    #   guis.enable = true;
-    # };
-
-    # security = {
-    #   sops.enable = true;
-    # };
 
     styles = {
       theming.enable = pkgs.stdenv.isLinux;

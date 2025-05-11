@@ -33,6 +33,7 @@ in {
         eza.enable = true;
         fzf.enable = true;
         git.enable = true;
+        gpg.enable = true;
         hardware.enable = true;
         kubernetes.enable = true;
         modern-unix.enable = true;
