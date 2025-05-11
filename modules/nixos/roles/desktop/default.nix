@@ -33,10 +33,12 @@ in {
       mpv
     ];
 
-    igloo = {
+    ${namespace} = {
       theme = {
         stylix.enable = pkgs.stdenv.isLinux;
       };
+
+      security.yubikey.enable = true;
     };
 
     roles = {

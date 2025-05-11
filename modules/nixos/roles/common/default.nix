@@ -29,7 +29,6 @@ in {
     security = {
       gnupg.enable = true;
       polkit.enable = true;
-      yubikey.enable = true;
       tpm.enable = true;
     };
 
