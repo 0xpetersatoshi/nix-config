@@ -40,11 +40,5 @@
     name = "peter";
   };
 
-  styles.stylix = {
-    theme = "tokyo-night-storm";
-  };
-
-  stylix.targets.hyprpaper.enable = lib.mkForce false;
-
   home.stateVersion = "24.11";
 }

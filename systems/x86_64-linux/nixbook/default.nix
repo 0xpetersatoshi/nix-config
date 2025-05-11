@@ -1,8 +1,4 @@
-{
-  pkgs,
-  namespace,
-  ...
-}: let
+{pkgs, ...}: let
   # Fix sound
   custom-alsa-ucm-conf = pkgs.fetchFromGitHub {
     owner = "alsa-project";
@@ -25,14 +21,12 @@ in {
       docker.enable = true;
       podman.enable = false;
     };
-    ${namespace} = {
-      localsend.enable = true;
-      syncthing.enable = true;
-    };
+
     keyboard.kanata = {
       enable = true;
       configFile = ../../../dotfiles/kanata/linux.config.kbd;
     };
+
     thermald.enable = true;
     # conflicts with pkgs.power-profiles-daemon used by hyprpanel
     # tlp.enable = true;
@@ -65,6 +59,7 @@ in {
       hasIntelCpu = true;
       hasIntelGpu = true;
     };
+
     enableAllFirmware = true;
     input-devices.touchpad.enable = true;
 
@@ -74,10 +69,6 @@ in {
       sof-firmware
       linux-firmware
     ];
-  };
-
-  styles.stylix = {
-    theme = "tokyo-night-storm";
   };
 
   system = {
