@@ -25,5 +25,7 @@ in {
         u2fAuth = true;
       };
     };
+
+    programs.yubikey-touch-detector.enable = true;
   };
 }
