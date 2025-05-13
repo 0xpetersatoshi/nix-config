@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  namespace,
   ...
 }: let
   cfg = config.roles.desktop;
@@ -12,7 +13,6 @@ in {
 
   config = lib.mkIf cfg.enable {
     desktops.addons = {
-      # NOTE: conflicts with stylix when gtk/qt enabled simultaneously
       xdg.enable = true;
     };
 
@@ -21,10 +21,14 @@ in {
       browsers.common.enable = pkgs.stdenv.isLinux;
     };
 
+    home.sessionVariables = {
+      OBSIDIAN_VAULT_PATH = "$HOME/obsidian/vault";
+    };
+
     # allows using Bluetooth headset buttons to control media player
     services.mpris-proxy.enable = true;
 
-    igloo = {
+    ${namespace} = {
       theme = {
         stylix.enable = pkgs.stdenv.isLinux;
       };

@@ -14,9 +14,7 @@ in {
     # GUIs should be managed by homebrew on macOS
     programs.firefox.enable = pkgs.stdenv.isLinux;
 
-    # TODO: find a better spot for this
     home.sessionVariables = {
-      OBSIDIAN_VAULT_PATH = "$HOME/obsidian/vault";
       EDITOR = "nvim";
     };
 
@@ -33,11 +31,17 @@ in {
     };
 
     cli = {
-      terminals.ghostty.enable = true;
-      terminals.kitty.enable = true;
-      terminals.wezterm.enable = true;
-      shells.zsh.enable = true;
-      shells.nushell.enable = true;
+      terminals = {
+        alacritty.enable = true;
+        ghostty.enable = true;
+        kitty.enable = true;
+        wezterm.enable = true;
+      };
+
+      shells = {
+        zsh.enable = true;
+        nushell.enable = true;
+      };
     };
 
     styles = {
