@@ -43,9 +43,8 @@ in {
       };
 
       services = {
-        sudo = {
-          u2fAuth = true;
-        };
+        sudo.u2fAuth = true;
+        login.u2fAuth = lib.mkForce false;
       };
     };
 
