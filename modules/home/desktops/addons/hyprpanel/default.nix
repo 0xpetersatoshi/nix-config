@@ -2,14 +2,17 @@
   config,
   inputs,
   lib,
+  namespace,
   pkgs,
   ...
 }:
-with lib; let
+with lib;
+with lib.${namespace}; let
   cfg = config.desktops.addons.hyprpanel;
 in {
   options.desktops.addons.hyprpanel = {
     enable = mkEnableOption "Enable hyprpanel";
+    overwrite = mkBoolOpt true "Automatically deletes the config.json file before generating a new one to allow viewing live changes from GUI";
 
     # Define these as proper options with types
     wallpaperPath = mkOption {
@@ -44,7 +47,7 @@ in {
     programs.hyprpanel = {
       enable = true;
       hyprland.enable = false;
-      overwrite.enable = true;
+      overwrite.enable = cfg.overwrite;
 
       settings = {
         scalingPriority = "gdk";
@@ -61,6 +64,8 @@ in {
               background_opacity = 65;
             };
           };
+
+          font.size = "1rem";
 
           matugen = true;
           matugen_settings = {

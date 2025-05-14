@@ -10,6 +10,13 @@
         "${pkgs.libinput-gestures}/bin/libinput-gestures &"
       ];
     };
+
+    addons = {
+      hyprpanel = {
+        wallpaperPath = ../../../wallpaper/standard/astronaut-5-2912x1632.jpg;
+        overwrite = false;
+      };
+    };
   };
 
   home.packages = with pkgs; [
