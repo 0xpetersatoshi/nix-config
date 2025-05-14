@@ -89,7 +89,7 @@ in {
 
         wallpaper = {
           enable = true;
-          image = "~/.local/share/hyprpanel/wallpapers/wallpaper.jpg";
+          image = "/home/${config.snowfallorg.user.name}/.local/share/hyprpanel/wallpapers/wallpaper.jpg";
         };
 
         notifications.position = "top right";
