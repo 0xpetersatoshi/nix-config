@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 with lib;
@@ -9,6 +10,28 @@ with lib.igloo; let
 in {
   options.cli.terminals.alacritty = with types; {
     enable = mkBoolOpt false "enable alacritty terminal emulator";
+    font = {
+      normal = mkOpt str (
+        if pkgs.stdenv.hostPlatform.isDarwin
+        then "Monaspace Neon"
+        else "JetBrainsMono Nerd Font Mono"
+      ) "Font to use for alacritty.";
+      bold = mkOpt str (
+        if pkgs.stdenv.hostPlatform.isDarwin
+        then "Monaspace Xenon"
+        else "JetBrainsMono Nerd Font Mono"
+      ) "Font to use for alacritty.";
+      italic = mkOpt str (
+        if pkgs.stdenv.hostPlatform.isDarwin
+        then "Monaspace Radon"
+        else "JetBrainsMono Nerd Font Mono"
+      ) "Font to use for alacritty.";
+      bold_italic = mkOpt str (
+        if pkgs.stdenv.hostPlatform.isDarwin
+        then "Monaspace Krypton"
+        else "JetBrainsMono Nerd Font Mono"
+      ) "Font to use for alacritty.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -16,16 +39,64 @@ in {
       enable = true;
 
       settings = {
-        shell = {
-          program = "zsh";
+        terminal = {
+          shell = {
+            program = "zsh";
+          };
+        };
+
+        cursor = {
+          style = {
+            shape = "Block";
+          };
+        };
+
+        font = {
+          size = lib.mkDefault 14.0;
+
+          offset = {
+            x = 0;
+            y = 0;
+          };
+
+          glyph_offset = {
+            x = 0;
+            y = 1;
+          };
+
+          normal = {
+            family = lib.mkDefault cfg.font.normal;
+          };
+          bold = {
+            family = lib.mkDefault cfg.font.bold;
+            style = "Bold";
+          };
+          italic = {
+            family = lib.mkDefault cfg.font.italic;
+            style = "italic";
+          };
+          bold_italic = {
+            family = lib.mkDefault cfg.font.bold_italic;
+            style = "bold_italic";
+          };
         };
 
         window = {
-          padding = {
-            x = 30;
-            y = 30;
+          dimensions = {
+            columns = 0;
+            lines = 0;
           };
-          decorations = "none";
+
+          padding = {
+            x = 10;
+            y = 10;
+          };
+
+          decorations = "None";
+
+          dynamic_padding = true;
+          dynamic_title = true;
+          # opacity = 0.98;
         };
 
         selection = {

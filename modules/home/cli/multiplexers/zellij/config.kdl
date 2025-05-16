@@ -11,7 +11,7 @@ keybinds {
     }
 
     pane clear-defaults=true {
-        bind "Ctrl P" "Esc" { SwitchToMode "normal"; }
+        bind "Alt p" "Esc" { SwitchToMode "normal"; }
 
         bind "h" "left" { MoveFocus "left"; }
         bind "j" "down" { MoveFocus "down"; }
@@ -30,7 +30,7 @@ keybinds {
     }
 
     tab clear-defaults=true {
-        bind "Ctrl T" "Esc" { SwitchToMode "normal"; }
+        bind "Alt t" "Esc" { SwitchToMode "normal"; }
 
         bind "r" { SwitchToMode "RenameTab"; TabNameInput 0; }
         bind "h" "Left" "Up" "k" { GoToPreviousTab; }
@@ -54,7 +54,7 @@ keybinds {
     }
 
     resize clear-defaults=true {
-        bind "Ctrl R" "Esc" { SwitchToMode "normal"; }
+        bind "Alt r" "Esc" { SwitchToMode "normal"; }
 
         bind "=" "+" { Resize "Increase"; }
         bind "-" { Resize "Decrease"; }
@@ -69,7 +69,7 @@ keybinds {
     }
 
     move clear-defaults=true {
-        bind "Ctrl M" "Esc" { SwitchToMode "normal"; }
+        bind "Alt m" "Esc" { SwitchToMode "normal"; }
 
         bind "n" "Tab" { MovePane; }
         bind "p" { MovePaneBackwards; }
@@ -126,7 +126,7 @@ keybinds {
     }
 
     session clear-defaults=true {
-        bind "Ctrl S" "Esc" { SwitchToMode "Normal"; }
+        bind "Alt s" "Esc" { SwitchToMode "Normal"; }
 
         bind "c" {
             LaunchOrFocusPlugin "configuration" {
@@ -160,7 +160,7 @@ keybinds {
             SwitchToMode "normal"
         }
 
-        bind "F" {
+        bind "k" {
             LaunchOrFocusPlugin "filepicker" {
                 floating true
                 move_to_focused_tab true
@@ -170,6 +170,8 @@ keybinds {
     }
 
     tmux clear-defaults=true {
+        bind "Ctrl a" { Write 2; SwitchToMode "normal"; }
+
         bind "left" { MoveFocus "left"; SwitchToMode "normal"; }
         bind "down" { MoveFocus "down"; SwitchToMode "normal"; }
         bind "up" { MoveFocus "up"; SwitchToMode "normal"; }
@@ -181,7 +183,6 @@ keybinds {
         bind "h" { NewPane "left"; SwitchToMode "normal"; }
         bind "," { SwitchToMode "renametab"; }
         bind "[" { SwitchToMode "scroll"; }
-        bind "Ctrl a" { Write 2; SwitchToMode "normal"; }
         bind "c" { NewTab; SwitchToMode "normal"; }
         //bind "h" { MoveFocus "left"; SwitchToMode "normal"; }
         //bind "j" { MoveFocus "down"; SwitchToMode "normal"; }
@@ -203,7 +204,7 @@ keybinds {
     }
 
     shared_except "locked" {
-        bind "Ctrl g" { SwitchToMode "locked"; }
+        bind "Alt g" { SwitchToMode "locked"; }
 
         bind "Alt F" { ToggleFloatingPanes; }
         bind "Alt q" { Quit; }
@@ -217,17 +218,17 @@ keybinds {
     }
 
     shared_except "normal" "locked" {
-        bind "Enter" "Esc" "Ctrl g" { SwitchToMode "Normal"; }
+        bind "Enter" "Esc" "Alt g" { SwitchToMode "Normal"; }
     }
 
     shared_except "move" "locked" {
         unbind "Ctrl h"
-        bind "Ctrl M" { SwitchToMode "move"; }
+        bind "Alt m" { SwitchToMode "move"; }
     }
 
     shared_except "session" "locked"  {
         unbind "Ctrl o"
-        bind "Ctrl S" { SwitchToMode "session"; }
+        bind "Alt s" { SwitchToMode "session"; }
     }
 
     shared_except "scroll" "locked" {
@@ -239,23 +240,19 @@ keybinds {
         bind "Ctrl a" { SwitchToMode "tmux"; }
     }
 
-    shared_except "locked" "scroll" "search" {
-       bind "Ctrl Alt s" { SwitchToMode "scroll"; }
-    }
-
     shared_except "tab" "locked" {
         unbind "Ctrl t"
-        bind "Ctrl T" { SwitchToMode "tab"; }
+        bind "Alt t" { SwitchToMode "tab"; }
     }
 
     shared_except "pane" "locked" {
         unbind "Ctrl p"
-        bind "Ctrl P" { SwitchToMode "pane"; }
+        bind "Alt p" { SwitchToMode "pane"; }
     }
 
     shared_except "resize" "locked" {
         unbind "Ctrl n"
-        bind "Ctrl R" { SwitchToMode "resize"; }
+        bind "Alt r" { SwitchToMode "resize"; }
     }
 
     shared_except "tmux" "locked" {
