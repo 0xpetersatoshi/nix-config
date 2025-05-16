@@ -15,12 +15,20 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      tail-tray
+      trayscale
     ];
 
     services.tailscale = {
       enable = true;
-      useRoutingFeatures = "client";
+      useRoutingFeatures = "both";
+    };
+
+    # Allow Tailscale traffic
+    networking.firewall = {
+      trustedInterfaces = ["tailscale0"];
+
+      # Allow incoming connections from Tailscale network
+      allowedUDPPorts = [config.services.tailscale.port];
     };
   };
 }
