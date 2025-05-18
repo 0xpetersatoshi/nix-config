@@ -87,7 +87,13 @@ in {
   };
 
   system = {
-    boot.nixConfigurationLimit = 5;
+    boot = {
+      secureBoot = true;
+      luksDevicePaths = ["/dev/nvme0n1p2"];
+      secureBootKeysPath = "/var/lib/sbctl";
+      nixConfigurationLimit = 5;
+    };
+
     stateVersion = "24.11";
   };
 
