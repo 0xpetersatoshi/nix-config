@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  namespace,
+  ...
+}: let
   # Fix sound
   custom-alsa-ucm-conf = pkgs.fetchFromGitHub {
     owner = "alsa-project";
@@ -30,6 +34,10 @@ in {
     thermald.enable = true;
     # conflicts with pkgs.power-profiles-daemon used by hyprpanel
     # tlp.enable = true;
+
+    ${namespace} = {
+      keybase.enable = true;
+    };
   };
 
   powerManagement.enable = true;
