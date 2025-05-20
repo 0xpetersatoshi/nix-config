@@ -12,8 +12,8 @@ with lib.${namespace}; let
 in {
   options.user = with types; {
     name = mkOpt str "peter" "The name of the user's account";
-    initialPassword =
-      mkOpt str "1"
+    initialHashedPassword =
+      mkOpt str "$6$8qMPXym8IqGqhbhS$oEjkslV1e0.9ZacVQIrF2StBBoeGNCIxuhHRTRqW.PLtBeXOy/wyxh.gbWcPj9DOvMHXiGrh.5xJTSgewQ7Bv0"
       "The initial password to use";
     extraGroups = mkOpt (listOf str) [] "Groups for the user to be assigned.";
     extraOptions =
@@ -42,7 +42,7 @@ in {
     users.users.${cfg.name} =
       {
         isNormalUser = true;
-        inherit (cfg) name initialPassword;
+        inherit (cfg) name initialHashedPassword;
         home = "/home/${cfg.name}";
         group = "users";
         shell = pkgs.zsh;
