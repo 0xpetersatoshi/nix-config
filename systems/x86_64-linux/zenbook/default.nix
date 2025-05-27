@@ -45,6 +45,7 @@ in {
     desktop = {
       enable = true;
       addons = {
+        appimage.enable = true;
         hyprland.enable = true;
         kde.enable = true;
       };

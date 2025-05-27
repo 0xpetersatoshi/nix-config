@@ -53,6 +53,12 @@ in {
       };
     };
 
-    guis.development.enable = pkgs.stdenv.isLinux;
+    guis = {
+      appimage = {
+        tableplus.enable = pkgs.stdenv.isLinux;
+      };
+
+      development.enable = pkgs.stdenv.isLinux;
+    };
   };
 }
