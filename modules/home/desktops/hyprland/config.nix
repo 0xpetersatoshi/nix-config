@@ -96,7 +96,7 @@ in {
             "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
             "${pkgs.pyprland}/bin/pypr"
             "${pkgs.clipse}/bin/clipse -listen"
-            "${pkgs.trayscale}/bin/trayscale"
+            # "${pkgs.trayscale}/bin/trayscale"
             "${pkgs.syncthingtray}/bin/syncthingtray --wait"
             "${pkgs.solaar}/bin/solaar -w hide"
             "${pkgs.hyprpanel}/bin/hyprpanel"
