@@ -97,8 +97,15 @@ return {
       provider = "claude",
       claude = {
         endpoint = "https://api.anthropic.com",
-        model = "claude-3-7-sonnet-latest",
-        api_key_name = "cmd:op read 'op://Private/anthropic-api-keys/avante' --no-newline",
+        model = "claude-sonnet-4-20250514",
+        api_key_name = {
+          "op",
+          "read",
+          "op://Private/anthropic-api-keys/avante",
+          "--no-newline",
+          "--account",
+          "QYIHA6GHC5FUFOQ2SAI7TO3IOM",
+        },
         timeout = 30000, -- Timeout in milliseconds
         temperature = 0,
         max_tokens = 8000,
