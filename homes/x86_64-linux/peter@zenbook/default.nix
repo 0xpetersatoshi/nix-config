@@ -33,6 +33,7 @@
     common.enable = true;
     desktop.enable = true;
     development.enable = true;
+    gaming.enable = true;
   };
 
   igloo.user = {

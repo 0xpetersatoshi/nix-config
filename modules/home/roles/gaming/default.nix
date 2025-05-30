@@ -26,6 +26,7 @@ in {
       lutris
       bottles
       heroic
+      gfn-electron
     ];
   };
 }
