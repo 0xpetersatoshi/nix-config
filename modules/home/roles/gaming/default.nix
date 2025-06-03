@@ -19,6 +19,7 @@ in {
       enableSessionWide = true;
       settings = {
         cpu_load_change = true;
+        blacklist = "foliate,trayscale";
       };
     };
 
