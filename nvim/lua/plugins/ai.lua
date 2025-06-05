@@ -95,17 +95,13 @@ return {
       -- add any opts here
       -- for example
       provider = "claude",
+      mappings = {
+        ask = "<leader>tt",
+      },
       claude = {
         endpoint = "https://api.anthropic.com",
         model = "claude-sonnet-4-20250514",
-        api_key_name = {
-          "op",
-          "read",
-          "op://Private/anthropic-api-keys/avante",
-          "--no-newline",
-          "--account",
-          "QYIHA6GHC5FUFOQ2SAI7TO3IOM",
-        },
+        api_key_name = "cmd:op item get anthropic-api-keys --account QYIHA6GHC5FUFOQ2SAI7TO3IOM --fields avante --reveal",
         timeout = 30000, -- Timeout in milliseconds
         temperature = 0,
         max_tokens = 8000,
@@ -115,7 +111,7 @@ return {
         provider = "tavily",
         providers = {
           tavily = {
-            api_key_name = "cmd:op read 'op://Private/tavily-api-keys/avante' --no-newline",
+            api_key_name = "cmd:op read op://Private/tavily-api-keys/avante --account QYIHA6GHC5FUFOQ2SAI7TO3IOM",
             extra_request_body = {
               include_answer = "basic",
             },
