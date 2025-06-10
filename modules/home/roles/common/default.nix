@@ -2,8 +2,26 @@
   lib,
   pkgs,
   config,
+  namespace,
   ...
 }: let
+  shellAliases = {
+    cat = "bat";
+    ll = "eza --icons=always -l";
+    tree = "eza --icons=always --tree";
+    v = "nvim";
+    z = "zellij";
+    grep = "rg";
+  };
+
+  tokenExports =
+    lib.optionalString config.${namespace}.security.sops.enable
+    ''
+      if [ -f ${config.sops.secrets.anthropic-api-key.path} ]; then
+        export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets.anthropic-api-key.path})"
+      fi
+    '';
+
   cfg = config.roles.common;
 in {
   options.roles.common = {
@@ -11,6 +29,10 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    sops.secrets = lib.mkIf config.${namespace}.security.sops.enable {
+      anthropic-api-key = {};
+    };
+
     # GUIs should be managed by homebrew on macOS
     programs.firefox.enable = pkgs.stdenv.isLinux;
 
@@ -39,7 +61,11 @@ in {
       };
 
       shells = {
-        zsh.enable = true;
+        zsh = {
+          enable = true;
+          extraInitContent = tokenExports;
+          inherit shellAliases;
+        };
         nushell.enable = true;
       };
     };
