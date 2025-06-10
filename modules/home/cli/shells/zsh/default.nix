@@ -2,20 +2,12 @@
   pkgs,
   lib,
   config,
+  namespace,
   ...
 }:
 with lib;
-with lib.igloo; let
+with lib.${namespace}; let
   cfg = config.cli.shells.zsh;
-
-  # TODO: Define this in a common module
-  shellAliases = {
-    cat = "bat";
-    ll = "eza --icons=always -l";
-    tree = "eza --icons=always --tree";
-    v = "nvim";
-    z = "zellij";
-  };
 
   homebrewInitExtra = ''
     # Setup the brew package manager for GUI apps
@@ -23,9 +15,68 @@ with lib.igloo; let
       eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
   '';
+
+  baseInitContent = ''
+    ${
+      if pkgs.stdenv.isDarwin
+      then homebrewInitExtra
+      else ""
+    }
+
+    # Functions
+    _zellij_update_tabname() {
+        if [[ -n $ZELLIJ ]]; then
+            if [[ $PWD == $HOME ]]; then
+                nohup zellij action rename-tab "~" >/dev/null 2>&1
+            else
+                nohup zellij action rename-tab "$(basename $PWD)" >/dev/null 2>&1
+            fi
+        fi
+    }
+    # Add this to your precmd hooks to run before each prompt
+    autoload -Uz add-zsh-hook
+    add-zsh-hook precmd _zellij_update_tabname
+
+
+    # Completion styling
+    zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+    zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
+    zstyle ':completion:*' menu no
+    zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+    zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+    # Kitty key bindings
+    bindkey '\e[H' beginning-of-line
+    bindkey '\e[F' end-of-line
+  '';
 in {
   options.cli.shells.zsh = with types; {
     enable = mkBoolOpt false "enable zsh shell";
+
+    shellAliases = mkOption {
+      type = attrsOf str;
+      default = {};
+      description = "Additional shell aliases to merge with default aliases. User aliases will override defaults if there are conflicts.";
+      example = {
+        ls = "eza --icons";
+        grep = "rg";
+      };
+    };
+
+    extraInitContent = mkOption {
+      type = str;
+      default = "";
+      description = "Additional lines to add to zsh initContent";
+      example = ''
+        # Custom functions
+        myfunction() {
+          echo "Hello from custom function"
+        }
+
+        # Custom exports
+        export MY_VAR="custom_value"
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
@@ -40,39 +91,7 @@ in {
         export PATH="$PATH:${config.xdg.configHome}/.foundry/bin"
       '';
 
-      initContent = ''
-        ${
-          if pkgs.stdenv.isDarwin
-          then homebrewInitExtra
-          else ""
-        }
-
-        # Functions
-        _zellij_update_tabname() {
-            if [[ -n $ZELLIJ ]]; then
-                if [[ $PWD == $HOME ]]; then
-                    nohup zellij action rename-tab "~" >/dev/null 2>&1
-                else
-                    nohup zellij action rename-tab "$(basename $PWD)" >/dev/null 2>&1
-                fi
-            fi
-        }
-        # Add this to your precmd hooks to run before each prompt
-        autoload -Uz add-zsh-hook
-        add-zsh-hook precmd _zellij_update_tabname
-
-
-        # Completion styling
-        zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-        zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
-        zstyle ':completion:*' menu no
-        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-        zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-
-        # Kitty key bindings
-        bindkey '\e[H' beginning-of-line
-        bindkey '\e[F' end-of-line
-      '';
+      initContent = baseInitContent + optionalString (cfg.extraInitContent != "") "\n${cfg.extraInitContent}";
 
       oh-my-zsh = {
         enable = true;
@@ -84,6 +103,7 @@ in {
           "sudo"
         ];
       };
+
       plugins = [
         {
           name = "fzf-tab";
@@ -96,7 +116,7 @@ in {
         }
       ];
 
-      inherit shellAliases;
+      inherit (cfg) shellAliases;
     };
   };
 }
