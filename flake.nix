@@ -104,8 +104,9 @@
         hyprpanel.overlay
       ];
 
-      # homes.modules = with inputs; [
-      # ];
+      homes.modules = with inputs; [
+        sops-nix.homeManagerModules.sops
+      ];
 
       systems.modules = {
         darwin = with inputs; [

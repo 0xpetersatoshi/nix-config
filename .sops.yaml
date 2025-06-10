@@ -1,0 +1,7 @@
+keys:
+  - &yubikey 5C61 5A0D 3CDF 670A 0729  BCBE 0069 3BD2 F5F5 2F44
+creation_rules:
+  - path_regex: modules/home/secrets.ya?ml$
+    key_groups:
+    - pgp:
+      - *yubikey
