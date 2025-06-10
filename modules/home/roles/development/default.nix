@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  namespace,
   ...
 }:
 with lib; let
@@ -14,7 +15,7 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       claude-code
-      opencode
+      pkgs.${namespace}.opencode
     ];
 
     cloud.google.enable = true;
