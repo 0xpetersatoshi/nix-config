@@ -1,10 +1,11 @@
 {
   config,
   lib,
+  namespace,
   ...
 }:
 with lib;
-with lib.igloo; let
+with lib.${namespace}; let
   cfg = config.cli.programs.bat;
 in {
   options.cli.programs.bat = with types; {

@@ -1,0 +1,46 @@
+{
+  "data": {
+    "directory": ".opencode"
+  },
+  "providers": {
+    "openai": {
+      "disabled": false
+    },
+    "anthropic": {
+      "disabled": false
+    },
+    "groq": {
+      "disabled": false
+    },
+    "openrouter": {
+      "disabled": false
+    }
+  },
+  "agents": {
+    "coder": {
+      "model": "claude-4-sonnet",
+      "maxTokens": 5000
+    },
+    "task": {
+      "model": "claude-4-sonnet",
+      "maxTokens": 5000
+    },
+    "title": {
+      "model": "claude-4-sonnet",
+      "maxTokens": 80
+    }
+  },
+  "shell": {
+    "path": "/bin/zsh",
+    "args": ["-l"]
+  },
+  "lsp": {
+    "go": {
+      "disabled": false,
+      "command": "gopls"
+    }
+  },
+  "debug": false,
+  "debugLSP": false,
+  "autoCompact": true
+}
