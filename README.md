@@ -143,6 +143,18 @@ darwin-rebuild switch --flake .
 # nh os switch
 ```
 
+## Helpful Commands
+
+### Getting sha256 artifact hashes
+
+```bash
+nix-prefetch-url https://registry.npmjs.org/@nomicfoundation/slang/-/slang-1.0.0.tgz
+# output: 1hvf7s7kd4881xi929i1in9j5dmk37xhmx5zamczni2nvk1c8lxd
+
+nix hash convert --hash-algo sha256 1hvf7s7kd4881xi929i1in9j5dmk37xhmx5zamczni2nvk1c8lxd
+# output: sha256-rVPEwtxWRPtZVb/0CvsZs7Yik40hJpFiDwiRNo8+bsM=
+```
+
 ## Resources
 
 I drew heavy inspiration from the following repos:
