@@ -18,15 +18,15 @@
   },
   "agents": {
     "coder": {
-      "model": "claude-4-sonnet",
+      "model": "openrouter.claude-4-sonnet",
       "maxTokens": 5000
     },
     "task": {
-      "model": "claude-4-sonnet",
+      "model": "openrouter.claude-4-sonnet",
       "maxTokens": 5000
     },
     "title": {
-      "model": "claude-4-sonnet",
+      "model": "openrouter.gemini-2.5-flash",
       "maxTokens": 80
     }
   },
