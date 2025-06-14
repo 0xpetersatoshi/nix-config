@@ -28,6 +28,10 @@
       if [ -f ${config.sops.secrets.openrouter-api-key.path} ]; then
         export OPENROUTER_API_KEY="$(cat ${config.sops.secrets.openrouter-api-key.path})"
       fi
+
+      if [ -f ${config.sops.secrets.gemini-api-key.path} ]; then
+        export GEMINI_API_KEY="$(cat ${config.sops.secrets.gemini-api-key.path})"
+      fi
     '';
 
   cfg = config.roles.common;
@@ -41,6 +45,7 @@ in {
       anthropic-api-key = {};
       openai-api-key = {};
       openrouter-api-key = {};
+      gemini-api-key = {};
     };
 
     # GUIs should be managed by homebrew on macOS
