@@ -20,6 +20,14 @@
       if [ -f ${config.sops.secrets.anthropic-api-key.path} ]; then
         export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets.anthropic-api-key.path})"
       fi
+
+      if [ -f ${config.sops.secrets.openai-api-key.path} ]; then
+        export OPENAI_API_KEY="$(cat ${config.sops.secrets.openai-api-key.path})"
+      fi
+
+      if [ -f ${config.sops.secrets.openrouter-api-key.path} ]; then
+        export OPENROUTER_API_KEY="$(cat ${config.sops.secrets.openrouter-api-key.path})"
+      fi
     '';
 
   cfg = config.roles.common;
@@ -31,6 +39,8 @@ in {
   config = lib.mkIf cfg.enable {
     sops.secrets = lib.mkIf config.${namespace}.security.sops.enable {
       anthropic-api-key = {};
+      openai-api-key = {};
+      openrouter-api-key = {};
     };
 
     # GUIs should be managed by homebrew on macOS
