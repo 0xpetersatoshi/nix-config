@@ -34,6 +34,14 @@
     "path": "/bin/zsh",
     "args": ["-l"]
   },
+  "mcpServers": {
+    "linear": {
+      "type": "stdio",
+      "command": "npx",
+      "env": [],
+      "args": ["-y", "mcp-remote", "https://mcp.linear.app/sse"]
+    }
+  },
   "lsp": {
     "go": {
       "disabled": false,
