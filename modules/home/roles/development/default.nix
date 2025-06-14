@@ -14,6 +14,7 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       claude-code
+      sqlite
     ];
 
     cloud.google.enable = true;
