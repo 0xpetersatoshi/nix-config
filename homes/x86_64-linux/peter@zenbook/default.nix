@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   desktops = {
     hyprland = {
       enable = true;
@@ -34,9 +38,13 @@
     gaming.enable = true;
   };
 
-  igloo.user = {
-    enable = true;
-    name = "peter";
+  igloo = {
+    user = {
+      enable = true;
+      inherit (config.snowfallorg.user) name;
+    };
+
+    security.sops.enable = true;
   };
 
   home.stateVersion = "24.11";
