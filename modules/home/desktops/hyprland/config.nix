@@ -24,6 +24,7 @@ in {
         "$fileManager" = "dolphin";
         "$menu" = "rofi -show drun -mode drun";
         "$windowSwitcher" = "rofi -show window";
+        "$calculatorWindow" = "rofi -show calc -modi calc -calc-command \"echo -n '{result}' | wl-copy\"";
         # "$notificationsClient" = "swaync-client -t";
         "$browser" = "brave";
         "$passwordManager" = "1password";

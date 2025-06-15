@@ -33,6 +33,9 @@ in {
         display-Network = " 󰤨  Network";
         sidebar-mode = true;
       };
+      plugins = with pkgs; [
+        rofi-calc
+      ];
       theme = let
         inherit (config.lib.formats.rasi) mkLiteral;
       in

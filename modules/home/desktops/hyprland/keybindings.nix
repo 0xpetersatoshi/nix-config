@@ -62,6 +62,7 @@ in {
         "SUPER, T, exec, $terminal"
         "SUPER, B, exec, $browser"
         "SUPER, Space, exec, $menu"
+        "SUPER, C, exec, $calculatorWindow"
         "SUPER, Q, killactive,"
         "SUPER, E, exec, $fileManager"
         "SUPER, F, Fullscreen,0"
