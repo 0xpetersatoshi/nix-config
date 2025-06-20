@@ -85,6 +85,8 @@ return {
       )
     end,
   },
+
+  -- avante
   {
     "yetone/avante.nvim",
     enabled = true,
@@ -197,6 +199,18 @@ return {
           provider_opts = {},
         },
       }
+    end,
+  },
+
+  -- claude code
+  {
+    "greggh/claude-code.nvim",
+    enabled = false,
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- Required for git operations
+    },
+    config = function()
+      require("claude-code").setup()
     end,
   },
 }
