@@ -71,6 +71,7 @@ in {
         "SUPER, N, exec, hyprpanel toggleWindow notificationsmenu"
         "SUPER, P, exec, $passwordManager"
         "SUPER, V, exec, $pypr toggle pwvucontrol"
+        "SUPER, Y, exec, yubioath-flutter"
         "SUPER_SHIFT, T, exec, $pypr toggle term"
         ",XF86ScreenSaver, exec, ${pkgs.hyprlock}/bin/hyprlock"
         ",XF86Calculator, exec, ${pkgs.kdePackages.kcalc}/bin/kcalc"
