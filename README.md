@@ -161,3 +161,4 @@ I drew heavy inspiration from the following repos:
 
 - [khaneliman/khanelinix](https://github.com/khaneliman/khanelinix)
 - [hmajid2301/nixicle](https://gitlab.com/hmajid2301/nixicle)
+- [usmcamp0811/dotfiles](https://gitlab.com/usmcamp0811/dotfiles)

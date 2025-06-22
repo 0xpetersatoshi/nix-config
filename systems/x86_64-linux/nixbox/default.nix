@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  namespace,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
@@ -55,9 +59,17 @@
   security = {
     _1password-browser-integration.enable = true;
     _1password-gui.enable = true;
+
+    ${namespace} = {
+      sops.enable = true;
+    };
   };
 
   services = {
+    ${namespace} = {
+      samba.enable = true;
+    };
+
     virtualisation = {
       docker.enable = true;
       podman.enable = false;
