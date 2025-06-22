@@ -18,6 +18,10 @@
     };
   };
 
+  guis.web3 = {
+    ledger.enable = true;
+  };
+
   home.packages = with pkgs; [
     nwg-displays
     hyprpolkitagent

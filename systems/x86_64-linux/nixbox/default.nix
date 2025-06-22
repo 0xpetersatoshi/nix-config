@@ -34,6 +34,8 @@
   };
 
   hardware = {
+    ${namespace}.udev.web3.enable = true;
+
     drivers = {
       enable = true;
       hasAmdCpu = true;
