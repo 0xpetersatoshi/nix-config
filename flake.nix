@@ -90,10 +90,6 @@
     lib.mkFlake {
       channels-config = {
         allowUnfree = true;
-
-        permittedInsecurePackages = [
-          "beekeeper-studio-5.2.9"
-        ];
       };
 
       home-manager = {
