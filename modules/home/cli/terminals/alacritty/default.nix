@@ -17,6 +17,9 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # Ensure font cache is properly configured
+    fonts.fontconfig.enable = true;
+
     programs.alacritty = {
       enable = true;
 
@@ -59,11 +62,11 @@ in {
           };
           italic = {
             family = lib.mkDefault config.stylix.fonts.monospace.name;
-            style = "italic";
+            style = "Italic";
           };
           bold_italic = {
             family = lib.mkDefault config.stylix.fonts.monospace.name;
-            style = "bold_italic";
+            style = "Bold Italic";
           };
         };
 
