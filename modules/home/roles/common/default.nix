@@ -14,7 +14,7 @@
     grep = "rg";
   };
 
-  tokenExports =
+  environmentVariableExports =
     lib.optionalString config.${namespace}.security.sops.enable
     ''
       if [ -f ${config.sops.secrets.anthropic-api-key.path} ]; then
@@ -83,7 +83,7 @@ in {
       shells = {
         zsh = {
           enable = true;
-          extraInitContent = tokenExports;
+          extraInitContent = environmentVariableExports;
           inherit shellAliases;
         };
         nushell.enable = true;

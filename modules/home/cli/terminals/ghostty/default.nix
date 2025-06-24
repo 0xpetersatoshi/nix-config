@@ -19,7 +19,7 @@ in {
       # temporarily managed by homebrew but need the
       # config file to be set above when enabled
       enable = !pkgs.stdenv.isDarwin;
-      enableZshIntegration = true;
+      enableZshIntegration = false;
     };
   };
 }
