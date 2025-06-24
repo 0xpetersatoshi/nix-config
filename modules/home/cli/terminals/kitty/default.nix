@@ -47,6 +47,8 @@ in {
         "alt+right" = "send_text all \x1bf";
         "super+left" = "send_text all \x1b[H";
         "super+right" = "send_text all \x1b[F";
+        # Send literal newline without executing command (emulate alt+enter)
+        "shift+enter" = "send_text all \\x1b\\x0d";
       };
     };
   };

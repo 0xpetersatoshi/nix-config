@@ -96,6 +96,12 @@ in {
               mods = "Control";
               action = "SpawnNewInstance";
             }
+            # Send literal newline without executing command (emulate alt+enter)
+            {
+              key = "Return";
+              mods = "Shift";
+              chars = "\\u001b\\r";
+            }
           ];
         };
 

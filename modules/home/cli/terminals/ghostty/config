@@ -20,3 +20,5 @@ copy-on-select = true
 # Keybind
 keybind = ctrl+t=new_tab
 keybind = ctrl+shift+t=unbind
+# Send literal newline without executing command (emulate alt+enter)
+keybind = shift+enter=text:\x1b\x0d
