@@ -7,31 +7,13 @@
 with lib;
 with lib.igloo; let
   cfg = config.cli.terminals.alacritty;
+  tokyonight-moon = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/alacritty/tokyonight_moon.toml";
+    sha256 = "sha256-HNrprH4KtXo4maNXLgwu68Gzf1bmXVj9YCo0dthcejU=";
+  };
 in {
   options.cli.terminals.alacritty = with types; {
     enable = mkBoolOpt false "enable alacritty terminal emulator";
-    font = {
-      normal = mkOpt str (
-        if pkgs.stdenv.hostPlatform.isDarwin
-        then "Monaspace Neon"
-        else "JetBrainsMono Nerd Font Mono"
-      ) "Font to use for alacritty.";
-      bold = mkOpt str (
-        if pkgs.stdenv.hostPlatform.isDarwin
-        then "Monaspace Xenon"
-        else "JetBrainsMono Nerd Font Mono"
-      ) "Font to use for alacritty.";
-      italic = mkOpt str (
-        if pkgs.stdenv.hostPlatform.isDarwin
-        then "Monaspace Radon"
-        else "JetBrainsMono Nerd Font Mono"
-      ) "Font to use for alacritty.";
-      bold_italic = mkOpt str (
-        if pkgs.stdenv.hostPlatform.isDarwin
-        then "Monaspace Krypton"
-        else "JetBrainsMono Nerd Font Mono"
-      ) "Font to use for alacritty.";
-    };
   };
 
   config = mkIf cfg.enable {
@@ -39,6 +21,9 @@ in {
       enable = true;
 
       settings = {
+        general = {
+          import = [tokyonight-moon];
+        };
         terminal = {
           shell = {
             program = "zsh";
@@ -52,7 +37,7 @@ in {
         };
 
         font = {
-          size = lib.mkDefault 14.0;
+          size = config.stylix.fonts.sizes.terminal;
 
           offset = {
             x = 0;
@@ -65,18 +50,19 @@ in {
           };
 
           normal = {
-            family = lib.mkDefault cfg.font.normal;
+            family = lib.mkDefault config.stylix.fonts.monospace.name;
+            style = lib.mkDefault "Bold";
           };
           bold = {
-            family = lib.mkDefault cfg.font.bold;
+            family = lib.mkDefault config.stylix.fonts.monospace.name;
             style = "Bold";
           };
           italic = {
-            family = lib.mkDefault cfg.font.italic;
+            family = lib.mkDefault config.stylix.fonts.monospace.name;
             style = "italic";
           };
           bold_italic = {
-            family = lib.mkDefault cfg.font.bold_italic;
+            family = lib.mkDefault config.stylix.fonts.monospace.name;
             style = "bold_italic";
           };
         };
@@ -103,12 +89,24 @@ in {
           save_to_clipboard = true;
         };
 
-        mouse_bindings = [
-          {
-            mouse = "Right";
-            action = "Paste";
-          }
-        ];
+        keyboard = {
+          bindings = [
+            {
+              key = "T";
+              mods = "Control";
+              action = "SpawnNewInstance";
+            }
+          ];
+        };
+
+        mouse = {
+          bindings = [
+            {
+              mouse = "Right";
+              action = "Paste";
+            }
+          ];
+        };
 
         env = {
           TERM = "xterm-256color";

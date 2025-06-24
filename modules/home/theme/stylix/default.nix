@@ -50,7 +50,7 @@ in {
         sizes = {
           desktop = 12;
           applications = 12;
-          terminal = 12;
+          terminal = 14;
           popups = 12;
         };
 
@@ -70,7 +70,7 @@ in {
         };
         monospace = {
           package = pkgs.nerd-fonts.jetbrains-mono;
-          name = "JetBrains Mono";
+          name = "JetBrainsMono Nerd Font Mono";
         };
         emoji = {
           package = pkgs.noto-fonts-color-emoji;
