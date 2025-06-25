@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   lib,
   namespace,
   pkgs,
@@ -28,8 +27,6 @@ in {
     };
   };
 
-  imports = [inputs.hyprpanel.homeManagerModules.hyprpanel];
-
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       gpu-screen-recorder
@@ -46,80 +43,62 @@ in {
 
     programs.hyprpanel = {
       enable = true;
-      hyprland.enable = false;
-      overwrite.enable = cfg.overwrite;
+      # overwrite.enable = cfg.overwrite;
+      systemd.enable = true;
 
       settings = {
         scalingPriority = "gdk";
 
-        theme = {
-          bar = {
-            floating = true;
-            transparent = false;
-            opacity = 80;
-            enableShadow = true;
-            buttons = {
-              enableBorders = false;
-              opacity = 100;
-              background_opacity = 65;
-            };
-          };
+        # Theme settings
+        theme.bar.floating = true;
+        theme.bar.transparent = false;
+        theme.bar.opacity = 80;
+        theme.bar.enableShadow = true;
+        theme.bar.buttons.enableBorders = false;
+        theme.bar.buttons.opacity = 100;
+        theme.bar.buttons.background_opacity = 65;
 
-          font.size = "1rem";
+        theme.font.size = "1rem";
 
-          matugen = true;
-          matugen_settings = {
-            scheme_type = "fruit-salad";
-            variation = "standard_1";
-          };
-        };
+        theme.matugen = true;
+        theme.matugen_settings.scheme_type = "fruit-salad";
+        theme.matugen_settings.variation = "standard_1";
 
-        bar = {
-          launcher.autoDetectIcon = true;
-          workspaces = {
-            show_icons = false;
-            show_numbered = true;
-            numbered_active_indicator = "highlight";
-            showWsIcons = false;
-            showApplicationIcons = false;
-            workspaceMask = false;
-            ignored = "-98";
-          };
-        };
+        # Bar settings
+        bar.launcher.autoDetectIcon = true;
+        bar.workspaces.show_icons = false;
+        bar.workspaces.show_numbered = true;
+        bar.workspaces.numbered_active_indicator = "highlight";
+        bar.workspaces.showWsIcons = false;
+        bar.workspaces.showApplicationIcons = false;
+        bar.workspaces.workspaceMask = false;
+        bar.workspaces.ignored = "-98";
 
-        wallpaper = {
-          enable = true;
-          image = "/home/${config.snowfallorg.user.name}/.local/share/hyprpanel/wallpapers/wallpaper.jpg";
-        };
+        # Wallpaper settings
+        wallpaper.enable = true;
+        wallpaper.image = "/home/${config.snowfallorg.user.name}/.local/share/hyprpanel/wallpapers/wallpaper.jpg";
 
+        # Notifications
         notifications.position = "top right";
 
-        menus = {
-          clock = {
-            time = {
-              hideSeconds = true;
-            };
-          };
-          dashboard = {
-            powermenu.avatar.image = "~/.local/share/hyprpanel/avatars/avatar.jpg";
-          };
-        };
+        # Menus
+        menus.clock.time.hideSeconds = true;
+        menus.dashboard.powermenu.avatar.image = "~/.local/share/hyprpanel/avatars/avatar.jpg";
 
-        layout = {
-          "bar.layouts" = {
-            "0" = {
-              left = ["dashboard" "workspaces" "windowtitle"];
-              middle = ["clock"];
-              right = [
-                "volume"
-                "network"
-                "bluetooth"
-                "battery"
-                "systray"
-                "media"
-                "notifications"
-              ];
-            };
+        # Layout configuration
+        bar.layouts = {
+          "0" = {
+            left = ["dashboard" "workspaces" "windowtitle"];
+            middle = ["clock"];
+            right = [
+              "volume"
+              "network"
+              "bluetooth"
+              "battery"
+              "systray"
+              "media"
+              "notifications"
+            ];
           };
         };
       };

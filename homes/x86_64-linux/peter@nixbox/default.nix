@@ -34,25 +34,21 @@
   cli.programs.git.signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFjoHku2U1i34uJWA6kODHU44QJCpQE7LHxYQgk382h";
 
   programs.hyprpanel.settings = lib.mkForce {
-    theme.matugen_settings = {
-      scheme_type = "rainbow";
-      variation = "standard_2";
-    };
+    theme.matugen_settings.scheme_type = "rainbow";
+    theme.matugen_settings.variation = "standard_2";
 
-    layout = {
-      "bar.layouts" = {
-        "0" = {
-          left = ["dashboard" "workspaces" "windowtitle"];
-          middle = ["clock"];
-          right = [
-            "volume"
-            "network"
-            "bluetooth"
-            "systray"
-            "media"
-            "notifications"
-          ];
-        };
+    bar.layouts = {
+      "0" = {
+        left = ["dashboard" "workspaces" "windowtitle"];
+        middle = ["clock"];
+        right = [
+          "volume"
+          "network"
+          "bluetooth"
+          "systray"
+          "media"
+          "notifications"
+        ];
       };
     };
   };
