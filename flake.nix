@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/release-24.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/release-25.05";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
 
     darwin = {
@@ -63,7 +63,7 @@
 
     hyprpanel = {
       url = "github:Jas-SinghFSU/HyprPanel";
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     zen-browser = {

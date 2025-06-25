@@ -11,7 +11,6 @@
     tree = "eza --icons=always --tree";
     v = "nvim";
     z = "zellij";
-    grep = "rg";
   };
 
   environmentVariableExports =
