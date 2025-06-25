@@ -1,7 +1,8 @@
 {
-  pkgs,
   config,
+  inputs,
   lib,
+  pkgs,
   ...
 }:
 with lib; let
@@ -100,7 +101,7 @@ in {
             # "${pkgs.trayscale}/bin/trayscale"
             "${pkgs.syncthingtray}/bin/syncthingtray --wait"
             "${pkgs.solaar}/bin/solaar -w hide"
-            "${pkgs.hyprpanel}/bin/hyprpanel"
+            "${inputs.hyprpanel.packages.${pkgs.system}.wrapper}/bin/hyprpanel"
             "hyprctl dispatch workspace 1"
           ]
           ++ lib.optionals config.desktops.addons.kde.enable ["${kdePackages.plasma-nm}/bin/nm-tray"]

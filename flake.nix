@@ -96,9 +96,7 @@
         backupFileExtension = "hm.bak";
       };
 
-      overlays = with inputs; [
-        hyprpanel.overlay
-      ];
+      overlays = [];
 
       homes.modules = with inputs; [
         sops-nix.homeManagerModules.sops

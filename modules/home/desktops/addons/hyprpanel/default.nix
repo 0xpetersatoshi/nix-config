@@ -30,7 +30,6 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       gpu-screen-recorder
-      hyprpanel
       hyprpicker
       matugen
       power-profiles-daemon
@@ -43,7 +42,7 @@ in {
 
     programs.hyprpanel-flake = {
       enable = true;
-      hyprland.enable = false;
+      systemd.enable = true;
       overwrite.enable = cfg.overwrite;
 
       settings = {
