@@ -61,10 +61,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # hyprpanel = {
-    #   url = "github:Jas-SinghFSU/HyprPanel";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    hyprpanel = {
+      url = "github:0xpetersatoshi/HyprPanel/rename-module";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
@@ -97,12 +97,12 @@
       };
 
       overlays = with inputs; [
-        # hyprpanel.overlay
+        hyprpanel.overlay
       ];
 
       homes.modules = with inputs; [
         sops-nix.homeManagerModules.sops
-        # hyprpanel.homeManagerModules.hyprpanel
+        hyprpanel.homeManagerModules.hyprpanel
       ];
 
       systems.modules = {

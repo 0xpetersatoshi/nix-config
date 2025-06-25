@@ -41,64 +41,82 @@ in {
     home.file.".local/share/hyprpanel/wallpapers/wallpaper.jpg".source = cfg.wallpaperPath;
     home.file.".local/share/hyprpanel/avatars/avatar.jpg".source = cfg.avatarPath;
 
-    programs.hyprpanel = {
+    programs.hyprpanel-flake = {
       enable = true;
-      # overwrite.enable = cfg.overwrite;
-      systemd.enable = true;
+      hyprland.enable = false;
+      overwrite.enable = cfg.overwrite;
 
       settings = {
         scalingPriority = "gdk";
 
-        # Theme settings
-        theme.bar.floating = true;
-        theme.bar.transparent = false;
-        theme.bar.opacity = 80;
-        theme.bar.enableShadow = true;
-        theme.bar.buttons.enableBorders = false;
-        theme.bar.buttons.opacity = 100;
-        theme.bar.buttons.background_opacity = 65;
+        theme = {
+          bar = {
+            floating = true;
+            transparent = false;
+            opacity = 80;
+            enableShadow = true;
+            buttons = {
+              enableBorders = false;
+              opacity = 100;
+              background_opacity = 65;
+            };
+          };
 
-        theme.font.size = "1rem";
+          font.size = "1rem";
 
-        theme.matugen = true;
-        theme.matugen_settings.scheme_type = "fruit-salad";
-        theme.matugen_settings.variation = "standard_1";
+          matugen = true;
+          matugen_settings = {
+            scheme_type = "fruit-salad";
+            variation = "standard_1";
+          };
+        };
 
-        # Bar settings
-        bar.launcher.autoDetectIcon = true;
-        bar.workspaces.show_icons = false;
-        bar.workspaces.show_numbered = true;
-        bar.workspaces.numbered_active_indicator = "highlight";
-        bar.workspaces.showWsIcons = false;
-        bar.workspaces.showApplicationIcons = false;
-        bar.workspaces.workspaceMask = false;
-        bar.workspaces.ignored = "-98";
+        bar = {
+          launcher.autoDetectIcon = true;
+          workspaces = {
+            show_icons = false;
+            show_numbered = true;
+            numbered_active_indicator = "highlight";
+            showWsIcons = false;
+            showApplicationIcons = false;
+            workspaceMask = false;
+            ignored = "-98";
+          };
+        };
 
-        # Wallpaper settings
-        wallpaper.enable = true;
-        wallpaper.image = "/home/${config.snowfallorg.user.name}/.local/share/hyprpanel/wallpapers/wallpaper.jpg";
+        wallpaper = {
+          enable = true;
+          image = "/home/${config.snowfallorg.user.name}/.local/share/hyprpanel/wallpapers/wallpaper.jpg";
+        };
 
-        # Notifications
         notifications.position = "top right";
 
-        # Menus
-        menus.clock.time.hideSeconds = true;
-        menus.dashboard.powermenu.avatar.image = "~/.local/share/hyprpanel/avatars/avatar.jpg";
+        menus = {
+          clock = {
+            time = {
+              hideSeconds = true;
+            };
+          };
+          dashboard = {
+            powermenu.avatar.image = "~/.local/share/hyprpanel/avatars/avatar.jpg";
+          };
+        };
 
-        # Layout configuration
-        bar.layouts = {
-          "0" = {
-            left = ["dashboard" "workspaces" "windowtitle"];
-            middle = ["clock"];
-            right = [
-              "volume"
-              "network"
-              "bluetooth"
-              "battery"
-              "systray"
-              "media"
-              "notifications"
-            ];
+        layout = {
+          "bar.layouts" = {
+            "0" = {
+              left = ["dashboard" "workspaces" "windowtitle"];
+              middle = ["clock"];
+              right = [
+                "volume"
+                "network"
+                "bluetooth"
+                "battery"
+                "systray"
+                "media"
+                "notifications"
+              ];
+            };
           };
         };
       };
