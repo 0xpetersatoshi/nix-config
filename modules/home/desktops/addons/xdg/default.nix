@@ -150,7 +150,7 @@ in {
             "org.freedesktop.impl.portal.Print" = "kde";
             "org.freedesktop.impl.portal.Screencast" = "kde";
             "org.freedesktop.impl.portal.Screenshot" = "kde";
-            # "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
+            "org.freedesktop.impl.portal.Secret" = "kde";
             # "org.freedesktop.impl.portal.Background" = "gnome";
             # "org.freedesktop.impl.portal.Clipboard" = "gnome";
             # "org.freedesktop.impl.portal.InputCapture" = "gnome";

@@ -95,6 +95,7 @@ in {
             "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME"
             # "${pkgs.kanshi}/bin/kanshi"
             "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init"
+            "${pkgs.kdePackages.kwallet}/bin/kwalletd6"
             "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
             "${pkgs.pyprland}/bin/pypr"
             "${pkgs.clipse}/bin/clipse -listen"
