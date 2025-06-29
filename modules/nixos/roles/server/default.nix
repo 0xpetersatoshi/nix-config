@@ -20,6 +20,8 @@ in {
     services = {
       ${namespace} = {
         avahi.enable = true;
+        nfs.enable = true;
+        ssh.enable = true;
       };
 
       vpn.tailscale.enable = true;
@@ -31,21 +33,30 @@ in {
       # };
     };
 
-    environment =
-      {
-        systemPackages = [
-          pkgs.nfs-utils
-          pkgs.openiscsi
-          pkgs.dnsutils
-        ];
-        # Print the URL instead on servers
-        variables.BROWSER = "echo";
-      }
-      // lib.optionalAttrs (lib.versionAtLeast (lib.versions.majorMinor lib.version) "24.05") {
-        # Don't install the /lib/ld-linux.so.2 and /lib64/ld-linux-x86-64.so.2
-        # stubs. Server users should know what they are doing.
-        stub-ld.enable = lib.mkDefault false;
-      };
+    environment = {
+      systemPackages = with pkgs; [
+        btop
+        curl
+        dnsutils
+        dysk
+        fzf
+        git
+        jq
+        neovim
+        nettools
+        openiscsi
+        ripgrep
+        vim
+        wget
+      ];
+      # Print the URL instead on servers
+      variables.BROWSER = "echo";
+    };
+    # // lib.optionalAttrs (lib.versionAtLeast (lib.versions.majorMinor lib.version) "24.05") {
+    #   # Don't install the /lib/ld-linux.so.2 and /lib64/ld-linux-x86-64.so.2
+    #   # stubs. Server users should know what they are doing.
+    #   stub-ld.enable = lib.mkDefault false;
+    # };
 
     security = {
       sudo = {

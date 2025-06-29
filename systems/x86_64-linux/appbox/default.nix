@@ -1,15 +1,21 @@
-{
-  pkgs,
-  namespace,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
   ];
 
+  fileSystems."/mnt/appdata" = {
+    device = "10.19.50.2:/appdata";
+    fsType = "nfs";
+  };
+
+  fileSystems."/mnt/media" = {
+    device = "10.19.50.2:/data";
+    fsType = "nfs";
+  };
+
   boot = {
-    kernelPackages = pkgs.linuxPackages;
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   hardware = {
@@ -22,20 +28,9 @@
   };
 
   networking.hostName = "appbox";
-
   roles.server.enable = true;
 
-  security = {
-    ${namespace} = {
-      sops.enable = true;
-    };
-  };
-
   services = {
-    ${namespace} = {
-      samba.enable = true;
-    };
-
     virtualisation = {
       docker.enable = true;
       podman.enable = false;
