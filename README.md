@@ -20,10 +20,13 @@ My NixOS, Darwin, and Nix Home Manager Config.
   - [Installation Methods](#installation-methods)
     - [Using nixos-anywhere](#using-nixos-anywhere)
     - [Using Nix on the Target Machine Directly](#using-nix-on-the-target-machine-directly)
+    - [Using Nix on the Target Machine Remotely](#using-nix-on-the-target-machine-remotely)
   - [Configuring Disk Partitioning on NixOS using Disko](#configuring-disk-partitioning-on-nixos-using-disko)
 - [Usage](#usage)
   - [Applying latest home-manager or nixos configuration](#applying-latest-home-manager-or-nixos-configuration)
   - [Updating](#updating)
+- [Helpful Commands](#helpful-commands)
+  - [Getting sha256 artifact hashes](#getting-sha256-artifact-hashes)
 - [Resources](#resources)
 <!--toc:end-->
 
@@ -52,6 +55,10 @@ curl https://github.com/0xpetersatoshi.keys >> ~/.ssh/authorized_keys
 4. Note the IP address of the target machine using `ip addr`
 5. Test connection from local machine:
 
+> [!important]
+> If using the 1password ssh agent, using `<ssh-key-name>.pub` will work here. Otherwise, you will need to reference
+> the actual ssh private key.
+
 ```{bash}
 ssh -i ~/.ssh/vms.pub -v nixos@<ip>
 ```
@@ -59,7 +66,7 @@ ssh -i ~/.ssh/vms.pub -v nixos@<ip>
 6. Run:
 
 ```{bash}
-nix run github:nix-community/nixos-anywhere -- --flake '.#<HOSTNAME>' -i ~/.ssh/vms.pub --target-host nixos@<IP_ADDRESS>
+nix run github:nix-community/nixos-anywhere -- --flake '.#<HOSTNAME>' -i ~/.ssh/vms --target-host nixos@<IP_ADDRESS>
 ```
 
 #### Using Nix on the Target Machine Directly
@@ -76,6 +83,10 @@ cd nix-config
 sudo nixos-install --flake .#<hostname>
 ```
 
+> [!note]
+> If you run into an error about the disk running out of space, set `TMPDIR=/mnt/flake/tmp` (or any other path on
+> the disk you are installing nix onto).
+
 On MacOS:
 
 ```bash
@@ -85,6 +96,14 @@ nix run nix-darwin -- switch --flake .
 # On subsequent runs, just run
 darwin-rebuild switch --flake .
 
+```
+
+#### Using Nix on the Target Machine Remotely
+
+You can also use `nh` to apply a configuration to a remote target via ssh. Here's an example:
+
+```bash
+nh os switch --hostname appbox --target-host username@<hostname or IP address>
 ```
 
 ### Configuring Disk Partitioning on NixOS using Disko
@@ -153,6 +172,12 @@ nix-prefetch-url https://registry.npmjs.org/@nomicfoundation/slang/-/slang-1.0.0
 
 nix hash convert --hash-algo sha256 1hvf7s7kd4881xi929i1in9j5dmk37xhmx5zamczni2nvk1c8lxd
 # output: sha256-rVPEwtxWRPtZVb/0CvsZs7Yik40hJpFiDwiRNo8+bsM=
+```
+
+### Generating nix hardware-configuration.nix file
+
+```bash
+nixos-generate-config --root /mnt
 ```
 
 ## Resources
