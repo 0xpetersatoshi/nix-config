@@ -24,6 +24,7 @@ in {
         GatewayPorts = "clientspecified";
       };
     };
+
     users.users = {
       ${config.user.name}.openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMM7C5+/++7Q1d4L+z8KYTHMa41dA2bVr/D4hgtzvt2f vms"

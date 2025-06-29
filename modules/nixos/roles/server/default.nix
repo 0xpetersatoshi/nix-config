@@ -40,6 +40,7 @@ in {
         dnsutils
         dysk
         fzf
+        ghostty # to fix ghostty terminfo issue when ssh'ing
         git
         jq
         neovim
