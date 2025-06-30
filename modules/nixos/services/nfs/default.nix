@@ -20,7 +20,8 @@ in {
       ];
     };
 
-    # optional, but ensures rpc-statsd is running for on demand mounting
+    # Enable NFS client support
     boot.supportedFilesystems = ["nfs"];
+    services.rpcbind.enable = true;
   };
 }

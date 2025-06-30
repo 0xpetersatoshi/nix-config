@@ -1,17 +1,34 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
   ];
 
+  # Add dockerhost group to match TrueNAS permissions
+  users = {
+    users.${config.user.name} = {
+      extraGroups = ["apps"];
+    };
+
+    groups.apps = {
+      gid = 568; # Match the GID from TrueNAS
+    };
+  };
+
   fileSystems."/mnt/appdata" = {
-    device = "10.19.50.2:/appdata";
+    device = "10.19.50.2:/mnt/flashpool/appdata";
     fsType = "nfs";
+    options = ["nfsvers=4" "hard" "rsize=131072" "wsize=131072"];
   };
 
   fileSystems."/mnt/media" = {
-    device = "10.19.50.2:/data";
+    device = "10.19.50.2:/mnt/flashpool/data";
     fsType = "nfs";
+    options = ["nfsvers=4" "hard" "rsize=1048576" "wsize=1048576"];
   };
 
   boot = {
