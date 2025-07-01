@@ -625,4 +625,13 @@ return {
 
   -- makes some plugins dot-repeatable like leap
   { "tpope/vim-repeat", event = "VeryLazy" },
+
+  {
+    "akinsho/git-conflict.nvim",
+    opts = {
+      disable_diagnostics = true,
+    },
+    version = "*",
+    config = true,
+  },
 }
