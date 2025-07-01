@@ -1,12 +1,10 @@
 {
   config,
   lib,
-  namespace,
   ...
 }:
 with lib; let
   cfg = config.desktops.addons.waybar;
-  stylixCfg = config.${namespace}.theme.stylix;
 in {
   options.desktops.addons.waybar = {
     enable = mkEnableOption "Enable waybar";
@@ -165,3 +163,4 @@ in {
     };
   };
 }
+
