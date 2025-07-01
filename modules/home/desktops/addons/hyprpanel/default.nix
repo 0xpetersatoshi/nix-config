@@ -11,7 +11,6 @@ with lib.${namespace}; let
 in {
   options.desktops.addons.hyprpanel = {
     enable = mkEnableOption "Enable hyprpanel";
-    overwrite = mkBoolOpt true "Automatically deletes the config.json file before generating a new one to allow viewing live changes from GUI";
 
     # Define these as proper options with types
     wallpaperPath = mkOption {
@@ -24,6 +23,60 @@ in {
       type = types.path;
       default = ../../../../../profile/lazy-lion-pink.jpg;
       description = "Path to the avatar image";
+    };
+
+    matugen = {
+      schemeType = mkOption {
+        type = types.str;
+        default = "fruit-salad";
+        description = "Matugen color scheme type";
+      };
+
+      variation = mkOption {
+        type = types.str;
+        default = "standard_1";
+        description = "Matugen color variation";
+      };
+    };
+
+    layouts = mkOption {
+      type = types.attrsOf (
+        types.submodule {
+          options = {
+            left = mkOption {
+              type = types.listOf types.str;
+              default = [];
+              description = "Widgets to display on the left side of the bar";
+            };
+            middle = mkOption {
+              type = types.listOf types.str;
+              default = [];
+              description = "Widgets to display in the middle of the bar";
+            };
+            right = mkOption {
+              type = types.listOf types.str;
+              default = [];
+              description = "Widgets to display on the right side of the bar";
+            };
+          };
+        }
+      );
+      default = {
+        "0" = {
+          left = ["dashboard" "workspaces" "windowtitle"];
+          middle = ["clock"];
+          right = [
+            "volume"
+            "network"
+            "bluetooth"
+            "battery"
+            "systray"
+            "media"
+            "notifications"
+          ];
+        };
+      };
+      description = "Bar layout configuration per monitor";
     };
   };
 
@@ -40,10 +93,9 @@ in {
     home.file.".local/share/hyprpanel/wallpapers/wallpaper.jpg".source = cfg.wallpaperPath;
     home.file.".local/share/hyprpanel/avatars/avatar.jpg".source = cfg.avatarPath;
 
-    programs.hyprpanel-flake = {
+    programs.hyprpanel = {
       enable = true;
       systemd.enable = true;
-      overwrite.enable = cfg.overwrite;
 
       settings = {
         scalingPriority = "gdk";
@@ -65,13 +117,14 @@ in {
 
           matugen = true;
           matugen_settings = {
-            scheme_type = "fruit-salad";
-            variation = "standard_1";
+            scheme_type = cfg.matugen.schemeType;
+            variation = cfg.matugen.variation;
           };
         };
 
         bar = {
           launcher.autoDetectIcon = true;
+          layouts = cfg.layouts;
           workspaces = {
             show_icons = false;
             show_numbered = true;
@@ -98,24 +151,6 @@ in {
           };
           dashboard = {
             powermenu.avatar.image = "~/.local/share/hyprpanel/avatars/avatar.jpg";
-          };
-        };
-
-        layout = {
-          "bar.layouts" = {
-            "0" = {
-              left = ["dashboard" "workspaces" "windowtitle"];
-              middle = ["clock"];
-              right = [
-                "volume"
-                "network"
-                "bluetooth"
-                "battery"
-                "systray"
-                "media"
-                "notifications"
-              ];
-            };
           };
         };
       };

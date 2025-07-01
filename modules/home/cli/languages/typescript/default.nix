@@ -17,7 +17,7 @@ in {
       bun
       deno
       eslint
-      nodejs_24
+      stable.nodejs_24
       graphql-language-service-cli
       typescript
       typescript-language-server

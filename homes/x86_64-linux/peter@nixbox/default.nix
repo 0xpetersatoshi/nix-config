@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }: {
   desktops = {
@@ -14,6 +13,24 @@
     addons = {
       hyprpanel = {
         wallpaperPath = ../../../wallpaper/ultrawide/sci_fi_architecture_building_beach-wallpaper-3440x1440.jpg;
+        matugen = {
+          schemeType = "rainbow";
+          variation = "standard_2";
+        };
+        layouts = {
+          "0" = {
+            left = ["dashboard" "workspaces" "windowtitle"];
+            middle = ["clock"];
+            right = [
+              "volume"
+              "network"
+              "bluetooth"
+              "systray"
+              "media"
+              "notifications"
+            ];
+          };
+        };
       };
     };
   };
@@ -32,30 +49,6 @@
   ];
 
   cli.programs.git.signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFjoHku2U1i34uJWA6kODHU44QJCpQE7LHxYQgk382h";
-
-  programs.hyprpanel-flake.settings = lib.mkForce {
-    theme.matugen_settings = {
-      scheme_type = "rainbow";
-      variation = "standard_2";
-    };
-
-    layout = {
-      "bar.layouts" = {
-        "0" = {
-          left = ["dashboard" "workspaces" "windowtitle"];
-          middle = ["clock"];
-          right = [
-            "volume"
-            "network"
-            "bluetooth"
-            "systray"
-            "media"
-            "notifications"
-          ];
-        };
-      };
-    };
-  };
 
   roles = {
     common.enable = true;
