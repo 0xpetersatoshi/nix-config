@@ -1,10 +1,12 @@
 {
   config,
   lib,
+  namespace,
   ...
 }:
 with lib; let
   cfg = config.desktops.addons.waybar;
+  stylixCfg = config.${namespace}.theme.stylix;
 in {
   options.desktops.addons.waybar = {
     enable = mkEnableOption "Enable waybar";
@@ -18,7 +20,7 @@ in {
         {
           layer = "top";
           position = "top";
-          margin = "0 0 0 0";
+          margin = "10 10 0 10";
           modules-left = [
             "hyprland/workspaces"
           ];
@@ -35,20 +37,16 @@ in {
             "network"
           ];
           "hyprland/workspaces" = {
-            format = "{icon}";
+            format = "{name}";
             sort-by-number = true;
             active-only = false;
-            format-icons = {
-              "1" = " 󰲌 ";
-              "2" = "  ";
-              "3" = " 󰎞 ";
-              "4" = "  ";
-              "5" = "  ";
-              "6" = " 󰺵 ";
-              "7" = "  ";
-              urgent = "  ";
-              focused = "  ";
-              default = "  ";
+            show-special = false;
+            persistent-workspaces = {
+              "1" = [];
+              "2" = [];
+              "3" = [];
+              "4" = [];
+              "5" = [];
             };
             on-click = "activate";
           };
@@ -63,11 +61,11 @@ in {
               "on-scroll" = 1;
               "on-click-right" = "mode";
               format = {
-                months = "<span color='#cba6f7'><b>{}</b></span>";
-                days = "<span color='#b4befe'><b>{}</b></span>";
-                weeks = "<span color='#89dceb'><b>W{}</b></span>";
-                weekdays = "<span color='#f2cdcd'><b>{}</b></span>";
-                today = "<span color='#f38ba8'><b><u>{}</u></b></span>";
+                months = "<span color='#${config.lib.stylix.colors.base0E}'><b>{}</b></span>";
+                days = "<span color='#${config.lib.stylix.colors.base0D}'><b>{}</b></span>";
+                weeks = "<span color='#${config.lib.stylix.colors.base0C}'><b>W{}</b></span>";
+                weekdays = "<span color='#${config.lib.stylix.colors.base0A}'><b>{}</b></span>";
+                today = "<span color='#${config.lib.stylix.colors.base08}'><b><u>{}</u></b></span>";
               };
             };
           };
@@ -76,13 +74,13 @@ in {
             format = "{} {icon}";
             "format-icons" = {
               notification = "󱅫";
-              none = "";
-              "dnd-notification" = " ";
+              none = "";
+              "dnd-notification" = " ";
               "dnd-none" = "󰂛";
-              "inhibited-notification" = " ";
-              "inhibited-none" = "";
-              "dnd-inhibited-notification" = " ";
-              "dnd-inhibited-none" = " ";
+              "inhibited-notification" = " ";
+              "inhibited-none" = "";
+              "dnd-inhibited-notification" = " ";
+              "dnd-inhibited-none" = " ";
             };
             "return-type" = "json";
             "exec-if" = "which swaync-client";
@@ -94,12 +92,12 @@ in {
           "idle_inhibitor" = {
             format = "{icon}";
             format-icons = {
-              activated = "  ";
-              deactivated = "  ";
+              activated = "  ";
+              deactivated = "  ";
             };
           };
           backlight = {
-            format = " {percent}%";
+            format = " {percent}%";
           };
           battery = {
             states = {
@@ -109,12 +107,12 @@ in {
             };
             format = "{icon} {capacity}%";
             format-alt = "{time}";
-            format-charging = "  {capacity}%";
+            format-charging = "  {capacity}%";
             format-icons = ["󰁻 " "󰁽 " "󰁿 " "󰂁 " "󰂂 "];
           };
           network = {
             interval = 1;
-            format-wifi = "  {essid}";
+            format-wifi = "  {essid}";
             format-ethernet = " 󰈀 ";
             format-disconnected = " 󱚵  ";
             tooltip-format = ''
@@ -128,12 +126,12 @@ in {
           pulseaudio = {
             scroll-step = 2;
             format = "{icon} {volume}%";
-            format-bluetooth = " {icon} {volume}%";
-            format-muted = "  ";
+            format-bluetooth = " {icon} {volume}%";
+            format-muted = "  ";
             format-icons = {
-              headphone = "  ";
-              headset = "  ";
-              default = ["  " "  "];
+              headphone = "  ";
+              headset = "  ";
+              default = ["  " "  "];
             };
           };
           tray = {
@@ -143,7 +141,27 @@ in {
         }
       ];
 
-      style = builtins.readFile ./styles.css;
+      style = ''
+        /* Stylix base16 colors */
+        @define-color base00 #${config.lib.stylix.colors.base00};
+        @define-color base01 #${config.lib.stylix.colors.base01};
+        @define-color base02 #${config.lib.stylix.colors.base02};
+        @define-color base03 #${config.lib.stylix.colors.base03};
+        @define-color base04 #${config.lib.stylix.colors.base04};
+        @define-color base05 #${config.lib.stylix.colors.base05};
+        @define-color base06 #${config.lib.stylix.colors.base06};
+        @define-color base07 #${config.lib.stylix.colors.base07};
+        @define-color base08 #${config.lib.stylix.colors.base08};
+        @define-color base09 #${config.lib.stylix.colors.base09};
+        @define-color base0A #${config.lib.stylix.colors.base0A};
+        @define-color base0B #${config.lib.stylix.colors.base0B};
+        @define-color base0C #${config.lib.stylix.colors.base0C};
+        @define-color base0D #${config.lib.stylix.colors.base0D};
+        @define-color base0E #${config.lib.stylix.colors.base0E};
+        @define-color base0F #${config.lib.stylix.colors.base0F};
+
+        ${builtins.readFile ./styles.css}
+      '';
     };
   };
 }

@@ -1,50 +1,63 @@
-@define-color blue      #89b4fa;
-@define-color lavender  #b4befe;
-@define-color green     #a6e3a1;
-@define-color red       #f38ba8;
-
 * {
-  border: 0;
-  padding: 0 0;
-  font-family: "Symbols Nerd Font", "JetBrains Mono";
-  font-size: 18px;
-  color: white;
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrainsMono Nerd Font Mono";
+  font-size: 14px;
+  min-height: 0;
 }
 
 window#waybar {
-  border: 0px solid rgba(0, 0, 0, 0);
-  background-color: rgba(0, 0, 0, 0);
+  background: transparent;
+}
+
+#waybar {
+  background: rgba(0, 0, 0, 0);
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  padding: 0 10px;
+  margin: 0 5px;
 }
 
 #workspaces {
-  background-color: @accent_fg_color;
-  border-radius: 5px;
-  margin: 8px;
+  background: transparent;
+  margin: 5px 0;
 }
 
 #workspaces button {
-  color: @window_bg_color;
-  border-radius: 5px;
-  padding-right: 5px;
-  margin: 2px 4px;
+  background: rgba(0, 0, 0, 0.2);
+  color: @base05;
+  border-radius: 15px;
+  padding: 5px 10px;
+  margin: 0 3px;
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
 
 #workspaces button:hover {
-  background-color: @lavender;
-  color: white;
+  background: @base02;
+  color: @base07;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-#workspaces button.active * {
-  border-radius: 7px;
-  background-color: @lavender;
+#workspaces button.active {
+  background: @base0D;
+  color: @base00;
 }
 
 #workspaces button.visible {
-  background-color: @lavender;
+  background: @base03;
+  color: @base06;
 }
 
-#workspaces button.visible * {
-  color: @window_bg_color;
+#workspaces button.urgent {
+  background: @base08;
+  color: @base00;
+  animation: blink 0.5s linear infinite alternate;
 }
 
 #clock,
@@ -52,60 +65,35 @@ window#waybar {
 #backlight,
 #network,
 #pulseaudio,
-#mode,
 #tray,
 #idle_inhibitor,
 #custom-notification {
-  border-style: solid;
-  background-color: @accent_fg_color;
-  margin: 8px 0;
-  padding: 5px 0;
+  padding: 5px 10px;
+  margin: 5px 3px;
+  background: rgba(0, 0, 0, 0.2);
+  color: @base05;
+  border-radius: 15px;
 }
 
 #custom-notification {
-  margin-left: 10px;
-  padding: 0 20px 0 20px;
-  border-radius: 10px 0 0 10px;
-  color: @lavender;
+  color: @base0D;
 }
 
 #clock {
-  border-radius: 0;
-  padding: 0 20px 0 10px;
   font-weight: bold;
-  color: @lavender;
+  color: @base0E;
 }
 
-#idle_inhibitor.deactivated {
-  border-radius: 0 10px 10px 0;
-  padding-right: 20px;
-  color: @lavender;
+#idle_inhibitor {
+  color: @base0C;
 }
 
 #idle_inhibitor.activated {
-  border-radius: 0 10px 10px 0;
-  padding-right: 20px;
-  color: @green;
+  color: @base0B;
 }
 
 #tray {
-  border-radius: 10px;
-  padding: 0 10px 0 10px;
-  margin-left: 10px;
-}
-
-#tray menu {
-  background-color: @accent_fg_color;
-}
-
-#tray menuitem,
-#tray window {
-  background-color: transparent;
-}
-
-#tray menu menuitem:hover {
-  color: #000000;
-  background-color: @lavender;
+  background: transparent;
 }
 
 #tray > .passive {
@@ -114,71 +102,60 @@ window#waybar {
 
 #tray > .needs-attention {
   -gtk-icon-effect: highlight;
-}
-
-#tray > .active {
+  background: @base09;
 }
 
 #backlight {
-  color: @lavender;
-  padding: 0 10px 0 20px;
-  border-radius: 10px 0 0 10px;
-  margin-left: 10px;
+  color: @base0A;
 }
 
 #battery {
-  color: @lavender;
-  padding: 0 20px 0 10px;
-  border-radius: 0 10px 10px 0;
-  margin-right: 10px;
-}
-
-#battery.critical:not(.charging) {
-  color: @red;
-  animation-name: blink;
-  animation-duration: 0.5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
+  color: @base0B;
 }
 
 #battery.charging {
-  color: @green;
+  color: @base0B;
+}
+
+#battery.warning:not(.charging) {
+  color: @base09;
+}
+
+#battery.critical:not(.charging) {
+  color: @base08;
+  animation: blink 0.5s linear infinite alternate;
+}
+
+#network {
+  color: @base0C;
+}
+
+#network.disconnected {
+  color: @base08;
+}
+
+#pulseaudio {
+  color: @base0D;
+}
+
+#pulseaudio.muted {
+  color: @base08;
 }
 
 @keyframes blink {
   to {
-    color: @red;
+    background: @base08;
+    color: @base00;
   }
 }
 
-#network {
-  color: @lavender;
-  border-radius: 0 10px 10px 0;
-  margin-right: 10px;
-  padding: 10px;
-}
-
-#network.disconnected {
-  color: @red;
-  margin-right: 10px;
-  padding: 10px;
-}
-
-#pulseaudio {
-  color: @lavender;
-  border-radius: 10px 0 0 10px;
-  padding: 10px;
-}
-
-#pulseaudio.muted {
-  color: @red;
-}
-
 tooltip {
-  background: @accent_fg_color;
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid @base02;
+  border-radius: 10px;
 }
 
 tooltip label {
-  color: @window_fg_color;
+  color: @base05;
+  padding: 5px;
 }
