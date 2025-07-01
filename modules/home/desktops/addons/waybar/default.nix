@@ -21,7 +21,6 @@ in {
           margin = "0 0 0 0";
           modules-left = [
             "hyprland/workspaces"
-            "tray"
           ];
           modules-center = [
             "custom/notification"
@@ -29,6 +28,7 @@ in {
             "idle_inhibitor"
           ];
           modules-right = [
+            "tray"
             "backlight"
             "battery"
             "pulseaudio"

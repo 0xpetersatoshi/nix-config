@@ -6,6 +6,7 @@
   desktops = {
     hyprland = {
       enable = true;
+      bar = "waybar";
       # Nvidia GPU
       drmDevices = "/dev/dri/by-path/pci-0000:01:00.0-card";
     };

@@ -50,10 +50,16 @@ with lib; let
     if cfg.hasLunarLakeCPU
     then "${pkgs.light}/bin/light -A 5"
     else "${pkgs.brightnessctl}/bin/brightnessctl +5%";
+
   decreaseBrightnessCommand =
     if cfg.hasLunarLakeCPU
     then "${pkgs.light}/bin/light -U 5"
     else "${pkgs.brightnessctl}/bin/brightnessctl -5%";
+
+  notificationToggleCommand =
+    if cfg.bar == "hyprpanel"
+    then "hyprpanel toggleWindow notificationsmenu"
+    else "sleep 0.1 && swaync-client -t -sw";
 in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
@@ -68,7 +74,7 @@ in {
         "SUPER, F, Fullscreen,0"
         "SUPER, R, exec, ${resize}/bin/resize"
         "SUPER, G, togglefloating,"
-        "SUPER, N, exec, hyprpanel toggleWindow notificationsmenu"
+        "SUPER, N, exec, ${notificationToggleCommand}"
         "SUPER, P, exec, $passwordManager"
         "SUPER, V, exec, $pypr toggle pwvucontrol"
         "SUPER, Y, exec, yubioath-flutter"

@@ -26,6 +26,11 @@ in {
       default = ",preferred,auto,1";
       description = "Hyprland monitor configuration settings";
     };
+    bar = lib.mkOption {
+      type = lib.types.enum ["waybar" "hyprpanel"];
+      default = "hyprpanel";
+      description = "Which status bar to use with Hyprland";
+    };
     multiMonitor = {
       enable = mkEnableOption "Enable multi-monitor support";
       laptopMonitor = mkOption {
@@ -80,7 +85,9 @@ in {
       wlogout.enable = true;
 
       pyprland.enable = true;
-      hyprpanel.enable = true;
+      waybar.enable = cfg.bar == "waybar";
+      swaync.enable = cfg.bar != "hyprpanel";
+      hyprpanel.enable = cfg.bar == "hyprpanel";
       hyprlock.enable = true;
       hypridle.enable = true;
     };
@@ -100,7 +107,6 @@ in {
 
     home.packages = with pkgs; [
       acpi
-      hyprpanel
       mplayer
       brightnessctl
       wl-clipboard
@@ -112,6 +118,7 @@ in {
 
       grimblast
       slurp
+      swappy
       sway-contrib.grimshot
       satty
     ];
