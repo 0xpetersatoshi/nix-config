@@ -25,12 +25,12 @@ in {
           modules-center = [
             "custom/notification"
             "clock"
-            "idle_inhibitor"
+            # "idle_inhibitor"
           ];
           modules-right = [
             "tray"
-            "backlight"
-            "battery"
+            # "backlight"
+            # "battery"
             "pulseaudio"
             "network"
           ];
@@ -108,11 +108,13 @@ in {
             format-charging = "  {capacity}%";
             format-icons = ["󰁻 " "󰁽 " "󰁿 " "󰂁 " "󰂂 "];
           };
+
           network = {
             interval = 1;
-            format-wifi = "  {essid}";
-            format-ethernet = " 󰈀 ";
-            format-disconnected = " 󱚵  ";
+            format = "{ifname}";
+            format-wifi = " {essid} ({signalStrength}%)";
+            format-ethernet = "󰈀 {ifname}";
+            format-disconnected = "Disconnected 󱚵";
             tooltip-format = ''
               {ifname}
               {ipaddr}/{cidr}
@@ -120,21 +122,54 @@ in {
               Up: {bandwidthUpBits}
               Down: {bandwidthDownBits}
             '';
+            tooltip-format-wifi = ''
+                {ifname} @ {essid}
+              IP: {ipaddr}
+              Strength: {signalStrength}%
+              Freq: {frequency}MHz
+              Up: {bandwidthUpBits}
+              Down: {bandwidthDownBits}
+            '';
+            tooltip-format-ethernet = ''
+               {ifname}
+              IP: {ipaddr}
+              Up: {bandwidthUpBits}
+              Down: {bandwidthDownBits}
+            '';
           };
+
           pulseaudio = {
             scroll-step = 2;
             format = "{icon} {volume}%";
-            format-bluetooth = " {icon} {volume}%";
-            format-muted = "  ";
+            format-bluetooth = "{volume}% {icon} {format_source}";
+            format-bluetooth-muted = " {icon} {format_source}";
+            format-muted = " {format_source}";
+            format-source = "{volume}% ";
+            format-source-muted = "";
             format-icons = {
-              headphone = "  ";
-              headset = "  ";
-              default = ["  " "  "];
+              headphone = " ";
+              hands-free = " ";
+              headset = " ";
+              phone = " ";
+              portable = " ";
+              car = " ";
+              default = ["" "" ""];
             };
+            on-click = "pavucontrol";
           };
+
+          bluetooth = {
+            format = " {status}";
+            format-disabled = "";
+            format-off = "";
+            interval = 30;
+            on-click = "blueman-manager";
+            format-no-controller = "";
+          };
+
           tray = {
-            icon-size = 16;
-            spacing = 8;
+            icon-size = 21;
+            spacing = 10;
           };
         }
       ];
