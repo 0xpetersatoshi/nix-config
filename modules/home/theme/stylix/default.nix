@@ -19,6 +19,7 @@ in {
   options.${namespace}.theme.stylix = {
     enable = mkEnableOption "stylix theme for applications";
     theme = mkOpt types.str "tokyo-night-storm" "base16 theme file name";
+    image = mkOpt (types.nullOr (types.either types.path types.package)) null "Path to wallpaper image or derivation";
 
     cursor = {
       name = mkOpt types.str "catppuccin-macchiato-blue-cursors" "The name of the cursor theme to apply.";
@@ -43,6 +44,7 @@ in {
     stylix = {
       enable = true;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.theme}.yaml";
+      image = mkIf (cfg.image != null) cfg.image;
 
       cursor = cfg.cursor;
 
@@ -98,7 +100,7 @@ in {
       };
 
       targets = {
-        hyprpaper.enable = lib.mkForce false;
+        hyprpaper.enable = lib.mkForce (cfg.image != null);
       };
     };
   };

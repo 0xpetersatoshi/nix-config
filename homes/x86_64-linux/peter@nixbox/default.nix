@@ -67,6 +67,8 @@
     };
 
     security.sops.enable = true;
+
+    theme.stylix.image = ../../../wallpaper/ultrawide/sci_fi_architecture_building_beach-wallpaper-3440x1440.jpg;
   };
 
   home.stateVersion = "24.11";
