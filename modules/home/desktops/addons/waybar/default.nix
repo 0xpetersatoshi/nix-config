@@ -58,6 +58,7 @@ in {
             };
             on-click = "activate";
           };
+
           clock = {
             format = "󰃰 {:%a, %b %d, %I:%M %p}";
             interval = 1;
