@@ -8,6 +8,11 @@ with lib; let
 in {
   options.desktops.addons.waybar = {
     enable = mkEnableOption "Enable waybar";
+    isLaptop = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Whether the device is a laptop (enables battery module)";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -26,13 +31,13 @@ in {
           modules-center = [
             "custom/notification"
             "clock"
+            "idle_inhibitor"
             "mpris"
-            # "idle_inhibitor"
           ];
 
-          modules-right = [
+          modules-right = lib.flatten [
             # "backlight"
-            # "battery"
+            (lib.optional cfg.isLaptop "battery")
             "tray"
             "pulseaudio"
             "bluetooth"
@@ -93,11 +98,12 @@ in {
             "on-click-right" = "sleep 0.1 && swaync-client -d -sw";
             escape = true;
           };
+
           "idle_inhibitor" = {
             format = "{icon}";
             format-icons = {
-              activated = "  ";
-              deactivated = "  ";
+              activated = "  ";
+              deactivated = "  ";
             };
           };
 
@@ -145,8 +151,8 @@ in {
 
           battery = {
             states = {
-              good = 80;
-              warning = 50;
+              good = 75;
+              warning = 45;
               critical = 15;
             };
             format = "{icon} {capacity}%";
