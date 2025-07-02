@@ -22,11 +22,14 @@ in {
           modules-left = [
             "hyprland/workspaces"
           ];
+
           modules-center = [
             "custom/notification"
             "clock"
+            "mpris"
             # "idle_inhibitor"
           ];
+
           modules-right = [
             # "backlight"
             # "battery"
@@ -35,6 +38,7 @@ in {
             "bluetooth"
             "network"
           ];
+
           "hyprland/workspaces" = {
             format = "{name}";
             sort-by-number = true;
@@ -68,6 +72,7 @@ in {
               };
             };
           };
+
           "custom/notification" = {
             tooltip = false;
             format = "{} {icon}";
@@ -95,9 +100,49 @@ in {
               deactivated = "  ";
             };
           };
+
+          mpris = {
+            format = "{player_icon} {dynamic}";
+            format-paused = "{status_icon} <i>{dynamic}</i>";
+            max-length = 40;
+            interval = 3;
+            dynamic-order = ["title" "artist"];
+            dynamic-importance-order = ["title" "artist"];
+            dynamic-len = 40;
+            dynamic-separator = " • ";
+            ellipsis = "...";
+            player-icons = {
+              default = "▶";
+              mpv = "🎵";
+              spotify = "󰓇";
+              firefox = "󱉺";
+            };
+            status-icons = {
+              paused = "󰏤";
+            };
+            on-click = "playerctl play-pause";
+            on-click-right = "playerctl next";
+            on-click-middle = "playerctl previous";
+            on-scroll-up = "playerctl volume 0.05+";
+            on-scroll-down = "playerctl volume 0.05-";
+            tooltip = true;
+            tooltip-format = ''
+              {player} ({status})
+              Title: {title}
+              Artist: {artist}
+              Album: {album}
+
+              Click: Play/Pause
+              Right-click: Next
+              Middle-click: Previous
+              Scroll: Volume control
+            '';
+          };
+
           backlight = {
             format = " {percent}%";
           };
+
           battery = {
             states = {
               good = 80;
@@ -156,6 +201,17 @@ in {
               default = ["" "" ""];
             };
             on-click = "pavucontrol";
+            on-click-right = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+            on-click-middle = "pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+            tooltip = true;
+            tooltip-format = ''
+              Volume: {volume}%
+              Device: {desc}
+
+              Click: Open audio settings
+              Right-click: Toggle mute
+              Middle-click: Toggle mic mute
+            '';
           };
 
           bluetooth = {
