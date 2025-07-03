@@ -64,31 +64,36 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
       "$pypr" = "${pkgs.pyprland}/bin/pypr";
+
       bind = [
-        "SUPER, T, exec, $terminal"
         "SUPER, B, exec, $browser"
-        "SUPER, Space, exec, $menu"
         "SUPER, C, exec, $calculatorWindow"
-        "SUPER, Q, killactive,"
         "SUPER, E, exec, $fileManager"
         "SUPER, F, Fullscreen,0"
-        "SUPER, R, exec, ${resize}/bin/resize"
         "SUPER, G, togglefloating,"
         "SUPER, N, exec, ${notificationToggleCommand}"
         "SUPER, P, exec, $passwordManager"
+        "SUPER, Q, killactive,"
+        "SUPER, R, exec, ${resize}/bin/resize"
+        "SUPER, T, exec, $terminal"
         "SUPER, V, exec, $pypr toggle pwvucontrol"
         "SUPER, Y, exec, yubioath-flutter"
+        "SUPER, Space, exec, $menu"
         "SUPER_SHIFT, T, exec, $pypr toggle term"
         ",XF86ScreenSaver, exec, ${pkgs.hyprlock}/bin/hyprlock"
         ",XF86Calculator, exec, ${pkgs.kdePackages.kcalc}/bin/kcalc"
         "SUPER, backspace, exec, ${pkgs.hyprlock}/bin/hyprlock"
         "SUPER, delete, exec, wlogout --column-spacing 50 --row-spacing 50"
-        ",Print, exec, grimblast --notify copysave area"
-        "SHIFT, Print, exec, grimblast --notify copy active"
-        "CONTROL, Print, exec, grimblast --notify copy screen"
+        "SUPER, Tab, exec, $windowSwitcher"
+
+        # Screenshots
+        ", Print, exec, grimblast --notify copysave area"
+        "SHIFT, Print, exec, grimblast save area - | swappy -f -"
+        "CONTROL, Print, exec, grimblast --notify copy screen - | swappy -f -"
         "ALT, Print, exec, grimblast --notify copy area"
         "SUPER,bracketleft, exec,grimblast --notify copysave area ~/Pictures/$(date \" + %Y-%m-%d \"T\"%H:%M:%S_no_watermark \").png"
-        "SUPER, Tab, exec, $windowSwitcher"
+
+        # Windows
         "SUPER,h, movefocus,l"
         "SUPER,l, movefocus,r"
         "SUPER,k, movefocus,u"
@@ -97,6 +102,16 @@ in {
         "SUPERCONTROL,l, focusmonitor,r"
         "SUPERCONTROL,k, focusmonitor,u"
         "SUPERCONTROL,j, focusmonitor,d"
+        "ALTCTRL,L, movewindow,r"
+        "ALTCTRL,H, movewindow,l"
+        "ALTCTRL,K, movewindow,u"
+        "ALTCTRL,J, movewindow,d"
+        "SUPERSHIFT,h, swapwindow,l"
+        "SUPERSHIFT,l, swapwindow,r"
+        "SUPERSHIFT,k, swapwindow,u"
+        "SUPERSHIFT,j, swapwindow,d"
+
+        # Workspaces
         "SUPER,1, workspace,01"
         "SUPER,2, workspace,02"
         "SUPER,3, workspace,03"
@@ -121,19 +136,14 @@ in {
         "SUPERALT,l, movecurrentworkspacetomonitor,r"
         "SUPERALT,k, movecurrentworkspacetomonitor,u"
         "SUPERALT,j, movecurrentworkspacetomonitor,d"
-        "ALTCTRL,L, movewindow,r"
-        "ALTCTRL,H, movewindow,l"
-        "ALTCTRL,K, movewindow,u"
-        "ALTCTRL,J, movewindow,d"
-        "SUPERSHIFT,h, swapwindow,l"
-        "SUPERSHIFT,l, swapwindow,r"
-        "SUPERSHIFT,k, swapwindow,u"
-        "SUPERSHIFT,j, swapwindow,d"
         "SUPER,u, togglespecialworkspace"
         "SUPERSHIFT,u, movetoworkspace,special"
+
+        # Monitors
         "SUPER, F7, exec, hyprctl keyword monitor \"${cfg.multiMonitor.laptopMonitor},disable\""
         "SUPER SHIFT, F7, exec, hyprctl keyword monitor \"${cfg.multiMonitor.laptopMonitor},${cfg.multiMonitor.laptopResolution},1280x2160,${toString cfg.multiMonitor.laptopScale}\""
       ];
+
       bindi = [
         ",XF86MonBrightnessUp, exec, ${increaseBrightnessCommand}"
         ",XF86MonBrightnessDown, exec, ${decreaseBrightnessCommand}"
@@ -146,6 +156,7 @@ in {
         ",XF86AudioPlay, exec,playerctl play-pause"
         ",XF86AudioStop, exec,playerctl stop"
       ];
+
       bindl = mkIf cfg.enable (
         [
           # Other bindings...
@@ -160,6 +171,7 @@ in {
         "SUPERALT, k, resizeactive, 0 -20"
         "SUPERALT, j, resizeactive, 0 20"
       ];
+
       bindm = [
         "SUPER, mouse:272, movewindow"
         "SUPER, mouse:273, resizewindow"
