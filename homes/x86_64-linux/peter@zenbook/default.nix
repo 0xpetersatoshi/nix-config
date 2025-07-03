@@ -6,6 +6,7 @@
   desktops = {
     hyprland = {
       enable = true;
+      bar = "waybar";
       hasLunarLakeCPU = true;
       monitor = "eDP-1, highrr, auto, 1.25";
       execOnceExtras = [
@@ -45,6 +46,8 @@
     };
 
     security.sops.enable = true;
+
+    theme.stylix.image = ../../../wallpaper/standard/astronaut-5-2912x1632.jpg;
   };
 
   home.stateVersion = "24.11";
