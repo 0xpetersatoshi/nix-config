@@ -81,7 +81,7 @@ in {
 
           "custom/notification" = {
             tooltip = false;
-            format = "{} {icon}";
+            format = "{icon} {}";
             "format-icons" = {
               notification = "󱅫";
               none = "";
@@ -158,14 +158,14 @@ in {
             };
             format = "{icon} {capacity}%";
             format-alt = "{time}";
-            format-charging = "  {capacity}%";
+            format-charging = "󰂄 {capacity}%";
             format-icons = ["󰁻 " "󰁽 " "󰁿 " "󰂁 " "󰂂 "];
           };
 
           network = {
             interval = 1;
             format = "󰈀 {ifname}";
-            format-wifi = " {essid} ({signalStrength}%)";
+            format-wifi = "󰖩 {essid} ({signalStrength}%)";
             format-ethernet = "󰈀 {ifname}";
             format-disconnected = "󱚵 Disconnected";
             tooltip-format = ''
