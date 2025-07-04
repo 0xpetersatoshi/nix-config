@@ -36,6 +36,8 @@ in {
           ];
 
           modules-right = lib.flatten [
+            "cpu"
+            "memory"
             # "backlight"
             (lib.optional cfg.isLaptop "battery")
             "tray"
@@ -165,7 +167,7 @@ in {
           network = {
             interval = 1;
             format = "󰈀 {ifname}";
-            format-wifi = "󰖩 {essid} ({signalStrength}%)";
+            format-wifi = "󰖩 {essid}";
             format-ethernet = "󰈀 {ifname}";
             format-disconnected = "󱚵 Disconnected";
             tooltip-format = ''
@@ -221,16 +223,54 @@ in {
             '';
           };
 
+          cpu = {
+            format = "󰍛 {usage}%";
+            interval = 2;
+            tooltip = true;
+            tooltip-format = ''
+              CPU Usage: {usage}%
+              Load Average: {load}
+            '';
+          };
+
+          memory = {
+            format = " {percentage}%";
+            interval = 5;
+            tooltip = true;
+            tooltip-format = ''
+              RAM: {used:0.1f}GiB / {total:0.1f}GiB ({percentage}%)
+              Available: {avail:0.1f}GiB
+              Swap: {swapUsed:0.1f}GiB / {swapTotal:0.1f}GiB
+            '';
+          };
+
           bluetooth = {
             format = "󰂯 {status}";
             format-connected = "󰂯 {device_alias}";
             format-connected-battery = "󰂯 {device_alias} ({device_battery_percentage}%)";
             format-disabled = "󰂲";
             format-off = "󰂲";
-            tooltip-format = "{controller_alias}\t{controller_address}\n\n{num_connections} connected";
-            tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
-            tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
-            tooltip-format-enumerate-connected-battery = "{device_alias}\t{device_address}\t{device_battery_percentage}%";
+            tooltip-format = ''
+              controller: {controller_alias}
+              controller address: {controller_address}
+              connections: {num_connections} connected
+            '';
+            tooltip-format-connected = ''
+              controller: {controller_alias}
+              address: {controller_address}
+              connections: {num_connections} connected
+              ==========================
+              device: {device_enumerate}
+            '';
+            tooltip-format-enumerate-connected = ''
+              {device_alias}
+              address: {device_address}
+            '';
+            tooltip-format-enumerate-connected-battery = ''
+              {device_alias}
+              address: {device_address}
+              battery: {device_battery_percentage}%
+            '';
             on-click = "blueman-manager";
           };
 

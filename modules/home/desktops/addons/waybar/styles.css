@@ -15,9 +15,13 @@
 /* Fine-tune specific modules that have alignment issues */
 #clock,
 #custom-notification,
-#pulseaudio,
+#pulseaudio {
+  font-size: 19px;
+}
 #network,
-#bluetooth {
+#bluetooth,
+#cpu,
+#memory {
   /* Slightly larger size for these modules with smaller icons */
   font-size: 19px;
 }
@@ -82,9 +86,9 @@ window#waybar {
 #network,
 #pulseaudio,
 #tray,
-#idle_inhibitor {
-  font-size: 19px;
-}
+#idle_inhibitor,
+#cpu,
+#memory,
 #custom-notification {
   padding: 5px 10px;
   margin: 5px 3px;
@@ -158,6 +162,14 @@ window#waybar {
 
 #pulseaudio.muted {
   color: @base08;
+}
+
+#cpu {
+  color: @base09;
+}
+
+#memory {
+  color: @base0E;
 }
 
 @keyframes blink {
