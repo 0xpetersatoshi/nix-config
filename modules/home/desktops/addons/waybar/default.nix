@@ -25,6 +25,7 @@ in {
           position = "top";
           margin = "10 10 0 10";
           modules-left = [
+            "custom/menu"
             "hyprland/workspaces"
           ];
 
@@ -45,6 +46,13 @@ in {
             "bluetooth"
             "network"
           ];
+
+          "custom/menu" = {
+            format = "";
+            on-click = "wlogout --column-spacing 50 --row-spacing 50";
+            on-click-right = "hyprlock";
+            tooltip-format = "Left-click: wlogout\nRight-click: hyprlock";
+          };
 
           "hyprland/workspaces" = {
             format = "{name}";

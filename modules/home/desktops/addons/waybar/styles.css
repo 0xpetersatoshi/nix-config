@@ -96,6 +96,12 @@ window#waybar {
   color: @base05;
   border-radius: 15px;
 }
+#custom-menu {
+  margin: 0px 10px;
+  background: rgba(0, 0, 0, 0.2);
+  color: @base0D;
+  font-size: 35px;
+}
 
 #custom-notification {
   color: @base0D;
