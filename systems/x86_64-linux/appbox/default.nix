@@ -1,12 +1,19 @@
 {
   pkgs,
   config,
+  namespace,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
   ];
+
+  # Enable stylix theme
+  ${namespace}.theme.stylix = {
+    enable = true;
+    theme = "tokyo-night-storm";
+  };
 
   # Add dockerhost group to match TrueNAS permissions
   users = {
@@ -46,6 +53,18 @@
 
   networking.hostName = "appbox";
   roles.server.enable = true;
+
+  # Generate SSH key for the user if it doesn't exist
+  system.activationScripts.generateUserSSHKey = ''
+    if [ ! -f /home/${config.user.name}/.ssh/id_ed25519 ]; then
+      mkdir -p /home/${config.user.name}/.ssh
+      ${pkgs.openssh}/bin/ssh-keygen -t ed25519 -f /home/${config.user.name}/.ssh/id_ed25519 -N ""
+      chown -R ${config.user.name}:users /home/${config.user.name}/.ssh
+      chmod 700 /home/${config.user.name}/.ssh
+      chmod 600 /home/${config.user.name}/.ssh/id_ed25519
+      chmod 644 /home/${config.user.name}/.ssh/id_ed25519.pub
+    fi
+  '';
 
   services = {
     virtualisation = {
