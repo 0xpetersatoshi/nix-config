@@ -1,6 +1,7 @@
 {
-  pkgs,
   config,
+  lib,
+  pkgs,
   namespace,
   ...
 }: {
@@ -18,6 +19,9 @@
   # Add dockerhost group to match TrueNAS permissions
   users = {
     users.${config.user.name} = {
+      uid = lib.mkForce 568; # Match UID from TrueNAS
+      isNormalUser = lib.mkForce false;
+      isSystemUser = true;
       extraGroups = ["apps"];
     };
 
@@ -38,6 +42,12 @@
     options = ["nfsvers=4" "hard" "rsize=1048576" "wsize=1048576"];
   };
 
+  fileSystems."/mnt/immich" = {
+    device = "10.19.50.2:/mnt/flashpool/media/immich";
+    fsType = "nfs";
+    options = ["nfsvers=4" "hard" "rsize=1048576" "wsize=1048576"];
+  };
+
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
   };
@@ -53,6 +63,12 @@
 
   networking.hostName = "appbox";
   roles.server.enable = true;
+
+  # Open ports for Docker services running in host mode
+  networking.firewall.allowedTCPPorts = [
+    8123
+    8096
+  ];
 
   # Generate SSH key for the user if it doesn't exist
   system.activationScripts.generateUserSSHKey = ''
