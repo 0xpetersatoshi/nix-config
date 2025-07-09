@@ -48,6 +48,12 @@
     options = ["nfsvers=4" "hard" "rsize=1048576" "wsize=1048576"];
   };
 
+  fileSystems."/mnt/syncthing" = {
+    device = "10.19.50.2:/mnt/flashpool/syncthing";
+    fsType = "nfs";
+    options = ["nfsvers=4" "hard" "rsize=1048576" "wsize=1048576"];
+  };
+
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
   };
