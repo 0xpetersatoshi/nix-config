@@ -26,7 +26,7 @@ in {
         "$windowSwitcher" = "rofi -show window";
         "$calculatorWindow" = "rofi -show calc -modi calc -calc-command \"echo -n '{result}' | wl-copy\"";
         # "$notificationsClient" = "swaync-client -t";
-        "$browser" = "brave";
+        "$browser" = "firefox";
         "$passwordManager" = "1password";
         "$editor" = "nvim";
         "$music" = "spotify";
