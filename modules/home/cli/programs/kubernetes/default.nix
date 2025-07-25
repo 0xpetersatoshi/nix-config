@@ -18,5 +18,7 @@ in {
       kubectl
       kubectx
     ];
+
+    programs.k9s.enable = true;
   };
 }
