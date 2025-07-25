@@ -22,6 +22,7 @@ in {
       typescript
       typescript-language-server
       vscode-js-debug
+      vtsls
       yarn
     ];
   };
