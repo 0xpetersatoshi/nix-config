@@ -27,6 +27,7 @@ in {
           modules-left = [
             "custom/menu"
             "hyprland/workspaces"
+            "hyprland/window"
           ];
 
           modules-center = [
@@ -67,6 +68,37 @@ in {
               "5" = [];
             };
             on-click = "activate";
+          };
+
+          "hyprland/window" = {
+            format = "{class}";
+            rewrite = {
+              "(.*) — Mozilla Firefox" = "󰈹 $1";
+              "(.*)Mozilla Firefox" = "󰈹 Firefox";
+              "firefox" = "󰈹 Firefox";
+              "(.*) - Visual Studio Code" = "󰨞 $1";
+              "(.*)Visual Studio Code" = "󰨞 VSCode";
+              "(.*) - Discord" = "󰙯 $1";
+              "(.*)Discord" = "󰙯 Discord";
+              "(.*)Spotify" = "󰓇 Spotify";
+              "(.*)Steam" = "󰓓 Steam";
+              "(.*) - YouTube" = "󰗃 $1";
+              "kitty" = "󰄛 Kitty";
+              "Alacritty" = " Alacritty";
+              "com.mitchellh.ghostty" = "󰊠 Ghostty";
+              "foot" = " Terminal";
+              "thunar" = "󰝰 Files";
+              "nautilus" = "󰝰 Files";
+              "org.kde.dolphin" = "󰝰 Files";
+              "1Password" = "󰌾 1Password";
+              "Slack" = "󰒱 Slack";
+              "signal" = "󰍩 Signal";
+              "org.telegram.desktop" = " Telegram";
+              "thunderbird" = " Thunderbirld";
+              "" = "Desktop";
+            };
+            separate-outputs = true;
+            max-length = 30;
           };
 
           clock = {

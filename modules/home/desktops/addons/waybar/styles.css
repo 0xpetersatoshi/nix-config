@@ -72,11 +72,20 @@ window#waybar {
 #memory,
 #custom-notification,
 #bluetooth,
-#mpris {
+#mpris,
+window#waybar.empty #window {
   padding: 6px 16px;
   margin: 0 4px;
   background: rgba(0, 0, 0, 0.8);
   color: @base05;
+  border-radius: 25px;
+}
+
+#window {
+  padding: 6px 16px;
+  margin: 0 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: @base06;
   border-radius: 25px;
 }
 #custom-menu {
