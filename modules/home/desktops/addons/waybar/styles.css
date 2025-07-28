@@ -1,29 +1,9 @@
 * {
   border: none;
   border-radius: 0;
-  font-family: "JetBrainsMono Nerd Font Mono";
+  font-family: "Symbols Nerd Font", "JetBrainsMono Nerd Font Propo";
   font-size: 18px;
   min-height: 0;
-}
-
-/* Ensure consistent icon rendering across all modules */
-#waybar {
-  /* Use Symbols Nerd Font for better icon consistency */
-  font-family: "Symbols Nerd Font", "JetBrainsMono Nerd Font Mono", monospace;
-}
-
-/* Fine-tune specific modules that have alignment issues */
-#clock,
-#custom-notification,
-#pulseaudio {
-  font-size: 19px;
-}
-#network,
-#bluetooth,
-#cpu,
-#memory {
-  /* Slightly larger size for these modules with smaller icons */
-  font-size: 19px;
 }
 
 window#waybar {
@@ -97,10 +77,10 @@ window#waybar {
   border-radius: 15px;
 }
 #custom-menu {
-  margin: 0px 10px;
+  margin: 0px 5px;
   background: rgba(0, 0, 0, 0.2);
   color: @base0D;
-  font-size: 35px;
+  font-size: 24px;
 }
 
 #custom-notification {
