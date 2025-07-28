@@ -113,8 +113,8 @@ in {
           "idle_inhibitor" = {
             format = "{icon}";
             format-icons = {
-              activated = "  ";
-              deactivated = "  ";
+              activated = "";
+              deactivated = "";
             };
           };
 
@@ -169,7 +169,7 @@ in {
             format = "{icon} {capacity}%";
             format-alt = "{time}";
             format-charging = "󰂄 {capacity}%";
-            format-icons = ["󰁻 " "󰁽 " "󰁿 " "󰂁 " "󰂂 "];
+            format-icons = ["󰁻" "󰁽" "󰁿" "󰂁" "󰂂"];
           };
 
           network = {
