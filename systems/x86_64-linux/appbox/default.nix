@@ -72,6 +72,7 @@
 
   # Open ports for Docker services running in host mode
   networking.firewall.allowedTCPPorts = [
+    2222
     8123
     8096
   ];
