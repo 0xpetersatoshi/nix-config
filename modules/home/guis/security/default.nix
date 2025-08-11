@@ -20,7 +20,7 @@ in {
       cfg._1password-gui.package
       # NOTE: need to fallback to stable package until python313Packages.fido2 v2.0.0 is released as there is
       # a bug in fido2 1.2.0 that breaks yubioath-flutter
-      pkgs.stable.yubioath-flutter
+      pkgs.yubioath-flutter
     ];
   };
 }
