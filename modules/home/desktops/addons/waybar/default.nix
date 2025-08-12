@@ -201,6 +201,7 @@ in {
             format = "{icon} {capacity}%";
             format-alt = "{time}";
             format-charging = "󰂄 {capacity}%";
+            format-critical = "{icon} {capacity}%";
             format-icons = ["󰁻" "󰁽" "󰁿" "󰂁" "󰂂"];
           };
 
