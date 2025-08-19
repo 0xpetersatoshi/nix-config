@@ -9,6 +9,7 @@
       bar = "waybar";
       hasLunarLakeCPU = true;
       monitor = "eDP-1, highrr, auto, 1.25";
+      multiMonitor.enable = true;
       execOnceExtras = [
         "${pkgs.libinput-gestures}/bin/libinput-gestures &"
       ];

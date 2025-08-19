@@ -17,7 +17,7 @@ with lib; let
             hyprctl keyword monitor "${cfg.multiMonitor.externalMonitor},${cfg.multiMonitor.externalResolution},0x0,${toString cfg.multiMonitor.externalScale}"
 
             # Check lid state
-            if grep -q open /proc/acpi/button/lid/LID0/state; then
+            if grep -q open /proc/acpi/button/lid/LID/state; then
                 # Lid is open, position laptop below external monitor
                 # Calculate the vertical position based on external resolution
                 external_height=$(echo "${cfg.multiMonitor.externalResolution}" | sed 's/x/ /g' | awk '{print $2}' | cut -d '@' -f 1)
