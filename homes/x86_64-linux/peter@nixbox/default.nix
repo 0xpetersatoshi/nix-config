@@ -36,8 +36,11 @@
     };
   };
 
-  guis.web3 = {
-    ledger.enable = true;
+  guis = {
+    media.enable = true;
+    web3 = {
+      ledger.enable = true;
+    };
   };
 
   home.packages = with pkgs; [
