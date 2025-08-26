@@ -36,6 +36,7 @@ in {
 
     ${namespace} = {
       keybase.enable = true;
+      samba.enable = true;
     };
   };
 
