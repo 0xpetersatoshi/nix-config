@@ -12,7 +12,7 @@ with lib.${namespace}; let
 in {
   options.desktops.addons.rofi = {
     enable = mkEnableOption "Enable rofi app manager";
-    package = mkPackageOpt pkgs.rofi-wayland "Package to use for rofi";
+    package = mkPackageOpt pkgs.rofi "Package to use for rofi";
   };
 
   config = mkIf cfg.enable {
@@ -41,7 +41,9 @@ in {
       in
         lib.mkForce {
           "*" = {
-            /* Color definitions matching waybar/swaync */
+            /*
+            Color definitions matching waybar/swaync
+            */
             bg-col = mkLiteral "#${colors.base01}";
             bg-col-light = mkLiteral "#${colors.base02}";
             border-col = mkLiteral "#${colors.base03}";
