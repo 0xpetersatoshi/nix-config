@@ -123,7 +123,11 @@ in {
       # Kernel parameters
       kernelParams = with pkgs.lib;
         []
-        ++ (optionals cfg.hasAmdCpu ["amd_pstate=active"]);
+        ++ (optionals cfg.hasAmdCpu ["amd_pstate=active"])
+        ++ (optionals cfg.hasIntelGpu [
+          "i915.enable_guc=3"  # Enable GuC/HuC for better power management (works for both i915 and xe)
+          "xe.force_probe=*"   # Ensure xe driver is used for newer Intel GPUs
+        ]);
 
       # Kernel modules
       kernelModules = with pkgs.lib;
