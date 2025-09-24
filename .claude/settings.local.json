@@ -3,7 +3,8 @@
     "allow": [
       "Bash(lspci:*)",
       "Bash(lsmod:*)",
-      "Read(//sys/class/drm/**)"
+      "Read(//sys/class/drm/**)",
+      "Bash(journalctl:*)"
     ]
   },
   "enableAllProjectMcpServers": false
