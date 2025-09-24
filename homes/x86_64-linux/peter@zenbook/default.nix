@@ -9,7 +9,10 @@
       bar = "waybar";
       hasLunarLakeCPU = true;
       monitor = "eDP-1, highrr, auto, 1.25";
-      multiMonitor.enable = true;
+      multiMonitor = {
+        enable = true;
+        laptopScale = 1.25;  # Override the default 1.5 scale
+      };
       execOnceExtras = [
         "${pkgs.libinput-gestures}/bin/libinput-gestures &"
       ];
@@ -48,7 +51,7 @@
       inherit (config.snowfallorg.user) name;
     };
 
-    security.sops.enable = true;
+    security.sops.enable = false;
 
     theme.stylix.image = ../../../wallpaper/standard/astronaut-5-2912x1632.jpg;
   };
