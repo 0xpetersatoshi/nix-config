@@ -180,6 +180,14 @@ nix hash convert --hash-algo sha256 1hvf7s7kd4881xi929i1in9j5dmk37xhmx5zamczni2n
 nixos-generate-config --root /mnt
 ```
 
+### Hyprland
+
+Setting monitor scale and resolution:
+
+```bash
+hyprctl keyword monitor "eDP-1, highrr, auto, 1.25"
+```
+
 ## Resources
 
 I drew heavy inspiration from the following repos:
