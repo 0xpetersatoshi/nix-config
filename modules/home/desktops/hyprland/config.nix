@@ -62,12 +62,6 @@ in {
           };
         };
 
-        gestures = {
-          workspace_swipe = true;
-          workspace_swipe_create_new = false;
-          workspace_swipe_forever = true;
-        };
-
         general = {
           gaps_in = 3;
           gaps_out = 5;
