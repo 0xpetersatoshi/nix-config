@@ -16,6 +16,8 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       rustup
+      # codelldb debugger
+      vscode-extensions.vadimcn.vscode-lldb
     ];
 
     home.file.".cargo/config.toml".text = ''
