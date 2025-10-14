@@ -2,7 +2,15 @@
   pkgs,
   namespace,
   ...
-}: {
+}: let
+  # Fix sound
+  custom-alsa-ucm-conf = pkgs.fetchFromGitHub {
+    owner = "alsa-project";
+    repo = "alsa-ucm-conf";
+    rev = "f293b3149b8b370fed70eb83025410ddaee8a9cf";
+    hash = "sha256-SEAizUiMbSN7iEsHoiDEJkBFdaVPyi/t2YN7Jao22iw=";
+  };
+in {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -107,9 +115,8 @@
   };
 
   environment = {
-    systemPackages = [pkgs.alsa-ucm-conf];
     sessionVariables = {
-      ALSA_CONFIG_UCM2 = "${pkgs.alsa-ucm-conf}/ucm2";
+      ALSA_CONFIG_UCM2 = "${custom-alsa-ucm-conf}/ucm2";
       ANV_VIDEO_DECODE = "1";
       LIBVA_DRIVER_NAME = "iHD"; # Use intel-media-driver
       VDPAU_DRIVER = "va_gl"; # VDPAU through VAAPI
