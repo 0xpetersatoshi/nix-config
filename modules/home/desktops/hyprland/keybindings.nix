@@ -67,6 +67,7 @@ in {
 
       bind = [
         "SUPER, B, exec, $browser"
+        "SUPER_SHIFT, B, exec, $browserWork"
         "SUPER, C, exec, $calculatorWindow"
         "SUPER, E, exec, $fileManager"
         "SUPER, F, Fullscreen,0"

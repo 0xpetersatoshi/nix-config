@@ -16,6 +16,39 @@ in {
   };
 
   config = mkIf cfg.enable {
+    cli.shells.zsh.shellAliases = {
+      firefox-work = "firefox -P Work";
+    };
+
+    xdg.desktopEntries.firefox-work = {
+      name = "Firefox (Work)";
+      genericName = "Web Browser";
+      comment = "Browse the Web with Firefox Work Profile";
+      exec = "firefox -P Work %U";
+      icon = "firefox";
+      terminal = false;
+      categories = ["Network" "WebBrowser"];
+      mimeType = [
+        "text/html"
+        "text/xml"
+        "application/xhtml+xml"
+        "application/vnd.mozilla.xul+xml"
+        "text/mml"
+        "x-scheme-handler/http"
+        "x-scheme-handler/https"
+      ];
+      actions = {
+        new-window = {
+          name = "Open a New Window";
+          exec = "firefox -P Work --new-window %U";
+        };
+        new-private-window = {
+          name = "Open a New Private Window";
+          exec = "firefox -P Work --private-window %U";
+        };
+      };
+    };
+
     xdg.mimeApps.defaultApplications = {
       "text/html" = ["firefox.desktop"];
       "text/xml" = ["firefox.desktop"];
