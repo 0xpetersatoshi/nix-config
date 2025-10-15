@@ -21,6 +21,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -96,7 +101,9 @@
         backupFileExtension = "hm.bak";
       };
 
-      overlays = [];
+      overlays = with inputs; [
+        nur.overlays.default
+      ];
 
       homes.modules = with inputs; [
         sops-nix.homeManagerModules.sops
