@@ -11,7 +11,7 @@
       monitor = "eDP-1, highrr, auto, 1.25";
       multiMonitor = {
         enable = true;
-        laptopScale = 1.25;  # Override the default 1.5 scale
+        laptopScale = 1.25; # Override the default 1.5 scale
       };
       execOnceExtras = [
         "${pkgs.libinput-gestures}/bin/libinput-gestures &"
@@ -24,6 +24,13 @@
       };
 
       waybar.isLaptop = true;
+    };
+  };
+
+  guis = {
+    media.enable = true;
+    web3 = {
+      ledger.enable = true;
     };
   };
 
