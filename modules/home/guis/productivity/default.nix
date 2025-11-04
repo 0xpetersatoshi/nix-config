@@ -19,7 +19,7 @@ in {
       dbeaver-bin
       morgen
       obsidian
-      stable.protonmail-desktop
+      protonmail-desktop
       qalculate-gtk
       thunderbird
       zoom-us
