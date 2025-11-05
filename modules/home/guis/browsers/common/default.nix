@@ -19,6 +19,7 @@ in {
       brave
       ungoogled-chromium
       vivaldi
+      microsoft-edge
     ];
   };
 }
