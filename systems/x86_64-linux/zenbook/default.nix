@@ -91,6 +91,7 @@ in {
   };
 
   hardware.${namespace} = {
+    udev.web3.enable = true;
     asus = {
       enable = true;
     };
