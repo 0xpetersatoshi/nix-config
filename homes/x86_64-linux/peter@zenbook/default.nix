@@ -30,7 +30,7 @@
   guis = {
     media.enable = true;
     web3 = {
-      ledger.enable = true;
+      wallets.enable = true;
     };
   };
 

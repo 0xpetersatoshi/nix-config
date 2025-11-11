@@ -8,15 +8,16 @@
 with lib;
 with lib.${namespace};
 with types; let
-  cfg = config.guis.web3.ledger;
+  cfg = config.guis.web3.wallets;
 in {
-  options.guis.web3.ledger = {
-    enable = mkEnableOption "Enable ledger live desktop gui";
+  options.guis.web3.wallets = {
+    enable = mkEnableOption "Enable desktop wallet guis";
   };
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       ledger-live-desktop
+      trezor-suite
     ];
   };
 }
