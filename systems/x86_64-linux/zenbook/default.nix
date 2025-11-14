@@ -40,7 +40,18 @@ in {
     };
   };
 
-  powerManagement.enable = true;
+  powerManagement = {
+    enable = true;
+    # Fix GPU performance after resume for Intel Arc/Xe graphics
+    resumeCommands = ''
+      # Force GPU to exit low power state
+      echo 1 > /sys/class/drm/card0/device/power/control || true
+      echo on > /sys/class/drm/card0/device/power/control || true
+
+      # Restart Hyprland compositor to reset GPU state
+      ${pkgs.systemd}/bin/systemctl --user restart hyprland-session.target || true
+    '';
+  };
 
   roles = {
     desktop = {
