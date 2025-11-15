@@ -46,6 +46,7 @@ in {
         home = "/home/${cfg.name}";
         group = "users";
         shell = pkgs.zsh;
+        uid = 1000;
 
         # TODO: set in modules
         extraGroups =
