@@ -10,7 +10,7 @@
       hasLunarLakeCPU = true;
       monitor = "eDP-1, highrr, auto, 1.25";
       multiMonitor = {
-        enable = true;
+        enable = false;
         laptopScale = 1.25; # Override the default 1.5 scale
       };
       execOnceExtras = [
