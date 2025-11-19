@@ -48,6 +48,7 @@
   networking.hostName = "nixbox";
 
   roles = {
+    development.enable = true;
     desktop = {
       enable = true;
       addons = {

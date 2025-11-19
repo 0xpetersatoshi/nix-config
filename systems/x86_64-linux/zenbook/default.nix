@@ -54,6 +54,7 @@ in {
   };
 
   roles = {
+    development.enable = true;
     desktop = {
       enable = true;
       addons = {
