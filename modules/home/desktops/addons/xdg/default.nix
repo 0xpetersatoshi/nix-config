@@ -9,7 +9,7 @@ with lib;
 with lib.${namespace}; let
   cfg = config.desktops.addons.xdg;
 
-  browser = ["firefox.desktop"];
+  browser = ["brave-browser.desktop"];
   pdfApp = ["com.github.johnfactotum.Foliate.desktop"];
   fileManager = ["org.kde.dolphin.desktop"];
   editor = ["nvim.desktop"];
@@ -80,6 +80,7 @@ with lib.${namespace}; let
     "text/*" = editor;
     "text/calendar" = mail;
     "text/html" = browser;
+    "text/xml" = browser;
     "text/plain" = editor;
     "video/*" = video;
     "x-scheme-handler/about" = browser;
