@@ -19,6 +19,7 @@ in {
       eslint
       stable.nodejs_24
       graphql-language-service-cli
+      pnpm
       typescript
       typescript-language-server
       vscode-js-debug
