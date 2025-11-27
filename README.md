@@ -190,8 +190,14 @@ hyprctl keyword monitor "eDP-1, highrr, auto, 1.25"
 
 ## Resources
 
+### Flake
+
 I drew heavy inspiration from the following repos:
 
 - [khaneliman/khanelinix](https://github.com/khaneliman/khanelinix)
 - [hmajid2301/nixicle](https://gitlab.com/hmajid2301/nixicle)
 - [usmcamp0811/dotfiles](https://gitlab.com/usmcamp0811/dotfiles)
+
+### NixOS
+
+- [Configuring Hardware Acceleration for Video](https://wiki.nixos.org/wiki/Accelerated_Video_Playback)
