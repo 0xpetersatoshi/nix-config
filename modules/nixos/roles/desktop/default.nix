@@ -41,6 +41,8 @@ in {
       security.yubikey.enable = true;
     };
 
+    browsers.chromium.enable = true;
+
     roles = {
       common.enable = true;
     };
