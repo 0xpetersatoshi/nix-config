@@ -36,7 +36,7 @@ in {
       element-desktop-wrapped
       slack
       telegram-desktop
-      whatsapp-for-linux
+      wasistlos
       signal-desktop
     ];
   };

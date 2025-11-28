@@ -46,7 +46,6 @@
   home.packages = with pkgs; [
     nwg-displays
     hyprpolkitagent
-    kdePackages.xwaylandvideobridge
     libnotify
     nix-prefetch
     nix-prefetch-scripts

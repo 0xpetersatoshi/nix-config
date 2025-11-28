@@ -125,8 +125,8 @@ in {
         []
         ++ (optionals cfg.hasAmdCpu ["amd_pstate=active"])
         ++ (optionals cfg.hasIntelGpu [
-          "i915.enable_guc=3"  # Enable GuC/HuC for better power management (works for both i915 and xe)
-          "xe.force_probe=*"   # Ensure xe driver is used for newer Intel GPUs
+          "i915.enable_guc=3" # Enable GuC/HuC for better power management (works for both i915 and xe)
+          "xe.force_probe=*" # Ensure xe driver is used for newer Intel GPUs
         ]);
 
       # Kernel modules
@@ -166,7 +166,7 @@ in {
       ]
       ++ [
         clinfo
-        glxinfo
+        mesa-demos
         libva-utils
         vdpauinfo
       ];

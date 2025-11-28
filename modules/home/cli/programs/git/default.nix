@@ -31,49 +31,58 @@ in {
       lazygit
     ];
 
-    programs.git = {
-      enable = true;
-      userName = cfg.username;
-      userEmail = cfg.email;
-      ignores = [
-        "*~"
-        "*.swp"
-        ".DS_Store"
-      ];
-      aliases = {
-        ci = "commit";
-      };
-      extraConfig = {
-        init.defaultBranch = "main";
-        core = {
-          editor = "nvim";
-        };
-        merge.conflictstyle = "diff3";
-        diff.colorMoved = "default";
-        url."git@github.com:".insteadOf = "https://github.com/";
-        gpg = {
-          format = "ssh";
-          ssh = {
-            program = sshProgramPath;
-            allowedSignersFile = "~/.ssh/allowed_signers";
-          };
-        };
-      };
-
-      lfs.enable = true;
-      signing = {
-        key = cfg.signingKey;
-        signByDefault = true;
-      };
-
+    programs = {
       delta = {
         enable = true;
+        enableGitIntegration = true;
         options = {
           navigate = true;
           light = false;
           line-numbers = true;
           side-by-side = true;
           options.syntax-theme = "catppuccin";
+        };
+      };
+
+      git = {
+        enable = true;
+        ignores = [
+          "*~"
+          "*.swp"
+          ".DS_Store"
+        ];
+        settings = {
+          user = {
+            name = cfg.username;
+            email = cfg.email;
+          };
+
+          alias = {
+            ci = "commit";
+          };
+
+          core = {
+            editor = "nvim";
+          };
+
+          init.defaultBranch = "main";
+          merge.conflictstyle = "diff3";
+          diff.colorMoved = "default";
+          url."git@github.com:".insteadOf = "https://github.com/";
+
+          gpg = {
+            format = "ssh";
+            ssh = {
+              program = sshProgramPath;
+              allowedSignersFile = "~/.ssh/allowed_signers";
+            };
+          };
+        };
+
+        lfs.enable = true;
+        signing = {
+          key = cfg.signingKey;
+          signByDefault = true;
         };
       };
     };

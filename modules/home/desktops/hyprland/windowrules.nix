@@ -17,14 +17,6 @@ in {
 
         "opacity 0.95 0.95, class:^(zen)$"
         "opacity 0.95 0.95, class:^(com.mitchellh.ghostty)$, initialClass:^(com.mitchellh.ghostty)$"
-
-        # hide xwaylandvideobridge
-        "opacity 0.0 override, class:^(xwaylandvideobridge)$"
-        "noanim, class:^(xwaylandvideobridge)$"
-        "noinitialfocus, class:^(xwaylandvideobridge)$"
-        "maxsize 1 1, class:^(xwaylandvideobridge)$"
-        "noblur, class:^(xwaylandvideobridge)$"
-        "nofocus, class:^(xwaylandvideobridge)$"
       ];
     };
   };
