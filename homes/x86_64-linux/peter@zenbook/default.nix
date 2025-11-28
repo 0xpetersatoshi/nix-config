@@ -57,7 +57,7 @@
       inherit (config.snowfallorg.user) name;
     };
 
-    security.sops.enable = false;
+    security.sops.enable = true;
 
     theme.stylix.image = ../../../wallpaper/standard/astronaut-5-2912x1632.jpg;
   };
