@@ -27,7 +27,7 @@ in {
         LC_TIME = "en_US.UTF-8";
       };
     };
-    time.timeZone = "America/Phoenix";
+    time.timeZone = "America/Los_Angeles";
 
     # Configure keymap in X11
     services.xserver = {
