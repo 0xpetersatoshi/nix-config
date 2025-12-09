@@ -28,6 +28,7 @@
   };
 
   guis = {
+    appimage.superbacked.enable = pkgs.stdenv.isLinux;
     media.enable = true;
     web3 = {
       wallets.enable = true;
