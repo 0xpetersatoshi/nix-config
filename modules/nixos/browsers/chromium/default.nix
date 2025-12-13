@@ -79,6 +79,7 @@ in {
         "pflnpcinjbcfefgbejjfanemlgcfjbna" # tab numbers
         "aeblfdkhhhdcdjpifhhbdiojplfjncoa" # 1password
         "acmacodkjbdgmoleebolmdjonilkdbch" # rabby wallet
+        "ldinpeekobnhjjdofggfgjlcehhmanlj" # leather wallet
       ];
 
       defaultSearchProviderEnabled = true;
