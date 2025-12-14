@@ -14,18 +14,10 @@
     initrd.kernelModules = ["amdgpu"];
   };
 
-  environment = {
-    sessionVariables = {
-      # Configure VAAPI and VDPAU drivers for video acceleration
-      LIBVA_DRIVER_NAME = "radeonsi";
-      VDPAU_DRIVER = "radeonsi";
-    };
-
-    systemPackages = with pkgs; [
-      firefox
-      lact
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    firefox
+    lact
+  ];
 
   hardware = {
     drivers = {

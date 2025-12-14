@@ -114,12 +114,18 @@ in {
 
       amdgpu = mkIf cfg.hasAmdGpu {
         opencl.enable = true;
-        amdvlk.enable = cfg.vulkanEnabled;
+        # amdvlk.enable = cfg.vulkanEnabled;
       };
     };
 
     # Boot configuration for GPU support
     boot = {
+      initrd.kernelModules =
+        []
+        ++ (optionals cfg.hasAmdGpu ["amdgpu"])
+        ++ (optionals cfg.hasNvidiaGpu ["nvidia"])
+        ++ (optionals cfg.hasIntelGpu ["xe"]);
+
       # Kernel parameters
       kernelParams = with pkgs.lib;
         []
@@ -170,5 +176,22 @@ in {
         libva-utils
         vdpauinfo
       ];
+
+    # GPU-specific environment variables for hardware acceleration
+    environment.sessionVariables = mkMerge [
+      (mkIf cfg.hasAmdGpu {
+        LIBVA_DRIVER_NAME = "radeonsi";
+        VDPAU_DRIVER = "radeonsi";
+      })
+      (mkIf cfg.hasNvidiaGpu {
+        LIBVA_DRIVER_NAME = "nvidia";
+        VDPAU_DRIVER = "nvidia";
+        __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+        GBM_BACKEND = "nvidia-drm";
+      })
+      (mkIf cfg.hasIntelGpu {
+        LIBVA_DRIVER_NAME = "iHD"; # Use intel-media-driver
+      })
+    ];
   };
 }

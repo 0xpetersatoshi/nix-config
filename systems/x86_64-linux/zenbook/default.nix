@@ -120,8 +120,7 @@ in {
     sessionVariables = {
       ALSA_CONFIG_UCM2 = "${custom-alsa-ucm-conf}/ucm2";
       ANV_VIDEO_DECODE = "1";
-      LIBVA_DRIVER_NAME = "iHD"; # Use intel-media-driver
-      VDPAU_DRIVER = "va_gl"; # VDPAU through VAAPI
+      VDPAU_DRIVER = "va_gl"; # VDPAU through VAAPI for Intel
       MOZ_X11_EGL = "1"; # Enable hardware acceleration in Firefox
     };
   };

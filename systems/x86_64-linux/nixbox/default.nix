@@ -17,20 +17,6 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_zen;
-    initrd.kernelModules = ["nvidia"];
-  };
-
-  environment.sessionVariables = {
-    # Configure VAAPI and VDPAU drivers for video acceleration
-    LIBVA_DRIVER_NAME = "nvidia";
-    VDPAU_DRIVER = "nvidia";
-
-    # Set primary GPU for rendering
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-    GBM_BACKEND = "nvidia-drm";
-
-    # Use proper Chromium flags instead
-    CHROMIUM_FLAGS = "--enable-features=VaapiVideoDecoder,VaapiVideoEncoder --disable-features=UseChromeOSDirectVideoDecoder --use-gl=egl --ozone-platform=wayland --ignore-gpu-blocklist";
   };
 
   hardware = {
@@ -39,10 +25,14 @@
     drivers = {
       enable = true;
       hasAmdCpu = true;
-      hasNvidiaGpu = true;
+      hasAmdGpu = true;
     };
 
     enableAllFirmware = true;
+
+    firmware = with pkgs; [
+      linux-firmware
+    ];
   };
 
   networking.hostName = "nixbox";
@@ -78,7 +68,7 @@
       podman.enable = false;
     };
 
-    xserver.videoDrivers = ["nvidia" "modeset"];
+    xserver.videoDrivers = ["amdgpu" "modeset"];
   };
 
   system = {
