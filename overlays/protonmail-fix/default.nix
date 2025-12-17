@@ -13,13 +13,14 @@
           # Remove the original wrapper
           rm -f $out/bin/proton-mail
 
-          # Create our own wrapper that bypasses Wayland issues by unsetting env vars
+          # Create our own wrapper that bypasses Wayland issues by forcing X11
           makeWrapper ${final.electron}/bin/electron $out/bin/proton-mail \
             --add-flags "$out/share/proton-mail/app.asar" \
             --set ELECTRON_FORCE_IS_PACKAGED 1 \
             --set ELECTRON_IS_DEV 0 \
             --unset NIXOS_OZONE_WL \
             --unset WAYLAND_DISPLAY \
+            --add-flags "--ozone-platform=x11" \
             --add-flags "--disable-gpu-compositing" \
             --add-flags "--disable-software-rasterizer"
 
