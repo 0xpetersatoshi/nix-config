@@ -16,6 +16,7 @@ in {
   config = mkIf cfg.enable {
     xdg.configFile."zellij/config.kdl".source = ./config.kdl;
     xdg.configFile."zellij/plugins/zellij-autolock.wasm".source = ./plugins/zellij-autolock.wasm;
+    xdg.configFile."zellij/plugins/zjstatus.wasm".source = "${pkgs.zjstatus}/bin/zjstatus.wasm";
     xdg.configFile."zellij/layouts/default.kdl".text = ''
       layout {
           swap_tiled_layout name="vertical" {
@@ -111,7 +112,7 @@ in {
 
           default_tab_template {
               pane size=2 borderless=true {
-                  plugin location="file://${pkgs.zjstatus}/bin/zjstatus.wasm" {
+                  plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
                       format_left   "{mode}#[bg=#${colors.base00}] {tabs}"
                       format_center ""
                       format_right  "#[bg=#${colors.base00},fg=#${colors.base0D}]#[bg=#${colors.base0D},fg=#${colors.base01},bold] #[bg=#${colors.base02},fg=#${colors.base05},bold] {session} #[bg=#${colors.base03},fg=#${colors.base05},bold]"
