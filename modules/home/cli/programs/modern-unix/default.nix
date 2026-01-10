@@ -19,7 +19,6 @@ in {
       choose
       cpufetch
       curlie
-      dogdns
       doggo
       duf
       delta
