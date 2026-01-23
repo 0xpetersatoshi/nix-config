@@ -117,14 +117,15 @@ function M.on_supports_method(method, fn)
   })
 end
 
----@return _.lspconfig.options
+---@return table|nil
 function M.get_config(server)
-  local configs = require "lspconfig.configs"
-  return rawget(configs, server)
+  -- Use Neovim 0.11+ native LSP config API
+  return vim.lsp.config[server]
 end
 
 ---@return {default_config:lspconfig.Config}
 function M.get_raw_config(server)
+  -- These direct module requires don't trigger the deprecation warning
   local ok, ret = pcall(require, "lspconfig.configs." .. server)
   if ok then
     return ret
@@ -140,14 +141,25 @@ end
 ---@param server string
 ---@param cond fun(root_dir, config): boolean
 function M.disable(server, cond)
-  local util = require "lspconfig.util"
-  local def = M.get_config(server)
-  ---@diagnostic disable-next-line: undefined-field
-  def.document_config.on_new_config = util.add_hook_before(def.document_config.on_new_config, function(config, root_dir)
-    if cond(root_dir, config) then
-      config.enabled = false
+  local current_config = M.get_config(server)
+  if not current_config then
+    return
+  end
+
+  -- Wrap the root_dir function to conditionally disable the server
+  local original_root_dir = current_config.root_dir
+  current_config.root_dir = function(fname, bufnr)
+    local root = original_root_dir and original_root_dir(fname, bufnr)
+      or vim.fs.root(fname, { ".git" })
+      or vim.fn.getcwd()
+
+    if cond(root, current_config) then
+      return nil -- Returning nil prevents the LSP from attaching
     end
-  end)
+    return root
+  end
+
+  vim.lsp.config[server] = current_config
 end
 
 ---@param opts? {filter?: (string|lsp.Client.filter), timeout_ms?: number, format_options?: table}
