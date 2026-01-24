@@ -36,20 +36,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Mapping to create a new empty buffer
-vim.keymap.set("n", "<leader>fn", ":enew<CR>", { desc = "Create new file" })
-
--- Mapping to save to a specific path
-vim.keymap.set("n", "<leader>fs", function()
-  local path = vim.fn.input("Save as: ", vim.fn.expand "%:p:h" .. "/", "file")
-  if path ~= "" then
-    vim.cmd("write! " .. vim.fn.fnameescape(path))
-    print("File saved to " .. path)
-  else
-    print "Save canceled."
-  end
-end, { desc = "Save file to specific path" })
-
 -- Mapping to open URL under cursor
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "markdown",

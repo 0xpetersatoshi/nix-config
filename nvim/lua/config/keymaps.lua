@@ -54,8 +54,22 @@ vim.keymap.set("i", "jj", "<Esc>", { noremap = false })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 
--- save file
+-- file
 vim.keymap.set({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
+
+-- Mapping to create a new empty buffer
+vim.keymap.set("n", "<leader>fn", ":enew<CR>", { desc = "Create new file" })
+
+-- Mapping to save to a specific path
+vim.keymap.set("n", "<leader>fs", function()
+  local path = vim.fn.input("Save as: ", vim.fn.expand "%:p:h" .. "/", "file")
+  if path ~= "" then
+    vim.cmd("write! " .. vim.fn.fnameescape(path))
+    print("File saved to " .. path)
+  else
+    print "Save canceled."
+  end
+end, { desc = "Save file to specific path" })
 
 -- quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
