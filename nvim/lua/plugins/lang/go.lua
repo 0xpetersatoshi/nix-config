@@ -9,6 +9,7 @@ return {
     opts = {
       servers = {
         gopls = {
+          root_markers = { "go.mod" },
           settings = {
             gopls = {
               gofumpt = true,

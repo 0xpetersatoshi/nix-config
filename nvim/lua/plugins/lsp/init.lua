@@ -1,10 +1,21 @@
+---@class LspServerConfig
+---@field settings? table
+---@field keys? {[1]: string, [2]: string|function, desc?: string}[]
+---@field cmd? string[]
+---@field root_markers? string[]
+
+---@class LspOpts
+---@field diagnostics? { underline?: boolean, virtual_text?: { spacing?: number } }
+---@field inlay_hints? { enabled?: boolean }
+---@field servers table<string, LspServerConfig|false>
+
 return {
   -- lspconfig
   {
     "neovim/nvim-lspconfig",
     event = "LazyFile",
     opts = function()
-      ---@class PluginLspOpts
+      ---@class LspOpts
       local ret = {
         -- options for vim.diagnostic.config()
         ---@type vim.diagnostic.Opts
@@ -59,7 +70,7 @@ return {
           timeout_ms = nil,
         },
         -- LSP Server Settings
-        ---@type lspconfig.options
+        ---@type LspServerConfig[]
         servers = {
           lua_ls = {
             -- mason = false, -- set to false if you don't want this server to be installed with mason
@@ -95,7 +106,7 @@ return {
         },
         -- you can do any additional lsp server setup here
         -- return true if you don't want this server to be setup with lspconfig
-        ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
+        ---@type table<string, fun(server:string, opts:LspServerConfig):boolean?>
         setup = {
           -- example to setup with typescript.nvim
           -- tsserver = function(_, opts)
@@ -108,7 +119,8 @@ return {
       }
       return ret
     end,
-    ---@param opts PluginLspOpts
+
+    ---@param opts LspOpts
     config = function(_, opts)
       -- setup autoformat
       util.format.register(util.lsp.formatter())
@@ -172,7 +184,7 @@ return {
 
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
-      local servers = opts.servers
+      -- local servers = opts.servers
       local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
       local has_blink, blink = pcall(require, "blink.cmp")
       local capabilities = vim.tbl_deep_extend(
@@ -184,34 +196,47 @@ return {
         opts.capabilities or {}
       )
 
-      local function setup(server)
-        local server_opts = vim.tbl_deep_extend("force", {
-          capabilities = vim.deepcopy(capabilities),
-        }, servers[server] or {})
-        if server_opts.enabled == false then
-          return
-        end
+      -- Apply global config
+      vim.lsp.config("*", { root_markers = { ".git" }, capabilities = capabilities })
 
-        if opts.setup[server] then
-          if opts.setup[server](server, server_opts) then
-            return
-          end
-        elseif opts.setup["*"] then
-          if opts.setup["*"](server, server_opts) then
-            return
-          end
-        end
-        require("lspconfig")[server].setup(server_opts)
-      end
-
-      for server, server_opts in pairs(servers) do
-        if server_opts then
-          server_opts = server_opts == true and {} or server_opts
+      -- Apply per-server configs and enable
+      local servers_to_enable = {}
+      for server, server_opts in pairs(opts.servers) do
+        if server ~= "*" and server_opts ~= false then
           if server_opts.enabled ~= false then
-            setup(server)
+            -- Call custom setup function if defined (doesn't prevent default setup unless it returns true)
+            if opts.setup[server] then
+              if opts.setup[server](server, server_opts) then
+                goto continue
+              end
+            elseif opts.setup["*"] then
+              if opts.setup["*"](server, server_opts) then
+                goto continue
+              end
+            end
+
+            vim.lsp.config(server, server_opts)
+            table.insert(servers_to_enable, server)
           end
         end
+        ::continue::
       end
+      vim.lsp.enable(servers_to_enable)
+
+      -- Trigger LSP attach for already-opened buffers (needed for lazy loading)
+      -- vim.lsp.enable() only sets up autocmds for future buffers, so we need
+      -- to manually trigger attachment for buffers that are already open
+      vim.schedule(function()
+        for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+          if vim.api.nvim_buf_is_loaded(bufnr) and vim.bo[bufnr].buftype == "" then
+            -- Re-trigger BufReadPost which is what vim.lsp.enable() listens to
+            local bufname = vim.api.nvim_buf_get_name(bufnr)
+            if bufname and bufname ~= "" then
+              vim.api.nvim_exec_autocmds("BufReadPost", { buffer = bufnr })
+            end
+          end
+        end
+      end)
 
       if util.lsp.is_enabled "denols" and util.lsp.is_enabled "vtsls" then
         local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
