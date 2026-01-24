@@ -201,10 +201,7 @@ return {
             return
           end
         end
-        -- Use Neovim 0.11+ native LSP config API
-        -- Merge user opts with existing defaults (cmd, filetypes, root_dir, etc.)
-        vim.lsp.config[server] = vim.tbl_deep_extend("force", vim.lsp.config[server] or {}, server_opts)
-        vim.lsp.enable(server)
+        require("lspconfig")[server].setup(server_opts)
       end
 
       for server, server_opts in pairs(servers) do
@@ -216,14 +213,8 @@ return {
         end
       end
 
-      -- Re-trigger FileType for current buffer to attach LSP
-      -- (needed because this config runs after the initial FileType event)
-      vim.api.nvim_exec_autocmds("FileType", { buffer = 0 })
-
       if util.lsp.is_enabled "denols" and util.lsp.is_enabled "vtsls" then
-        local function is_deno(path)
-          return vim.fs.root(path, { "deno.json", "deno.jsonc" }) ~= nil
-        end
+        local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
         util.lsp.disable("vtsls", is_deno)
         util.lsp.disable("denols", function(root_dir, config)
           if not is_deno(root_dir) then
