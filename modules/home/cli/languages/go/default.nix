@@ -24,6 +24,7 @@ in {
       golines
       gomodifytags
       gopls
+      gotest
       gotestsum
       gotools
       impl
