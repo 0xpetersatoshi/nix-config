@@ -4,6 +4,14 @@ return {
     optional = true,
     opts = {
       formatters = {
+        prettier = {
+          prepend_args = function(_, ctx)
+            if vim.bo[ctx.buf].filetype == "markdown" or vim.bo[ctx.buf].filetype == "markdown.mdx" then
+              return { "--prose-wrap", "always", "--print-width", "120" }
+            end
+            return {}
+          end,
+        },
         ["markdown-toc"] = {
           condition = function(_, ctx)
             for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
