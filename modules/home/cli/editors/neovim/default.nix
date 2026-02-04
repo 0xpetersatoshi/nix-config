@@ -30,6 +30,7 @@ in {
       nodePackages.prettier
       prettierd
       shfmt
+      igloo.solhint
       igloo.solidity-language-server
       sqls
       stylua
