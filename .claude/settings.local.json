@@ -4,7 +4,16 @@
       "Bash(lspci:*)",
       "Bash(lsmod:*)",
       "Read(//sys/class/drm/**)",
-      "Bash(journalctl:*)"
+      "Bash(journalctl:*)",
+      "WebSearch",
+      "WebFetch(domain:www.lazyvim.org)",
+      "WebFetch(domain:github.com)",
+      "Bash(find:*)",
+      "Bash(tree:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(nix-prefetch-url:*)",
+      "Bash(nix hash to-sri:*)",
+      "Bash(nix-shell:*)"
     ]
   },
   "enableAllProjectMcpServers": false
