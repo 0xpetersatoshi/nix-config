@@ -28,11 +28,11 @@
 in
   stdenv.mkDerivation rec {
     pname = "nomicfoundation-solidity-language-server";
-    version = "0.8.20";
+    version = "0.8.25";
 
     src = fetchurl {
       url = "https://registry.npmjs.org/@nomicfoundation/solidity-language-server/-/solidity-language-server-${version}.tgz";
-      hash = "sha256-YsBom0bNxplKlNdzeMQSaVejwI4zjcv4MFTYsN5DD6A=";
+      hash = "sha256-X0km1BhatI8omkBEOd4f3PiDEP3NcUCECYwROnV9IVk=";
     };
 
     nativeBuildInputs = [makeWrapper];
