@@ -38,7 +38,6 @@ in {
         build.enable = true;
         direnv.enable = true;
         eza.enable = true;
-        foundry.enable = true;
         fzf.enable = true;
         git.enable = true;
         gpg.enable = true;
@@ -51,6 +50,7 @@ in {
         podman.enable = true;
         ssh.enable = true;
         starship.enable = true;
+        web3.enable = true;
         zoxide.enable = true;
       };
 
