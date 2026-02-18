@@ -54,6 +54,12 @@
     options = ["nfsvers=4" "hard" "rsize=1048576" "wsize=1048576"];
   };
 
+  fileSystems."/mnt/nextcloud" = {
+    device = "10.19.50.2:/mnt/flashpool/nextcloud";
+    fsType = "nfs";
+    options = ["nfsvers=4" "hard" "rsize=1048576" "wsize=1048576"];
+  };
+
   fileSystems."/mnt/isos" = {
     device = "10.19.50.2:/mnt/rustpool/isos";
     fsType = "nfs";
