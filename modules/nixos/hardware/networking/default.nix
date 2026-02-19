@@ -27,7 +27,22 @@ in {
         extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
       };
 
-      networkmanager.enable = true;
+      networkmanager = {
+        enable = true;
+        wifi.backend = "iwd";
+      };
+
+      wireless.iwd = {
+        enable = true;
+        settings = {
+          General = {
+            EnableNetworkConfiguration = false; # Let NetworkManager handle DHCP
+          };
+          Settings = {
+            AutoConnect = true;
+          };
+        };
+      };
     };
     # environment.persistence."/persist".directories = [
     #   "/etc/NetworkManager"
