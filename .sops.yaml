@@ -1,7 +1,10 @@
 keys:
-  - &yubikey 5C61 5A0D 3CDF 670A 0729  BCBE 0069 3BD2 F5F5 2F44
+  - &yubikey 5C61 5A0D 3CDF 670A 0729 BCBE 0069 3BD2 F5F5 2F44
+  - &age age1c6w09lz4v29p4ms5rv22vekrxuw958nv2sa8v0r4tl52f4vnrpmqhzqjx9
 creation_rules:
   - path_regex: modules/home/secrets.ya?ml$
     key_groups:
     - pgp:
       - *yubikey
+      age:
+      - *age

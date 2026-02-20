@@ -22,7 +22,7 @@ in {
       defaultSopsFile = lib.snowfall.fs.get-file "modules/home/secrets.yaml";
       defaultSopsFormat = "yaml";
 
-      gnupg.home = "/home/${config.snowfallorg.user.name}/.gnupg";
+      age.keyFile = "/home/${config.snowfallorg.user.name}/.config/sops/age/keys.txt";
     };
   };
 }

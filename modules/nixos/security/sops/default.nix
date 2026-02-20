@@ -17,9 +17,7 @@ in {
       defaultSopsFile = lib.snowfall.fs.get-file "modules/nixos/secrets.yaml";
       defaultSopsFormat = "yaml";
 
-      gnupg.home = "/home/${config.user.name}/.gnupg";
-      # Ensure sops can access secrets during boot
-      gnupg.sshKeyPaths = [];
+      age.keyFile = "/home/${config.user.name}/.config/sops/age/keys.txt";
     };
   };
 }
