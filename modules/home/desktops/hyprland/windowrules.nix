@@ -12,11 +12,14 @@ in {
       #   "float, bitwarden"
       # ];
 
-      windowrulev2 = [
-        "idleinhibit fullscreen, class:^(firefox)$"
+      windowrule = [
+        "match:class ^(firefox)$, idle_inhibit fullscreen"
 
-        "opacity 0.95 0.95, class:^(zen)$"
-        "opacity 0.95 0.95, class:^(com.mitchellh.ghostty)$, initialClass:^(com.mitchellh.ghostty)$"
+        "match:class ^(zen)$, opacity 0.95 0.95"
+        "match:initial_class ^(com.mitchellh.ghostty)$, opacity 0.95 0.95"
+        "match:class ^(com.mitchellh.ghostty)$, opacity 0.95 0.95"
+
+        "match:class (pinentry-)(.*), stay_focused on" # Fix pinentry losing focus
       ];
     };
   };
