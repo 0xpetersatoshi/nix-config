@@ -13,7 +13,11 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(nix-prefetch-url:*)",
       "Bash(nix hash to-sri:*)",
-      "Bash(nix-shell:*)"
+      "Bash(nix-shell:*)",
+      "Bash(systemctl status:*)",
+      "Bash(nix-store:*)",
+      "Bash(xargs nix-store:*)",
+      "Bash(sudo journalctl:*)"
     ]
   },
   "enableAllProjectMcpServers": false
