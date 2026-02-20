@@ -18,7 +18,7 @@ in {
     home.packages = with pkgs; [
       brave
       vivaldi
-      microsoft-edge
+      # microsoft-edge # Temporarily disabled due to upstream availability issues
     ];
   };
 }
