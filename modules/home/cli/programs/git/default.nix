@@ -3,6 +3,7 @@
   config,
   lib,
   namespace,
+  osConfig ? null,
   ...
 }:
 with lib;
@@ -11,8 +12,8 @@ with lib.${namespace}; let
   sshProgramPath =
     if pkgs.stdenv.isDarwin
     then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-    else if (lib.hasAttr "nixos" config)
-    then "${config.programs._1password-gui.package}/share/1password/op-ssh-sign"
+    else if osConfig != null
+    then "${osConfig.programs._1password-gui.package}/share/1password/op-ssh-sign"
     else "${config.guis.security._1password-gui.package}/share/1password/op-ssh-sign";
 in {
   options.cli.programs.git = with types; {

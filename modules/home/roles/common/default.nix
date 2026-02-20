@@ -3,8 +3,10 @@
   pkgs,
   config,
   namespace,
+  osConfig ? null,
   ...
 }: let
+  isNixOS = osConfig != null;
   shellAliases = {
     cat = "bat";
     ll = "eza --icons=always -l";
@@ -56,14 +58,14 @@ in {
       EDITOR = "nvim";
     };
 
-    home.packages = lib.mkIf (!lib.hasAttr "nixos" config) [
+    home.packages = lib.mkIf (!isNixOS) [
       # install as service instead on NixOS
       pkgs._1password-cli
     ];
 
     guis = {
       # NOTE: only enable on non-nixos linux systems as these apps are managed in nixos modules
-      security.enable = !pkgs.stdenv.isDarwin && (!lib.hasAttr "nixos" config);
+      security.enable = !pkgs.stdenv.isDarwin && (!isNixOS);
       browsers.firefox.enable = pkgs.stdenv.isLinux;
       browsers.zen.enable = pkgs.stdenv.isLinux;
       productivity.enable = pkgs.stdenv.isLinux;
