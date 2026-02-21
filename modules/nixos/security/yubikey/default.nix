@@ -48,6 +48,29 @@ in {
       };
     };
 
+    # Relax polkit-agent-helper sandboxing so pam_u2f can access YubiKey HID devices.
+    # Polkit 127+ runs the helper in a systemd transient service with heavy sandboxing
+    # that blocks USB device access needed by libfido2/libudev for FIDO2/U2F auth.
+    # See README.md for full explanation. Without these overrides, pam_u2f silently
+    # fails and polkit falls back to password-only authentication.
+    systemd.services."polkit-agent-helper@" = {
+      overrideStrategy = "asDropin";
+      serviceConfig = {
+        # Required: allow access to YubiKey HID devices for libfido2
+        PrivateDevices = lib.mkForce false;
+        DevicePolicy = lib.mkForce "auto";
+        DeviceAllow = lib.mkForce ["char-hidraw rw" "/dev/null rw"];
+
+        # Required: libudev needs AF_NETLINK for device enumeration
+        PrivateNetwork = lib.mkForce false;
+        RestrictAddressFamilies = lib.mkForce ["AF_UNIX" "AF_NETLINK"];
+
+        # Required: relax from "yes"/"strict" to allow reading PAM/auth config
+        ProtectHome = lib.mkForce "read-only";
+        ProtectSystem = lib.mkForce "full";
+      };
+    };
+
     environment.systemPackages = with pkgs; [
       yubikey-manager # provides ykman
     ];

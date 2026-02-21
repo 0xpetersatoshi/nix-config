@@ -94,7 +94,7 @@ in {
             # "${pkgs.kanshi}/bin/kanshi"
             "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init"
             "${pkgs.kdePackages.kwallet}/bin/kwalletd6"
-            "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1"
+            "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
             "${pkgs.pyprland}/bin/pypr"
             "${pkgs.clipse}/bin/clipse -listen"
             # "${pkgs.trayscale}/bin/trayscale"
