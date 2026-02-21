@@ -206,6 +206,7 @@ in {
           };
 
           network = {
+            on-click = "ghostty -e impala";
             interval = 1;
             format = "󰈀 {ifname}";
             format-wifi = "󰖩 {essid}";
