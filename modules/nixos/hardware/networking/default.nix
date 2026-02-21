@@ -9,7 +9,7 @@ with lib.${namespace}; let
   cfg = config.hardware.networking;
 in {
   options.hardware.networking = with types; {
-    enable = mkBoolOpt false "Enable networkmanager";
+    enable = mkBoolOpt false "Enable networking";
   };
 
   config = mkIf cfg.enable {
@@ -27,16 +27,14 @@ in {
         extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
       };
 
-      networkmanager = {
-        enable = true;
-        wifi.backend = "iwd";
-      };
-
       wireless.iwd = {
         enable = true;
         settings = {
           General = {
-            EnableNetworkConfiguration = false; # Let NetworkManager handle DHCP
+            EnableNetworkConfiguration = true;
+          };
+          Network = {
+            NameResolvingService = "systemd";
           };
           Settings = {
             AutoConnect = true;
@@ -44,8 +42,5 @@ in {
         };
       };
     };
-    # environment.persistence."/persist".directories = [
-    #   "/etc/NetworkManager"
-    # ];
   };
 }

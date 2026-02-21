@@ -55,7 +55,6 @@ in {
             "audio"
             "sound"
             "video"
-            "networkmanager"
             "input"
             "tty"
             "plugdev"
