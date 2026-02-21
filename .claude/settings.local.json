@@ -17,7 +17,9 @@
       "Bash(systemctl status:*)",
       "Bash(nix-store:*)",
       "Bash(xargs nix-store:*)",
-      "Bash(sudo journalctl:*)"
+      "Bash(sudo journalctl:*)",
+      "Bash(ls:*)",
+      "Bash(systemctl cat:*)"
     ]
   },
   "enableAllProjectMcpServers": false
