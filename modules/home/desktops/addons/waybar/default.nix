@@ -251,7 +251,7 @@ in {
               car = "󰄋";
               default = ["" "" ""];
             };
-            on-click = "pavucontrol";
+            on-click = "ghostty -e wiremix";
             on-click-right = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
             on-click-middle = "pactl set-source-mute @DEFAULT_SOURCE@ toggle";
             tooltip = true;

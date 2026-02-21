@@ -34,8 +34,7 @@ in {
       cider-wrapped # apple music player
       foliate
       keymapp
-      pavucontrol
-      pwvucontrol
+      wiremix
       spotify
       vlc
     ];
