@@ -81,7 +81,7 @@ in {
     guis.common.enable = true;
 
     desktops.addons = {
-      rofi.enable = true;
+      walker.enable = true;
       wlogout.enable = true;
 
       pyprland.enable = true;

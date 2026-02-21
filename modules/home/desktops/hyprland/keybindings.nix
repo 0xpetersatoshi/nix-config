@@ -69,7 +69,6 @@ in {
         "SUPER, A, exec, $pypr toggle pwvucontrol"
         "SUPER, B, exec, $browser"
         "SUPER_SHIFT, B, exec, $browserWork"
-        "SUPER, C, exec, $calculatorWindow"
         "SUPER, E, exec, $fileManager"
         "SUPER, F, Fullscreen,0"
         "SUPER, M, exec, $music"
@@ -85,7 +84,6 @@ in {
         ",XF86Calculator, exec, ${pkgs.kdePackages.kcalc}/bin/kcalc"
         "SUPER, backspace, exec, ${pkgs.hyprlock}/bin/hyprlock"
         "SUPER, delete, exec, wlogout --column-spacing 50 --row-spacing 50"
-        "SUPERALT, Tab, exec, $windowSwitcher"
 
         # Screenshots
         ", Print, exec, grimblast --notify copysave area"

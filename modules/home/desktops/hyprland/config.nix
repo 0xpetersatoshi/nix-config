@@ -22,9 +22,7 @@ in {
         "$mainMod" = "SUPER";
         "$terminal" = "ghostty";
         "$fileManager" = "dolphin";
-        "$menu" = "rofi -show drun -mode drun";
-        "$windowSwitcher" = "rofi -show window";
-        "$calculatorWindow" = "rofi -show calc -modi calc -calc-command \"echo -n '{result}' | wl-copy\"";
+        "$menu" = "walker";
         # "$notificationsClient" = "swaync-client -t";
         "$browser" = "brave";
         "$browserWork" = "brave -P Work";
