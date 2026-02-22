@@ -1,0 +1,172 @@
+* {
+  all: unset;
+}
+
+popover {
+  background: lighter(@base01);
+  border: 1px solid @base02;
+  border-radius: 18px;
+  padding: 10px;
+}
+
+.normal-icons {
+  -gtk-icon-size: 16px;
+}
+
+.large-icons {
+  -gtk-icon-size: 32px;
+}
+
+scrollbar {
+  opacity: 0;
+}
+
+.box-wrapper {
+  box-shadow:
+    0 19px 38px rgba(0, 0, 0, 0.3),
+    0 15px 12px rgba(0, 0, 0, 0.22);
+  background: @base00;
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid @base02;
+}
+
+.preview-box,
+.elephant-hint,
+.placeholder {
+  color: @base05;
+}
+
+.search-container {
+  border-radius: 10px;
+}
+
+.input placeholder {
+  opacity: 0.5;
+}
+
+.input selection {
+  background: @base02;
+}
+
+.input {
+  caret-color: @base05;
+  background: @base01;
+  padding: 10px;
+  color: @base05;
+}
+
+.content-container {
+}
+
+.list {
+  color: @base05;
+}
+
+.item-box {
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.item-quick-activation {
+  background: alpha(@base0D, 0.25);
+  border-radius: 5px;
+  padding: 10px;
+}
+
+child:selected .item-box,
+row:selected .item-box {
+  background: alpha(@base0D, 0.25);
+}
+
+.item-subtext {
+  font-size: 12px;
+  color: @base04;
+  opacity: 0.75;
+}
+
+.providerlist .item-subtext {
+  font-size: unset;
+  opacity: 0.75;
+}
+
+.item-image-text {
+  font-size: 28px;
+}
+
+.preview {
+  border: 1px solid alpha(@base0D, 0.25);
+  border-radius: 10px;
+  color: @base05;
+}
+
+.calc .item-text {
+  font-size: 24px;
+  color: @base0B;
+}
+
+.symbols .item-image {
+  font-size: 24px;
+}
+
+.todo.done .item-text-box {
+  opacity: 0.25;
+}
+
+.todo.urgent {
+  font-size: 24px;
+  color: @base09;
+}
+
+.todo.active {
+  font-weight: bold;
+}
+
+.bluetooth.disconnected {
+  opacity: 0.5;
+}
+
+.preview .large-icons {
+  -gtk-icon-size: 64px;
+}
+
+.keybinds {
+  padding-top: 10px;
+  border-top: 1px solid @base02;
+  font-size: 12px;
+  color: @base04;
+}
+
+.keybind-button {
+  opacity: 0.5;
+}
+
+.keybind-button:hover {
+  opacity: 0.75;
+}
+
+.keybind-bind {
+  text-transform: lowercase;
+  opacity: 0.35;
+}
+
+.keybind-label {
+  padding: 2px 4px;
+  border-radius: 4px;
+  border: 1px solid @base04;
+}
+
+.error {
+  padding: 10px;
+  background: @base08;
+  color: @base05;
+}
+
+:not(.calc).current {
+  font-style: italic;
+}
+
+.preview-content.archlinuxpkgs,
+.preview-content.dnfpackages {
+  font-family: monospace;
+}

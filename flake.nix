@@ -66,6 +66,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # hyprpanel = {
     #   url = "github:0xpetersatoshi/HyprPanel/rename-module";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -107,6 +112,7 @@
 
       homes.modules = with inputs; [
         sops-nix.homeManagerModules.sops
+        walker.homeManagerModules.default
         # hyprpanel.homeManagerModules.hyprpanel
       ];
 
