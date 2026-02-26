@@ -15,6 +15,7 @@ in {
     home.packages = with pkgs; [
       claude-code
       doppler
+      opencode
       openssl
       sqlite
     ];
@@ -46,7 +47,6 @@ in {
         modern-unix.enable = true;
         network-tools.enable = true;
         nh.enable = true;
-        opencode.enable = false;
         podman.enable = true;
         ssh.enable = true;
         starship.enable = true;
