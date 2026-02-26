@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  namespace,
   pkgs,
   ...
 }:
@@ -12,6 +13,23 @@ in {
   };
 
   config = mkIf cfg.enable {
+    sops.templates.opencode-auth = mkIf config.${namespace}.security.sops.enable {
+      path = "${config.xdg.dataHome}/opencode/auth.json";
+      mode = "0600";
+      content = ''
+        {
+          "openai": {
+            "type": "api",
+            "key": "${config.sops.placeholder.openai-api-key}"
+          },
+          "synthetic": {
+            "type": "api",
+            "key": "${config.sops.placeholder.synthetic-api-key}"
+          }
+        }
+      '';
+    };
+
     home.packages = with pkgs; [
       claude-code
       doppler

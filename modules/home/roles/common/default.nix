@@ -34,6 +34,10 @@
         export GEMINI_API_KEY="$(cat ${config.sops.secrets.gemini-api-key.path})"
       fi
 
+      if [ -f ${config.sops.secrets.synthetic-api-key.path} ]; then
+        export SYNTHETIC_API_KEY="$(cat ${config.sops.secrets.synthetic-api-key.path})"
+      fi
+
       if [ -f ${config.sops.secrets.tavily-api-key.path} ]; then
         export TAVILY_API_KEY="$(cat ${config.sops.secrets.tavily-api-key.path})"
       fi
@@ -51,6 +55,7 @@ in {
       openai-api-key = {};
       openrouter-api-key = {};
       gemini-api-key = {};
+      synthetic-api-key = {};
       tavily-api-key = {};
     };
 
