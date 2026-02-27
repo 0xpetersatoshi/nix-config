@@ -26,6 +26,7 @@ in {
 
       settings = {
         useFahrenheit = true;
+        fontWeight = 600;
         fontScale = 1.3;
 
         barConfigs = [
