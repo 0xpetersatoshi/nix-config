@@ -27,7 +27,7 @@ in {
       description = "Hyprland monitor configuration settings";
     };
     bar = lib.mkOption {
-      type = lib.types.enum ["waybar" "hyprpanel"];
+      type = lib.types.enum ["waybar" "hyprpanel" "dms"];
       default = "hyprpanel";
       description = "Which status bar to use with Hyprland";
     };
@@ -81,15 +81,16 @@ in {
     guis.common.enable = true;
 
     desktops.addons = {
-      walker.enable = true;
-      wlogout.enable = true;
+      walker.enable = cfg.bar != "dms";
+      wlogout.enable = cfg.bar != "dms";
 
       pyprland.enable = true;
       waybar.enable = cfg.bar == "waybar";
-      swaync.enable = cfg.bar != "hyprpanel";
+      swaync.enable = cfg.bar == "waybar";
       hyprpanel.enable = cfg.bar == "hyprpanel";
-      hyprlock.enable = true;
+      hyprlock.enable = cfg.bar != "dms";
       hypridle.enable = true;
+      dms.enable = cfg.bar == "dms";
     };
 
     # Fixes tray icons: https://github.com/nix-community/home-manager/issues/2064#issuecomment-887300055

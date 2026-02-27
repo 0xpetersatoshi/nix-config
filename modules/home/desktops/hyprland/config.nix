@@ -22,7 +22,10 @@ in {
         "$mainMod" = "SUPER";
         "$terminal" = "ghostty";
         "$fileManager" = "dolphin";
-        "$menu" = "walker";
+        "$menu" =
+          if cfg.bar == "dms"
+          then "dms ipc call spotlight toggle"
+          else "walker";
         # "$notificationsClient" = "swaync-client -t";
         "$browser" = "brave";
         "$browserWork" = "brave -P Work";

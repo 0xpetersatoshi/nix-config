@@ -71,6 +71,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # hyprpanel = {
     #   url = "github:0xpetersatoshi/HyprPanel/rename-module";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -113,6 +118,7 @@
       homes.modules = with inputs; [
         sops-nix.homeManagerModules.sops
         walker.homeManagerModules.default
+        dms.homeModules.dank-material-shell
         # hyprpanel.homeManagerModules.hyprpanel
       ];
 

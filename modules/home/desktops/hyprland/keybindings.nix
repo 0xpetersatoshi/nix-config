@@ -56,8 +56,27 @@ with lib; let
     then "${pkgs.light}/bin/light -U 5"
     else "${pkgs.brightnessctl}/bin/brightnessctl -5%";
 
+  isDms = cfg.bar == "dms";
+
+  lockCommand =
+    if isDms
+    then "dms ipc call lock lock"
+    else "${pkgs.hyprlock}/bin/hyprlock";
+
+  logoutCommand =
+    if isDms
+    then "dms ipc call powermenu toggle"
+    else "wlogout --column-spacing 50 --row-spacing 50";
+
+  menuCommand =
+    if isDms
+    then "dms ipc call spotlight toggle"
+    else "$menu";
+
   notificationToggleCommand =
-    if cfg.bar == "hyprpanel"
+    if isDms
+    then "dms ipc call notifications toggle"
+    else if cfg.bar == "hyprpanel"
     then "hyprpanel toggleWindow notificationsmenu"
     else "sleep 0.1 && swaync-client -t -sw";
 in {
@@ -78,12 +97,12 @@ in {
         "SUPER, R, exec, ${resize}/bin/resize"
         "SUPER, T, exec, $terminal"
         "SUPER, Y, exec, yubioath-flutter"
-        "SUPER, Space, exec, $menu"
+        "SUPER, Space, exec, ${menuCommand}"
         "SUPER_SHIFT, T, exec, $pypr toggle term"
-        ",XF86ScreenSaver, exec, ${pkgs.hyprlock}/bin/hyprlock"
+        ",XF86ScreenSaver, exec, ${lockCommand}"
         ",XF86Calculator, exec, ${pkgs.kdePackages.kcalc}/bin/kcalc"
-        "SUPER, backspace, exec, ${pkgs.hyprlock}/bin/hyprlock"
-        "SUPER, delete, exec, wlogout --column-spacing 50 --row-spacing 50"
+        "SUPER, backspace, exec, ${lockCommand}"
+        "SUPER, delete, exec, ${logoutCommand}"
 
         # Screenshots
         ", Print, exec, grimblast --notify copysave area"
