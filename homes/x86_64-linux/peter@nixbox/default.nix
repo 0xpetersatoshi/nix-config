@@ -7,8 +7,8 @@
     hyprland = {
       enable = true;
       bar = "dms";
-      # Nvidia GPU
-      drmDevices = "/dev/dri/by-path/pci-0000:01:00.0-card";
+      # AMD RX 9070 XT
+      drmDevices = "/dev/dri/by-path/pci-0000:03:00.0-card";
     };
 
     addons = {
