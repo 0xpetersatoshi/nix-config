@@ -68,6 +68,7 @@ in {
   };
 
   networking.hostName = "zenbook";
+  hardware.networking.wireless = true;
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

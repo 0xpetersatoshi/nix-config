@@ -10,10 +10,13 @@ with lib.${namespace}; let
 in {
   options.hardware.networking = with types; {
     enable = mkBoolOpt false "Enable networking";
+    wireless = mkBoolOpt false "Enable wireless networking (iwd)";
   };
 
   config = mkIf cfg.enable {
     networking = {
+      useNetworkd = !cfg.wireless;
+
       firewall = {
         enable = true;
 
@@ -27,7 +30,7 @@ in {
         extraCommands = ''iptables -t raw -A OUTPUT -p udp -m udp --dport 137 -j CT --helper netbios-ns'';
       };
 
-      wireless.iwd = {
+      wireless.iwd = mkIf cfg.wireless {
         enable = true;
         settings = {
           General = {
