@@ -6,7 +6,7 @@
   desktops = {
     hyprland = {
       enable = true;
-      bar = "waybar";
+      bar = "dms";
       hasLunarLakeCPU = true;
       monitor = "eDP-1, highrr, auto, 1.25";
       multiMonitor = {
@@ -19,11 +19,7 @@
     };
 
     addons = {
-      hyprpanel = {
-        wallpaperPath = ../../../wallpaper/standard/astronaut-5-2912x1632.jpg;
-      };
-
-      waybar.isLaptop = true;
+      dms.isLaptop = true;
     };
   };
 
