@@ -75,7 +75,7 @@
     boot = {
       nixConfigurationLimit = 5;
       secureBoot = true;
-      luksDevicePaths = ["/dev/nvme1n1p2"];
+      luksDevicePaths = ["/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_2TB_S59CNM0R856340J-part2"];
       secureBootKeysPath = "/var/lib/sbctl";
     };
     stateVersion = "24.11";
