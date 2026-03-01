@@ -11,7 +11,7 @@
       monitor = "eDP-1, highrr, auto, 1.25";
       multiMonitor = {
         enable = false;
-        laptopScale = 1.25; # Override the default 1.5 scale
+        laptopScale = 1; # Override the default 1.5 scale
       };
       execOnceExtras = [
         "${pkgs.libinput-gestures}/bin/libinput-gestures &"
@@ -55,8 +55,6 @@
     };
 
     security.sops.enable = true;
-
-    theme.stylix.image = ../../../wallpaper/standard/astronaut-5-2912x1632.jpg;
   };
 
   home.stateVersion = "24.11";

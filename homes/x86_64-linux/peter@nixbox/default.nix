@@ -10,30 +10,6 @@
       # AMD RX 9070 XT
       drmDevices = "/dev/dri/by-path/pci-0000:03:00.0-card";
     };
-
-    addons = {
-      hyprpanel = {
-        wallpaperPath = ../../../wallpaper/ultrawide/sci_fi_architecture_building_beach-wallpaper-3440x1440.jpg;
-        matugen = {
-          schemeType = "rainbow";
-          variation = "standard_2";
-        };
-        layouts = {
-          "0" = {
-            left = ["dashboard" "workspaces" "windowtitle"];
-            middle = ["clock"];
-            right = [
-              "volume"
-              "network"
-              "bluetooth"
-              "systray"
-              "media"
-              "notifications"
-            ];
-          };
-        };
-      };
-    };
   };
 
   guis = {
@@ -69,8 +45,6 @@
     };
 
     security.sops.enable = true;
-
-    theme.stylix.image = ../../../wallpaper/ultrawide/sci_fi_architecture_building_beach-wallpaper-3440x1440.jpg;
   };
 
   home.stateVersion = "24.11";
