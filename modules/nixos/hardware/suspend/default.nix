@@ -60,10 +60,10 @@ in {
     };
 
     # Modify logind for better suspend behavior
-    services.logind.extraConfig = ''
-      HandleSuspendKey=suspend
-      SuspendMode=deep
-      SuspendState=mem
-    '';
+    services.logind.settings.Login = {
+      HandleSuspendKey = "suspend";
+      SuspendMode = "deep";
+      SuspendState = "mem";
+    };
   };
 }

@@ -137,8 +137,8 @@ in {
 
     desktops.addons.hypridle = {
       lock_cmd = mkForce "dms ipc call lock lock";
-      before_sleep_cmd = mkForce "dms ipc call lock lock && sleep 0.1 && hyprctl dispatch dpms off";
-      after_sleep_cmd = mkForce "hyprctl dispatch dpms on";
+      before_sleep_cmd = mkForce "dms ipc call lock lock";
+      after_sleep_cmd = mkForce "sleep 1 && hyprctl dispatch dpms on";
     };
   };
 }

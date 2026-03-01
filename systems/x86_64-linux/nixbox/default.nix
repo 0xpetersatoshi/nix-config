@@ -28,6 +28,11 @@
       hasAmdGpu = true;
     };
 
+    suspend = {
+      enable = true;
+      hasAmdCpu = true;
+    };
+
     enableAllFirmware = true;
 
     firmware = with pkgs; [
