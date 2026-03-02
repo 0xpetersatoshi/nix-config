@@ -69,10 +69,17 @@ in {
     # (enp10s0, enp13s0, etc.) and "wlan" matches any wireless NIC, regardless of what
     # the kernel names them on a given machine.
     systemd.network.networks.${networkName} = {
-      matchConfig.Type =
-        if cfg.wireless
-        then "wlan"
-        else "ether";
+      matchConfig = {
+        Type =
+          if cfg.wireless
+          then "wlan"
+          else "ether";
+        # Match only physical NICs (i.e. "enp15s0") and exclude docker interfaces
+        Name =
+          if cfg.wireless
+          then "wl*"
+          else "en*";
+      };
       networkConfig.DHCP = "yes";
 
       # Accept DNS search domains from DHCP (OPNsense pushes "home.mydomain.xyz").
