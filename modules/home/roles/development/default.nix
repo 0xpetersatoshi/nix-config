@@ -69,6 +69,7 @@ in {
         ssh.enable = true;
         starship.enable = true;
         web3.enable = true;
+        worktrunk.enable = true;
         zoxide.enable = true;
       };
 
