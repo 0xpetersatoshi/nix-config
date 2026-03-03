@@ -33,6 +33,7 @@ in {
     home.packages = with pkgs; [
       claude-code
       doppler
+      gh
       opencode
       openssl
       sqlite
