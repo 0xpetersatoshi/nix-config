@@ -16,11 +16,10 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      dbeaver-bin
+      libreoffice
       morgen
       obsidian
       protonmail-desktop
-      qalculate-gtk
       thunderbird
       zoom-us
     ];
