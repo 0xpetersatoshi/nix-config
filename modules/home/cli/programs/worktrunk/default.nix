@@ -18,6 +18,8 @@ in {
   config = mkIf cfg.enable {
     home.packages = [wtPkg];
 
+    xdg.configFile."worktrunk/config.toml".source = ./config.toml;
+
     programs.zsh.initContent = mkIf config.programs.zsh.enable ''
       eval "$(command ${wtPkg}/bin/wt config shell init zsh)"
     '';
