@@ -41,6 +41,10 @@
       if [ -f ${config.sops.secrets.tavily-api-key.path} ]; then
         export TAVILY_API_KEY="$(cat ${config.sops.secrets.tavily-api-key.path})"
       fi
+
+      if [ -f ${config.sops.secrets.context7-api-key.path} ]; then
+        export CONTEXT7_API_KEY="$(cat ${config.sops.secrets.context7-api-key.path})"
+      fi
     '';
 
   cfg = config.roles.common;
@@ -57,6 +61,7 @@ in {
       gemini-api-key = {};
       synthetic-api-key = {};
       tavily-api-key = {};
+      context7-api-key = {};
     };
 
     home.sessionVariables = {
