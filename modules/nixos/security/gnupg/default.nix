@@ -16,7 +16,7 @@ in {
   config = mkIf cfg.enable {
     programs.gnupg.agent = {
       enable = true;
-      enableSSHSupport = true;
+      enableSSHSupport = false;
       pinentryPackage = pkgs.pinentry-qt;
     };
   };
