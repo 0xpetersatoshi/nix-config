@@ -122,6 +122,9 @@ in {
       swappy
       sway-contrib.grimshot
       satty
+
+      gpu-screen-recorder
+      gpu-screen-recorder-gtk
     ];
   };
 }
