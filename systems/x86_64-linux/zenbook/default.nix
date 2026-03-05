@@ -109,7 +109,7 @@ in {
   system = {
     boot = {
       secureBoot = true;
-      luksDevicePaths = ["/dev/nvme0n1p2"];
+      luksDevicePaths = ["/dev/disk/by-uuid/24dd164a-9843-4e7d-8645-6efccaa7043f"];
       secureBootKeysPath = "/var/lib/sbctl";
       nixConfigurationLimit = 5;
     };
