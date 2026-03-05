@@ -11,7 +11,7 @@
       monitor = "eDP-1, highrr, auto, 1.25";
       multiMonitor = {
         enable = false;
-        laptopScale = 1; # Override the default 1.5 scale
+        laptopScale = 1.0; # Override the default 1.5 scale
       };
       execOnceExtras = [
         "${pkgs.libinput-gestures}/bin/libinput-gestures &"
