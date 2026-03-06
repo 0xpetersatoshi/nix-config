@@ -80,6 +80,7 @@ in {
         "aeblfdkhhhdcdjpifhhbdiojplfjncoa" # 1password
         "acmacodkjbdgmoleebolmdjonilkdbch" # rabby wallet
         "ldinpeekobnhjjdofggfgjlcehhmanlj" # leather wallet
+        "mihdfbecejheednfigjpdacgeilhlmnf" # huntr
       ];
 
       defaultSearchProviderEnabled = true;
