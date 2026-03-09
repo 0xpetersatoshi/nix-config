@@ -114,7 +114,6 @@ in {
       clipse
       pamixer
       playerctl
-      light
       kdePackages.kcalc
 
       grimblast

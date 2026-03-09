@@ -13,8 +13,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    xdg.configFile."neofetch/config.conf".source = ./neofetch.conf;
-
     home.packages = with pkgs; [
       choose
       cpufetch
@@ -36,7 +34,6 @@ in {
       hexyl
       jqp
       jnv
-      neofetch
       ouch
       procs
       ripgrep
