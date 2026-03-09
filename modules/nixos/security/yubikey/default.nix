@@ -71,6 +71,14 @@ in {
       };
     };
 
+    # Relax pcscd sandboxing so it can access YubiKey USB devices.
+    # Upstream pcscd.service uses PrivateUsers=identity which creates a user
+    # namespace that breaks group-based USB device access, causing
+    # LIBUSB_ERROR_ACCESS when opening the YubiKey CCID interface.
+    systemd.services.pcscd.serviceConfig = {
+      PrivateUsers = lib.mkForce false;
+    };
+
     environment.systemPackages = with pkgs; [
       yubikey-manager # provides ykman
     ];

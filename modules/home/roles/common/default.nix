@@ -71,11 +71,11 @@ in {
     home.packages = lib.mkIf (!isNixOS) [
       # install as service instead on NixOS
       pkgs._1password-cli
+      pkgs._1password-gui
     ];
 
     guis = {
-      # NOTE: only enable on non-nixos linux systems as these apps are managed in nixos modules
-      security.enable = !pkgs.stdenv.isDarwin && (!isNixOS);
+      security.enable = pkgs.stdenv.isLinux;
       browsers.firefox.enable = pkgs.stdenv.isLinux;
       browsers.zen.enable = pkgs.stdenv.isLinux;
       productivity.enable = pkgs.stdenv.isLinux;
