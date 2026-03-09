@@ -16,6 +16,7 @@ in {
       claude-code
       doppler
       gh
+      jq
       openssl
       sqlite
     ];
