@@ -25,7 +25,7 @@
       "WebFetch(domain:api.github.com)",
       "Bash(gh api:*)",
       "Bash(nix flake:*)",
-      "Bash(nix eval:*)",
+      "Bash(nix eval:*)"
     ]
   },
   "enableAllProjectMcpServers": false
