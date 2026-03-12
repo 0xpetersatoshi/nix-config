@@ -19,7 +19,13 @@
       "Bash(xargs nix-store:*)",
       "Bash(sudo journalctl:*)",
       "Bash(ls:*)",
-      "Bash(systemctl cat:*)"
+      "Bash(systemctl cat:*)",
+      "Bash(grep:*)",
+      "Bash(head:*)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(gh api:*)",
+      "Bash(nix flake:*)",
+      "Bash(nix eval:*)",
     ]
   },
   "enableAllProjectMcpServers": false
