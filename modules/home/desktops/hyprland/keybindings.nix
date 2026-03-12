@@ -46,15 +46,8 @@ with lib; let
     hyprctl dispatch resizeactive exact $size_x $size_y
   '';
 
-  increaseBrightnessCommand =
-    if cfg.hasLunarLakeCPU
-    then "${pkgs.light}/bin/light -A 5"
-    else "${pkgs.brightnessctl}/bin/brightnessctl +5%";
-
-  decreaseBrightnessCommand =
-    if cfg.hasLunarLakeCPU
-    then "${pkgs.light}/bin/light -U 5"
-    else "${pkgs.brightnessctl}/bin/brightnessctl -5%";
+  increaseBrightnessCommand = "${pkgs.brightnessctl}/bin/brightnessctl +5%";
+  decreaseBrightnessCommand = "${pkgs.brightnessctl}/bin/brightnessctl -5%";
 
   isDms = cfg.bar == "dms";
 
