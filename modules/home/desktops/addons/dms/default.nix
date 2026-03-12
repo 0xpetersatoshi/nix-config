@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   namespace,
   ...
 }:
@@ -14,6 +15,10 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      wl-clipboard
+    ];
+
     programs.dank-material-shell = {
       enable = true;
       systemd.enable = true;
@@ -130,6 +135,21 @@ in {
         builtInPluginSettings = {
           dms_settings_search = {
             trigger = "?";
+          };
+        };
+      };
+
+      plugins = {
+        calculator = {
+          enable = true;
+          src = pkgs.fetchFromGitHub {
+            owner = "rochacbruno";
+            repo = "DankCalculator";
+            rev = "0.2.2";
+            sha256 = "1sb26kc9k9jcgkssx4xf35im2h5h7hkb8g66wxlj5w7pnbcpc5bf";
+          };
+          settings = {
+            trigger = "=";
           };
         };
       };
