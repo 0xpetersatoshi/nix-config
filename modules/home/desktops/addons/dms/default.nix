@@ -155,6 +155,8 @@ in {
       };
     };
 
+    programs.dsearch.enable = true;
+
     desktops.addons.hypridle = {
       lock_cmd = mkForce "dms ipc call lock lock";
       before_sleep_cmd = mkForce "dms ipc call lock lock";

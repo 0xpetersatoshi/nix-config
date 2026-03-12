@@ -76,6 +76,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    danksearch = {
+      url = "github:AvengeMedia/danksearch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # hyprpanel = {
     #   url = "github:0xpetersatoshi/HyprPanel/rename-module";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -124,6 +129,7 @@
         sops-nix.homeManagerModules.sops
         walker.homeManagerModules.default
         dms.homeModules.dank-material-shell
+        danksearch.homeModules.dsearch
         # hyprpanel.homeManagerModules.hyprpanel
       ];
 
