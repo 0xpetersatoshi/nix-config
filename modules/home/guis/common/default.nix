@@ -32,11 +32,11 @@ in {
     home.packages = with pkgs; [
       cava # audio visualizer
       cider-wrapped # apple music player
-      foliate
       keymapp
-      wiremix
+      readest
       spotify
       vlc
+      wiremix
     ];
   };
 }
