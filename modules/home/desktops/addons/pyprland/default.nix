@@ -12,7 +12,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    xdg.configFile."hypr/pyprland.toml".source = ./pyprland.toml;
+    xdg.configFile."pypr/config.toml".source = ./pyprland.toml;
 
     home = {
       packages = with pkgs; [pyprland];
