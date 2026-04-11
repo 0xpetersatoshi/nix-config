@@ -87,7 +87,7 @@ return {
         { "<leader>dPc", function() require('dap-python').test_class() end, desc = "Debug Class", ft = "python" },
       },
       config = function()
-        require("dap-python").setup "debugpy"
+        require("dap-python").setup "debugpy-adapter"
       end,
     },
   },
