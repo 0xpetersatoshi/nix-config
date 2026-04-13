@@ -27,7 +27,7 @@ in {
       marksman
       neovim
       nixd
-      nodePackages.prettier
+      prettier
       prettierd
       shfmt
       igloo.solhint
