@@ -13,10 +13,16 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.shells = with pkgs; [
-      zsh
-      nushell
-    ];
+    environment = {
+      shells = with pkgs; [
+        zsh
+        nushell
+      ];
+
+      systemPackages = with pkgs; [
+        psmisc
+      ];
+    };
 
     hardware = {
       networking.enable = true;
