@@ -74,6 +74,7 @@
     drivers = {
       enable = true;
       hasIntelCpu = true;
+      hasIntelGpu = true;
     };
 
     enableAllFirmware = true;
