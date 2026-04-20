@@ -17,8 +17,6 @@
   environment.systemPackages = with pkgs; [
     firefox
     lact
-    lshw
-    pciutils
   ];
 
   hardware = {

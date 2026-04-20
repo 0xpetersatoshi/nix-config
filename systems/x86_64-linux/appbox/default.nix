@@ -70,6 +70,11 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
+  environment.systemPackages = with pkgs; [
+    lshw
+    pciutils
+  ];
+
   hardware = {
     drivers = {
       enable = true;
