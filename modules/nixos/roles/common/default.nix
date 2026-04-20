@@ -35,7 +35,6 @@ in {
     security = {
       gnupg.enable = true;
       polkit.enable = true;
-      tpm.enable = true;
     };
 
     system = {

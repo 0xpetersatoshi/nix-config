@@ -57,6 +57,8 @@ in {
       zsa.enable = true;
     };
 
+    security.tpm.enable = true;
+
     services = {
       ${namespace} = {
         localsend.enable = true;
