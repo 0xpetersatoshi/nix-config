@@ -73,6 +73,8 @@
       podman.enable = false;
     };
 
+    vpn.openvpn.enable = true;
+
     xserver.videoDrivers = ["amdgpu" "modeset"];
   };
 
