@@ -58,11 +58,11 @@ in {
       };
     };
 
-    # When iwd handles network configuration (wireless mode), it pushes DNS info
-    # to systemd-resolved via NameResolvingService = "systemd". Without resolved
-    # running, /etc/resolv.conf has no nameservers and DNS resolution fails entirely
-    # (you can ping IPs but not hostnames).
-    services.resolved.enable = cfg.wireless;
+    # systemd-resolved manages /etc/resolv.conf and receives DNS server info from
+    # systemd-networkd (wired) or iwd (wireless). Without resolved running,
+    # /etc/resolv.conf has no nameservers when Tailscale is off — DNS fails entirely
+    # even though the DHCP lease includes DNS servers.
+    services.resolved.enable = true;
 
     # Only require one interface to be online for the system to consider
     # networking ready. Without this, systemd-networkd-wait-online blocks
