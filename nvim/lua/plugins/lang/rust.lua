@@ -20,12 +20,6 @@ return {
     },
   },
 
-  -- Add Rust & related to treesitter
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = { ensure_installed = { "rust", "ron" } },
-  },
-
   -- -- Ensure Rust debugger is installed
   -- {
   --   "mason-org/mason.nvim",

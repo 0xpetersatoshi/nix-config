@@ -4,11 +4,6 @@ local ruff = vim.g.lazyvim_python_ruff or "ruff"
 return {
 
   {
-    "nvim-treesitter/nvim-treesitter",
-    opts = { ensure_installed = { "ninja", "rst" } },
-  },
-
-  {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {

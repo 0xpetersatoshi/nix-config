@@ -27,6 +27,7 @@ in {
       marksman
       neovim
       nixd
+      tree-sitter
       prettier
       prettierd
       shfmt
