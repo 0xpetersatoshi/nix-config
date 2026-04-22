@@ -26,7 +26,7 @@ in {
       gopls
       gotest
       gotestsum
-      gotools
+      (lib.meta.lowPrio gotools)
       impl
       sqlc
       templ
