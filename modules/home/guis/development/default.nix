@@ -16,6 +16,7 @@ in {
     home.packages = with pkgs; [
       insomnia
       stable.postman
+      jetbrains.datagrip
     ];
   };
 }
