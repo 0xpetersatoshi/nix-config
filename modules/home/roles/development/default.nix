@@ -21,9 +21,14 @@ in {
       sqlite
     ];
 
-    cloud.google.enable = true;
+    cloud = {
+      aws.enable = true;
+      google.enable = true;
+    };
 
     cli = {
+      databases.postgres.enable = true;
+
       editors = {
         neovim.enable = true;
         sql.enable = true;
