@@ -22,7 +22,7 @@
       uid = lib.mkForce 568; # Match UID from TrueNAS
       isNormalUser = lib.mkForce false;
       isSystemUser = true;
-      extraGroups = ["apps"];
+      extraGroups = ["apps" "render"];
     };
 
     groups.apps = {
@@ -67,7 +67,7 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxKernel.kernels.linux_7_0;
   };
 
   environment.systemPackages = with pkgs; [
