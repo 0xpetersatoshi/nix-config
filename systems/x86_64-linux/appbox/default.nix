@@ -67,7 +67,7 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxKernel.kernels.linux_7_0;
+    kernelPackages = pkgs.linuxPackages_7_0;
   };
 
   environment.systemPackages = with pkgs; [
