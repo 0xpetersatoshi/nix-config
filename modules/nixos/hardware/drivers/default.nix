@@ -37,6 +37,7 @@ in {
             vpl-gpu-rt
             libvpl
             libvdpau-va-gl
+            intel-compute-runtime
           ]
           # Intel Cpu packages
           ++ lib.optionals cfg.hasIntelCpu [
