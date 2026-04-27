@@ -13,6 +13,9 @@
     tree = "eza --icons=always --tree";
     v = "nvim";
     z = "zellij";
+    dcx = "devcontainer exec --workspace-folder .";
+    dcup = "devcontainer up --workspace-folder .";
+    dcdown = "devcontainer down --workspace-folder .";
   };
 
   environmentVariableExports =
@@ -72,6 +75,7 @@ in {
       # install as service instead on NixOS
       pkgs._1password-cli
       pkgs._1password-gui
+      pkgs.devcontainer
     ];
 
     guis = {
