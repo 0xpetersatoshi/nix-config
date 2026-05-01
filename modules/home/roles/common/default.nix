@@ -48,6 +48,10 @@
       if [ -f ${config.sops.secrets.context7-api-key.path} ]; then
         export CONTEXT7_API_KEY="$(cat ${config.sops.secrets.context7-api-key.path})"
       fi
+
+      if [ -f ${config.sops.secrets.opencode-zen-api-key.path} ]; then
+        export OPENCODE_ZEN_API_KEY="$(cat ${config.sops.secrets.opencode-zen-api-key.path})"
+      fi
     '';
 
   cfg = config.roles.common;
@@ -65,6 +69,7 @@ in {
       synthetic-api-key = {};
       tavily-api-key = {};
       context7-api-key = {};
+      opencode-zen-api-key = {};
     };
 
     home.sessionVariables = {

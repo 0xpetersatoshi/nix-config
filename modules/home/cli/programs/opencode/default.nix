@@ -27,10 +27,15 @@ in {
             "type": "api",
             "key": "${config.sops.placeholder.openai-api-key}"
           },
+          "opencode": {
+            "type": "api",
+            "key": "${config.sops.placeholder.opencode-zen-api-key}"
+          }
           "synthetic": {
             "type": "api",
             "key": "${config.sops.placeholder.synthetic-api-key}"
           }
+
         }
       '';
     };
