@@ -14,7 +14,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    xdg.configFile."zellij/config.kdl".source = ./config.kdl;
+    xdg.configFile."zellij/config.kdl".text =
+      builtins.replaceStrings
+        ["@COPY_COMMAND@"]
+        [(if pkgs.stdenv.isDarwin then "pbcopy" else "wl-copy")]
+        (builtins.readFile ./config.kdl);
     xdg.configFile."zellij/plugins/zellij-autolock.wasm".source = ./plugins/zellij-autolock.wasm;
     xdg.configFile."zellij/plugins/zjstatus.wasm".source = "${pkgs.zjstatus}/bin/zjstatus.wasm";
     xdg.configFile."zellij/layouts/default.kdl".text = ''
