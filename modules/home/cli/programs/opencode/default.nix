@@ -17,6 +17,7 @@ in {
     home.packages = [pkgs.opencode];
 
     xdg.configFile."opencode/config.json".source = ./config.json;
+    xdg.configFile."opencode/tui.json".source = ./tui.json;
 
     sops.templates.opencode-auth = mkIf config.${namespace}.security.sops.enable {
       path = "${config.xdg.dataHome}/opencode/auth.json";
@@ -30,12 +31,11 @@ in {
           "opencode": {
             "type": "api",
             "key": "${config.sops.placeholder.opencode-zen-api-key}"
-          }
+          },
           "synthetic": {
             "type": "api",
             "key": "${config.sops.placeholder.synthetic-api-key}"
           }
-
         }
       '';
     };
