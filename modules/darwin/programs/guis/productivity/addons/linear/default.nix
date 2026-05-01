@@ -18,7 +18,7 @@ in {
       ];
 
       casks = [
-        "linear-linear"
+        "linear"
       ];
 
       masApps = {

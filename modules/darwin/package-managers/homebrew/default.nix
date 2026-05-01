@@ -33,11 +33,6 @@ in {
         upgrade = true;
       };
 
-      taps = [
-        "homebrew/bundle"
-        "homebrew/services"
-      ];
-
       casks = [
         "sf-symbols"
       ];

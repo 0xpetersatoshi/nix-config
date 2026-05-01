@@ -22,7 +22,7 @@ in {
         "obsidian"
         "proton-mail"
         "raycast"
-        "zoom"
+        # "zoom"
       ];
 
       masApps = {

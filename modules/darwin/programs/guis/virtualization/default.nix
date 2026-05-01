@@ -18,7 +18,7 @@ in {
       ];
 
       casks = [
-        "docker"
+        "docker-desktop"
       ];
 
       masApps = {

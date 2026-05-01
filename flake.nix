@@ -122,6 +122,9 @@
 
       overlays = with inputs; [
         nur.overlays.default
+	(final: prev: {
+          direnv = prev.direnv.overrideAttrs (_: { doCheck = false; });
+        })
       ];
 
       homes.modules = with inputs; [
