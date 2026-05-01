@@ -55,6 +55,7 @@ in {
         nh.enable = true;
         opencode.enable = true;
         podman.enable = true;
+        pi.enable = true;
         ssh.enable = true;
         starship.enable = true;
         web3.enable = true;
