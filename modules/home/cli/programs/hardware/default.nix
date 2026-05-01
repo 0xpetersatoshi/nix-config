@@ -14,9 +14,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      parted
-      qemu
-    ];
+    home.packages = with pkgs;
+      [qemu]
+      ++ lib.optionals pkgs.stdenv.isLinux [parted];
   };
 }

@@ -14,17 +14,13 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs;
-      [
-        dnsutils
+      [dnsutils]
+      ++ lib.optionals pkgs.stdenv.isLinux [
         impala
         tshark
         termshark
         kubeshark
-      ]
-      ++ (
-        if pkgs.stdenv.isLinux
-        then [ethtool]
-        else []
-      );
+        ethtool
+      ];
   };
 }

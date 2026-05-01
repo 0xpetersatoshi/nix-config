@@ -99,7 +99,7 @@ in {
         popups = 1.0;
       };
 
-      targets = {
+      targets = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         hyprpaper.enable = lib.mkForce (cfg.image != null);
       };
     };
