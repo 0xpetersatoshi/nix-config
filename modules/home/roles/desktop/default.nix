@@ -26,11 +26,11 @@ in {
     };
 
     # allows using Bluetooth headset buttons to control media player
-    services.mpris-proxy.enable = true;
+    services.mpris-proxy.enable = pkgs.stdenv.isLinux;
 
     ${namespace} = {
       theme = {
-        stylix.enable = pkgs.stdenv.isLinux;
+        stylix.enable = true;
       };
     };
   };

@@ -56,7 +56,11 @@
     # Add more system preferences
   };
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
+
+  system.primaryUser = config.${namespace}.user.name;
+
+  nixpkgs.hostPlatform = "aarch64-darwin";
 
   # Set Git commit hash for darwin-version.
   system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
@@ -69,6 +73,11 @@
   programs.guis.productivity.addons = {
     linear.enable = true;
     tableplus.enable = true;
+  };
+
+  styles.stylix = {
+    enable = true;
+    theme = "tokyo-night-storm";
   };
 
   services.${namespace} = {

@@ -4,11 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/release-25.11";
-    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
 
     darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
-      inputs.nixpkgs.follows = "nixpkgs-darwin";
+      url = "github:LnL7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
@@ -137,6 +136,7 @@
         darwin = with inputs; [
           home-manager.darwinModules.home-manager
           sops-nix.darwinModules.sops
+          stylix.darwinModules.stylix
         ];
         nixos = with inputs; [
           disko.nixosModules.disko
