@@ -8,7 +8,7 @@ with lib;
 with lib.igloo; let
   cfg = config.cli.terminals.alacritty;
   tokyonight-moon = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/alacritty/tokyonight_moon.toml";
+    url = "https://raw.githubusercontent.com/folke/tokyonight.nvim/cdc07ac78467a233fd62c493de29a17e0cf2b2b6/extras/alacritty/tokyonight_moon.toml";
     sha256 = "sha256-s6C6jDtkQGJEo4DEzchEXzE0qR6P25WxczUlATzKjAY=";
   };
 in {

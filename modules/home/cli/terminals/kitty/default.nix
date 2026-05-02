@@ -7,7 +7,7 @@
 with lib; let
   cfg = config.cli.terminals.kitty;
   tokyonight-moon = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/folke/tokyonight.nvim/main/extras/kitty/tokyonight_moon.conf";
+    url = "https://raw.githubusercontent.com/folke/tokyonight.nvim/cdc07ac78467a233fd62c493de29a17e0cf2b2b6/extras/kitty/tokyonight_moon.conf";
     sha256 = "sha256-F2mcDp1HI/RLRjEpAABRCfrCsJTcEhbsUE02bTKEBDA=";
   };
 in {
