@@ -32,11 +32,6 @@ My NixOS, Darwin, and Nix Home Manager Config.
 
 ## Getting Started
 
-Install nix (preferably) using the [Determinate Systems Installer](https://github.com/DeterminateSystems/nix-installer).
-
-If running on MacOS, you'll need `nix-darwin` which won't initially be installed. Instructions for that are included
-in the next section.
-
 ### Installation Methods
 
 #### Using nixos-anywhere
@@ -52,18 +47,17 @@ mkdir -p ~/.ssh
 curl https://github.com/0xpetersatoshi.keys >> ~/.ssh/authorized_keys
 ```
 
-4. Note the IP address of the target machine using `ip addr`
-5. Test connection from local machine:
+1. Note the IP address of the target machine using `ip addr`
+2. Test connection from local machine:
 
-> [!important]
-> If using the 1password ssh agent, using `<ssh-key-name>.pub` will work here. Otherwise, you will need to reference
-> the actual ssh private key.
+> [!important] If using the 1password ssh agent, using `<ssh-key-name>.pub` will work here. Otherwise, you will need to
+> reference the actual ssh private key.
 
 ```{bash}
 ssh -i ~/.ssh/vms.pub -v nixos@<ip>
 ```
 
-6. Run:
+1. Run:
 
 ```{bash}
 nix run github:nix-community/nixos-anywhere -- --flake '.#<HOSTNAME>' -i ~/.ssh/vms --target-host nixos@<IP_ADDRESS>
@@ -83,18 +77,28 @@ cd nix-config
 sudo nixos-install --flake .#<hostname>
 ```
 
-> [!note]
-> If you run into an error about the disk running out of space, set `TMPDIR=/mnt/flake/tmp` (or any other path on
-> the disk you are installing nix onto).
+> [!note] If you run into an error about the disk running out of space, set `TMPDIR=/mnt/flake/tmp` (or any other path
+> on the disk you are installing nix onto).
 
 On MacOS:
 
+1. Install nix (preferably) using the
+   [Determinate Systems Installer](https://github.com/DeterminateSystems/nix-installer).
+2. Make sure [homebrew](https://brew.sh/) is installed.
+3. Make sure your hostname is set to match the target hostname from the [homes](./homes/) directory. If it is not, run:
+
+```{bash}
+sudo scutil --set HostName <name>
+sudo scutil --set LocalHostName <name>
+sudo scutil --set ComputerName <name>
+```
+
 ```bash
 # On the first run, you'll need to install nix-darwin
-nix run nix-darwin -- switch --flake .
+sudo --preserve-env=HOME nix run nix-darwin -- switch --flake .
 
 # On subsequent runs, just run
-darwin-rebuild switch --flake .
+nh darwin switch
 
 ```
 
@@ -108,8 +112,8 @@ nh os switch --hostname appbox --target-host username@<hostname or IP address>
 
 ### Configuring Disk Partitioning on NixOS using Disko
 
-You can optionally use [disko](https://github.com/nix-community/disko/blob/master/docs/quickstart.md) to configure the disk
-partitioning by running:
+You can optionally use [disko](https://github.com/nix-community/disko/blob/master/docs/quickstart.md) to configure the
+disk partitioning by running:
 
 ```{bash}
 sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode destroy,format,mount ./path/to/disko.nix
@@ -129,7 +133,8 @@ sudo fdisk -l /dev/sda
 
 ### Applying latest home-manager or nixos configuration
 
-> _NOTE_: when using the [nh](https://github.com/viperML/nh) tool, set the `FLAKE` env var to the path of the nix config (i.e. `/home/peter/nix-config/`)
+> _NOTE_: when using the [nh](https://github.com/viperML/nh) tool, set the `FLAKE` env var to the path of the nix config
+> (i.e. `/home/peter/nix-config/`)
 
 On NixOS:
 
