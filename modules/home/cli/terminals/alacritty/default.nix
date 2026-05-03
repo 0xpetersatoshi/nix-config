@@ -23,6 +23,11 @@ in {
     programs.alacritty = {
       enable = true;
 
+      # On Darwin the .app bundle from the Nix package is not linked into
+      # /Applications, so install via homebrew instead and let home-manager
+      # only manage the config file.
+      package = lib.mkIf pkgs.stdenv.isDarwin null;
+
       settings = {
         general = {
           import = [tokyonight-moon];
@@ -86,6 +91,10 @@ in {
           dynamic_padding = true;
           dynamic_title = true;
           # opacity = 0.98;
+
+          # Treat macOS Option as Alt so alt+hjkl reaches zellij/tmux.
+          # Ignored on non-macOS.
+          option_as_alt = "Both";
         };
 
         selection = {

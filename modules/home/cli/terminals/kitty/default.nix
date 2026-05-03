@@ -20,6 +20,11 @@ in {
       enable = true;
       shellIntegration.enableZshIntegration = true;
 
+      # On Darwin the .app bundle from the Nix package is not linked into
+      # /Applications, so install via homebrew instead and let home-manager
+      # only manage the config file.
+      package = lib.mkIf pkgs.stdenv.isDarwin null;
+
       font = {
         name = config.stylix.fonts.monospace.name;
         size = config.stylix.fonts.sizes.terminal;
@@ -34,6 +39,10 @@ in {
 
         # Copy on select
         copy_on_select = "yes";
+
+        # Treat macOS Option as Alt so alt+hjkl reaches zellij/tmux.
+        # Ignored on non-macOS.
+        macos_option_as_alt = "yes";
 
         # Background
         # background_opacity = "0.95";

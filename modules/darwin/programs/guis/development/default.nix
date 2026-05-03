@@ -24,7 +24,9 @@ in {
       ];
 
       casks = [
+        "alacritty"
         "ghostty"
+        "kitty"
         "podman-desktop"
         "visual-studio-code"
       ];
