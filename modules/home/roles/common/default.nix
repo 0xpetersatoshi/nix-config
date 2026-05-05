@@ -15,7 +15,6 @@
     z = "zellij";
     dcx = "devcontainer exec --workspace-folder .";
     dcup = "devcontainer up --workspace-folder .";
-    dcdown = "devcontainer down --workspace-folder .";
   };
 
   environmentVariableExports =
