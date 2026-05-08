@@ -6,7 +6,7 @@
   osConfig ? null,
   ...
 }: let
-  isNixOS = osConfig != null;
+  isNixOS = osConfig ? system.nixos;
   shellAliases = {
     cat = "bat";
     ll = "eza --icons=always -l";
@@ -84,7 +84,6 @@ in {
       # install as service instead on NixOS
       pkgs._1password-cli
       pkgs._1password-gui
-      pkgs.devcontainer
     ];
 
     guis = {
