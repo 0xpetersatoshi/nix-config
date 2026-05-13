@@ -628,10 +628,11 @@ return {
 
   {
     "akinsho/git-conflict.nvim",
+    url = "https://github.com/b0o/git-conflict.nvim",
+    branch = "main",
     opts = {
       disable_diagnostics = true,
     },
-    version = "*",
     config = true,
   },
 }
