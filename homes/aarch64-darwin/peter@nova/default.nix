@@ -7,6 +7,7 @@
 
     # touch ID support in tmux
     pam-reattach
+    railway
     reattach-to-user-namespace
   ];
 
