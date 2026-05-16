@@ -73,10 +73,6 @@ in {
           package = pkgs.kdePackages.kwallet-pam;
           forceRun = true;
         };
-        text = ''
-          auth     optional     ${pkgs.kdePackages.kwallet-pam}/lib/security/pam_kwallet5.so
-          session  optional     ${pkgs.kdePackages.kwallet-pam}/lib/security/pam_kwallet5.so auto_start
-        '';
       };
 
       ${config.user.name}.kwallet = {
