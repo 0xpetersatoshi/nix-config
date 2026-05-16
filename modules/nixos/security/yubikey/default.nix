@@ -18,6 +18,14 @@ in {
       pcscd.enable = true;
       udev.packages = with pkgs; [yubikey-personalization];
       dbus.packages = [pkgs.gcr];
+
+      # systemd-uaccess (triggered via 60-fido-id.rules because the YubiKey
+      # exposes a FIDO interface) installs an ACL granting the seat user access
+      # but masking off group permissions, blocking pcscd from opening the
+      # CCID interface even though 92_pcscd_ccid.rules sets GROUP="pcscd".
+      udev.extraRules = ''
+        ACTION=="add", SUBSYSTEM=="usb", ENV{ID_USB_INTERFACES}=="*:0b0000:*", ATTRS{idVendor}=="1050", RUN+="${pkgs.acl}/bin/setfacl -m g:pcscd:rw $env{DEVNAME}"
+      '';
     };
 
     security.pam = {
