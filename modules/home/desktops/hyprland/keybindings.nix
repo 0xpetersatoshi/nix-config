@@ -105,7 +105,7 @@ in {
         "SUPER,bracketleft, exec,grimblast --notify copysave area ~/Pictures/$(date \" + %Y-%m-%d \"T\"%H:%M:%S_no_watermark \").png"
 
         # Windows
-        "SUPER, S, togglesplit,"
+        "SUPER, S, layoutmsg, togglesplit"
         "SUPER, V, togglefloating,"
         "SUPER, G, togglegroup,"
         "SUPER, X, lockactivegroup,toggle"
