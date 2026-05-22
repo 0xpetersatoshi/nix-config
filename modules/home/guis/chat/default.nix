@@ -36,7 +36,7 @@ in {
       element-desktop-wrapped
       slack
       telegram-desktop
-      wasistlos
+      karere
       signal-desktop
     ];
   };
