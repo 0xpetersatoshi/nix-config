@@ -17,6 +17,7 @@ in {
       [
         alejandra
         bash-language-server
+        biome
         docker-compose-language-service
         # TODO: need to install these manually for now:
         # https://github.com/0no-co/graphqlsp
@@ -30,6 +31,7 @@ in {
         tree-sitter
         prettier
         prettierd
+        protols
         shfmt
         igloo.solhint
         igloo.solidity-language-server
