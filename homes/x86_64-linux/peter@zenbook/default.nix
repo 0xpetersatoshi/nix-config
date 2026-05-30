@@ -34,6 +34,7 @@
   home.packages = with pkgs; [
     nwg-displays
     hyprpolkitagent
+    immich-go
     libnotify
     nix-prefetch
     nix-prefetch-scripts
