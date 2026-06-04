@@ -116,14 +116,22 @@ in {
       cmd-l = 'focus right'
 
       # # See: https://nikitabobko.github.io/AeroSpace/commands#move
-      alt-ctrl-h = 'move left'
-      alt-ctrl-j = 'move down'
-      alt-ctrl-k = 'move up'
-      alt-ctrl-l = 'move right'
+      cmd-ctrl-h = 'move left'
+      cmd-ctrl-j = 'move down'
+      cmd-ctrl-k = 'move up'
+      cmd-ctrl-l = 'move right'
+
+      # See: https://nikitabobko.github.io/AeroSpace/commands#swap
+      cmd-shift-h = 'swap left'
+      cmd-shift-j = 'swap down'
+      cmd-shift-k = 'swap up'
+      cmd-shift-l = 'swap right'
 
       # See: https://nikitabobko.github.io/AeroSpace/commands#resize
-      cmd-alt-minus = 'resize smart -50'
-      cmd-alt-equal = 'resize smart +50'
+      cmd-alt-h = 'resize width -50'
+      cmd-alt-j = 'resize height +50'
+      cmd-alt-k = 'resize height -50'
+      cmd-alt-l = 'resize width +50'
 
       # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
       cmd-1 = 'workspace 1'
@@ -135,6 +143,7 @@ in {
       cmd-7 = 'workspace 7'
       cmd-8 = 'workspace 8'
       cmd-9 = 'workspace 9'
+      cmd-0 = 'workspace 10'
       # alt-a = 'workspace A' # In your config, you can drop workspace bindings that you don't need
       # alt-b = 'workspace B'
       # alt-c = 'workspace C'
@@ -168,6 +177,7 @@ in {
       cmd-shift-7 = 'move-node-to-workspace 7'
       cmd-shift-8 = 'move-node-to-workspace 8'
       cmd-shift-9 = 'move-node-to-workspace 9'
+      cmd-shift-0 = 'move-node-to-workspace 10'
       # cmd-shift-a = 'move-node-to-workspace A'
       # cmd-shift-b = 'move-node-to-workspace B'
       # cmd-shift-c = 'move-node-to-workspace C'
@@ -192,20 +202,23 @@ in {
       # cmd-shift-z = 'move-node-to-workspace Z'
 
       # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-      alt-tab = 'workspace-back-and-forth'
+      cmd-tab = 'workspace-back-and-forth'
       # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
-      alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+      cmd-alt-tab = 'move-workspace-to-monitor --wrap-around next'
 
       # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-      alt-shift-semicolon = 'mode service'
+      cmd-shift-semicolon = 'mode service'
 
       # 'service' binding mode declaration.
       # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
       [mode.service.binding]
       esc = ['reload-config', 'mode main']
+      q = ['close', 'mode main']
       r = ['flatten-workspace-tree', 'mode main'] # reset layout
       #s = ['layout sticky tiling', 'mode main'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
       f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+      v = ['layout floating tiling', 'mode main']
+      z = ['fullscreen', 'mode main']
       backspace = ['close-all-windows-but-current', 'mode main']
 
       cmd-ctrl-h = ['join-with left', 'mode main']
