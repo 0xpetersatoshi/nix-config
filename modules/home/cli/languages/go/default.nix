@@ -18,6 +18,7 @@ in {
       air
       delve
       go
+      gofumpt
       go-task
       golangci-lint
       golangci-lint-langserver
