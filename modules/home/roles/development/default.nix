@@ -21,6 +21,8 @@ in {
       gh
       jq
       openssl
+      pulumi
+      pulumiPackages.pulumi-go
       sqlite
     ];
 
