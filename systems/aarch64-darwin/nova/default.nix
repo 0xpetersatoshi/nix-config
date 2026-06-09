@@ -81,7 +81,7 @@
   };
 
   services.${namespace} = {
-    kanata.enable = false;
+    kanata.enable = true;
     sketchybar.enable = true;
   };
 
