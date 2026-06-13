@@ -6,6 +6,26 @@
     "edit": "ask",
     "bash": "ask"
   },
+  "experimental": {
+    "hook": {
+      "session.idle": [
+        {
+          "command": ["notify-send", "-u", "normal", "-a", "opencode", "opencode", "Agent is idle — your turn"]
+        },
+        {
+          "command": ["pw-play", "/run/current-system/sw/share/sounds/freedesktop/stereo/complete.oga"]
+        }
+      ],
+      "permission.ask": [
+        {
+          "command": ["notify-send", "-u", "critical", "-a", "opencode", "opencode", "Permission requested"]
+        },
+        {
+          "command": ["pw-play", "/run/current-system/sw/share/sounds/freedesktop/stereo/dialog-information.oga"]
+        }
+      ]
+    }
+  },
   "mcp": {
     "context7": {
       "type": "remote",

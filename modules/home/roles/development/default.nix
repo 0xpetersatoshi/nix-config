@@ -14,7 +14,6 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       buf
-      claude-code
       codex
       devcontainer
       doppler
@@ -44,6 +43,11 @@ in {
         tmux.enable = true;
       };
 
+      ai = {
+        claude-code.enable = true;
+        opencode.enable = true;
+      };
+
       programs = {
         bat.enable = true;
         btop.enable = true;
@@ -58,7 +62,6 @@ in {
         modern-unix.enable = true;
         network-tools.enable = true;
         nh.enable = true;
-        opencode.enable = true;
         podman.enable = true;
         pi.enable = true;
         ssh.enable = true;

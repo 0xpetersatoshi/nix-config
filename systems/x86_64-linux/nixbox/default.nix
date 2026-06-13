@@ -20,7 +20,10 @@
   };
 
   hardware = {
-    ${namespace}.udev.web3.enable = true;
+    ${namespace} = {
+      udev.web3.enable = true;
+      audio.hdmiKeepalive = true;
+    };
 
     drivers = {
       enable = true;

@@ -7,14 +7,18 @@
 }:
 with lib;
 with lib.${namespace}; let
-  cfg = config.cli.programs.opencode;
+  cfg = config.cli.ai.opencode;
 in {
-  options.cli.programs.opencode = with types; {
+  options.cli.ai.opencode = with types; {
     enable = mkBoolOpt false "Whether or not to enable the opencode tui";
   };
 
   config = mkIf cfg.enable {
-    home.packages = [pkgs.opencode];
+    home.packages = [
+      pkgs.opencode
+      pkgs.libnotify
+      pkgs.sound-theme-freedesktop
+    ];
 
     xdg.configFile."opencode/config.json".source = ./config.json;
     xdg.configFile."opencode/tui.json".source = ./tui.json;
