@@ -1,0 +1,40 @@
+{
+  "sound": true,
+  "notification": true,
+  "bell": false,
+  "timeout": 5,
+  "suppressWhenFocused": true,
+  "showProjectName": true,
+  "showIcon": true,
+  "permission": true,
+  "complete": true,
+  "error": true,
+  "question": true,
+  "subagent_complete": true,
+  "user_cancelled": false,
+  "plan_exit": true,
+  "session_started": false,
+  "user_message": false,
+  "client_connected": false,
+  "sounds": {
+    "permission": "Ping",
+    "complete": "Glass",
+    "error": "Basso",
+    "question": "Ping",
+    "subagent_complete": "Pop"
+  },
+  "volumes": {
+    "permission": 0.7,
+    "complete": 0.5,
+    "error": 0.8,
+    "question": 0.7,
+    "subagent_complete": 0.4
+  },
+  "messages": {
+    "permission": "Permission requested in {projectName}",
+    "complete": "Agent finished in {projectName}",
+    "error": "Error in {projectName}",
+    "question": "Question in {projectName}",
+    "subagent_complete": "Subagent finished in {projectName}"
+  }
+}

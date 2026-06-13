@@ -1,31 +1,14 @@
 {
-  "model": "openai/gpt-5.3-codex",
   "$schema": "https://opencode.ai/config.json",
+  "model": "opencode/kimi-k2.6",
   "theme": "tokyonight",
   "permission": {
     "edit": "ask",
     "bash": "ask"
   },
-  "experimental": {
-    "hook": {
-      "session.idle": [
-        {
-          "command": ["notify-send", "-u", "normal", "-a", "opencode", "opencode", "Agent is idle — your turn"]
-        },
-        {
-          "command": ["pw-play", "/run/current-system/sw/share/sounds/freedesktop/stereo/complete.oga"]
-        }
-      ],
-      "permission.ask": [
-        {
-          "command": ["notify-send", "-u", "critical", "-a", "opencode", "opencode", "Permission requested"]
-        },
-        {
-          "command": ["pw-play", "/run/current-system/sw/share/sounds/freedesktop/stereo/dialog-information.oga"]
-        }
-      ]
-    }
-  },
+  "plugin": [
+    "@mohak34/opencode-notifier@latest"
+  ],
   "mcp": {
     "context7": {
       "type": "remote",

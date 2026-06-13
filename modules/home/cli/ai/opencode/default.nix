@@ -14,14 +14,22 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [
-      pkgs.opencode
-      pkgs.libnotify
-      pkgs.sound-theme-freedesktop
-    ];
+    home.packages =
+      [
+        pkgs.opencode
+      ]
+      ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+        pkgs.libnotify
+        pkgs.sound-theme-freedesktop
+        pkgs.pulseaudio
+      ];
 
-    xdg.configFile."opencode/config.json".source = ./config.json;
+    xdg.configFile."opencode/opencode.jsonc".source = ./opencode.jsonc;
     xdg.configFile."opencode/tui.json".source = ./tui.json;
+    xdg.configFile."opencode/opencode-notifier.json".source =
+      if pkgs.stdenv.hostPlatform.isDarwin
+      then ./opencode-notifier.darwin.json
+      else ./opencode-notifier.linux.json;
 
     sops.templates.opencode-auth = mkIf config.${namespace}.security.sops.enable {
       path = "${config.xdg.dataHome}/opencode/auth.json";

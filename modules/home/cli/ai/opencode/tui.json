@@ -3,5 +3,8 @@
   "keybinds": {
     "leader": "ctrl+x",
     "variant_cycle": "alt+v,<leader>v"
-  }
+  },
+  "scroll_acceleration": {
+    "enabled": true
+  },
 }
