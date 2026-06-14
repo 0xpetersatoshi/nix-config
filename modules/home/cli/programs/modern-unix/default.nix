@@ -38,7 +38,6 @@ in {
       procs
       ripgrep
       sd
-      silver-searcher
       tokei
       trash-cli
       tailspin
