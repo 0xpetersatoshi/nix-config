@@ -85,8 +85,9 @@ in {
               sleep 1
             done
 
-            # Start Kanata
-            exec ${pkgs.${namespace}.kanata}/bin/kanata --cfg ${cfg.configFile}
+            # Start Kanata via the stable /usr/local/bin symlink so macOS
+            # Input Monitoring permission survives rebuilds.
+            exec /usr/local/bin/kanata --cfg ${cfg.configFile}
           ''
         ];
         WorkingDirectory = "/tmp";
@@ -108,6 +109,11 @@ in {
           chown root:wheel "$logfile"
         fi
       done
+
+      # Stable symlink so macOS Input Monitoring permission survives Nix rebuilds.
+      # Grant Input Monitoring to /usr/local/bin/kanata once, not the store path.
+      mkdir -p /usr/local/bin
+      ln -sfn ${pkgs.${namespace}.kanata}/bin/kanata /usr/local/bin/kanata
     '';
   };
 }
