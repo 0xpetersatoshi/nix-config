@@ -33,6 +33,15 @@ in {
     ];
 
     programs = {
+      hunk = {
+        enable = true;
+        enableGitIntegration = false;
+        settings = {
+          theme = "auto";
+          agent_notes = true;
+        };
+      };
+
       delta = {
         enable = true;
         enableGitIntegration = true;

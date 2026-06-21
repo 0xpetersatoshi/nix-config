@@ -94,6 +94,11 @@
       url = "github:max-sixty/worktrunk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    hunk = {
+      url = "github:modem-dev/hunk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: let
@@ -132,6 +137,7 @@
         walker.homeManagerModules.default
         dms.homeModules.dank-material-shell
         danksearch.homeModules.dsearch
+        hunk.homeManagerModules.default
         # hyprpanel.homeManagerModules.hyprpanel
       ];
 

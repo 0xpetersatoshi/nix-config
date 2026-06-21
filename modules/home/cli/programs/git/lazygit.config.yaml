@@ -10,3 +10,6 @@ git:
       # Value of the --color arg in the git diff command. Some pagers want this to be set to 'always' and some want it set to 'never'
       colorArg: always
 
+    # - pager: "hunk pager --wrap"
+    #   colorArg: always
+
