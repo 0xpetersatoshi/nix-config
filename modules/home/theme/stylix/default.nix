@@ -80,7 +80,7 @@ in {
         };
       };
 
-      iconTheme =
+      icons =
         lib.mkIf (pkgs.stdenv.hostPlatform.isLinux)
         {
           enable = true;

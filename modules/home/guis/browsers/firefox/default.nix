@@ -49,8 +49,11 @@ in {
       };
     };
 
+    stylix.targets.firefox.profileNames = lib.mkIf pkgs.stdenv.isLinux [ "default" "work" ];
+
     programs.firefox = {
       enable = pkgs.stdenv.isLinux;
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
       profiles = {
         default = {
           name = "Default";
