@@ -4,7 +4,35 @@
   pkgs,
   namespace,
   ...
-}: {
+}: let
+  # Shared options for the TrueNAS NFS mounts. `x-systemd.automount` + `noauto` makes each
+  # mount lazy and self-healing: rather than a single attempt at boot (which fails and stays
+  # failed when the network or the TrueNAS VM isn't ready yet after a host reboot), the mount
+  # is (re)attempted on first access and, with `hard`, retries until the server responds.
+  # This removes the need to run `nh os switch` by hand to re-mount after a restart.
+  nfsMountOpts = extra:
+    [
+      "nfsvers=4"
+      "hard"
+      "_netdev"
+      "noauto"
+      "x-systemd.automount"
+      "x-systemd.mount-timeout=30"
+      "x-systemd.idle-timeout=0"
+    ]
+    ++ extra;
+
+  # Mountpoints that Docker containers bind into. Docker must wait for the real NFS mounts
+  # before starting so it never binds an empty underlying directory (e.g. traefik ssl-certs).
+  nfsMountpoints = [
+    "/mnt/appdata"
+    "/mnt/media"
+    "/mnt/immich"
+    "/mnt/syncthing"
+    "/mnt/nextcloud"
+    "/mnt/isos"
+  ];
+in {
   imports = [
     ./hardware-configuration.nix
     ./disks.nix
@@ -33,37 +61,37 @@
   fileSystems."/mnt/appdata" = {
     device = "10.19.50.2:/mnt/flashpool/appdata";
     fsType = "nfs";
-    options = ["nfsvers=4" "hard" "rsize=131072" "wsize=131072"];
+    options = nfsMountOpts ["rsize=131072" "wsize=131072"];
   };
 
   fileSystems."/mnt/media" = {
     device = "10.19.50.2:/mnt/flashpool/data";
     fsType = "nfs";
-    options = ["nfsvers=4" "hard" "rsize=1048576" "wsize=1048576"];
+    options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
   };
 
   fileSystems."/mnt/immich" = {
     device = "10.19.50.2:/mnt/flashpool/media/immich";
     fsType = "nfs";
-    options = ["nfsvers=4" "hard" "rsize=1048576" "wsize=1048576"];
+    options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
   };
 
   fileSystems."/mnt/syncthing" = {
     device = "10.19.50.2:/mnt/flashpool/syncthing";
     fsType = "nfs";
-    options = ["nfsvers=4" "hard" "rsize=1048576" "wsize=1048576"];
+    options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
   };
 
   fileSystems."/mnt/nextcloud" = {
     device = "10.19.50.2:/mnt/flashpool/nextcloud";
     fsType = "nfs";
-    options = ["nfsvers=4" "hard" "rsize=1048576" "wsize=1048576"];
+    options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
   };
 
   fileSystems."/mnt/isos" = {
     device = "10.19.50.2:/mnt/rustpool/isos";
     fsType = "nfs";
-    options = ["nfsvers=4" "hard" "rsize=1048576" "wsize=1048576"];
+    options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
   };
 
   boot = {
@@ -112,6 +140,30 @@
       docker.enable = true;
       podman.enable = false;
     };
+  };
+
+  # Hold Docker until every TrueNAS NFS share is actually mounted, so containers bind the
+  # real data instead of empty mountpoints (this is what breaks traefik's ssl-certs on boot).
+  # Accessing each automount triggers the backing mount; the loop then waits for the real
+  # nfs mount to appear before letting docker.service start.
+  systemd.services.nfs-mounts-ready = {
+    description = "Wait for TrueNAS NFS mounts before starting Docker";
+    after = ["network-online.target"];
+    wants = ["network-online.target"];
+    before = ["docker.service"];
+    requiredBy = ["docker.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      for m in ${lib.concatStringsSep " " nfsMountpoints}; do
+        until ${pkgs.util-linux}/bin/findmnt --types nfs,nfs4 "$m" > /dev/null 2>&1; do
+          ${pkgs.coreutils}/bin/ls "$m" > /dev/null 2>&1 || true
+          ${pkgs.coreutils}/bin/sleep 2
+        done
+      done
+    '';
   };
 
   system = {
