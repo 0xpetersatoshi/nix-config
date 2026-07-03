@@ -146,15 +146,16 @@ in {
   # until the real NFS mount appears — this is also the retry mechanism for a slow/late
   # TrueNAS after a host reboot, so we don't need automount.
   #
-  # Gate BOTH docker.service and docker.socket: dockerd can be started either by
-  # multi-user.target or on-demand via socket activation, and only gating the service lets
-  # the socket path start dockerd before the mounts are ready.
+  # Gate docker.service only — NOT docker.socket. docker.socket lives in basic.target, and a
+  # unit ordered After=network-online.target (which comes after basic.target) can't run before
+  # it without creating an ordering cycle. That's fine: the socket may listen early, but dockerd
+  # only starts via docker.service, which is gated — a queued connection just waits for it.
   systemd.services.nfs-mounts-ready = {
     description = "Wait for TrueNAS NFS mounts before starting Docker";
     after = ["network-online.target"];
     wants = ["network-online.target"];
-    before = ["docker.service" "docker.socket"];
-    requiredBy = ["docker.service" "docker.socket"];
+    before = ["docker.service"];
+    requiredBy = ["docker.service"];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
