@@ -143,18 +143,25 @@ in {
   };
 
   # Hold Docker until every TrueNAS NFS share is actually mounted, so containers bind the
-  # real data instead of empty mountpoints (this is what breaks traefik's ssl-certs on boot).
-  # Accessing each automount triggers the backing mount; the loop then waits for the real
-  # nfs mount to appear before letting docker.service start.
+  # real data instead of empty mountpoints (this is what breaks traefik's ssl-certs, and
+  # fails the n8n/zitadel file binds, on boot). Accessing each automount triggers the backing
+  # mount; the loop then waits for the real nfs mount to appear before letting Docker start.
+  #
+  # Gate BOTH docker.service and docker.socket: dockerd can be started either by
+  # multi-user.target or on-demand via socket activation, and only gating the service lets
+  # the socket path start dockerd before the mounts are ready.
   systemd.services.nfs-mounts-ready = {
     description = "Wait for TrueNAS NFS mounts before starting Docker";
     after = ["network-online.target"];
     wants = ["network-online.target"];
-    before = ["docker.service"];
-    requiredBy = ["docker.service"];
+    before = ["docker.service" "docker.socket"];
+    requiredBy = ["docker.service" "docker.socket"];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
+      # TrueNAS (a sibling VM) can take minutes to serve NFS after a host reboot; never let
+      # the default 90s start timeout fail the gate and take Docker's dependency down with it.
+      TimeoutStartSec = "infinity";
     };
     script = ''
       for m in ${lib.concatStringsSep " " nfsMountpoints}; do
@@ -165,6 +172,10 @@ in {
       done
     '';
   };
+
+  # Belt-and-suspenders: express the mount dependency directly on dockerd too, so the ordering
+  # holds even if something triggers the daemon outside the gate.
+  systemd.services.docker.unitConfig.RequiresMountsFor = nfsMountpoints;
 
   system = {
     boot = {
