@@ -5,20 +5,18 @@
   namespace,
   ...
 }: let
-  # Shared options for the TrueNAS NFS mounts. `x-systemd.automount` + `noauto` makes each
-  # mount lazy and self-healing: rather than a single attempt at boot (which fails and stays
-  # failed when the network or the TrueNAS VM isn't ready yet after a host reboot), the mount
-  # is (re)attempted on first access and, with `hard`, retries until the server responds.
-  # This removes the need to run `nh os switch` by hand to re-mount after a restart.
+  # Shared options for the TrueNAS NFS mounts. Plain `_netdev` mounts (ordered after the
+  # network) with `nofail` so a boot-time race with the TrueNAS VM doesn't fail remote-fs.target
+  # or block boot. The retry-until-mounted behaviour lives in the nfs-mounts-ready gate below,
+  # which is also what holds Docker back until the real NFS is present. (We deliberately do NOT
+  # use x-systemd.automount: converting an already-mounted path to autofs breaks live
+  # `nh os switch` activation, and the autofs indirection races Docker's bind mounts.)
   nfsMountOpts = extra:
     [
       "nfsvers=4"
       "hard"
       "_netdev"
-      "noauto"
-      "x-systemd.automount"
-      "x-systemd.mount-timeout=30"
-      "x-systemd.idle-timeout=0"
+      "nofail"
     ]
     ++ extra;
 
@@ -144,8 +142,9 @@ in {
 
   # Hold Docker until every TrueNAS NFS share is actually mounted, so containers bind the
   # real data instead of empty mountpoints (this is what breaks traefik's ssl-certs, and
-  # fails the n8n/zitadel file binds, on boot). Accessing each automount triggers the backing
-  # mount; the loop then waits for the real nfs mount to appear before letting Docker start.
+  # fails the n8n/zitadel file binds, on boot). The loop actively (re)starts each mount unit
+  # until the real NFS mount appears — this is also the retry mechanism for a slow/late
+  # TrueNAS after a host reboot, so we don't need automount.
   #
   # Gate BOTH docker.service and docker.socket: dockerd can be started either by
   # multi-user.target or on-demand via socket activation, and only gating the service lets
@@ -165,17 +164,14 @@ in {
     };
     script = ''
       for m in ${lib.concatStringsSep " " nfsMountpoints}; do
+        unit="$(${pkgs.systemd}/bin/systemd-escape -p --suffix=mount "$m")"
         until ${pkgs.util-linux}/bin/findmnt --types nfs,nfs4 "$m" > /dev/null 2>&1; do
-          ${pkgs.coreutils}/bin/ls "$m" > /dev/null 2>&1 || true
+          ${pkgs.systemd}/bin/systemctl start "$unit" > /dev/null 2>&1 || true
           ${pkgs.coreutils}/bin/sleep 2
         done
       done
     '';
   };
-
-  # Belt-and-suspenders: express the mount dependency directly on dockerd too, so the ordering
-  # holds even if something triggers the daemon outside the gate.
-  systemd.services.docker.unitConfig.RequiresMountsFor = nfsMountpoints;
 
   system = {
     boot = {
