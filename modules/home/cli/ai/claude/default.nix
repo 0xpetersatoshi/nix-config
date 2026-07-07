@@ -82,7 +82,15 @@ in {
       pkgs.sound-theme-freedesktop
     ];
 
-    home.file.".claude/settings.json".source =
-      (pkgs.formats.json {}).generate "settings.json" settings;
+    home.file =
+      {
+        ".claude/settings.json".source =
+          (pkgs.formats.json {}).generate "settings.json" settings;
+      }
+      // lib.mapAttrs' (name: _:
+        lib.nameValuePair ".claude/skills/${lib.removeSuffix ".yaml" name}/SKILL.md" {
+          source = ./skills + "/${name}";
+        })
+      (builtins.readDir ./skills);
   };
 }
