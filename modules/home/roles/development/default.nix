@@ -19,6 +19,7 @@ in {
       doppler
       gh
       jq
+      markdown-toc
       openssl
       pulumi
       pulumiPackages.pulumi-go
