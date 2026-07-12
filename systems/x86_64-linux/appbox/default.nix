@@ -57,37 +57,37 @@ in {
   };
 
   fileSystems."/mnt/appdata" = {
-    device = "10.19.50.2:/mnt/flashpool/appdata";
+    device = "10.10.30.2:/mnt/flashpool/appdata";
     fsType = "nfs";
     options = nfsMountOpts ["rsize=131072" "wsize=131072"];
   };
 
   fileSystems."/mnt/media" = {
-    device = "10.19.50.2:/mnt/flashpool/data";
+    device = "10.10.30.2:/mnt/flashpool/data";
     fsType = "nfs";
     options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
   };
 
   fileSystems."/mnt/immich" = {
-    device = "10.19.50.2:/mnt/flashpool/media/immich";
+    device = "10.10.30.2:/mnt/flashpool/media/immich";
     fsType = "nfs";
     options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
   };
 
   fileSystems."/mnt/syncthing" = {
-    device = "10.19.50.2:/mnt/flashpool/syncthing";
+    device = "10.10.30.2:/mnt/flashpool/syncthing";
     fsType = "nfs";
     options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
   };
 
   fileSystems."/mnt/nextcloud" = {
-    device = "10.19.50.2:/mnt/flashpool/nextcloud";
+    device = "10.10.30.2:/mnt/flashpool/nextcloud";
     fsType = "nfs";
     options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
   };
 
   fileSystems."/mnt/isos" = {
-    device = "10.19.50.2:/mnt/rustpool/isos";
+    device = "10.10.30.2:/mnt/rustpool/isos";
     fsType = "nfs";
     options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
   };
