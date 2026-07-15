@@ -9,6 +9,7 @@
 
     # touch ID support in tmux
     pam-reattach
+    pscale
     railway
     reattach-to-user-namespace
   ];
