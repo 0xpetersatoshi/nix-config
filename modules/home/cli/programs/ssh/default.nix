@@ -18,6 +18,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.file.".ssh/config.d/personal.config".source = ./personal.config;
+
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false;
@@ -27,6 +29,7 @@ in {
 
       includes = [
         "~/.ssh/1Password/config"
+        "~/.ssh/config.d/personal.config"
       ];
 
       settings."*" = {
