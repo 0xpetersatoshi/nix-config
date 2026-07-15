@@ -47,6 +47,10 @@ with lib.${namespace}; let
   notificationScript = pkgs.writeShellScript "claude-code-notify-event" notifyEvent;
 
   settings = {
+    enabledPlugins = {
+      "ponytail@ponytail" = true;
+    };
+
     hooks = {
       Stop = [
         {
