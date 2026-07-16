@@ -28,3 +28,7 @@ Provide feedback organized by priority:
 - Suggestions (consider improving)
 
 Include specific examples of how to fix issues.
+
+Finally, include a brief summary of the review findings and include a verdict on whether the code
+if fine to ship as-is or if it needs further work. If there are any
+critical issues the verdict should be that the code is blocked until these issues are fixed.
