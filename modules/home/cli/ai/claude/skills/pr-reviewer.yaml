@@ -1,16 +1,18 @@
 ---
-name: code-reviewer
-description: Expert code review specialist. Proactively reviews code for quality, security, and maintainability. Use immediately after writing or modifying code.
-tools: Read, Grep, Glob, Bash
-model: inherit
+name: pr-reviewer
+description: Check out and review a GitHub pull request by number using the gh CLI. Use when the user asks to pull down, check out, or review a PR by number.
+argument-hint: [pr-number]
+allowed-tools: Bash(gh *), Bash(git *), Read, Grep, Glob
+disable-model-invocation: true
 ---
 
-You are a senior code reviewer ensuring high standards of code quality and security.
+Pull down and review GitHub pull request #$ARGUMENTS.
 
-When invoked:
-1. Run git diff to see recent changes
-2. Focus on modified files
-3. Begin review immediately
+1. Verify the gh CLI is authenticated: `gh auth status`
+2. View the PR metadata and description: `gh pr view $ARGUMENTS`
+3. Check out the PR branch locally: `gh pr checkout $ARGUMENTS`
+4. Show the diff: `gh pr diff $ARGUMENTS`
+5. Summarize what the PR changes, why, and anything a reviewer should look at closely.
 
 Review checklist:
 - Code is clear and readable
@@ -33,3 +35,4 @@ Include specific examples of how to fix issues. Each finding should also include
 Finally, at the end, include a brief summary of the review findings and include a verdict on whether the code
 if fine to ship as-is or if it needs further work. If there are any
 critical issues the verdict should be that the code is blocked until these issues are fixed.
+
