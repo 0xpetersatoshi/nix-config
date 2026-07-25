@@ -1,0 +1,4 @@
+{
+  "defaultProvider": "openrouter",
+  "defaultModel": "z-ai/glm-5.2"
+}

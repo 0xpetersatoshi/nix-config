@@ -16,13 +16,15 @@ in {
   config = mkIf cfg.enable {
     home.packages = [pkgs.pi-coding-agent];
 
+    home.file.".pi/agent/settings.json".source = ./settings.json;
+
     sops.templates.pi-auth = mkIf config.${namespace}.security.sops.enable {
       path = "${config.home.homeDirectory}/.pi/agent/auth.json";
       mode = "0600";
       content = ''
         {
           "openrouter": {
-            "type": "api-key",
+            "type": "api_key",
             "key": "${config.sops.placeholder.openrouter-api-key}"
           }
         }
