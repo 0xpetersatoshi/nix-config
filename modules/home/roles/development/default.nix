@@ -47,6 +47,7 @@ in {
       ai = {
         claude-code.enable = true;
         opencode.enable = true;
+        pi.enable = true;
       };
 
       programs = {
@@ -64,7 +65,6 @@ in {
         network-tools.enable = true;
         nh.enable = true;
         podman.enable = true;
-        pi.enable = true;
         ssh.enable = true;
         starship.enable = true;
         web3.enable = true;
