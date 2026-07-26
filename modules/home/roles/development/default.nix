@@ -42,6 +42,7 @@ in {
       multiplexers = {
         zellij.enable = true;
         tmux.enable = true;
+        herdr.enable = true;
       };
 
       ai = {

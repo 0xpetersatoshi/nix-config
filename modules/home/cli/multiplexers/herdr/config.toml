@@ -1,0 +1,55 @@
+# Keybindings modeled on my zellij setup (see ../zellij/config.kdl).
+# Herdr has no modal keymaps, so zellij modes map onto Ctrl+a prefix combos,
+# with direct Alt chords for the zellij mode-switch keys that have a herdr
+# equivalent (Alt+f scroll, Alt+r resize, Alt+s session, Alt+n new pane).
+
+[keys]
+prefix = "ctrl+a"
+
+# tabs (zellij tmux/tab mode: c, n, p, 1-9, ",", x)
+new_tab = "prefix+c"
+next_tab = "prefix+n"
+previous_tab = "prefix+p"
+switch_tab = "prefix+1..9"
+rename_tab = "prefix+comma"
+close_tab = "prefix+shift+x"
+
+# panes (zellij pane mode: hjkl focus, "-"/"|" splits, x, f fullscreen, c rename)
+focus_pane_left = ["prefix+h", "prefix+left"]
+focus_pane_down = ["prefix+j", "prefix+down"]
+focus_pane_up = ["prefix+k", "prefix+up"]
+focus_pane_right = ["prefix+l", "prefix+right"]
+split_horizontal = ["prefix+minus", "alt+n"]
+split_vertical = "prefix+|"
+close_pane = "prefix+x"
+zoom = "prefix+z"
+cycle_pane_next = "prefix+o"
+rename_pane = "prefix+shift+c"
+
+# scrollback (zellij scroll mode: Ctrl+a [ or Alt+f; e = edit in $EDITOR)
+copy_mode = ["prefix+[", "alt+f"]
+edit_scrollback = "prefix+e"
+
+# resize mode (zellij: Alt+r)
+resize_mode = ["prefix+r", "alt+r"]
+
+# session (zellij session mode: Alt+s -> session manager, d = detach)
+goto = ["prefix+g", "alt+s"]
+detach = "prefix+d"
+
+# Base16 palette injected from stylix by the nix module.
+[theme]
+name = "terminal"
+
+[theme.custom]
+panel_bg = "#@base00@"
+surface_dim = "#@base01@"
+text = "#@base05@"
+accent = "#@base0D@"
+red = "#@base08@"
+peach = "#@base09@"
+yellow = "#@base0A@"
+green = "#@base0B@"
+teal = "#@base0C@"
+blue = "#@base0D@"
+mauve = "#@base0E@"
