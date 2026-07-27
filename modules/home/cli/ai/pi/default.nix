@@ -16,7 +16,10 @@ in {
   config = mkIf cfg.enable {
     home.packages = [pkgs.pi-coding-agent];
 
-    home.file.".pi/agent/settings.json".source = ./settings.json;
+    home.file.".pi/agent/settings.json" = {
+      source = ./settings.json;
+      force = true;
+    };
 
     sops.templates.pi-auth = mkIf config.${namespace}.security.sops.enable {
       path = "${config.home.homeDirectory}/.pi/agent/auth.json";
