@@ -17,6 +17,8 @@
 
   xdg.configFile."kanata/config.kbd".source = ../../../dotfiles/kanata/config.kbd;
 
+  cli.ai.cursor.enable = true;
+
   cli.programs.git.signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFjoHku2U1i34uJWA6kODHU44QJCpQE7LHxYQgk382h";
 
   desktops.addons.darwin = {
