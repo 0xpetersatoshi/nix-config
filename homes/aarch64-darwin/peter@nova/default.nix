@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
+    buildkite-cli
     crane
     doppler
     graphite-cli
