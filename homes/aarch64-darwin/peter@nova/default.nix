@@ -3,6 +3,7 @@
     crane
     doppler
     graphite-cli
+    gws
 
     kubectl
     kubectx
