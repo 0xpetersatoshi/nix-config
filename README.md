@@ -20,10 +20,10 @@ My NixOS, Darwin, and Nix Home Manager Config.
   - [Installation Methods](#installation-methods)
     - [Using nixos-anywhere](#using-nixos-anywhere)
     - [Using Nix on the Target Machine Directly](#using-nix-on-the-target-machine-directly)
-    - [Using Nix on the Target Machine Remotely](#using-nix-on-the-target-machine-remotely)
   - [Configuring Disk Partitioning on NixOS using Disko](#configuring-disk-partitioning-on-nixos-using-disko)
 - [Usage](#usage)
   - [Applying latest home-manager or nixos configuration](#applying-latest-home-manager-or-nixos-configuration)
+  - [Deploying to a Remote Machine over SSH](#deploying-to-a-remote-machine-over-ssh)
   - [Updating](#updating)
 - [Helpful Commands](#helpful-commands)
   - [Getting sha256 artifact hashes](#getting-sha256-artifact-hashes)
@@ -36,32 +36,42 @@ My NixOS, Darwin, and Nix Home Manager Config.
 
 #### Using nixos-anywhere
 
-> **NOTE**: The architecture of the target machine must match the architecture of the local machine for this option.
+> [!warning] [nixos-anywhere](https://github.com/nix-community/nixos-anywhere) is for **initial installs only**. It runs
+> disko in `destroy,format,mount` mode, wiping the target's disks before installing. To update a machine that is already
+> running NixOS, see [Deploying to a Remote Machine over SSH](#deploying-to-a-remote-machine-over-ssh) instead.
 
 1. Use netboot or the nix usb installer to initiate the installer on the target machine
 2. Run `passwd` to create new password for the installer user
-3. Copy public ssh keys to the installer user
+3. Copy public ssh keys to the installer user:
 
-```{bash}
-mkdir -p ~/.ssh
-curl https://github.com/0xpetersatoshi.keys >> ~/.ssh/authorized_keys
-```
+   ```bash
+   mkdir -p ~/.ssh
+   curl https://github.com/0xpetersatoshi.keys >> ~/.ssh/authorized_keys
+   ```
 
-1. Note the IP address of the target machine using `ip addr`
-2. Test connection from local machine:
+4. Note the IP address of the target machine using `ip addr`
+5. Test connection from local machine:
 
-> [!important] If using the 1password ssh agent, using `<ssh-key-name>.pub` will work here. Otherwise, you will need to
-> reference the actual ssh private key.
+   > [!important] If using the 1password ssh agent, using `<ssh-key-name>.pub` will work here. Otherwise, you will need
+   > to reference the actual ssh private key.
 
-```{bash}
-ssh -i ~/.ssh/vms.pub -v nixos@<ip>
-```
+   ```bash
+   ssh -i ~/.ssh/vms.pub -v nixos@<ip>
+   ```
 
-1. Run:
+6. Run:
 
-```{bash}
-nix run github:nix-community/nixos-anywhere -- --flake '.#<HOSTNAME>' -i ~/.ssh/vms --target-host nixos@<IP_ADDRESS>
-```
+   ```bash
+   nix run github:nix-community/nixos-anywhere -- --flake '.#<HOSTNAME>' -i ~/.ssh/vms --target-host nixos@<IP_ADDRESS>
+   ```
+
+Useful flags:
+
+- `--build-on remote` — build on the target machine instead of locally. Use this when the target's architecture does not
+  match the local machine (e.g. deploying to an x86_64 server from an aarch64 Mac).
+- `--generate-hardware-config nixos-generate-config ./systems/<arch>/<hostname>/hardware-configuration.nix` — generate
+  the hardware config from the target during install instead of writing it by hand.
+- `--vm-test` — run the install in a local VM first to validate the configuration without touching the target.
 
 #### Using Nix on the Target Machine Directly
 
@@ -100,14 +110,6 @@ sudo --preserve-env=HOME nix run nix-darwin -- switch --flake .
 # On subsequent runs, just run
 nh darwin switch
 
-```
-
-#### Using Nix on the Target Machine Remotely
-
-You can also use `nh` to apply a configuration to a remote target via ssh. Here's an example:
-
-```bash
-nh os switch --hostname appbox --target-host username@<hostname or IP address>
 ```
 
 ### Configuring Disk Partitioning on NixOS using Disko
@@ -153,6 +155,33 @@ On MacOS:
 ```bash
 darwin-rebuild switch --flake .
 ```
+
+### Deploying to a Remote Machine over SSH
+
+For machines that are **already running NixOS** (do not use nixos-anywhere for this — it wipes the target's disks),
+build the configuration locally and push it over ssh with `nh`:
+
+```bash
+# Builds locally, copies the closure to the target, and activates it remotely.
+# --hostname defaults to the target machine's hostname, so it can usually be omitted.
+nh os switch --hostname appbox --target-host peter@appbox --elevation-strategy passwordless
+```
+
+Requirements on the target:
+
+- ssh key access for the deploying user (configured by the ssh module for all systems with `roles.server` enabled)
+- passwordless sudo for activation (the server role sets `security.sudo.wheelNeedsPassword = false`); this is what
+  `--elevation-strategy passwordless` relies on — without the flag, nh tries to prompt for a sudo password, which
+  fails with "The input device is not a TTY" in non-interactive shells
+
+Alternatively, plain `nixos-rebuild` works too:
+
+```bash
+nixos-rebuild switch --flake .#appbox --target-host peter@appbox --sudo
+```
+
+If the target's architecture differs from the local machine, add `--build-host peter@appbox` (nh) or `--build-on remote`
+style remote building so the build happens on the target.
 
 ### Updating
 

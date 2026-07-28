@@ -93,7 +93,10 @@ in {
   };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_7_0;
+    # Track the latest kernel instead of pinning a version: pinned kernels keep
+    # getting removed from nixpkgs at EOL, which breaks evaluation entirely
+    # (linux_7_0 was removed upstream while appbox was still pinned to it).
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   environment.systemPackages = with pkgs; [
