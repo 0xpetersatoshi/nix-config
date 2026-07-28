@@ -16,7 +16,8 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       foundry
-      slither-analyzer
+      # unstable's slither is broken on python 3.14 (py-evm); use 25.11's
+      stable.slither-analyzer
     ];
   };
 }

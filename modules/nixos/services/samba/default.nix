@@ -23,11 +23,11 @@ in {
     };
 
     fileSystems."/mnt/nugshare" = {
-      device = "//10.19.50.2/nugshare";
+      device = "//nas.home.internal/nugshare";
       fsType = "cifs";
       options = let
         # this line prevents hanging on network split
-        automount_opts = "x-systemd.automount,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+        automount_opts = "x-systemd.automount,nofail,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       in [
         # HACK: gpg with yubikey <> sops-nix configuration not working as expected with nixos module
         # will need to manually create secret file for now until a fix is found
@@ -40,11 +40,11 @@ in {
     };
 
     fileSystems."/mnt/media-archive" = {
-      device = "//10.19.50.2/media-archive";
+      device = "//nas.home.internal/media-archive";
       fsType = "cifs";
       options = let
         # this line prevents hanging on network split
-        automount_opts = "x-systemd.automount,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+        automount_opts = "x-systemd.automount,nofail,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       in [
         # HACK: gpg with yubikey <> sops-nix configuration not working as expected with nixos module
         # will need to manually create secret file for now until a fix is found
@@ -57,11 +57,11 @@ in {
     };
 
     fileSystems."/mnt/books" = {
-      device = "//10.19.50.2/books";
+      device = "//nas.home.internal/books";
       fsType = "cifs";
       options = let
         # this line prevents hanging on network split
-        automount_opts = "x-systemd.automount,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+        automount_opts = "x-systemd.automount,nofail,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
       in [
         # HACK: gpg with yubikey <> sops-nix configuration not working as expected with nixos module
         # will need to manually create secret file for now until a fix is found

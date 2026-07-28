@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/release-25.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/release-26.05";
 
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -98,6 +98,9 @@
     hunk = {
       url = "github:modem-dev/hunk";
       inputs.nixpkgs.follows = "nixpkgs";
+      # bun2nix evaluates outputs for x86_64-darwin, which nixpkgs unstable
+      # (26.11) dropped; keep it on 25.11 until upstream drops that system
+      inputs.bun2nix.inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
     herdr = {

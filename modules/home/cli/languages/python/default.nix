@@ -15,7 +15,8 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      poetry
+      # unstable's poetry fails its own tests on python 3.14; use 26.05's
+      stable.poetry
       pyenv
       pyright
       python313

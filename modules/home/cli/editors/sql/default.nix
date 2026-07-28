@@ -14,7 +14,8 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      harlequin
+      # unstable's harlequin pulls a broken python3.14 sqlfmt; use 26.05's
+      stable.harlequin
       lazysql
       atlas
     ];
