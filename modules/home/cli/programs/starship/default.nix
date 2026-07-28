@@ -22,7 +22,8 @@ in {
         add_newline = true;
         command_timeout = 1000;
 
-        format = "$username$hostname$localip$shlvl$singularity$directory$vcsh$fossil_branch$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch$pijul_channel$docker_context$package$c$cmake$cobol$daml$dart$deno$dotnet$elixir$elm$erlang$fennel$golang$guix_shell$haskell$haxe$helm$java$julia$kotlin$gradle$lua$nim$nodejs$ocaml$opa$perl$php$pulumi$purescript$python$raku$rlang$red$ruby$rust$scala$solidity$swift$terraform$vlang$vagrant$zig$buf$nix_shell$conda$meson$spack$memory_usage$aws$gcloud$openstack$azure$env_var$crystal$custom$sudo$kubernetes$time$cmd_duration$line_break$jobs$battery$status$os$container$shell$character";
+        format = "$all$time$line_break$character";
+        right_format = "$cmd_duration";
 
         character = {
           success_symbol = "[❯](bold green)";
@@ -32,19 +33,22 @@ in {
           disabled = false;
           time_format = "%r";
           style = "bg:#1d2230";
-          format = "[[  $time ](bg:#1C3A5E fg:#8DFBD2)]($style)";
+          format = "[[$time](bg:#1C3A5E fg:#8DFBD2)]($style)";
         };
 
         cmd_duration = {
-          format = "last command: [$duration](bold yellow)";
+          format = "took: [$duration](bold yellow)";
         };
 
         package = {
-          disabled = true;
+          disabled = false;
         };
 
+        direnv = {};
+        docker_context = {};
+
         kubernetes = {
-          disabled = false;
+          disabled = true;
           contexts = [
             {
               context_pattern = "kubernetes-admin-homelab-k8s@homelab-k8s";
@@ -64,16 +68,20 @@ in {
           ];
         };
 
-        aws.symbol = " ";
+        nix_shell = {
+          disabled = false;
+        };
+
         c.symbol = " ";
         conda.symbol = " ";
         docker_context.symbol = " ";
         git_branch.symbol = " ";
         golang.symbol = " ";
 
+        aws = {};
+
         gcloud = {
-          symbol = "󱇶 ";
-          format = "on [$symbol$account(@$domain)(\\($project\\))]($style) ";
+          format = "(on [󱇶 $account(@$domain)(\\($project\\))]($style) )";
           style = "bold yellow";
         };
 

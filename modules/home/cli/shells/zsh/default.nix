@@ -48,6 +48,15 @@ with lib.${namespace}; let
     # Kitty key bindings
     bindkey '\e[H' beginning-of-line
     bindkey '\e[F' end-of-line
+
+    # `nix shell` sets no env var, so mark it ourselves for the starship nix_shell module
+    nix() {
+      if [[ "$1" == "shell" ]]; then
+        IN_NIX_SHELL=impure command nix "$@"
+      else
+        command nix "$@"
+      fi
+    }
   '';
 in {
   options.cli.shells.zsh = with types; {
