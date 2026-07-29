@@ -70,6 +70,9 @@
   # Nix darwin options not compatible with determinate systems nix daemon
   nix.enable = false;
 
+  # Managed via /etc/nix/nix.custom.conf since determinate owns nix.conf
+  system.nix.enable = true;
+
   programs.guis.productivity.addons = {
     linear.enable = true;
     tableplus.enable = true;

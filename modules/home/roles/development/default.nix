@@ -74,6 +74,7 @@ in {
         bat.enable = true;
         btop.enable = true;
         build.enable = true;
+        devenv.enable = true;
         direnv.enable = true;
         eza.enable = true;
         fzf.enable = true;
