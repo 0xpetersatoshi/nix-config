@@ -8,3 +8,9 @@ creation_rules:
       - *yubikey
       age:
       - *age
+  - path_regex: secrets/.*\.yaml$
+    key_groups:
+    - pgp:
+      - *yubikey
+      age:
+      - *age

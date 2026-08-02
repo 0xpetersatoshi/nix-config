@@ -28,6 +28,11 @@
     nix-prefetch-scripts
   ];
 
+  cloud.aws = {
+    enable = true;
+    secretsFile = ../../../secrets/aws.yaml;
+  };
+
   cli.programs.git.signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFjoHku2U1i34uJWA6kODHU44QJCpQE7LHxYQgk382h";
 
   roles = {

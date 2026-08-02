@@ -27,7 +27,6 @@ in {
     ];
 
     cloud = {
-      aws.enable = true;
       google.enable = true;
     };
 

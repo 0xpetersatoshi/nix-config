@@ -42,6 +42,11 @@
     wireguard-tools # ad-hoc `wg-quick up/down` for the UDM WireGuard client
   ];
 
+  cloud.aws = {
+    enable = true;
+    secretsFile = ../../../secrets/aws.yaml;
+  };
+
   # Ad-hoc WireGuard client for the UniFi Dream Machine. Nothing runs at boot;
   # bring it up on demand with `wg-udm-up` / `wg-udm-down`.
   #
