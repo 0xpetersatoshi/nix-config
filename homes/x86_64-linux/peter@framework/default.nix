@@ -8,11 +8,11 @@
     hyprland = {
       enable = true;
       bar = "dms";
-      hasLunarLakeCPU = true;
-      monitor = "eDP-1, highrr, auto, 1.25";
+      # 2880x1920 3:2 panel, 30-120Hz
+      monitor = "eDP-1, highrr, auto, 1.5";
       multiMonitor = {
         enable = false;
-        laptopScale = 1.0; # Override the default 1.5 scale
+        laptopScale = 1.5;
       };
       execOnceExtras = [
         "${pkgs.libinput-gestures}/bin/libinput-gestures &"
