@@ -180,6 +180,13 @@ in {
         defaultApplications = associations;
       };
 
+      # Desktop apps (browsers, etc.) rewrite ~/.config/mimeapps.list at runtime when
+      # you set a default handler, replacing HM's managed symlink with a plain file.
+      # On the next switch HM tries to back that file up to mimeapps.list.hm.bak and
+      # aborts activation if a stale backup already exists ("would be clobbered").
+      # Force HM to overwrite it instead — the associations above are the source of truth.
+      configFile."mimeapps.list".force = mkIf pkgs.stdenv.isLinux true;
+
       userDirs = mkIf pkgs.stdenv.isLinux {
         enable = true;
         createDirectories = true;

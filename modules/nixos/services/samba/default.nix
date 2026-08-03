@@ -22,6 +22,13 @@ in {
       ];
     };
 
+    # Static hosts entry for the NAS. During a nixos switch that restarts
+    # systemd-resolved, there's a brief window with no DNS resolver; if a CIFS
+    # remount lands in that window it fails with "could not resolve address for
+    # nas.home.internal" and takes home-manager activation down with it. A
+    # /etc/hosts entry makes resolution independent of resolved being up.
+    networking.hosts."10.10.20.2" = ["nas.home.internal"];
+
     fileSystems."/mnt/nugshare" = {
       device = "//nas.home.internal/nugshare";
       fsType = "cifs";
