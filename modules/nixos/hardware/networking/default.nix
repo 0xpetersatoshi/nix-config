@@ -88,6 +88,14 @@ in {
       };
       networkConfig.DHCP = "yes";
 
+      # Keep addresses/routes/DNS through brief carrier drops. SFP+ links on the
+      # Mellanox ConnectX-3 flap up/down for ~15-80s of link training every time
+      # they come up (including after suspend). Without this, each flap tears down
+      # the DHCP lease and restarts the exchange with exponential backoff, adding
+      # ~10s+ after the link finally stabilizes. Real disconnects (>10s of
+      # continuous carrier loss) still tear down the config as before.
+      networkConfig.IgnoreCarrierLoss = mkIf (!cfg.wireless) "10s";
+
       # Accept DNS search domains from DHCP (OPNsense pushes "home.mydomain.xyz").
       # systemd-networkd defaults UseDomains to false, which causes the search domain
       # to be missing from resolvectl — breaking short-name resolution (e.g. "ping opnsense"

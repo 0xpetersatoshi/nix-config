@@ -34,6 +34,7 @@
     suspend = {
       enable = true;
       hasAmdCpu = true;
+      hasMlx4Nic = true;
     };
 
     enableAllFirmware = true;
