@@ -20,7 +20,7 @@ in {
     enable = mkBoolOpt false "Whether or not to enable git.";
     email = mkOpt (nullOr str) "dev@ngml.me" "The email to use with git.";
     username = mkOpt (nullOr str) "0xPeterSatoshi" "The username to use with git.";
-    signingKey = mkOpt str "" "The public key used for signing commits";
+    signingKey = mkOpt str "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAAc9c/SJBN52MkS459tC18D7vJHLJ/ebwQZk3H/dlqN" "The public key used for signing commits";
   };
 
   config = mkIf cfg.enable {
