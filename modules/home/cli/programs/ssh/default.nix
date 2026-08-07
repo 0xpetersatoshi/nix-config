@@ -46,6 +46,11 @@ in {
         IdentityFile = "~/.ssh/gitlab.pub";
       };
 
+      settings."git.nugbox.xyz" = {
+        IdentitiesOnly = true;
+        IdentityFile = "~/.ssh/github.pub";
+      };
+
       settings."*" = {
         ForwardAgent = false;
         AddKeysToAgent = "no";
