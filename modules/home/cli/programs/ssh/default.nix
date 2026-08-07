@@ -19,6 +19,7 @@ in {
 
   config = mkIf cfg.enable {
     home.file.".ssh/config.d/personal.config".source = ./personal.config;
+    home.file.".ssh/github.pub".source = ./github.pub;
 
     programs.ssh = {
       enable = true;
@@ -31,6 +32,13 @@ in {
         "~/.ssh/1Password/config"
         "~/.ssh/config.d/personal.config"
       ];
+
+      # 1Password agent holds many keys; GitHub's server rejects after 6 auth
+      # attempts. Pin the GitHub key so only it is offered.
+      settings."github.com" = {
+        IdentitiesOnly = true;
+        IdentityFile = "~/.ssh/github.pub";
+      };
 
       settings."*" = {
         ForwardAgent = false;
