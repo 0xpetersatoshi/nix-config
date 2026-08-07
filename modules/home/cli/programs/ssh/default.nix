@@ -33,11 +33,16 @@ in {
         "~/.ssh/config.d/personal.config"
       ];
 
-      # 1Password agent holds many keys; GitHub's server rejects after 6 auth
-      # attempts. Pin the GitHub key so only it is offered.
+      # 1Password agent holds many keys; git forges reject after 6 auth
+      # attempts. Pin the right key per host so only it is offered.
       settings."github.com" = {
         IdentitiesOnly = true;
         IdentityFile = "~/.ssh/github.pub";
+      };
+
+      settings."gitlab.com" = {
+        IdentitiesOnly = true;
+        IdentityFile = "~/.ssh/gitlab.pub";
       };
 
       settings."*" = {
