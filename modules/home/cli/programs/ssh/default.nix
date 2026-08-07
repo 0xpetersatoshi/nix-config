@@ -20,6 +20,7 @@ in {
   config = mkIf cfg.enable {
     home.file.".ssh/config.d/personal.config".source = ./personal.config;
     home.file.".ssh/github.pub".source = ./github.pub;
+    home.file.".ssh/gitlab.pub".source = ./gitlab.pub;
 
     programs.ssh = {
       enable = true;
