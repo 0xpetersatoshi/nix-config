@@ -34,7 +34,9 @@
     suspend = {
       enable = true;
       hasAmdCpu = true;
-      hasMlx4Nic = true;
+      # Mellanox ConnectX-3 replaced with an Intel X550 (10Gtek) — the mlx4
+      # link-flap workarounds are no longer needed
+      hasMlx4Nic = false;
     };
 
     enableAllFirmware = true;
