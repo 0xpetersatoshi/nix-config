@@ -34,6 +34,7 @@
 
   home.packages = with pkgs; [
     digikam
+    exiftool
     nwg-displays
     hyprpolkitagent
     immich-go
