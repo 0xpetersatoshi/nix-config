@@ -22,6 +22,8 @@
   home.packages = with pkgs; [
     digikam
     exiftool
+    lutris # runs ON1 Photo Raw via GE-Proton; see notes
+    protonup-qt # installs GE-Proton runners for lutris
     nwg-displays
     hyprpolkitagent
     immich-go

@@ -155,6 +155,7 @@ in {
     # Environment packages for GPU support
     environment.systemPackages = with pkgs;
       lib.optionals cfg.hasAmdGpu [
+        nvtopPackages.amd
         radeontop
       ]
       ++ lib.optionals cfg.vulkanEnabled [
