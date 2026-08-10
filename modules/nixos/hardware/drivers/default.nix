@@ -47,7 +47,9 @@ in {
             intel-vaapi-driver
           ];
         extraPackages32 = pkgs.lib.flatten (
-          with pkgs; [
+          # extraPackages32 must use the i686 builds; the 64-bit variants are
+          # invisible to 32-bit apps and collide with nixos-hardware's entries
+          with pkgs.driversi686Linux; [
             # Nvidia/Intel shared GPU packages
             (lib.optional ((cfg.hasNvidiaGpu && !cfg.hasIntegratedGpu) || cfg.hasIntelGpu) libva-vdpau-driver)
 

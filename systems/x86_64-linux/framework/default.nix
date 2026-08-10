@@ -64,6 +64,13 @@
   };
 
   hardware = {
+    # nixos-hardware's Intel GPU module defaults to i915 + both VAAPI
+    # drivers; Panther Lake is xe-only with the iHD media driver
+    intelgpu = {
+      driver = "xe";
+      vaapiDriver = "intel-media-driver";
+    };
+
     drivers = {
       enable = true;
       hasIntelCpu = true;
