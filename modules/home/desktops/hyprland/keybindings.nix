@@ -46,8 +46,8 @@ with lib; let
     hyprctl dispatch resizeactive exact $size_x $size_y
   '';
 
-  increaseBrightnessCommand = "${pkgs.brightnessctl}/bin/brightnessctl +5%";
-  decreaseBrightnessCommand = "${pkgs.brightnessctl}/bin/brightnessctl -5%";
+  increaseBrightnessCommand = "${pkgs.brightnessctl}/bin/brightnessctl set +5%";
+  decreaseBrightnessCommand = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
 
   isDms = cfg.bar == "dms";
 
