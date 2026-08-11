@@ -8,6 +8,27 @@
 with lib;
 with lib.${namespace}; let
   cfg = config.desktops.addons.dms;
+
+  dmsBin = getExe config.programs.dank-material-shell.package;
+
+  # Turns night mode on from 20:00 (8pm) until 06:00 (6am), off otherwise.
+  # State is recomputed from the current time on every run, so it is correct
+  # whenever the unit fires: a schedule boundary, login, or resume from suspend.
+  nightModeScript = pkgs.writeShellScript "dms-night-mode" ''
+    # Wait for the DMS IPC socket to come up (e.g. right after login).
+    for _ in $(${pkgs.coreutils}/bin/seq 1 30); do
+      ${dmsBin} ipc call night status >/dev/null 2>&1 && break
+      ${pkgs.coreutils}/bin/sleep 1
+    done
+
+    hour=$((10#$(${pkgs.coreutils}/bin/date +%H)))
+
+    if [ "$hour" -ge 20 ] || [ "$hour" -lt 6 ]; then
+      ${dmsBin} ipc call night enable
+    else
+      ${dmsBin} ipc call night disable
+    fi
+  '';
 in {
   options.desktops.addons.dms = with types; {
     enable = mkBoolOpt false "Whether to enable DankMaterialShell";
@@ -156,6 +177,29 @@ in {
     };
 
     programs.dsearch.enable = true;
+
+    # Automatically switch DankMaterialShell night mode on at 8pm / off at 6am.
+    systemd.user.services.dms-night-mode = {
+      Unit = {
+        Description = "Apply DankMaterialShell night mode based on time of day";
+        After = ["dms.service" "graphical-session.target"];
+        PartOf = ["graphical-session.target"];
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${nightModeScript}";
+      };
+      Install.WantedBy = ["graphical-session.target"];
+    };
+
+    systemd.user.timers.dms-night-mode = {
+      Unit.Description = "Toggle DankMaterialShell night mode at 20:00 and 06:00";
+      Timer = {
+        OnCalendar = ["*-*-* 20:00:00" "*-*-* 06:00:00"];
+        Persistent = true;
+      };
+      Install.WantedBy = ["timers.target"];
+    };
 
     desktops.addons.hypridle = {
       lock_cmd = mkForce "dms ipc call lock lock";
