@@ -19,6 +19,8 @@
     _1password-gui.enable = true;
   };
 
+  ${namespace}.security.fingerprint.enable = true;
+
   services = {
     virtualisation = {
       docker.enable = true;
