@@ -55,6 +55,13 @@ in {
         fontWeight = 600;
         fontScale = 1.3;
 
+        # Arm the fingerprint reader on the DMS lock screen (shown on resume
+        # from suspend). DMS only starts an fprintd PAM conversation when this
+        # is on; it also self-gates on reader readiness, so it is a no-op on
+        # machines without an enrolled reader. Uses DMS's bundled `fprint` PAM
+        # stack (pam_fprintd), independent of the system PAM services.
+        enableFprint = true;
+
         barConfigs = [
           {
             id = "default";
