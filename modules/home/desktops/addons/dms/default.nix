@@ -62,6 +62,16 @@ in {
         # stack (pam_fprintd), independent of the system PAM services.
         enableFprint = true;
 
+        # Lock via DMS's native pre-suspend path instead of a fire-and-forget
+        # IPC call from hypridle. DMS holds a logind delay inhibitor and only
+        # releases it once the WlSessionLock (ext-session-lock) surface is
+        # actually active, so the system never suspends with the desktop as the
+        # last committed frame. Without this, the desktop is briefly visible on
+        # resume before the lock finishes drawing. Requires loginctlLockIntegration
+        # (default true). The hypridle before_sleep_cmd lock is dropped below so
+        # DMS is the single, race-free owner of pre-suspend locking.
+        lockBeforeSuspend = true;
+
         barConfigs = [
           {
             id = "default";
@@ -210,7 +220,11 @@ in {
 
     desktops.addons.hypridle = {
       lock_cmd = mkForce "dms ipc call lock lock";
-      before_sleep_cmd = mkForce "dms ipc call lock lock";
+      # Pre-suspend locking is owned by DMS's native `lockBeforeSuspend` (above),
+      # which gates the actual suspend on the session lock being active. Firing a
+      # lock from hypridle here as well is racy — the IPC call returns before the
+      # lock surface is up — and would let the desktop flash on resume.
+      before_sleep_cmd = mkForce "";
       after_sleep_cmd = mkForce "sleep 1 && hyprctl dispatch dpms on";
     };
   };
