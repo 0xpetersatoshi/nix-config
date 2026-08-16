@@ -32,6 +32,7 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
+      bluebubbles
       discord
       element-desktop-wrapped
       slack

@@ -19,6 +19,7 @@ in {
       cava # audio visualizer
       keymapp
       readest
+      remmina
       spotify
       vlc
       wiremix
