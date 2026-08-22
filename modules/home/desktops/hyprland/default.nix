@@ -22,9 +22,14 @@ in {
       description = "The device(s) to set for the WLR_DRM_DEVICES env var";
     };
     monitor = lib.mkOption {
-      type = lib.types.str;
-      default = ",preferred,auto,1";
-      description = "Hyprland monitor configuration settings";
+      type = lib.types.attrs;
+      default = {
+        output = "";
+        mode = "preferred";
+        position = "auto";
+        scale = "auto";
+      };
+      description = "Monitor spec passed to hl.monitor() when multiMonitor is disabled";
     };
     bar = lib.mkOption {
       type = lib.types.enum ["waybar" "hyprpanel" "dms"];

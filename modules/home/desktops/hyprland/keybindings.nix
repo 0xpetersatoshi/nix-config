@@ -47,10 +47,19 @@ with lib; let
     hyprctl dispatch resizeactive exact $size_x $size_y
   '';
 
+  isDms = cfg.bar == "dms";
+
+  pypr = "${pkgs.pyprland}/bin/pypr";
+
+  terminal = "ghostty";
+  fileManager = "nautilus --new-window";
+  browser = "brave";
+  browserWork = "brave -P Work";
+  passwordManager = "1password";
+  music = "spotify";
+
   increaseBrightnessCommand = "${pkgs.brightnessctl}/bin/brightnessctl set +5%";
   decreaseBrightnessCommand = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
-
-  isDms = cfg.bar == "dms";
 
   lockCommand =
     if isDms
@@ -65,7 +74,7 @@ with lib; let
   menuCommand =
     if isDms
     then "dms ipc call spotlight toggle"
-    else "$menu";
+    else "walker";
 
   screenshot = "${pkgs.${namespace}.omarchy-capture-screenshot}/bin/omarchy-capture-screenshot";
   captureText = "${pkgs.${namespace}.omarchy-capture-text}/bin/omarchy-capture-text";
@@ -77,146 +86,119 @@ with lib; let
     else if cfg.bar == "hyprpanel"
     then "hyprpanel toggleWindow notificationsmenu"
     else "sleep 0.1 && swaync-client -t -sw";
+
+  inherit (cfg.multiMonitor) laptopMonitor laptopResolution laptopScale;
 in {
   config = mkIf cfg.enable {
-    wayland.windowManager.hyprland.settings = {
-      "$pypr" = "${pkgs.pyprland}/bin/pypr";
+    wayland.windowManager.hyprland.extraLuaFiles.bindings = ''
+      local mod = "SUPER"
 
-      bind = [
-        "SUPER, A, exec, $pypr toggle pwvucontrol"
-        "SUPER, B, exec, $browser"
-        "SUPER_SHIFT, B, exec, $browserWork"
-        "SUPER, E, exec, $fileManager"
-        "SUPER, F, Fullscreen,0"
-        "SUPER, M, exec, $music"
-        "SUPER, N, exec, ${notificationToggleCommand}"
-        "SUPER, P, exec, $passwordManager"
-        "SUPER, Q, killactive,"
-        "SUPER, R, exec, ${resize}/bin/resize"
-        "SUPER, T, exec, $terminal"
-        "SUPER, Y, exec, yubioath-flutter"
-        "SUPER, Space, exec, ${menuCommand}"
-        "SUPER_SHIFT, T, exec, $pypr toggle term"
-        ",XF86ScreenSaver, exec, ${lockCommand}"
-        ",XF86Calculator, exec, ${pkgs.kdePackages.kcalc}/bin/kcalc"
-        "SUPER, backspace, exec, ${lockCommand}"
-        "SUPER, delete, exec, ${logoutCommand}"
+      -- Applications
+      hl.bind(mod .. " + A", hl.dsp.exec_cmd("${pypr} toggle pwvucontrol"))
+      hl.bind(mod .. " + B", hl.dsp.exec_cmd("${browser}"))
+      hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("${browserWork}"))
+      hl.bind(mod .. " + E", hl.dsp.exec_cmd("${fileManager}"))
+      hl.bind(mod .. " + M", hl.dsp.exec_cmd("${music}"))
+      hl.bind(mod .. " + N", hl.dsp.exec_cmd("${notificationToggleCommand}"))
+      hl.bind(mod .. " + P", hl.dsp.exec_cmd("${passwordManager}"))
+      hl.bind(mod .. " + R", hl.dsp.exec_cmd("${resize}/bin/resize"))
+      hl.bind(mod .. " + T", hl.dsp.exec_cmd("${terminal}"))
+      hl.bind(mod .. " + Y", hl.dsp.exec_cmd("yubioath-flutter"))
+      hl.bind(mod .. " + Space", hl.dsp.exec_cmd("${menuCommand}"))
+      hl.bind(mod .. " + SHIFT + T", hl.dsp.exec_cmd("${pypr} toggle term"))
+      hl.bind("XF86Calculator", hl.dsp.exec_cmd("${pkgs.kdePackages.kcalc}/bin/kcalc"))
 
-        # Screenshots (Omarchy-style: frozen screen, window snapping,
-        # keyboard selection with Tab/arrows/Enter while the picker is up).
-        #   Print              smart pick -> save + clipboard + edit toast
-        #   SHIFT+Print        snap to a window or monitor rectangle
-        #   CONTROL+Print      whole focused monitor
-        #   SUPER+SHIFT+Print  freeform region, clipboard only
-        #   SUPER+CONTROL+Print  OCR the region to the clipboard
-        #   SUPER+Print        colour picker
-        #   ALT+Print          start/stop a screen recording
-        ", Print, exec, ${screenshot}"
-        "SHIFT, Print, exec, ${screenshot} windows"
-        "CONTROL, Print, exec, ${screenshot} fullscreen"
-        "SUPER SHIFT, Print, exec, ${screenshot} region copy"
-        "SUPER CONTROL, Print, exec, ${captureText}"
+      -- Session
+      hl.bind("XF86ScreenSaver", hl.dsp.exec_cmd("${lockCommand}"))
+      hl.bind(mod .. " + backspace", hl.dsp.exec_cmd("${lockCommand}"))
+      hl.bind(mod .. " + delete", hl.dsp.exec_cmd("${logoutCommand}"))
 
-        # Screen recording. Same key toggles: press to pick a region/window/
-        # monitor and start, press again to stop, post-process and save.
-        "ALT, Print, exec, ${screenrecord}"
-        "ALT SHIFT, Print, exec, ${screenrecord} --fullscreen --with-desktop-audio"
-        "ALT CONTROL, Print, exec, ${screenrecord} --with-desktop-audio --with-microphone-audio"
-        "SUPER, Print, exec, pkill hyprpicker || ${pkgs.hyprpicker}/bin/hyprpicker -a"
+      -- Screenshots (Omarchy-style: frozen screen, window snapping,
+      -- keyboard selection with Tab/arrows/Enter while the picker is up).
+      hl.bind("Print", hl.dsp.exec_cmd("${screenshot}"))                                  -- smart pick -> save + clipboard + edit toast
+      hl.bind("SHIFT + Print", hl.dsp.exec_cmd("${screenshot} windows"))                  -- snap to a window or monitor rectangle
+      hl.bind("CONTROL + Print", hl.dsp.exec_cmd("${screenshot} fullscreen"))             -- whole focused monitor
+      hl.bind(mod .. " + SHIFT + Print", hl.dsp.exec_cmd("${screenshot} region copy"))    -- freeform region, clipboard only
+      hl.bind(mod .. " + CONTROL + Print", hl.dsp.exec_cmd("${captureText}"))             -- OCR the region to the clipboard
+      hl.bind(mod .. " + Print", hl.dsp.exec_cmd("pkill hyprpicker || ${pkgs.hyprpicker}/bin/hyprpicker -a"))
 
-        # Windows
-        "SUPER, S, layoutmsg, togglesplit"
-        "SUPER, V, togglefloating,"
-        "SUPER, G, togglegroup,"
-        "SUPER, X, lockactivegroup,toggle"
-        "SUPER, Tab, changegroupactive,f"
-        "SUPERSHIFT, tab, changegroupactive,b"
-        "SUPERCONTROL,h, movewindoworgroup,l"
-        "SUPERCONTROL,l, movewindoworgroup,r"
-        "SUPERCONTROL,k, movewindoworgroup,u"
-        "SUPERCONTROL,j, movewindoworgroup,d"
-        "SUPER,h, movefocus,l"
-        "SUPER,l, movefocus,r"
-        "SUPER,k, movefocus,u"
-        "SUPER,j, movefocus,d"
-        # "SUPERCONTROL,h, focusmonitor,l"
-        # "SUPERCONTROL,l, focusmonitor,r"
-        # "SUPERCONTROL,k, focusmonitor,u"
-        # "SUPERCONTROL,j, focusmonitor,d"
-        "ALTCTRL,L, movewindow,r"
-        "ALTCTRL,H, movewindow,l"
-        "ALTCTRL,K, movewindow,u"
-        "ALTCTRL,J, movewindow,d"
-        "SUPERSHIFT,h, swapwindow,l"
-        "SUPERSHIFT,l, swapwindow,r"
-        "SUPERSHIFT,k, swapwindow,u"
-        "SUPERSHIFT,j, swapwindow,d"
+      -- Screen recording. Same key toggles: press to pick a region/window/
+      -- monitor and start, press again to stop, post-process and save.
+      hl.bind("ALT + Print", hl.dsp.exec_cmd("${screenrecord}"))
+      hl.bind("ALT + SHIFT + Print", hl.dsp.exec_cmd("${screenrecord} --fullscreen --with-desktop-audio"))
+      hl.bind("ALT + CONTROL + Print", hl.dsp.exec_cmd("${screenrecord} --with-desktop-audio --with-microphone-audio"))
 
-        # Workspaces
-        "SUPER,1, workspace,01"
-        "SUPER,2, workspace,02"
-        "SUPER,3, workspace,03"
-        "SUPER,4, workspace,04"
-        "SUPER,5, workspace,05"
-        "SUPER,6, workspace,06"
-        "SUPER,7, workspace,07"
-        "SUPER,8, workspace,08"
-        "SUPER,9, workspace,09"
-        "SUPER,0, workspace,10"
-        "SUPERSHIFT,1, movetoworkspacesilent,01"
-        "SUPERSHIFT,2, movetoworkspacesilent,02"
-        "SUPERSHIFT,3, movetoworkspacesilent,03"
-        "SUPERSHIFT,4, movetoworkspacesilent,04"
-        "SUPERSHIFT,5, movetoworkspacesilent,05"
-        "SUPERSHIFT,6, movetoworkspacesilent,06"
-        "SUPERSHIFT,7, movetoworkspacesilent,07"
-        "SUPERSHIFT,8, movetoworkspacesilent,08"
-        "SUPERSHIFT,9, movetoworkspacesilent,09"
-        "SUPERSHIFT,0, movetoworkspacesilent,10"
-        "SUPERALT,h, movecurrentworkspacetomonitor,l"
-        "SUPERALT,l, movecurrentworkspacetomonitor,r"
-        "SUPERALT,k, movecurrentworkspacetomonitor,u"
-        "SUPERALT,j, movecurrentworkspacetomonitor,d"
-        "SUPER,u, togglespecialworkspace"
-        "SUPERSHIFT,u, movetoworkspace,special"
+      -- Windows
+      hl.bind(mod .. " + F", hl.dsp.window.fullscreen({ mode = "fullscreen" }))
+      hl.bind(mod .. " + Q", hl.dsp.window.close())
+      hl.bind(mod .. " + S", hl.dsp.layout("togglesplit"))
+      hl.bind(mod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+      hl.bind(mod .. " + G", hl.dsp.group.toggle())
+      hl.bind(mod .. " + X", hl.dsp.group.lock_active({ action = "toggle" }))
+      hl.bind(mod .. " + Tab", hl.dsp.group.next())
+      hl.bind(mod .. " + SHIFT + Tab", hl.dsp.group.prev())
 
-        # Monitors
-        "SUPER, F7, exec, hyprctl keyword monitor \"${cfg.multiMonitor.laptopMonitor},disable\""
-        "SUPER SHIFT, F7, exec, hyprctl keyword monitor \"${cfg.multiMonitor.laptopMonitor},${cfg.multiMonitor.laptopResolution},1280x2160,${toString cfg.multiMonitor.laptopScale}\""
-      ];
+      -- Directional window management, vim keys
+      local directions = { h = "left", l = "right", k = "up", j = "down" }
+      for key, dir in pairs(directions) do
+        hl.bind(mod .. " + " .. key, hl.dsp.focus({ direction = dir }))
+        hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.swap({ direction = dir }))
+        hl.bind(mod .. " + CONTROL + " .. key, hl.dsp.group.move_window({ direction = dir }))
+        hl.bind("ALT + CONTROL + " .. key, hl.dsp.window.move({ direction = dir }))
+        hl.bind(mod .. " + ALT + " .. key, hl.dsp.workspace.move({ monitor = dir }))
+      end
 
-      bindi = [
-        ",XF86MonBrightnessUp, exec, ${increaseBrightnessCommand}"
-        ",XF86MonBrightnessDown, exec, ${decreaseBrightnessCommand}"
-        ",XF86AudioRaiseVolume, exec, ${pkgs.pamixer}/bin/pamixer -i 5"
-        ",XF86AudioLowerVolume, exec, ${pkgs.pamixer}/bin/pamixer -d 5"
-        ",XF86AudioMute, exec, ${pkgs.pamixer}/bin/pamixer --toggle-mute"
-        ",XF86AudioMicMute, exec, ${pkgs.pamixer}/bin/pamixer --default-source --toggle-mute"
-        ",XF86AudioNext, exec,playerctl next"
-        ",XF86AudioPrev, exec,playerctl previous"
-        ",XF86AudioPlay, exec,playerctl play-pause"
-        ",XF86AudioStop, exec,playerctl stop"
-      ];
+      -- Workspaces: mod + [0-9] to focus, mod + SHIFT + [0-9] to send the window
+      for i = 1, 10 do
+        local key = i % 10 -- 10 maps to key 0
+        hl.bind(mod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+        hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i, silent = true }))
+      end
 
-      bindl = mkIf cfg.enable (
-        [
-          # Other bindings...
-        ]
-        ++ (optionals cfg.multiMonitor.enable [
-          ",switch:Lid Switch, exec, ${cfg.multiMonitor.monitorScript}/bin/handle-monitors"
-        ])
-      );
-      binde = [
-        "SUPERALT, h, resizeactive, -20 0"
-        "SUPERALT, l, resizeactive, 20 0"
-        "SUPERALT, k, resizeactive, 0 -20"
-        "SUPERALT, j, resizeactive, 0 20"
-      ];
+      hl.bind(mod .. " + u", hl.dsp.workspace.toggle_special())
+      hl.bind(mod .. " + SHIFT + u", hl.dsp.window.move({ workspace = "special" }))
 
-      bindm = [
-        "SUPER, mouse:272, movewindow"
-        "SUPER, mouse:273, resizewindow"
-      ];
-    };
+      -- Monitors. Toggle the laptop panel off, or back on below the external.
+      hl.bind(mod .. " + F7", function()
+        hl.monitor({ output = "${laptopMonitor}", disabled = true })
+      end)
+      hl.bind(mod .. " + SHIFT + F7", function()
+        hl.monitor({
+          output = "${laptopMonitor}",
+          mode = "${laptopResolution}",
+          position = "1280x2160",
+          scale = ${toString laptopScale},
+        })
+      end)
+
+      -- Media and brightness. ignore_mods so they fire with any modifier held.
+      local mediaKeys = {
+        { "XF86MonBrightnessUp", "${increaseBrightnessCommand}" },
+        { "XF86MonBrightnessDown", "${decreaseBrightnessCommand}" },
+        { "XF86AudioRaiseVolume", "${pkgs.pamixer}/bin/pamixer -i 5" },
+        { "XF86AudioLowerVolume", "${pkgs.pamixer}/bin/pamixer -d 5" },
+        { "XF86AudioMute", "${pkgs.pamixer}/bin/pamixer --toggle-mute" },
+        { "XF86AudioMicMute", "${pkgs.pamixer}/bin/pamixer --default-source --toggle-mute" },
+        { "XF86AudioNext", "playerctl next" },
+        { "XF86AudioPrev", "playerctl previous" },
+        { "XF86AudioPlay", "playerctl play-pause" },
+        { "XF86AudioStop", "playerctl stop" },
+      }
+      for _, entry in ipairs(mediaKeys) do
+        hl.bind(entry[1], hl.dsp.exec_cmd(entry[2]), { ignore_mods = true })
+      end
+
+      -- Resize the active window. NOTE: these keys are already taken by the
+      -- move-workspace-to-monitor binds above, which win; kept to preserve the
+      -- pre-migration config exactly.
+      local resizeSteps = { h = { -20, 0 }, l = { 20, 0 }, k = { 0, -20 }, j = { 0, 20 } }
+      for key, step in pairs(resizeSteps) do
+        hl.bind(mod .. " + ALT + " .. key, hl.dsp.window.resize({ x = step[1], y = step[2], relative = true }), { repeating = true })
+      end
+
+      -- Mouse
+      hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+      hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+    '';
   };
 }

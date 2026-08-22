@@ -6,11 +6,27 @@
 }:
 with lib; let
   cfg = config.desktops.hyprland;
+
+  autostart =
+    [
+      "dbus-update-activation-environment --systemd --all"
+      "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME"
+      "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init"
+      "${pkgs.kdePackages.kwallet}/bin/kwalletd6"
+      "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
+      "${pkgs.pyprland}/bin/pypr"
+      "${pkgs.clipse}/bin/clipse -listen"
+      "${pkgs.syncthingtray}/bin/syncthingtray --wait"
+      "${pkgs.solaar}/bin/solaar -w hide"
+      "hyprctl dispatch workspace 1"
+    ]
+    ++ lib.optionals config.desktops.addons.kde.enable ["${pkgs.kdePackages.plasma-nm}/bin/nm-tray"]
+    ++ cfg.execOnceExtras;
 in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
-      configType = "hyprlang";
+      configType = "lua";
 
       systemd = {
         enable = true;
@@ -19,98 +35,80 @@ in {
       };
       xwayland.enable = true;
 
+      # Autostart. Must run from the start event rather than at file scope,
+      # otherwise every config reload would respawn the whole list.
+      extraLuaFiles.autostart = ''
+        hl.on("hyprland.start", function()
+        ${concatMapStrings (command: "  hl.exec_cmd(${builtins.toJSON command})\n") autostart}end)
+      '';
+
       settings = {
-        "$mainMod" = "SUPER";
-        "$terminal" = "ghostty";
-        "$fileManager" = "nautilus --new-window";
-        "$menu" =
-          if cfg.bar == "dms"
-          then "dms ipc call spotlight toggle"
-          else "walker";
-        # "$notificationsClient" = "swaync-client -t";
-        "$browser" = "brave";
-        "$browserWork" = "brave -P Work";
-        "$passwordManager" = "1password";
-        "$editor" = "nvim";
-        "$music" = "spotify";
         monitor = mkIf (!cfg.multiMonitor.enable) cfg.monitor;
 
-        # Add environment variables here
         env = [
-          "WLR_DRM_DEVICES,${cfg.drmDevices}"
-          "WLR_NO_HARDWARE_CURSORS,1"
+          {_args = ["WLR_DRM_DEVICES" cfg.drmDevices];}
+          {_args = ["WLR_NO_HARDWARE_CURSORS" "1"];}
           # https://bbs.archlinux.org/viewtopic.php?pid=2167673#p2167673
-          "XDG_MENU_PREFIX,plasma-"
+          {_args = ["XDG_MENU_PREFIX" "plasma-"];}
         ];
 
-        # Create persistent workspaces
-        workspace = [
-          "1, default:true persistent:true"
-          "2, persistent:true"
-          "3, persistent:true"
-          "4, persistent:true"
-          "5, persistent:true"
-          "special:scratchpad, on-created-empty:ghostty"
-        ];
+        # Persistent workspaces
+        workspace_rule =
+          [
+            {
+              workspace = "1";
+              default = true;
+              persistent = true;
+            }
+          ]
+          ++ map (n: {
+            workspace = toString n;
+            persistent = true;
+          }) [2 3 4 5]
+          ++ [
+            {
+              workspace = "special:scratchpad";
+              on_created_empty = "ghostty";
+            }
+          ];
 
-        input = {
-          kb_layout = "us";
-          repeat_delay = 200;
-          natural_scroll = true;
-          touchpad = {
-            disable_while_typing = false;
+        config = {
+          input = {
+            kb_layout = "us";
+            repeat_delay = 200;
             natural_scroll = true;
-            scroll_factor = 0.15;
-            tap-and-drag = true;
+            touchpad = {
+              disable_while_typing = false;
+              natural_scroll = true;
+              scroll_factor = 0.15;
+              tap_and_drag = true;
+            };
+          };
+
+          general = {
+            gaps_in = 3;
+            gaps_out = 5;
+            border_size = 3;
+            "col.active_border" = mkForce "rgb(${config.lib.stylix.colors.base0E})";
+          };
+
+          decoration.rounding = 5;
+
+          dwindle.preserve_split = true;
+
+          misc = let
+            FULLSCREEN_ONLY = 2;
+          in {
+            vrr = FULLSCREEN_ONLY;
+            disable_hyprland_logo = true;
+            disable_splash_rendering = true;
+            force_default_wallpaper = 0;
+            # Follow xdg-activation requests: e.g. clicking a link in another app
+            # jumps to the browser's window/workspace instead of just flagging it
+            # urgent. (Omarchy enables this in its looknfeel defaults.)
+            focus_on_activate = true;
           };
         };
-
-        general = {
-          gaps_in = 3;
-          gaps_out = 5;
-          border_size = 3;
-          "col.active_border" = mkForce "rgb(${config.lib.stylix.colors.base0E})";
-        };
-
-        decoration = {
-          rounding = 5;
-        };
-
-        dwindle = {
-          preserve_split = true;
-        };
-
-        misc = let
-          FULLSCREEN_ONLY = 2;
-        in {
-          vrr = FULLSCREEN_ONLY;
-          disable_hyprland_logo = true;
-          disable_splash_rendering = true;
-          force_default_wallpaper = 0;
-          # Follow xdg-activation requests: e.g. clicking a link in another app
-          # jumps to the browser's window/workspace instead of just flagging it
-          # urgent. (Omarchy enables this in its looknfeel defaults.)
-          focus_on_activate = true;
-        };
-
-        exec-once =
-          [
-            "dbus-update-activation-environment --systemd --all"
-            "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME"
-            # "${pkgs.kanshi}/bin/kanshi"
-            "${pkgs.kdePackages.kwallet-pam}/libexec/pam_kwallet_init"
-            "${pkgs.kdePackages.kwallet}/bin/kwalletd6"
-            "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
-            "${pkgs.pyprland}/bin/pypr"
-            "${pkgs.clipse}/bin/clipse -listen"
-            # "${pkgs.trayscale}/bin/trayscale"
-            "${pkgs.syncthingtray}/bin/syncthingtray --wait"
-            "${pkgs.solaar}/bin/solaar -w hide"
-            # "${pkgs.hyprpanel}/bin/hyprpanel"
-            "hyprctl dispatch workspace 1"
-          ]
-          ++ lib.optionals config.desktops.addons.kde.enable ["${kdePackages.plasma-nm}/bin/nm-tray"]
-          ++ cfg.execOnceExtras;
       };
     };
   };

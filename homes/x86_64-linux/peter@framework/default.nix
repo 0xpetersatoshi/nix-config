@@ -9,7 +9,12 @@
       enable = true;
       bar = "dms";
       # 2880x1920 3:2 panel, 30-120Hz
-      monitor = "eDP-1, highrr, auto, 1.5";
+      monitor = {
+        output = "eDP-1";
+        mode = "highrr";
+        position = "auto";
+        scale = 1.5;
+      };
       multiMonitor = {
         enable = false;
         laptopScale = 1.5;

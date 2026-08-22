@@ -9,7 +9,12 @@
       enable = true;
       bar = "dms";
       hasLunarLakeCPU = true;
-      monitor = "eDP-1, highrr, auto, 1.25";
+      monitor = {
+        output = "eDP-1";
+        mode = "highrr";
+        position = "auto";
+        scale = 1.25;
+      };
       multiMonitor = {
         enable = false;
         laptopScale = 1.0; # Override the default 1.5 scale

@@ -53,40 +53,35 @@ in {
     # Expose the script through the option
     desktops.hyprland.multiMonitor.monitorScript = handleMonitorsScript;
 
-    wayland.windowManager.hyprland.settings = {
-      # Monitor configuration
-      monitor = mkIf cfg.multiMonitor.enable [
-        # Default configuration for single monitor mode
-        "${cfg.multiMonitor.laptopMonitor},${cfg.multiMonitor.laptopResolution},0x0,${toString cfg.multiMonitor.laptopScale}"
-        "${cfg.multiMonitor.externalMonitor},${cfg.multiMonitor.externalResolution},0x0,${toString cfg.multiMonitor.externalScale}"
-        # Position for dual monitor mode - will be overridden by the script
+    wayland.windowManager.hyprland = {
+      settings.monitor = [
+        {
+          output = cfg.multiMonitor.laptopMonitor;
+          mode = cfg.multiMonitor.laptopResolution;
+          position = "0x0";
+          scale = cfg.multiMonitor.laptopScale;
+        }
+        {
+          output = cfg.multiMonitor.externalMonitor;
+          mode = cfg.multiMonitor.externalResolution;
+          position = "0x0";
+          scale = cfg.multiMonitor.externalScale;
+        }
+        # Positions above are the single-monitor defaults; handle-monitors
+        # repositions them on hotplug.
       ];
 
-      # Default workspaces
-      # workspace = [
-      #   "1,monitor:${cfg.multiMonitor.externalMonitor},default:true"
-      #   "2,monitor:${cfg.multiMonitor.externalMonitor}"
-      #   "3,monitor:${cfg.multiMonitor.externalMonitor}"
-      #   "4,monitor:${cfg.multiMonitor.externalMonitor}"
-      #   "5,monitor:${cfg.multiMonitor.externalMonitor}"
-      #   "6,monitor:${cfg.multiMonitor.laptopMonitor},default:true"
-      #   "7,monitor:${cfg.multiMonitor.laptopMonitor}"
-      #   "8,monitor:${cfg.multiMonitor.laptopMonitor}"
-      #   "9,monitor:${cfg.multiMonitor.laptopMonitor}"
-      #   "10,monitor:${cfg.multiMonitor.laptopMonitor}"
-      # ];
+      # Hotplug and lid handling. Monitor add/remove are real events now, which
+      # replaces the old bindl ",monitor:connect:..." pseudo-binds.
+      extraLuaFiles.monitors = ''
+        local handleMonitors = "${handleMonitorsScript}/bin/handle-monitors"
 
-      # Add to exec-once
-      exec-once = mkIf cfg.multiMonitor.enable [
-        "${handleMonitorsScript}/bin/handle-monitors"
-      ];
+        hl.on("hyprland.start", function() hl.exec_cmd(handleMonitors) end)
+        hl.on("monitor.added", function() hl.exec_cmd(handleMonitors) end)
+        hl.on("monitor.removed", function() hl.exec_cmd(handleMonitors) end)
 
-      # Add hotplug event handlers
-      bindl = mkIf cfg.multiMonitor.enable [
-        ",monitor:disconnect:${cfg.multiMonitor.externalMonitor},exec,${handleMonitorsScript}/bin/handle-monitors"
-        ",monitor:connect:${cfg.multiMonitor.externalMonitor},exec,${handleMonitorsScript}/bin/handle-monitors"
-        ",switch:Lid Switch,exec,${handleMonitorsScript}/bin/handle-monitors"
-      ];
+        hl.bind("switch:Lid Switch", hl.dsp.exec_cmd(handleMonitors), { locked = true })
+      '';
     };
   };
 }
