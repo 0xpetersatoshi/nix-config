@@ -170,6 +170,62 @@ in {
           }
         ];
 
+        # Control Center widgets. DMS replaces its built-in defaults with this
+        # list wholesale, so the stock eight are reproduced here verbatim and
+        # `builtin_tailscale` is the only addition -- DMS's native Tailscale
+        # widget (connect toggle, online peer count, searchable peer list).
+        #
+        # It only lights up when TailscaleService.available is true, which
+        # needs this user to own tailscaled's LocalAPI: see --operator in
+        # modules/nixos/services/vpn/tailscale.
+        controlCenterWidgets = [
+          {
+            id = "volumeSlider";
+            enabled = true;
+            width = 50;
+          }
+          {
+            id = "brightnessSlider";
+            enabled = true;
+            width = 50;
+          }
+          {
+            id = "wifi";
+            enabled = true;
+            width = 50;
+          }
+          {
+            id = "bluetooth";
+            enabled = true;
+            width = 50;
+          }
+          {
+            id = "audioOutput";
+            enabled = true;
+            width = 50;
+          }
+          {
+            id = "audioInput";
+            enabled = true;
+            width = 50;
+          }
+          {
+            id = "nightMode";
+            enabled = true;
+            width = 50;
+          }
+          {
+            id = "darkMode";
+            enabled = true;
+            width = 50;
+          }
+          {
+            id = "builtin_tailscale";
+            enabled = true;
+            width = 50;
+          }
+        ];
+
         builtInPluginSettings = {
           dms_settings_search = {
             trigger = "?";

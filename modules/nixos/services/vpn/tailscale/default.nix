@@ -21,6 +21,11 @@ in {
     services.tailscale = {
       enable = true;
       useRoutingFeatures = "both";
+      # Let this user drive tailscaled's LocalAPI without sudo, so desktop
+      # frontends (DankMaterialShell's native Tailscale widget, trayscale)
+      # can query status and toggle the connection. Mirrors Omarchy's
+      # `tailscale set --operator=$USER`.
+      extraSetFlags = ["--operator=${config.user.name}"];
     };
 
     # Allow Tailscale traffic
