@@ -116,11 +116,15 @@ in {
       playerctl
       kdePackages.kcalc
 
-      grimblast
+      # Screenshot stack (Omarchy-style). The capture commands bundle their
+      # own grim/slurp/hyprpicker/tesseract; these are here for ad-hoc use.
+      grim
       slurp
-      swappy
-      sway-contrib.grimshot
-      satty
+      hyprpicker
+      pkgs.${namespace}.tensaku # annotation editor opened from the screenshot toast
+      pkgs.${namespace}.omarchy-capture-screenshot
+      pkgs.${namespace}.omarchy-capture-text
+      pkgs.${namespace}.omarchy-capture-region
 
       gpu-screen-recorder
       gpu-screen-recorder-gtk

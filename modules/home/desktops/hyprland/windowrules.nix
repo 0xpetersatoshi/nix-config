@@ -8,6 +8,12 @@ with lib; let
 in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland.settings = {
+      # Remove the 1px border and animation around the slurp region selection
+      # used by the screenshot picker (matches Omarchy's screenshot-selection).
+      layerrule = [
+        "match:namespace ^(selection)$, no_anim on"
+      ];
+
       # windowrule = [
       #   "float, bitwarden"
       # ];

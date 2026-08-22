@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  namespace,
   ...
 }:
 with lib; let
@@ -66,6 +67,9 @@ with lib; let
     then "dms ipc call spotlight toggle"
     else "$menu";
 
+  screenshot = "${pkgs.${namespace}.omarchy-capture-screenshot}/bin/omarchy-capture-screenshot";
+  captureText = "${pkgs.${namespace}.omarchy-capture-text}/bin/omarchy-capture-text";
+
   notificationToggleCommand =
     if isDms
     then "dms ipc call notifications toggle"
@@ -97,12 +101,20 @@ in {
         "SUPER, backspace, exec, ${lockCommand}"
         "SUPER, delete, exec, ${logoutCommand}"
 
-        # Screenshots
-        ", Print, exec, grimblast --notify copysave area"
-        "SHIFT, Print, exec, grimblast save area - | swappy -f -"
-        "CONTROL, Print, exec, grimblast --notify copy screen - | swappy -f -"
-        "ALT, Print, exec, grimblast --notify copy area"
-        "SUPER,bracketleft, exec,grimblast --notify copysave area ~/Pictures/$(date \" + %Y-%m-%d \"T\"%H:%M:%S_no_watermark \").png"
+        # Screenshots (Omarchy-style: frozen screen, window snapping,
+        # keyboard selection with Tab/arrows/Enter while the picker is up).
+        #   Print              smart pick -> save + clipboard + edit toast
+        #   SHIFT+Print        snap to a window or monitor rectangle
+        #   CONTROL+Print      whole focused monitor
+        #   ALT+Print          freeform region, clipboard only
+        #   SUPER+CONTROL+Print  OCR the region to the clipboard
+        #   SUPER+Print        colour picker
+        ", Print, exec, ${screenshot}"
+        "SHIFT, Print, exec, ${screenshot} windows"
+        "CONTROL, Print, exec, ${screenshot} fullscreen"
+        "ALT, Print, exec, ${screenshot} region copy"
+        "SUPER CONTROL, Print, exec, ${captureText}"
+        "SUPER, Print, exec, pkill hyprpicker || ${pkgs.hyprpicker}/bin/hyprpicker -a"
 
         # Windows
         "SUPER, S, layoutmsg, togglesplit"
