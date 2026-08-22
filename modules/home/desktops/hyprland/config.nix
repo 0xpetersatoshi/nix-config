@@ -87,6 +87,10 @@ in {
           disable_hyprland_logo = true;
           disable_splash_rendering = true;
           force_default_wallpaper = 0;
+          # Follow xdg-activation requests: e.g. clicking a link in another app
+          # jumps to the browser's window/workspace instead of just flagging it
+          # urgent. (Omarchy enables this in its looknfeel defaults.)
+          focus_on_activate = true;
         };
 
         exec-once =
