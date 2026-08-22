@@ -125,6 +125,7 @@ in {
       pkgs.${namespace}.omarchy-capture-screenshot
       pkgs.${namespace}.omarchy-capture-text
       pkgs.${namespace}.omarchy-capture-region
+      pkgs.${namespace}.omarchy-capture-screenrecording
 
       gpu-screen-recorder
       gpu-screen-recorder-gtk

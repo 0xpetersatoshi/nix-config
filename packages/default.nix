@@ -5,6 +5,7 @@
     ./karabiner-driverkit
     ./localsend-cli-alias
     ./omarchy-capture-region
+    ./omarchy-capture-screenrecording
     ./omarchy-capture-screenshot
     ./omarchy-capture-text
     ./omarchy-launch-floating-terminal-with-presentation

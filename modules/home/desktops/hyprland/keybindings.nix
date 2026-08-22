@@ -69,6 +69,7 @@ with lib; let
 
   screenshot = "${pkgs.${namespace}.omarchy-capture-screenshot}/bin/omarchy-capture-screenshot";
   captureText = "${pkgs.${namespace}.omarchy-capture-text}/bin/omarchy-capture-text";
+  screenrecord = "${pkgs.${namespace}.omarchy-capture-screenrecording}/bin/omarchy-capture-screenrecording";
 
   notificationToggleCommand =
     if isDms
@@ -106,14 +107,21 @@ in {
         #   Print              smart pick -> save + clipboard + edit toast
         #   SHIFT+Print        snap to a window or monitor rectangle
         #   CONTROL+Print      whole focused monitor
-        #   ALT+Print          freeform region, clipboard only
+        #   SUPER+SHIFT+Print  freeform region, clipboard only
         #   SUPER+CONTROL+Print  OCR the region to the clipboard
         #   SUPER+Print        colour picker
+        #   ALT+Print          start/stop a screen recording
         ", Print, exec, ${screenshot}"
         "SHIFT, Print, exec, ${screenshot} windows"
         "CONTROL, Print, exec, ${screenshot} fullscreen"
-        "ALT, Print, exec, ${screenshot} region copy"
+        "SUPER SHIFT, Print, exec, ${screenshot} region copy"
         "SUPER CONTROL, Print, exec, ${captureText}"
+
+        # Screen recording. Same key toggles: press to pick a region/window/
+        # monitor and start, press again to stop, post-process and save.
+        "ALT, Print, exec, ${screenrecord}"
+        "ALT SHIFT, Print, exec, ${screenrecord} --fullscreen --with-desktop-audio"
+        "ALT CONTROL, Print, exec, ${screenrecord} --with-desktop-audio --with-microphone-audio"
         "SUPER, Print, exec, pkill hyprpicker || ${pkgs.hyprpicker}/bin/hyprpicker -a"
 
         # Windows
