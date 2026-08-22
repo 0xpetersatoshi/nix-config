@@ -96,14 +96,14 @@ in {
 
       -- Applications
       hl.bind(mod .. " + A", hl.dsp.exec_cmd("${pypr} toggle pwvucontrol"))
-      hl.bind(mod .. " + B", hl.dsp.exec_cmd("${browser}"))
+      hl.bind(mod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("${browser}"))
       hl.bind(mod .. " + SHIFT + B", hl.dsp.exec_cmd("${browserWork}"))
       hl.bind(mod .. " + E", hl.dsp.exec_cmd("${fileManager}"))
       hl.bind(mod .. " + M", hl.dsp.exec_cmd("${music}"))
       hl.bind(mod .. " + N", hl.dsp.exec_cmd("${notificationToggleCommand}"))
       hl.bind(mod .. " + P", hl.dsp.exec_cmd("${passwordManager}"))
       hl.bind(mod .. " + R", hl.dsp.exec_cmd("${resize}/bin/resize"))
-      hl.bind(mod .. " + T", hl.dsp.exec_cmd("${terminal}"))
+      hl.bind(mod .. " + RETURN", hl.dsp.exec_cmd("${terminal}"))
       hl.bind(mod .. " + Y", hl.dsp.exec_cmd("yubioath-flutter"))
       hl.bind(mod .. " + Space", hl.dsp.exec_cmd("${menuCommand}"))
       hl.bind(mod .. " + SHIFT + T", hl.dsp.exec_cmd("${pypr} toggle term"))
