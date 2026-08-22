@@ -112,6 +112,13 @@
       url = "github:ogulcancelik/herdr";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Source-only: we vendor a couple of files (e.g. nautilus-python
+    # extensions) out of Omarchy. `nix flake update omarchy` pulls upstream.
+    omarchy = {
+      url = "github:basecamp/omarchy";
+      flake = false;
+    };
   };
 
   outputs = inputs: let

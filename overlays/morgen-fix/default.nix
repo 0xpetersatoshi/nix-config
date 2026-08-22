@@ -7,7 +7,7 @@
       ["asar pack --unpack='{*.node,*.ftz,rect-overlay}' \"$TMP/work\" $out/opt/Morgen/resources/app.asar"]
       [''
         substituteInPlace $TMP/work/dist/main.js \
-          --replace-fail "zj&&ee.app.disableHardwareAcceleration()" "void 0"
+          --replace-fail ".app.disableHardwareAcceleration()" ".app"
         asar pack --unpack='{*.node,*.ftz,rect-overlay}' "$TMP/work" $out/opt/Morgen/resources/app.asar
       '']
       oldAttrs.installPhase;

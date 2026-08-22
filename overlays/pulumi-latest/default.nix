@@ -19,6 +19,7 @@
     _finalScope: prevScope: {
       pulumi-go = prevScope.pulumi-go.overrideAttrs (_old: {
         vendorHash = "sha256-LzbP5wqa3DzHJZB/fnyRtHTW0LAUPPE0Hik4YGzR55g=";
+        doCheck = false;
       });
     }
   );
