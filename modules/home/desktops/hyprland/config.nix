@@ -22,7 +22,7 @@ in {
       settings = {
         "$mainMod" = "SUPER";
         "$terminal" = "ghostty";
-        "$fileManager" = "dolphin";
+        "$fileManager" = "nautilus --new-window";
         "$menu" =
           if cfg.bar == "dms"
           then "dms ipc call spotlight toggle"

@@ -20,6 +20,10 @@ in {
         "match:class ^(com.mitchellh.ghostty)$, opacity 0.95 0.95"
 
         "match:class (pinentry-)(.*), stay_focused on" # Fix pinentry losing focus
+
+        # Float the transcode job terminal (omarchy-transcode / transcode.py)
+        "match:class ^(com.omarchy.transcode)$, float on"
+        "match:class ^(com.omarchy.transcode)$, center on"
       ];
     };
   };

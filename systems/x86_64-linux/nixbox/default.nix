@@ -55,6 +55,7 @@
       addons = {
         hyprland.enable = true;
         kde.enable = true;
+        nautilus.enable = true;
       };
     };
     gaming.enable = true;

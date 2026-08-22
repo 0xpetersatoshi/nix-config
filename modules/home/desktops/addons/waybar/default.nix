@@ -89,7 +89,6 @@ in {
               "foot" = " Terminal";
               "thunar" = "󰝰 Files";
               "nautilus" = "󰝰 Files";
-              "org.kde.dolphin" = "󰝰 Files";
               "1Password" = "󰌾 1Password";
               "Slack" = "󰒱 Slack";
               "signal" = "󰍩 Signal";

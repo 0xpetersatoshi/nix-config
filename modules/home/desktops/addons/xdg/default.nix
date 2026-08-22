@@ -11,7 +11,7 @@ with lib.${namespace}; let
 
   browser = ["brave-browser.desktop"];
   pdfApp = ["readest.desktop"];
-  fileManager = ["org.kde.dolphin.desktop"];
+  fileManager = ["org.gnome.Nautilus.desktop"];
   editor = ["nvim.desktop"];
   archivesApp = ["org.kde.ark.desktop"];
   terminal = ["com.mitchellh.ghostty.desktop"];

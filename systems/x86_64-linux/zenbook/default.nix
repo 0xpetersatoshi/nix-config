@@ -61,6 +61,7 @@ in {
         appimage.enable = true;
         hyprland.enable = true;
         kde.enable = true;
+        nautilus.enable = true;
       };
     };
 
