@@ -15,11 +15,10 @@
 #   --match-monitor print "monitor:NAME" instead when the picked geometry
 #                   exactly matches a monitor
 #
-# Differences from upstream: Omarchy registers the picker's keyboard bindings
-# from Hyprland Lua event hooks (hl.on("layer.opened")). This config uses
-# hyprlang, where `hyprctl eval` is unavailable, so the bindings are registered
-# with `hyprctl keyword bind` around slurp's lifetime instead, and cursor warps
-# use `hyprctl dispatch movecursor`.
+# The picker's keyboard bindings live in the Hyprland config, scoped to the
+# lifetime of slurp's "selection" layer via hl.on("layer.opened"/"layer.closed")
+# -- see modules/home/desktops/hyprland/keybindings.nix. They invoke the
+# --take-* / --select-window modes below.
 
 FULLSCREEN_MARKER="${XDG_RUNTIME_DIR:-/tmp}/capture-region-fullscreen"
 WINDOW_MARKER="${XDG_RUNTIME_DIR:-/tmp}/capture-region-window"
@@ -288,34 +287,6 @@ done
 # Keyboard control while slurp is open. Upstream scopes these to slurp's layer
 # surface via Lua layer events; here they are added just before slurp starts and
 # removed as soon as it exits, which brackets the same window of time.
-SELF="$0"
-BOUND=false
-
-bind_selection_keys() {
-  hyprctl keyword bind ",Return,exec,$SELF --take-window" >/dev/null
-  hyprctl keyword bind "CTRL,Return,exec,$SELF --take-fullscreen" >/dev/null
-  hyprctl keyword bind ",Tab,exec,$SELF --select-window next" >/dev/null
-  hyprctl keyword bind "CTRL,Tab,exec,$SELF --select-window prev" >/dev/null
-  local dir
-  for dir in left right up down; do
-    hyprctl keyword bind ",${dir},exec,$SELF --select-window ${dir}" >/dev/null
-  done
-  BOUND=true
-}
-
-unbind_selection_keys() {
-  [[ $BOUND == true ]] || return 0
-  hyprctl keyword unbind ",Return" >/dev/null
-  hyprctl keyword unbind "CTRL,Return" >/dev/null
-  hyprctl keyword unbind ",Tab" >/dev/null
-  hyprctl keyword unbind "CTRL,Tab" >/dev/null
-  local dir
-  for dir in left right up down; do
-    hyprctl keyword unbind ",${dir}" >/dev/null
-  done
-  BOUND=false
-}
-
 # Runs slurp; an empty result with a marker present means one of the --take-*
 # binds was pressed, so the highlighted rectangle or the monitor is the
 # selection.
@@ -323,9 +294,7 @@ pick() {
   local selection
   rm -f "$FULLSCREEN_MARKER" "$WINDOW_MARKER"
 
-  bind_selection_keys
   selection=$(slurp "$@" 2>/dev/null)
-  unbind_selection_keys
 
   if [[ -z $selection && -e $FULLSCREEN_MARKER ]]; then
     rm -f "$FULLSCREEN_MARKER"
@@ -346,7 +315,6 @@ freeze_screen() {
 }
 
 cleanup() {
-  unbind_selection_keys
   [[ $KEEP_FREEZE == true ]] && return
   [[ -n $FREEZE_PID ]] && kill "$FREEZE_PID" 2>/dev/null
 }

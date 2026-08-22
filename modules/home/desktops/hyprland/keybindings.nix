@@ -79,6 +79,7 @@ with lib; let
   screenshot = "${pkgs.${namespace}.omarchy-capture-screenshot}/bin/omarchy-capture-screenshot";
   captureText = "${pkgs.${namespace}.omarchy-capture-text}/bin/omarchy-capture-text";
   screenrecord = "${pkgs.${namespace}.omarchy-capture-screenrecording}/bin/omarchy-capture-screenrecording";
+  captureRegion = "${pkgs.${namespace}.omarchy-capture-region}/bin/omarchy-capture-region";
 
   notificationToggleCommand =
     if isDms
@@ -121,6 +122,46 @@ in {
       hl.bind(mod .. " + SHIFT + Print", hl.dsp.exec_cmd("${screenshot} region copy"))    -- freeform region, clipboard only
       hl.bind(mod .. " + CONTROL + Print", hl.dsp.exec_cmd("${captureText}"))             -- OCR the region to the clipboard
       hl.bind(mod .. " + Print", hl.dsp.exec_cmd("pkill hyprpicker || ${pkgs.hyprpicker}/bin/hyprpicker -a"))
+
+      -- Keyboard control for the slurp region picker. The binds live exactly as
+      -- long as a selection layer is on screen (slurp opens one per monitor),
+      -- so they cannot leak or get stuck. Unbinding by key would take a
+      -- same-key binding out of this config with it, so each handle is kept
+      -- and removed individually.
+      local selection_layers = 0
+      local selection_binds = {}
+
+      hl.on("layer.opened", function(layer)
+        if layer.namespace == "selection" then
+          selection_layers = selection_layers + 1
+          if selection_layers == 1 then
+            selection_binds = {
+              hl.bind("RETURN", hl.dsp.exec_cmd("${captureRegion} --take-window")),
+              hl.bind("CTRL + RETURN", hl.dsp.exec_cmd("${captureRegion} --take-fullscreen")),
+              hl.bind("TAB", hl.dsp.exec_cmd("${captureRegion} --select-window next")),
+              hl.bind("CTRL + TAB", hl.dsp.exec_cmd("${captureRegion} --select-window prev")),
+            }
+            for _, direction in ipairs({ "left", "right", "up", "down" }) do
+              table.insert(
+                selection_binds,
+                hl.bind(direction:upper(), hl.dsp.exec_cmd("${captureRegion} --select-window " .. direction))
+              )
+            end
+          end
+        end
+      end)
+
+      hl.on("layer.closed", function(layer)
+        if layer.namespace == "selection" and selection_layers > 0 then
+          selection_layers = selection_layers - 1
+          if selection_layers == 0 then
+            for _, keybind in ipairs(selection_binds) do
+              keybind:unbind()
+            end
+            selection_binds = {}
+          end
+        end
+      end)
 
       -- Screen recording. Same key toggles: press to pick a region/window/
       -- monitor and start, press again to stop, post-process and save.
