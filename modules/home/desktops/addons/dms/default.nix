@@ -38,6 +38,9 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       wl-clipboard
+      # required by the claudeCodeUsage plugin's get-claude-usage script
+      jq
+      curl
     ];
 
     programs.dank-material-shell = {
@@ -125,6 +128,10 @@ in {
               }
               {
                 id = "battery";
+                enabled = true;
+              }
+              {
+                id = "claudeCodeUsage";
                 enabled = true;
               }
               {
@@ -234,6 +241,25 @@ in {
       };
 
       plugins = {
+        # Claude Code subscription usage in the bar: 5-hour rate-limit ring,
+        # pacing, today/week/month tokens, estimated cost, and a weekly chart.
+        # Reads ~/.claude/.credentials.json and ~/.claude/projects/ via its own
+        # bash script, so it needs jq and curl on PATH (added to home.packages
+        # below). Placed in the bar via the claudeCodeUsage widget entry above.
+        claudeCodeUsage = {
+          enable = true;
+          src = pkgs.fetchFromGitHub {
+            owner = "titeya";
+            repo = "dms-claudecode";
+            rev = "4c29b39f8299abbc113bfc085e28f805fde35e10";
+            hash = "sha256-i5FdG7Q7dJfmxxf5b7tB/Gt/Y2h/muYMQg3S+pr7SgQ=";
+          };
+          settings = {
+            refreshInterval = 5; # minutes (2-15)
+            showPacing = true;
+          };
+        };
+
         calculator = {
           enable = true;
           src = pkgs.fetchFromGitHub {
