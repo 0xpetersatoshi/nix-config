@@ -107,7 +107,7 @@
       # in setup mode, run `sudo sbctl enroll-keys --microsoft`, re-enable
       # Secure Boot, and finally re-run `luksCryptenroller` (the old TPM2
       # enrollment is bound to the zenbook's TPM).
-      secureBoot = true;
+      secureBoot = false;
       luksDevicePaths = ["/dev/disk/by-uuid/24dd164a-9843-4e7d-8645-6efccaa7043f"];
       secureBootKeysPath = "/var/lib/sbctl";
       nixConfigurationLimit = 5;
