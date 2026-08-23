@@ -20,7 +20,6 @@ with lib; let
       "${pkgs.solaar}/bin/solaar -w hide"
       "hyprctl dispatch workspace 1"
     ]
-    ++ lib.optionals config.desktops.addons.kde.enable ["${pkgs.kdePackages.plasma-nm}/bin/nm-tray"]
     ++ cfg.execOnceExtras;
 in {
   config = mkIf cfg.enable {
@@ -29,7 +28,10 @@ in {
       configType = "lua";
 
       systemd = {
-        enable = true;
+        # uwsm owns the session -- it starts graphical-session.target itself and
+        # imports the environment. Letting HM also start hyprland-session.target
+        # double-activates the graphical session.
+        enable = false;
         enableXdgAutostart = true;
         variables = ["--all"];
       };

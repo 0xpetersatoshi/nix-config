@@ -43,6 +43,9 @@ in {
 
     browsers.chromium.enable = true;
 
+    # Not a plasma component -- just a phone bridge, so it lives with the role
+    programs.kdeconnect.enable = true;
+
     roles = {
       common.enable = true;
     };

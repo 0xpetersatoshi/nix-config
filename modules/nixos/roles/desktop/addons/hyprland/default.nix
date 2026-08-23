@@ -20,6 +20,12 @@ in {
       withUWSM = true;
     };
 
+    # uwsm is what actually manages the session (it owns graphical-session.target),
+    # so point the greeter at the uwsm entry. The plain `hyprland.desktop` session
+    # stays in the list as a fallback, but user services bound to
+    # graphical-session.target will not come up under it.
+    services.displayManager.defaultSession = "hyprland-uwsm";
+
     security.pam.services = {
       hyprlock = {
         # Disable u2f authentication for hyprlock

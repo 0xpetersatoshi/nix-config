@@ -64,7 +64,8 @@ in {
       addons = {
         appimage.enable = true;
         hyprland.enable = true;
-        kde.enable = true;
+        kwallet.enable = true;
+        sddm.enable = true;
         nautilus.enable = true;
       };
     };
