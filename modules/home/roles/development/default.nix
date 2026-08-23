@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }:
 with lib; let
@@ -28,6 +29,24 @@ in {
 
     cloud = {
       google.enable = true;
+    };
+
+    # Scratch dirs per experiment; upstream's module also wires the shell
+    # `try init` hook so `try <name>` cds into the new directory.
+    programs.try = {
+      enable = true;
+      # `try init` emits a shell function that calls $out/bin/.try-wrapped --
+      # the inner script -- which skips the makeBinaryWrapper that puts ruby on
+      # PATH, so every invocation died with "env: 'ruby': No such file". Give
+      # the inner script an absolute ruby shebang so it stands alone.
+      package = inputs.try.packages."${pkgs.system}".default.overrideAttrs (old: {
+        postFixup =
+          (old.postFixup or "")
+          + ''
+            substituteInPlace "$out/bin/.try-wrapped" \
+              --replace-fail "#!/usr/bin/env ruby" "#!${pkgs.ruby_3_3}/bin/ruby"
+          '';
+      });
     };
 
     cli = {

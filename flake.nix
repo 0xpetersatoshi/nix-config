@@ -113,6 +113,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    try = {
+      url = "github:tobi/try";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Source-only: we vendor a couple of files (e.g. nautilus-python
     # extensions) out of Omarchy. `nix flake update omarchy` pulls upstream.
     omarchy = {
@@ -158,6 +163,7 @@
         dms.homeModules.dank-material-shell
         danksearch.homeModules.dsearch
         hunk.homeManagerModules.default
+        try.homeModules.default
         # hyprpanel.homeManagerModules.hyprpanel
       ];
 
