@@ -86,12 +86,12 @@ in {
             ];
             showOnLastDisplay = true;
             leftWidgets = [
-              "launcherButton"
+              # "launcherButton"
               "workspaceSwitcher"
               "focusedWindow"
               {
                 id = "appsDock";
-                enabled = true;
+                enabled = false;
               }
             ];
             centerWidgets = [
@@ -103,6 +103,16 @@ in {
               {
                 id = "systemTray";
                 enabled = true;
+                # The bar's three sections are anchored independently (left /
+                # horizontalCenter / right) and are not clipped, so the centered
+                # clock+weather pill paints over whatever the right section
+                # pushes under it -- the tray, being leftmost on the right.
+                # DMS's own overlap guard assumes a 200px right section, so with
+                # 12 widgets here it never fires. Capping the tray shrinks the
+                # right section from its left edge, pulling the icons clear.
+                # The overflow chevron occupies a slot, so N visible costs N+1.
+                trayAutoOverflow = true;
+                trayMaxVisibleItems = 4;
               }
               {
                 id = "clipboard";
@@ -118,7 +128,7 @@ in {
               }
               {
                 id = "gpuTemp";
-                enabled = true;
+                enabled = false;
                 selectedGpuIndex = 0;
                 pciId = "1002:7550";
               }
@@ -172,7 +182,7 @@ in {
             visible = true;
             popupGapsAuto = true;
             popupGapsManual = 4;
-            widgetPadding = 8;
+            widgetPadding = 4;
             iconScale = 1.2;
           }
         ];
