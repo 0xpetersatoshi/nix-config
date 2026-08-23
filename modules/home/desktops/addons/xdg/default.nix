@@ -10,13 +10,13 @@ with lib.${namespace}; let
   cfg = config.desktops.addons.xdg;
 
   browser = ["brave-browser.desktop"];
-  pdfApp = ["readest.desktop"];
+  pdfApp = ["org.gnome.Evince.desktop"];
   fileManager = ["org.gnome.Nautilus.desktop"];
   editor = ["nvim.desktop"];
   archivesApp = ["org.kde.ark.desktop"];
   terminal = ["com.mitchellh.ghostty.desktop"];
   mail = ["thunderbird.desktop"];
-  image = ["org.kde.gwenview.desktop"];
+  image = ["imv.desktop"];
   video = ["vlc.desktop"];
 
   # XDG MIME types

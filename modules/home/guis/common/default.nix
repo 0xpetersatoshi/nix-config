@@ -18,7 +18,8 @@ in {
     home.packages = with pkgs; [
       cava # audio visualizer
       keymapp
-      readest
+      evince
+      imv
       remmina
       spotify
       vlc
