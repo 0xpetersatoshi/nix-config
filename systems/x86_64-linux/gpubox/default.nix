@@ -52,6 +52,7 @@
 
   services.${namespace}.ollama = {
     enable = true;
+    package = pkgs.ollama-rocm;
     loadModels = [
       "deepseek-r1:32b"
     ];
@@ -63,5 +64,4 @@
     stateVersion = "24.11";
   };
 
-  users.users.peter.isNormalUser = lib.mkForce false;
 }

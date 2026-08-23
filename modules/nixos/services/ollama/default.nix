@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   namespace,
   ...
 }:
@@ -10,10 +11,10 @@ with lib.${namespace}; let
 in {
   options.services.${namespace}.ollama = {
     enable = mkEnableOption "Enable the ollama service";
-    accelerationType = lib.mkOption {
-      type = lib.types.str;
-      default = "rocm";
-      description = "The interface to use for hardware acceleration";
+    # `services.ollama.acceleration` was removed upstream; the acceleration
+    # backend is now chosen by picking the matching package.
+    package = lib.mkPackageOption pkgs "ollama" {
+      example = "pkgs.ollama-rocm";
     };
     rocmOverrideGfx = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
@@ -31,13 +32,13 @@ in {
   config = mkIf cfg.enable {
     services = {
       ollama = {
+        # Left on the upstream defaults: DynamicUser + /var/lib/ollama.
+        # Running the daemon as a login user forces it to be a system user
+        # (upstream asserts on it) — the CLI talks to it over HTTP anyway.
         enable = true;
-        user = config.user.name;
-        home = "/home/${config.user.name}";
-        group = "users";
         openFirewall = true;
+        package = cfg.package;
         loadModels = cfg.loadModels;
-        acceleration = cfg.accelerationType;
         rocmOverrideGfx = cfg.rocmOverrideGfx;
       };
     };

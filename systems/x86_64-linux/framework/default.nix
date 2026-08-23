@@ -43,6 +43,13 @@
     ${namespace} = {
       keybase.enable = true;
       samba.enable = true;
+      # Xe3 iGPU: no ROCm/CUDA, so Vulkan via mesa's ANV. Drop to
+      # pkgs.ollama-cpu if a model misbehaves on the Vulkan backend.
+      ollama = {
+        enable = true;
+        package = pkgs.ollama-vulkan;
+        loadModels = ["qwen3:8b" "gemma4:e4b"];
+      };
     };
   };
 
