@@ -58,6 +58,25 @@ with lib; let
   passwordManager = "1password";
   music = "spotify";
 
+  # Flip the active workspace between dwindle and scrolling. `hyprctl eval`
+  # only works under the Lua config manager; fall back to the hyprlang keyword
+  # so this works either way.
+  layoutToggle = pkgs.writeShellScriptBin "hypr-layout-toggle" ''
+    ws=$(hyprctl activeworkspace -j)
+    id=$(jq -r '.id' <<<"$ws")
+    [[ $id =~ ^-?[0-9]+$ ]] || exit 1
+
+    case "$(jq -r '.tiledLayout' <<<"$ws")" in
+      dwindle) new=scrolling ;;
+      *) new=dwindle ;;
+    esac
+
+    hyprctl eval "hl.workspace_rule({ workspace = \"$id\", layout = \"$new\" })" >/dev/null 2>&1 ||
+      hyprctl keyword workspace "$id, layout:$new"
+
+    notify-send -t 1500 "Workspace layout: $new"
+  '';
+
   increaseBrightnessCommand = "${pkgs.brightnessctl}/bin/brightnessctl set +5%";
   decreaseBrightnessCommand = "${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
 
@@ -175,6 +194,7 @@ in {
       hl.bind(mod .. " + S", hl.dsp.layout("togglesplit"))
       hl.bind(mod .. " + V", hl.dsp.window.float({ action = "toggle" }))
       hl.bind(mod .. " + G", hl.dsp.group.toggle())
+      hl.bind(mod .. " + ALT + CONTROL + SHIFT + L", hl.dsp.exec_cmd("${layoutToggle}/bin/hypr-layout-toggle"))
       hl.bind(mod .. " + X", hl.dsp.group.lock_active({ action = "toggle" }))
       hl.bind(mod .. " + Tab", hl.dsp.group.next())
       hl.bind(mod .. " + SHIFT + Tab", hl.dsp.group.prev())
