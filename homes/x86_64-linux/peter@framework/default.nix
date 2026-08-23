@@ -29,6 +29,14 @@
     };
   };
 
+  # DMS probes for the fingerprint reader once, when the shell starts, and never
+  # re-probes on its own: if `fprintd-list` is slow or fprintd is not up yet at
+  # login, the lock screen silently runs without the reader for the whole
+  # session (password only) until DMS is restarted. The reader is permanent
+  # hardware here, so skip the probe and let DMS's fprintd PAM context -- which
+  # already retries with backoff -- be the thing that decides.
+  systemd.user.services.dms.Service.Environment = ["DMS_FORCE_FPRINT_AVAILABLE=1"];
+
   guis = {
     appimage.superbacked.enable = pkgs.stdenv.isLinux;
     media.enable = true;

@@ -50,10 +50,9 @@ in {
         };
       };
 
-      services = {
-        sudo.u2fAuth = true;
-        login.u2fAuth = lib.mkForce false;
-      };
+      # sudo (and every other service) picks up pam_u2f from u2f.enable above;
+      # hosts with a fingerprint reader turn that off wholesale.
+      services.login.u2fAuth = lib.mkForce false;
     };
 
     # Relax polkit-agent-helper sandboxing so pam_u2f can access YubiKey HID devices.
