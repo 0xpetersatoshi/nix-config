@@ -21,10 +21,27 @@ in {
     };
 
     # uwsm is what actually manages the session (it owns graphical-session.target),
-    # so point the greeter at the uwsm entry. The plain `hyprland.desktop` session
-    # stays in the list as a fallback, but user services bound to
-    # graphical-session.target will not come up under it.
+    # so point the greeter at the uwsm entry.
     services.displayManager.defaultSession = "hyprland-uwsm";
+
+    # pkgs.hyprland ships BOTH hyprland.desktop and hyprland-uwsm.desktop
+    # (providedSessions = ["hyprland" "hyprland-uwsm"]) and the module gives no way
+    # to pick one. The plain entry is a trap now: nothing starts
+    # graphical-session.target under it, so the bar/shell never comes up.
+    #
+    # sessionPackages is a list, so overriding it would drop every other
+    # contributor (steam's gamescope session, whose package is private to that
+    # module). Point the greeter at a filtered copy instead -- steam and any
+    # future session package come through untouched. hyprland.desktop itself must
+    # stay installed: uwsm's Exec line resolves it by name out of XDG_DATA_DIRS.
+    services.displayManager.sddm.settings.Wayland.SessionDir = mkIf config.services.displayManager.sddm.enable "${pkgs.runCommand "wayland-sessions-uwsm-only" {
+      preferLocalBuild = true;
+      allowSubstitutes = false;
+    } ''
+      cp -rL ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions $out
+      chmod -R u+w $out
+      rm -f $out/hyprland.desktop
+    ''}";
 
     security.pam.services = {
       hyprlock = {
