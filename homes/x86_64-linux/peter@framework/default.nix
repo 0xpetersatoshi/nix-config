@@ -53,7 +53,7 @@
     libnotify
     nix-prefetch
     nix-prefetch-scripts
-    wireguard-tools # ad-hoc `wg-quick up/down` for the UDM WireGuard client
+    wireguard-tools # ad-hoc `wg-quick up/down` for the home WireGuard client
   ];
 
   cloud.aws = {
@@ -62,26 +62,25 @@
   };
 
   # Ad-hoc WireGuard client for the UniFi Dream Machine. Nothing runs at boot;
-  # bring it up on demand with `wg-udm-up` / `wg-udm-down`.
+  # bring it up on demand with `wg-home-up` / `wg-home-down`.
   #
-  # The conf lives age-encrypted in modules/home/secrets.yaml (key: wireguard-udm-conf)
-  # and is decrypted at login to tmpfs at $XDG_RUNTIME_DIR/wg-udm.conf (mode 0400).
+  # The conf lives age-encrypted in modules/home/secrets.yaml (key: wireguard-home-conf)
+  # and is decrypted at login to tmpfs at $XDG_RUNTIME_DIR/wg-home.conf (mode 0400).
   # The plaintext key therefore never persists on disk.
-  sops.secrets.wireguard-udm-conf = lib.mkIf config.igloo.security.sops.enable {
-    path = "%r/wg-udm.conf"; # %r = $XDG_RUNTIME_DIR (memory-backed, per-user)
+  sops.secrets.wireguard-home-conf = lib.mkIf config.igloo.security.sops.enable {
+    path = "%r/wg-home.conf"; # %r = $XDG_RUNTIME_DIR (memory-backed, per-user)
   };
 
-  sops.secrets.wireguard-udm-conf-local = lib.mkIf config.igloo.security.sops.enable {
-    path = "%r/wg-udm-local.conf"; # %r = $XDG_RUNTIME_DIR (memory-backed, per-user)
+  sops.secrets.wireguard-home-conf-local = lib.mkIf config.igloo.security.sops.enable {
+    path = "%r/wg-home-local.conf"; # %r = $XDG_RUNTIME_DIR (memory-backed, per-user)
   };
 
   home.shellAliases = {
-    wg-udm-up = ''sudo wg-quick up "$XDG_RUNTIME_DIR/wg-udm.conf"'';
-    wg-udm-down = ''sudo wg-quick down "$XDG_RUNTIME_DIR/wg-udm.conf"'';
-    wg-udm-up-local = ''sudo wg-quick up "$XDG_RUNTIME_DIR/wg-udm-local.conf"'';
-    wg-udm-down-local = ''sudo wg-quick down "$XDG_RUNTIME_DIR/wg-udm-local.conf"'';
+    wg-home-up = ''sudo wg-quick up "$XDG_RUNTIME_DIR/wg-home.conf"'';
+    wg-home-down = ''sudo wg-quick down "$XDG_RUNTIME_DIR/wg-home.conf"'';
+    wg-home-up-local = ''sudo wg-quick up "$XDG_RUNTIME_DIR/wg-home-local.conf"'';
+    wg-home-down-local = ''sudo wg-quick down "$XDG_RUNTIME_DIR/wg-home-local.conf"'';
   };
-
 
   roles = {
     common.enable = true;
