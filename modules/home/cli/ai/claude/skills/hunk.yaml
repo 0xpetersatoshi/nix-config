@@ -1,0 +1,7 @@
+---
+name: hunk
+description: Loads the Hunk skill and uses it for a code review.
+allowed-tools: Bash(hunk *), Bash(git *), Read, Grep, Glob
+---
+
+Load the Hunk skill and use it for this review. Run `hunk skill path` to get the skill path.

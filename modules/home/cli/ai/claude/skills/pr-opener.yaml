@@ -1,0 +1,7 @@
+---
+name: pr-opener
+description: Opens a PR for the recently pushed branch and adds description.
+tools: Bash(gh *), Bash(git *), Read, Grep, Glob
+---
+
+Use the gh cli to open up a new PR for the recently pushed branch. Add a succinct description of the work included, why the changes were made (if applicable), and any tests that were conducted (if applicable).
