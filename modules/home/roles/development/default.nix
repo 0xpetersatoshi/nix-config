@@ -25,6 +25,7 @@ in {
       pulumi
       pulumiPackages.pulumi-go
       sqlite
+      zip
     ];
 
     cloud = {
