@@ -58,6 +58,16 @@ in {
       };
     };
 
+    # Don't restart iwd on a nixos switch. Restarting it deauthenticates wlan0 and
+    # reassociation takes ~30s (autoconnect scan + auth + DHCP). Anything that touches
+    # the CIFS automounts in /mnt during that window (gvfs walking the GTK bookmarks,
+    # for one) fails with ENETUNREACH, and the failed mount units make
+    # switch-to-configuration exit 4 — "Activation (test) failed". New iwd versions
+    # take effect at the next reboot instead.
+    systemd.services = mkIf cfg.wireless {
+      iwd.restartIfChanged = false;
+    };
+
     # systemd-resolved manages /etc/resolv.conf and receives DNS server info from
     # systemd-networkd (wired) or iwd (wireless). Without resolved running,
     # /etc/resolv.conf has no nameservers when Tailscale is off — DNS fails entirely
