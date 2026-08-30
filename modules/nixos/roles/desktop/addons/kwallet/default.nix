@@ -21,21 +21,23 @@ in {
     # without it libsecret clients (1Password's 2FA token) cannot persist secrets.
     environment.systemPackages = [pkgs.kdePackages.kwallet];
 
-    security.pam.services = {
-      ${config.user.name}.kwallet = {
+    # Unlocks the wallet with the login password. This must live on the "login"
+    # PAM service, not "sddm": the sddm service is defined via a literal `text`
+    # ("auth substack login" ...) which overrides generated options like
+    # kwallet.enable, but it substacks login -- so kwallet runs from there.
+    # (This is also what services.desktopManager.plasma6 does.)
+    security.pam.services.login = {
+      kwallet = {
         enable = true;
         package = pkgs.kdePackages.kwallet-pam;
       };
 
-      # Unlocks the wallet with the login password at the greeter, so the
-      # session never prompts for it separately.
-      sddm = mkIf config.services.displayManager.sddm.enable {
-        kwallet = {
-          enable = true;
-          package = pkgs.kdePackages.kwallet-pam;
-          forceRun = true;
-        };
-      };
+      # The wallet key is derived from the typed login password. fprintd is
+      # auto-added to every PAM service as "sufficient" ahead of the password
+      # modules, so a fingerprint login skips them and the wallet prompts
+      # anyway. Force password auth at login; fingerprint stays for
+      # sudo/polkit/DMS lock (see security/fingerprint).
+      fprintAuth = false;
     };
   };
 }
