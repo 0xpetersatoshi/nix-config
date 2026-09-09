@@ -19,12 +19,11 @@ with lib.${namespace}; let
   # `omarchy-launch-floating-terminal-with-presentation`; we ship NixOS-native
   # equivalents of both below (see packages/omarchy-transcode and
   # packages/omarchy-launch-floating-terminal-with-presentation).
-  omarchy-nautilus-extensions =
-    pkgs.runCommandLocal "omarchy-nautilus-extensions" {} ''
-      mkdir -p "$out/share/nautilus-python/extensions"
-      cp ${inputs.omarchy}/default/nautilus-python/extensions/*.py \
-        "$out/share/nautilus-python/extensions/"
-    '';
+  omarchy-nautilus-extensions = pkgs.runCommandLocal "omarchy-nautilus-extensions" {} ''
+    mkdir -p "$out/share/nautilus-python/extensions"
+    cp ${inputs.omarchy}/default/nautilus-python/extensions/*.py \
+      "$out/share/nautilus-python/extensions/"
+  '';
 in {
   options.roles.desktop.addons.nautilus = with types; {
     enable = mkBoolOpt false "Whether to enable the gnome file manager.";
@@ -66,6 +65,12 @@ in {
     };
 
     snowfallorg.users.${config.user.name}.home.config = {
+      # Nautilus dropped the XDG user dirs from its sidebar, so bookmark them.
+      # mkBefore keeps them above the samba share bookmarks.
+      gtk.gtk3.bookmarks = mkBefore (map
+        (dir: "file://${config.users.users.${config.user.name}.home}/${dir}")
+        ["Documents" "Downloads" "Pictures" "Videos"]);
+
       dconf.settings = {
         "org/gnome/desktop/privacy" = {
           remember-recent-files = false;
