@@ -185,7 +185,9 @@ in {
       # On the next switch HM tries to back that file up to mimeapps.list.hm.bak and
       # aborts activation if a stale backup already exists ("would be clobbered").
       # Force HM to overwrite it instead — the associations above are the source of truth.
-      configFile."mimeapps.list".force = mkIf pkgs.stdenv.isLinux true;
+      configFile = mkIf pkgs.stdenv.isLinux {
+        "mimeapps.list".force = true;
+      };
 
       userDirs = mkIf pkgs.stdenv.isLinux {
         enable = true;
