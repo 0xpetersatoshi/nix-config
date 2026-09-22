@@ -46,7 +46,7 @@ in {
       base16Scheme = "${pkgs.base16-schemes}/share/themes/${cfg.theme}.yaml";
       image = mkIf (cfg.image != null) cfg.image;
 
-      cursor = cfg.cursor;
+      cursor = mkIf pkgs.stdenv.hostPlatform.isLinux cfg.cursor;
 
       fonts = {
         sizes = {
