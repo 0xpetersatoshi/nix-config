@@ -17,7 +17,7 @@ in {
     services = {
       pcscd.enable = true;
       udev.packages = with pkgs; [yubikey-personalization];
-      dbus.packages = [pkgs.gcr];
+      dbus.packages = [pkgs.gcr_4];
 
       # systemd-uaccess (triggered via 60-fido-id.rules because the YubiKey
       # exposes a FIDO interface) installs an ACL granting the seat user access
