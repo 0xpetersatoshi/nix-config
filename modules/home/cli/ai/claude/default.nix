@@ -47,8 +47,16 @@ with lib.${namespace}; let
   notificationScript = pkgs.writeShellScript "claude-code-notify-event" notifyEvent;
 
   settings = {
+    extraKnownMarketplaces = {
+      rivet.source = {
+        source = "github";
+        repo = "rivettax/claude-plugins";
+      };
+    };
+
     enabledPlugins = {
       "ponytail@ponytail" = true;
+      "rivet-eng@rivet" = true;
     };
 
     hooks = {
