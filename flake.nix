@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/release-26.05";
+    # Bumped independently (`nix flake update nixpkgs-opencode`) to get a fresh opencode without updating everything.
+    nixpkgs-opencode.url = "github:nixos/nixpkgs/nixos-unstable";
 
     darwin = {
       url = "github:LnL7/nix-darwin/master";
