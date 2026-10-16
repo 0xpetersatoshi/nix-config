@@ -52,11 +52,16 @@ with lib.${namespace}; let
         source = "github";
         repo = "rivettax/claude-plugins";
       };
+      meridianlabs-ai.source = {
+        source = "github";
+        repo = "meridianlabs-ai/inspect-skills";
+      };
     };
 
     enabledPlugins = {
       "ponytail@ponytail" = true;
       "rivet-eng@rivet" = true;
+      "inspect-skills@meridian" = true;
     };
 
     hooks = {
