@@ -56,12 +56,17 @@ with lib.${namespace}; let
         source = "github";
         repo = "meridianlabs-ai/inspect-skills";
       };
+      zj-radar.source = {
+        source = "github";
+        repo = "marktoda/zj-radar";
+      };
     };
 
     enabledPlugins = {
       "ponytail@ponytail" = true;
       "rivet-eng@rivet" = true;
       "inspect-skills@meridian" = true;
+      "zj-radar-claude@zj-radar" = true;
     };
 
     hooks = {

@@ -55,6 +55,10 @@
       url = "github:dj95/zjstatus";
     };
 
+    zj-radar = {
+      url = "github:marktoda/zj-radar";
+    };
+
     # Hyprland
 
     hypr-contrib = {

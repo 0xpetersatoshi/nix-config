@@ -8,6 +8,71 @@ with lib;
 with lib.igloo; let
   cfg = config.cli.multiplexers.zellij;
   inherit (config.lib.stylix) colors;
+  bar = ''
+    pane size=2 borderless=true {
+        plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+            format_left   "{mode}#[bg=#${colors.base00}] {tabs}"
+            format_center ""
+            format_right  "#[bg=#${colors.base00},fg=#${colors.base0D}]#[bg=#${colors.base0D},fg=#${colors.base01},bold] #[bg=#${colors.base02},fg=#${colors.base05},bold] {session} #[bg=#${colors.base03},fg=#${colors.base05},bold]"
+            format_space  ""
+            format_hide_on_overlength "false"
+            format_precedence "crl"
+
+            border_enabled  "false"
+            border_char     "─"
+            border_format   "#[fg=#6C7086]{char}"
+            border_position "top"
+
+            mode_normal        "#[bg=#${colors.base0B},fg=#${colors.base02},bold] NORMAL#[bg=#${colors.base03},fg=#${colors.base0B}]█"
+            mode_locked        "#[bg=#${colors.base04},fg=#${colors.base02},bold] LOCKED #[bg=#${colors.base03},fg=#${colors.base04}]█"
+            mode_resize        "#[bg=#${colors.base08},fg=#${colors.base02},bold] RESIZE#[bg=#${colors.base03},fg=#${colors.base08}]█"
+            mode_pane          "#[bg=#${colors.base0D},fg=#${colors.base02},bold] PANE#[bg=#${colors.base03},fg=#${colors.base0D}]█"
+            mode_tab           "#[bg=#${colors.base07},fg=#${colors.base02},bold] TAB#[bg=#${colors.base03},fg=#${colors.base07}]█"
+            mode_scroll        "#[bg=#${colors.base0A},fg=#${colors.base02},bold] SCROLL#[bg=#${colors.base03},fg=#${colors.base0A}]█"
+            mode_enter_search  "#[bg=#${colors.base0D},fg=#${colors.base02},bold] ENT-SEARCH#[bg=#${colors.base03},fg=#${colors.base0D}]█"
+            mode_search        "#[bg=#${colors.base0D},fg=#${colors.base02},bold] SEARCHARCH#[bg=#${colors.base03},fg=#${colors.base0D}]█"
+            mode_rename_tab    "#[bg=#${colors.base07},fg=#${colors.base02},bold] RENAME-TAB#[bg=#${colors.base03},fg=#${colors.base07}]█"
+            mode_rename_pane   "#[bg=#${colors.base0D},fg=#${colors.base02},bold] RENAME-PANE#[bg=#${colors.base03},fg=#${colors.base0D}]█"
+            mode_session       "#[bg=#${colors.base0E},fg=#${colors.base02},bold] SESSION#[bg=#${colors.base03},fg=#${colors.base0E}]█"
+            mode_move          "#[bg=#${colors.base0F},fg=#${colors.base02},bold] MOVE#[bg=#${colors.base03},fg=#${colors.base0F}]█"
+            mode_prompt        "#[bg=#${colors.base0D},fg=#${colors.base02},bold] PROMPT#[bg=#${colors.base03},fg=#${colors.base0D}]█"
+            mode_tmux          "#[bg=#${colors.base09},fg=#${colors.base02},bold] TMUX#[bg=#${colors.base03},fg=#${colors.base09}]█"
+
+            // formatting for inactive tabs
+            tab_normal              "#[bg=#${colors.base03},fg=#${colors.base09}]█#[bg=#${colors.base09},fg=#${colors.base02},bold]{index} #[bg=#${colors.base02},fg=#${colors.base05},bold] {name}{floating_indicator}#[bg=#${colors.base03},fg=#${colors.base02},bold]█"
+            tab_normal_fullscreen   "#[bg=#${colors.base03},fg=#${colors.base09}]█#[bg=#${colors.base09},fg=#${colors.base02},bold]{index} #[bg=#${colors.base02},fg=#${colors.base05},bold] {name}{fullscreen_indicator}#[bg=#${colors.base03},fg=#${colors.base02},bold]█"
+            tab_normal_sync         "#[bg=#${colors.base03},fg=#${colors.base09}]█#[bg=#${colors.base09},fg=#${colors.base02},bold]{index} #[bg=#${colors.base02},fg=#${colors.base05},bold] {name}{sync_indicator}#[bg=#${colors.base03},fg=#${colors.base02},bold]█"
+
+            // formatting for the current active tab
+            tab_active              "#[bg=#${colors.base03},fg=#${colors.base0D}]█#[bg=#${colors.base0D},fg=#${colors.base02},bold]{index} #[bg=#${colors.base02},fg=#${colors.base05},bold] {name}{floating_indicator}#[bg=#${colors.base03},fg=#${colors.base02},bold]█"
+            tab_active_fullscreen   "#[bg=#${colors.base03},fg=#${colors.base0D}]█#[bg=#${colors.base0D},fg=#${colors.base02},bold]{index} #[bg=#${colors.base02},fg=#${colors.base05},bold] {name}{fullscreen_indicator}#[bg=#${colors.base03},fg=#${colors.base02},bold]█"
+            tab_active_sync         "#[bg=#${colors.base03},fg=#${colors.base0D}]█#[bg=#${colors.base0D},fg=#${colors.base02},bold]{index} #[bg=#${colors.base02},fg=#${colors.base05},bold] {name}{sync_indicator}#[bg=#${colors.base03},fg=#${colors.base02},bold]█"
+
+            // separator between the tabs
+            tab_separator           "#[bg=#${colors.base00}] "
+
+            // indicators
+            tab_sync_indicator       " "
+            tab_fullscreen_indicator " 󰊓"
+            tab_floating_indicator   " 󰹙"
+
+            command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
+            command_git_branch_format      "#[fg=blue] {stdout} "
+            command_git_branch_interval    "10"
+            command_git_branch_rendermode  "static"
+
+            datetime        "#[fg=#6C7086,bold] {format} "
+            datetime_format "%A, %d %b %Y %H:%M"
+            datetime_timezone "America/Los_Angeles"
+        }
+    }
+  '';
+  rail = inner: ''
+    pane split_direction="vertical" {
+        pane size=32 borderless=true { plugin location="radar"; }
+        ${inner}
+    }
+  '';
 in {
   options.cli.multiplexers.zellij = with types; {
     enable = mkBoolOpt false "enable zellij multiplexer";
@@ -21,22 +86,36 @@ in {
         (builtins.readFile ./config.kdl);
     xdg.configFile."zellij/plugins/zellij-autolock.wasm".source = ./plugins/zellij-autolock.wasm;
     xdg.configFile."zellij/plugins/zjstatus.wasm".source = "${pkgs.zjstatus}/bin/zjstatus.wasm";
+    # stable path: zellij keys permission grants by location string
+    xdg.configFile."zellij/plugins/zj_radar.wasm".source = "${pkgs.zj-radar}/bin/zj_radar.wasm";
+    # producer hooks call `zj-radar notify` from PATH
+    home.packages = [
+      # ponytail: Claude's internal post-turn agent fires SubagentStop (empty agent_type) after Stop;
+      # zj-radar maps it to "running" and the row sticks. Drop it here; remove once fixed upstream.
+      (pkgs.writeShellScriptBin "zj-radar" ''
+        real=${pkgs.zj-radar-cli}/bin/zj-radar
+        [ "$1 $2 $4" = "notify claude running" ] || exec "$real" "$@"
+        input=$(cat)
+        [ "$(printf '%s' "$input" | ${pkgs.jq}/bin/jq -r '"\(.hook_event_name)/\(.agent_type // "")"')" = "SubagentStop/" ] && exit 0
+        printf '%s' "$input" | exec "$real" "$@"
+      '')
+    ];
     xdg.configFile."zellij/layouts/default.kdl".text = ''
       layout {
           swap_tiled_layout name="vertical" {
-              tab max_panes=5 {
+              ui max_panes=5 {
                   pane split_direction="vertical" {
                       pane
                       pane { children; }
                   }
               }
-              tab max_panes=8 {
+              ui max_panes=8 {
                   pane split_direction="vertical" {
                       pane { children; }
                       pane { pane; pane; pane; pane; }
                   }
               }
-              tab max_panes=12 {
+              ui max_panes=12 {
                   pane split_direction="vertical" {
                       pane { children; }
                       pane { pane; pane; pane; pane; }
@@ -46,17 +125,17 @@ in {
           }
 
           swap_tiled_layout name="horizontal" {
-              tab max_panes=5 {
+              ui max_panes=5 {
                   pane
                   pane
               }
-              tab max_panes=8 {
+              ui max_panes=8 {
                   pane {
                       pane split_direction="vertical" { children; }
                       pane split_direction="vertical" { pane; pane; pane; pane; }
                   }
               }
-              tab max_panes=12 {
+              ui max_panes=12 {
                   pane {
                       pane split_direction="vertical" { children; }
                       pane split_direction="vertical" { pane; pane; pane; pane; }
@@ -66,7 +145,7 @@ in {
           }
 
           swap_tiled_layout name="stacked" {
-              tab min_panes=5 {
+              ui min_panes=5 {
                   pane split_direction="vertical" {
                       pane
                       pane stacked=true { children; }
@@ -114,65 +193,18 @@ in {
               }
           }
 
+          // zj-radar rail must be in every template (swap entries route through `ui`)
           default_tab_template {
-              pane size=2 borderless=true {
-                  plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
-                      format_left   "{mode}#[bg=#${colors.base00}] {tabs}"
-                      format_center ""
-                      format_right  "#[bg=#${colors.base00},fg=#${colors.base0D}]#[bg=#${colors.base0D},fg=#${colors.base01},bold] #[bg=#${colors.base02},fg=#${colors.base05},bold] {session} #[bg=#${colors.base03},fg=#${colors.base05},bold]"
-                      format_space  ""
-                      format_hide_on_overlength "false"
-                      format_precedence "crl"
-
-                      border_enabled  "false"
-                      border_char     "─"
-                      border_format   "#[fg=#6C7086]{char}"
-                      border_position "top"
-
-                      mode_normal        "#[bg=#${colors.base0B},fg=#${colors.base02},bold] NORMAL#[bg=#${colors.base03},fg=#${colors.base0B}]█"
-                      mode_locked        "#[bg=#${colors.base04},fg=#${colors.base02},bold] LOCKED #[bg=#${colors.base03},fg=#${colors.base04}]█"
-                      mode_resize        "#[bg=#${colors.base08},fg=#${colors.base02},bold] RESIZE#[bg=#${colors.base03},fg=#${colors.base08}]█"
-                      mode_pane          "#[bg=#${colors.base0D},fg=#${colors.base02},bold] PANE#[bg=#${colors.base03},fg=#${colors.base0D}]█"
-                      mode_tab           "#[bg=#${colors.base07},fg=#${colors.base02},bold] TAB#[bg=#${colors.base03},fg=#${colors.base07}]█"
-                      mode_scroll        "#[bg=#${colors.base0A},fg=#${colors.base02},bold] SCROLL#[bg=#${colors.base03},fg=#${colors.base0A}]█"
-                      mode_enter_search  "#[bg=#${colors.base0D},fg=#${colors.base02},bold] ENT-SEARCH#[bg=#${colors.base03},fg=#${colors.base0D}]█"
-                      mode_search        "#[bg=#${colors.base0D},fg=#${colors.base02},bold] SEARCHARCH#[bg=#${colors.base03},fg=#${colors.base0D}]█"
-                      mode_rename_tab    "#[bg=#${colors.base07},fg=#${colors.base02},bold] RENAME-TAB#[bg=#${colors.base03},fg=#${colors.base07}]█"
-                      mode_rename_pane   "#[bg=#${colors.base0D},fg=#${colors.base02},bold] RENAME-PANE#[bg=#${colors.base03},fg=#${colors.base0D}]█"
-                      mode_session       "#[bg=#${colors.base0E},fg=#${colors.base02},bold] SESSION#[bg=#${colors.base03},fg=#${colors.base0E}]█"
-                      mode_move          "#[bg=#${colors.base0F},fg=#${colors.base02},bold] MOVE#[bg=#${colors.base03},fg=#${colors.base0F}]█"
-                      mode_prompt        "#[bg=#${colors.base0D},fg=#${colors.base02},bold] PROMPT#[bg=#${colors.base03},fg=#${colors.base0D}]█"
-                      mode_tmux          "#[bg=#${colors.base09},fg=#${colors.base02},bold] TMUX#[bg=#${colors.base03},fg=#${colors.base09}]█"
-
-                      // formatting for inactive tabs
-                      tab_normal              "#[bg=#${colors.base03},fg=#${colors.base09}]█#[bg=#${colors.base09},fg=#${colors.base02},bold]{index} #[bg=#${colors.base02},fg=#${colors.base05},bold] {name}{floating_indicator}#[bg=#${colors.base03},fg=#${colors.base02},bold]█"
-                      tab_normal_fullscreen   "#[bg=#${colors.base03},fg=#${colors.base09}]█#[bg=#${colors.base09},fg=#${colors.base02},bold]{index} #[bg=#${colors.base02},fg=#${colors.base05},bold] {name}{fullscreen_indicator}#[bg=#${colors.base03},fg=#${colors.base02},bold]█"
-                      tab_normal_sync         "#[bg=#${colors.base03},fg=#${colors.base09}]█#[bg=#${colors.base09},fg=#${colors.base02},bold]{index} #[bg=#${colors.base02},fg=#${colors.base05},bold] {name}{sync_indicator}#[bg=#${colors.base03},fg=#${colors.base02},bold]█"
-
-                      // formatting for the current active tab
-                      tab_active              "#[bg=#${colors.base03},fg=#${colors.base0D}]█#[bg=#${colors.base0D},fg=#${colors.base02},bold]{index} #[bg=#${colors.base02},fg=#${colors.base05},bold] {name}{floating_indicator}#[bg=#${colors.base03},fg=#${colors.base02},bold]█"
-                      tab_active_fullscreen   "#[bg=#${colors.base03},fg=#${colors.base0D}]█#[bg=#${colors.base0D},fg=#${colors.base02},bold]{index} #[bg=#${colors.base02},fg=#${colors.base05},bold] {name}{fullscreen_indicator}#[bg=#${colors.base03},fg=#${colors.base02},bold]█"
-                      tab_active_sync         "#[bg=#${colors.base03},fg=#${colors.base0D}]█#[bg=#${colors.base0D},fg=#${colors.base02},bold]{index} #[bg=#${colors.base02},fg=#${colors.base05},bold] {name}{sync_indicator}#[bg=#${colors.base03},fg=#${colors.base02},bold]█"
-
-                      // separator between the tabs
-                      tab_separator           "#[bg=#${colors.base00}] "
-
-                      // indicators
-                      tab_sync_indicator       " "
-                      tab_fullscreen_indicator " 󰊓"
-                      tab_floating_indicator   " 󰹙"
-
-                      command_git_branch_command     "git rev-parse --abbrev-ref HEAD"
-                      command_git_branch_format      "#[fg=blue] {stdout} "
-                      command_git_branch_interval    "10"
-                      command_git_branch_rendermode  "static"
-
-                      datetime        "#[fg=#6C7086,bold] {format} "
-                      datetime_format "%A, %d %b %Y %H:%M"
-                      datetime_timezone "America/Los_Angeles"
-                  }
-              }
-              children
+              ${bar}
+              ${rail "children"}
+          }
+          new_tab_template {
+              ${bar}
+              ${rail "pane focus=true"}
+          }
+          tab_template name="ui" {
+              ${bar}
+              ${rail "children"}
           }
       }
     '';
