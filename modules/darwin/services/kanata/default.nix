@@ -110,10 +110,17 @@ in {
         fi
       done
 
-      # Stable symlink so macOS Input Monitoring permission survives Nix rebuilds.
-      # Grant Input Monitoring to /usr/local/bin/kanata once, not the store path.
+      # Copy (not symlink) to a stable path so macOS Input Monitoring permission
+      # survives Nix rebuilds. TCC resolves symlinks and records the store path,
+      # so a symlink loses the grant whenever the store path changes.
+      # Grant Input Monitoring to /usr/local/bin/kanata once.
       mkdir -p /usr/local/bin
-      ln -sfn ${pkgs.${namespace}.kanata}/bin/kanata /usr/local/bin/kanata
+      if [ -L /usr/local/bin/kanata ] || ! cmp -s ${pkgs.${namespace}.kanata}/bin/kanata /usr/local/bin/kanata; then
+        rm -f /usr/local/bin/kanata
+        cp ${pkgs.${namespace}.kanata}/bin/kanata /usr/local/bin/kanata
+        chmod 755 /usr/local/bin/kanata
+        chown root:wheel /usr/local/bin/kanata
+      fi
     '';
   };
 }
