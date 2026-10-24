@@ -47,7 +47,7 @@ in {
           "synthetic": {
             "type": "api",
             "key": "${config.sops.placeholder.synthetic-api-key}"
-          }
+          },
           "openrouter": {
             "type": "api",
             "key": "${config.sops.placeholder.openrouter-api-key}"
