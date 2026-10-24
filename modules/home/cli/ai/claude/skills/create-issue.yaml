@@ -1,0 +1,255 @@
+---
+name: create-issue
+description:
+  Creates an issue in any issue tracker (GitHub, GitLab, Linear, Jira, etc.) following a standard format (title,
+  description template, type, priority, status), shows a preview, and creates it only after the user approves. Use when
+  the user asks to create a ticket, file a bug, open an issue, or says /create-issue.
+argument-hint: "<description of the issue>"
+---
+
+# Create Issue
+
+Create an issue for: **$ARGUMENTS**
+
+Write all titles and descriptions in ASD-STE100 Simplified Technical English: use short sentences, the active voice, and
+one instruction for each sentence.
+
+## Choose the tracker
+
+1. If the user names a tracker (e.g. "GitHub issue", "Linear ticket", "Jira"), use it.
+2. Otherwise, infer it from context: the current repository's remote (e.g. `gh` for GitHub, `glab` for GitLab), or a
+   connected issue-tracker MCP.
+3. If it is still unclear, ask the user.
+
+Verify that the tool for the chosen tracker (CLI or MCP) is available and authenticated before proceeding.
+
+The conventions below are tracker-neutral. Map each one to the tracker's native mechanism. If the tracker has no native
+field for a concept (e.g. GitHub has no priority field), use an existing label for it, or omit it. Never invent fields.
+
+## Style guide
+
+### Title
+
+- **Sentence case**: capitalize only the first word (e.g., "Add retry to document upload")
+- **Descriptive**: a reader should understand the scope without opening the issue
+- **5–15 words**: long enough to be specific, short enough to scan
+- **Imperative mood for features and improvements**: "Add ...", "Support ...", "Improve ..."
+- **Bug titles describe the symptom** in plain words (e.g., "Names and channels not resolved in inbox"). Don't prefix
+  with "Bug"; the type label covers that.
+- **No issue IDs in titles**: the tracker assigns the identifier
+- **No trailing punctuation**
+
+### Description
+
+Structure the description using markdown headers. Use the appropriate template:
+
+**For bugs:**
+
+```markdown
+## Description
+
+[Clear explanation of the problem]
+
+## Expected
+
+[What should happen]
+
+## Actual
+
+[What happens instead]
+
+## Attachments
+
+[Screenshots, videos, or screen recordings that illustrate the problem]
+
+## Steps to reproduce
+
+1. [Step-by-step reproduction]
+
+## Additional context
+
+- Environment: [prod/staging/local]
+- Affected entity or URL: [if known]
+- Likely code: [`file:line`, if known]
+- Related: [linked issues, threads, PRs]
+```
+
+**For features:**
+
+```markdown
+## Goal
+
+[What this adds and why: the user problem it solves]
+
+## Background
+
+[Current state and the gap, plus the technical context needed to plan the work: relevant constraints, prior findings,
+and links to any related investigation.]
+
+## Scope
+
+[Concrete list of what changes. Name the files or areas to create or modify and any existing pattern to follow.]
+
+## Acceptance criteria
+
+[Testable outcomes, including automated tests.]
+
+## Out of scope
+
+[What this explicitly does not cover]
+```
+
+**For tech debt:**
+
+```markdown
+## Summary
+
+[What technical improvement is needed]
+
+## Current state
+
+[What the code/system looks like today and why it's problematic]
+
+## Proposed improvement
+
+[What the improved state should look like]
+
+## Motivation
+
+[Why this matters: maintainability, performance, developer experience, etc.]
+
+## Scope
+
+[What is included / excluded from this work]
+```
+
+**For spikes / investigations:**
+
+```markdown
+## Goal
+
+[What question(s) are we trying to answer]
+
+## Context
+
+[Why this investigation is needed now]
+
+## Questions
+
+1. [Specific question to resolve]
+
+## Expected output
+
+[What deliverable is expected: RFC, PoC, decision document, etc.]
+
+## Acceptance criteria
+
+[How we know the spike is done: each question answered, deliverable produced]
+```
+
+### Attachments (screenshots / videos)
+
+If the user provides screenshots, videos, or screen recordings:
+
+- **URLs**: embed directly in the description using markdown image syntax (`![description](url)`)
+- **File paths**: attach the file with the tracker's attachment mechanism, if it has one. If it does not, tell the user
+  that they must attach the file manually after creation.
+- **Pasted images in conversation**: describe what the image shows in the description and note that a screenshot was
+  provided. You cannot upload binary data directly.
+
+Always mention in the description when visual evidence was provided, even if it cannot be directly embedded.
+
+### Type
+
+Pick one:
+
+- **Bug**: something is broken
+- **Feature**: net-new capability
+- **Improvement**: improvement to existing functionality, including tech debt and spikes
+
+**Guardrails:**
+
+- **Always set a type**: use the tracker's issue-type field or an existing label that matches
+- If no matching type field or label exists, state the type in the preview and omit it from the issue. Don't create new
+  labels unless the user asks.
+
+### Priority
+
+| Level  | When to use                                            |
+| ------ | ------------------------------------------------------ |
+| Low    | Cosmetic or annoyance, no real user impact             |
+| Medium | Default: standard planned work                         |
+| High   | Blocks other work, a client is blocked, or a deadline  |
+| Urgent | Production-breaking, security vulnerability, data loss |
+
+**Guardrails:**
+
+- **Default to Medium** unless the user explicitly states otherwise
+- **Never set Urgent** unless the user explicitly says "urgent", "P0", "production down", or "security vulnerability"
+- **Always make a priority assessment**. If unsure, use Medium
+- If the tracker has no priority field and no priority labels exist, show the priority in the preview only
+
+### Status
+
+- **Default to the tracker's standard open/backlog state** (e.g. "Backlog" in Linear, "Open" in GitHub)
+- **Don't put the issue in a triage queue** unless the user explicitly asks; the user already knows the context
+- **Use a "Todo" / "Ready" state** only when the user indicates the work is planned soon
+- **Never set In Progress, In Review, or Done** at creation time
+
+### Labels
+
+- Before applying any label, list the existing labels for the repository/project/team (e.g. `gh label list`)
+- **Never invent labels**: use only labels that exist
+- **Never apply automation-trigger labels** (labels that start bots, agents, or CI workflows) unless the user explicitly
+  asks
+
+### Estimates
+
+Only set an estimate if the user provides one or explicitly asks for one, and only if the tracker supports it. Use
+t-shirt sizes:
+
+| Size | Value | Approximate effort |
+| ---- | ----- | ------------------ |
+| XS   | 1     | ≤ 1 hour           |
+| S    | 2     | ≤ 1 day            |
+| M    | 3     | 2–3 days           |
+| L    | 4     | 3–5 days           |
+| XL   | 5     | ≥ 6 days           |
+
+## Creating the issue
+
+1. **Search for duplicates** first. Use the tracker's search with keywords from the request, scoped to the target
+   repository/project and recent issues (e.g. `gh issue list --search "<keywords>" --state all`). If a likely match
+   exists, show it and ask whether to proceed.
+
+2. **Gather required fields**. If any are missing, ask the user:
+   - Tracker and target (repository, project, or team)
+   - Title
+   - Description (draft one from the user's input using the templates above)
+
+3. **Present a preview** before creating. Show the user:
+   - Tracker and target
+   - Title
+   - Type
+   - Status
+   - Priority
+   - Labels
+   - Description (abbreviated if long)
+
+4. **Wait for user confirmation**. Do not create until the user approves.
+
+5. **Create the issue** with the tracker's tool. Pass the description from a file or heredoc to keep markdown intact
+   (e.g. `gh issue create --title "<title>" --body-file <file> --label "<label>"`).
+
+6. **Report back** with the issue identifier and URL.
+
+## Things to never do
+
+- Never create an issue in a tracker other than the one the user chose
+- Never put issues in **triage** without explicit user instruction
+- Never set **Urgent** priority without explicit user instruction
+- Never apply **automation-trigger labels** without explicit user instruction
+- Never invent **labels** or **fields** that the tracker does not have
+- Never set **assignee** unless the user explicitly asks
+- Never set a **cycle**, **sprint**, **project**, or **milestone** unless the user explicitly asks
+- Never create **duplicate issues**: search first
