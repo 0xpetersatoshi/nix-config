@@ -80,7 +80,7 @@ keybinds {
     }
 
     scroll clear-defaults=true {
-        bind "Alt f" "Esc" { SwitchToMode "Normal"; }
+        bind "Alt u" "Esc" { SwitchToMode "Normal"; }
 
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
         bind "s" { SwitchToMode "EnterSearch"; SearchInput 0; }
@@ -95,7 +95,7 @@ keybinds {
     }
 
     search clear-defaults=true {
-        bind "Alt f" "Esc" { SwitchToMode "Normal"; }
+        bind "Alt u" "Esc" { SwitchToMode "Normal"; }
 
         bind "Ctrl c" "Esc" "Ctrl {" { ScrollToBottom; SwitchToMode "Normal"; }
         bind "j" "Down" { ScrollDown; }
@@ -207,7 +207,8 @@ keybinds {
     shared_except "locked" {
         bind "Alt g" { SwitchToMode "locked"; }
 
-        bind "Alt F" { ToggleFloatingPanes; }
+        // "Alt f" too: rolling alt→f→shift sends Alt f first
+        bind "Alt f" "Alt F" { ToggleFloatingPanes; }
         bind "Alt q" { Quit; }
         bind "Alt n" { NewPane; }
         bind "Alt +" "Alt =" { Resize "Increase"; }
@@ -234,7 +235,7 @@ keybinds {
 
     shared_except "scroll" "locked" {
         unbind "Ctrl s"
-        bind "Alt f" { SwitchToMode "Scroll"; }
+        bind "Alt u" { SwitchToMode "Scroll"; }
     }
 
     shared_except "locked" "scroll" "search" "tmux" {
