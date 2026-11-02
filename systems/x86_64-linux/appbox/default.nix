@@ -20,15 +20,16 @@
     ]
     ++ extra;
 
-  # Mountpoints that Docker containers bind into. Docker must wait for the real NFS mounts
+  # Mountpoints that Docker containers bind into. Docker must wait for the real NFS/iSCSI mounts
   # before starting so it never binds an empty underlying directory (e.g. traefik ssl-certs).
-  nfsMountpoints = [
+  dockerMountpoints = [
     "/mnt/appdata"
     "/mnt/media"
     "/mnt/immich"
     "/mnt/syncthing"
     "/mnt/nextcloud"
     "/mnt/isos"
+    "/mnt/appdb"
   ];
 in {
   imports = [
@@ -92,6 +93,8 @@ in {
     options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
   };
 
+  # SQLite configs for jellyfin + *arr live on an ext4 iSCSI zvol from TrueNAS
+  # (flashpool/iscsi/appbox-appdb), because SQLite file locks are unreliable over NFS.
   # No enableAutoLoginOut/discoverPortal: that logs in to *every* target discovered on the
   # portal, and TrueNAS also serves the open steam-library target. iscsi-appdb below logs in
   # to the appbox-appdb target only.
@@ -134,6 +137,9 @@ in {
     fsType = "ext4";
     options = ["_netdev" "nofail" "noatime" "x-systemd.requires=iscsi-appdb.service"];
   };
+
+  # Start Docker after /mnt/appdb mounts; stop Docker before /mnt/appdb unmounts.
+  systemd.services.docker.unitConfig.RequiresMountsFor = ["/mnt/appdb"];
 
   boot = {
     # Track the latest kernel instead of pinning a version: pinned kernels keep
@@ -186,18 +192,20 @@ in {
     };
   };
 
-  # Hold Docker until every TrueNAS NFS share is actually mounted, so containers bind the
-  # real data instead of empty mountpoints (this is what breaks traefik's ssl-certs, and
-  # fails the n8n/zitadel file binds, on boot). The loop actively (re)starts each mount unit
-  # until the real NFS mount appears — this is also the retry mechanism for a slow/late
-  # TrueNAS after a host reboot, so we don't need automount.
+  # Hold Docker until every TrueNAS NFS share and the iSCSI /mnt/appdb is actually mounted, so
+  # containers bind the real data instead of empty mountpoints (this is what breaks traefik's
+  # ssl-certs, and fails the n8n/zitadel file binds, on boot). The loop actively (re)starts each
+  # mount unit until the real mount appears — this is also the retry mechanism for a slow/late
+  # TrueNAS after a host reboot (a failed iscsi-appdb.service login is retried the same way, since
+  # starting mnt-appdb.mount re-starts it), so we don't need automount. An empty directory is not
+  # a mountpoint, so `findmnt --mountpoint` keeps that protection without the NFS-only filter.
   #
   # Gate docker.service only — NOT docker.socket. docker.socket lives in basic.target, and a
   # unit ordered After=network-online.target (which comes after basic.target) can't run before
   # it without creating an ordering cycle. That's fine: the socket may listen early, but dockerd
   # only starts via docker.service, which is gated — a queued connection just waits for it.
   systemd.services.nfs-mounts-ready = {
-    description = "Wait for TrueNAS NFS mounts before starting Docker";
+    description = "Wait for TrueNAS NFS and iSCSI mounts before starting Docker";
     after = ["network-online.target"];
     wants = ["network-online.target"];
     before = ["docker.service"];
@@ -210,9 +218,9 @@ in {
       TimeoutStartSec = "infinity";
     };
     script = ''
-      for m in ${lib.concatStringsSep " " nfsMountpoints}; do
+      for m in ${lib.concatStringsSep " " dockerMountpoints}; do
         unit="$(${pkgs.systemd}/bin/systemd-escape -p --suffix=mount "$m")"
-        until ${pkgs.util-linux}/bin/findmnt --types nfs,nfs4 "$m" > /dev/null 2>&1; do
+        until ${pkgs.util-linux}/bin/findmnt --mountpoint "$m" > /dev/null 2>&1; do
           ${pkgs.systemd}/bin/systemctl start "$unit" > /dev/null 2>&1 || true
           ${pkgs.coreutils}/bin/sleep 2
         done
