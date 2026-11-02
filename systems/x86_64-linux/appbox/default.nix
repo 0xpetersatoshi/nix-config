@@ -92,6 +92,49 @@ in {
     options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
   };
 
+  # No enableAutoLoginOut/discoverPortal: that logs in to *every* target discovered on the
+  # portal, and TrueNAS also serves the open steam-library target. iscsi-appdb below logs in
+  # to the appbox-appdb target only.
+  services.openiscsi = {
+    enable = true;
+    name = "iqn.2026-10.internal.home:appbox";
+    # Queue I/O while TrueNAS is down, like the NFS `hard` mounts. The 120s default
+    # returns I/O errors, and ext4 then remounts read-only.
+    extraConfig = ''
+      node.session.timeo.replacement_timeout = 86400
+    '';
+  };
+
+  systemd.services.iscsi-appdb = let
+    target = "iqn.2005-10.org.freenas.ctl:appbox-appdb";
+    portal = "10.10.30.2:3260";
+  in {
+    description = "Log in to the appbox-appdb iSCSI target on TrueNAS";
+    after = ["network-online.target" "iscsid.service"];
+    wants = ["network-online.target" "iscsid.service"];
+    # A restart logs out the session, which (via Requires=) would also unmount /mnt/appdb
+    # and stop Docker mid-switch. Only start it at boot (or from the mount gate).
+    restartIfChanged = false;
+    path = [config.services.openiscsi.package];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      iscsiadm -m node -T ${target} -p ${portal} > /dev/null 2>&1 \
+        || iscsiadm -m node -T ${target} -p ${portal} -o new
+      iscsiadm -m session 2>/dev/null | grep -q ${target} \
+        || iscsiadm -m node -T ${target} -p ${portal} --login
+    '';
+    preStop = "iscsiadm -m node -T ${target} -p ${portal} --logout || true";
+  };
+
+  fileSystems."/mnt/appdb" = {
+    device = "/dev/disk/by-label/appdb";
+    fsType = "ext4";
+    options = ["_netdev" "nofail" "noatime" "x-systemd.requires=iscsi-appdb.service"];
+  };
+
   boot = {
     # Track the latest kernel instead of pinning a version: pinned kernels keep
     # getting removed from nixpkgs at EOL, which breaks evaluation entirely
