@@ -40,6 +40,12 @@ in {
   config = mkIf cfg.enable {
     services.fprintd.enable = true;
 
+    # Suspending mid-verify (e.g. the DMS lock screen idles into suspend)
+    # leaves fprintd holding a stale device claim ("ReleaseDevice failed:
+    # device is still busy"), so every post-resume PAM attempt fails with
+    # AUTHINFO_UNAVAIL. Stop it before sleep; D-Bus reactivates it fresh.
+    powerManagement.powerDownCommands = "${pkgs.systemd}/bin/systemctl stop fprintd.service || true";
+
     security.pam = {
       # The reader is the only token this host authenticates with, so drop
       # pam_u2f everywhere: every PAM service inherits it from u2f.enable, which
