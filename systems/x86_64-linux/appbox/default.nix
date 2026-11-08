@@ -220,9 +220,13 @@ in {
     script = ''
       for m in ${lib.concatStringsSep " " dockerMountpoints}; do
         unit="$(${pkgs.systemd}/bin/systemd-escape -p --suffix=mount "$m")"
+        n=0
         until ${pkgs.util-linux}/bin/findmnt --mountpoint "$m" > /dev/null 2>&1; do
           ${pkgs.systemd}/bin/systemctl start "$unit" > /dev/null 2>&1 || true
           ${pkgs.coreutils}/bin/sleep 2
+          n=$((n + 1))
+          # Surface the stall in `systemctl status nfs-mounts-ready` so a hung docker points at the NAS.
+          if [ $((n % 30)) -eq 0 ]; then echo "still waiting for $m after $((n * 2))s (is TrueNAS reachable?)"; fi
         done
       done
     '';
