@@ -69,8 +69,6 @@ in {
 
   config = mkIf cfg.enable {
     boot = {
-      initrd.systemd.enable = true;
-
       lanzaboote = mkIf cfg.secureBoot {
         enable = true;
         pkiBundle = cfg.secureBootKeysPath;
