@@ -45,7 +45,7 @@ in {
           (old.postFixup or "")
           + ''
             substituteInPlace "$out/bin/.try-wrapped" \
-              --replace-fail "#!/usr/bin/env ruby" "#!${pkgs.ruby_3_3}/bin/ruby"
+              --replace-fail "#!/usr/bin/env ruby" "#!${pkgs.ruby}/bin/ruby"
           '';
       });
     };

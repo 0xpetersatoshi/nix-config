@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   namespace,
   ...
 }:
@@ -45,6 +46,18 @@ in {
 
     programs.dank-material-shell = {
       enable = true;
+      # ponytail: DMS isMine() counts every tagged peer as "mine", so ~530 Mullvad exit
+      # nodes land in the default "My Online" list and its non-virtualized Repeater
+      # freezes the shell. Drop this override once upstream fixes isMine().
+      package = inputs.dms.packages.${pkgs.stdenv.hostPlatform.system}.dms-shell.overrideAttrs (old: {
+        postInstall =
+          (old.postInstall or "")
+          + ''
+            substituteInPlace $out/share/quickshell/dms/Services/TailscaleService.qml \
+              --replace-fail 'if (peer.tags && peer.tags.length > 0)' \
+              'if (peer.tags && peer.tags.length > 0 && !peer.tags.includes("tag:mullvad-exit-node"))'
+          '';
+      });
       systemd.enable = true;
       enableSystemMonitoring = true;
       enableVPN = true;

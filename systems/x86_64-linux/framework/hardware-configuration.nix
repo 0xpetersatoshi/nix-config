@@ -24,7 +24,6 @@
   boot.initrd.luks.devices = {
     "nixos-root" = {
       device = "/dev/disk/by-uuid/24dd164a-9843-4e7d-8645-6efccaa7043f";
-      preLVM = true;
       allowDiscards = true;
     };
   };
