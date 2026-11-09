@@ -30,6 +30,7 @@
     "/mnt/nextcloud"
     "/mnt/isos"
     "/mnt/appdb"
+    "/mnt/nugshare"
   ];
 in {
   imports = [
@@ -140,6 +141,12 @@ in {
 
   # Start Docker after /mnt/appdb mounts; stop Docker before /mnt/appdb unmounts.
   systemd.services.docker.unitConfig.RequiresMountsFor = ["/mnt/appdb"];
+
+  fileSystems."/mnt/nugshare" = {
+    device = "10.10.30.2:/mnt/flashpool/nugshare";
+    fsType = "nfs";
+    options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
+  };
 
   boot = {
     # Track the latest kernel instead of pinning a version: pinned kernels keep
