@@ -60,6 +60,10 @@ with lib.${namespace}; let
         source = "github";
         repo = "marktoda/zj-radar";
       };
+      cursor-plugins.source = {
+        source = "github";
+        repo = "cursor/plugins";
+      };
     };
 
     enabledPlugins = {
@@ -67,6 +71,7 @@ with lib.${namespace}; let
       "rivet-eng@rivet" = true;
       "inspect-skills@meridian" = true;
       "zj-radar-claude@zj-radar" = true;
+      "pstack@cursor-plugins" = true;
     };
 
     hooks = {
