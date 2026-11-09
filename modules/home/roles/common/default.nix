@@ -52,6 +52,10 @@
         export OPENCODE_API_KEY="$(cat ${config.sops.secrets.opencode-zen-api-key.path})"
       fi
 
+      if [ -f ${config.sops.secrets.fireworks-api-key.path} ]; then
+        export FIREWORKS_API_KEY="$(cat ${config.sops.secrets.fireworks-api-key.path})"
+      fi
+
       if [ -f ${config.sops.secrets.ollama-base-url.path} ]; then
         export OLLAMA_BASE_URL="$(cat ${config.sops.secrets.ollama-base-url.path})"
       fi
@@ -73,6 +77,7 @@ in {
       tavily-api-key = {};
       context7-api-key = {};
       opencode-zen-api-key = {};
+      fireworks-api-key = {};
       ollama-base-url = {};
     };
 
