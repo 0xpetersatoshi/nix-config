@@ -1,5 +1,15 @@
 # Home Modules
 
+## OMP
+
+Enabling `cli.ai.omp` installs a provider-status extension alongside OMP. The status bar
+shows the active provider ID (for example, `[openrouter]`) next to the model, updating
+within 500 ms of a provider switch. Existing status segments and options are retained;
+extension status messages share the inline `status` segment rather than a separate footer.
+The layout changes are runtime-only and do not overwrite `~/.omp/agent/config.yml`.
+
+Apply Home Manager and restart OMP to load the extension.
+
 ## Sops
 
 ### Configure a sops file

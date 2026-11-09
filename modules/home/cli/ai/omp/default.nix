@@ -15,5 +15,7 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = [pkgs.omp];
+
+    home.file.".omp/agent/extensions/provider-status.ts".source = ./provider-status.ts;
   };
 }
