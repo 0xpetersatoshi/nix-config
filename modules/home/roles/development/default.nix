@@ -68,6 +68,7 @@ in {
         claude-code.enable = true;
         opencode.enable = true;
         pi.enable = true;
+        omp.enable = true;
       };
 
       programs = {
