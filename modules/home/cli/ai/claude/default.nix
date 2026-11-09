@@ -46,7 +46,24 @@ with lib.${namespace}; let
   stopScript = pkgs.writeShellScript "claude-code-notify-stop" notifyStop;
   notificationScript = pkgs.writeShellScript "claude-code-notify-event" notifyEvent;
 
+  statusLineScript = pkgs.writeShellScript "claude-code-statusline" ''
+    input=$(cat)
+    model=$(${pkgs.jq}/bin/jq -r '.model.display_name // "?"' <<<"$input")
+    dir=$(${pkgs.jq}/bin/jq -r '.workspace.current_dir // .cwd // ""' <<<"$input")
+    ctx=$(${pkgs.jq}/bin/jq -r '.context_window.used_percentage // empty | floor' <<<"$input")
+    branch=$(${pkgs.git}/bin/git -C "$dir" --no-optional-locks branch --show-current 2>/dev/null)
+    out="$model | ''${dir/#$HOME/\~}"
+    [ -n "$branch" ] && out="$out | $branch"
+    [ -n "$ctx" ] && out="$out | ctx $ctx%"
+    printf '%s' "$out"
+  '';
+
   settings = {
+    statusLine = {
+      type = "command";
+      command = "${statusLineScript}";
+    };
+
     extraKnownMarketplaces = {
       rivet.source = {
         source = "github";
