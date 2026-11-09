@@ -1,4 +1,5 @@
 {
-  "defaultProvider": "openrouter",
-  "defaultModel": "z-ai/glm-5.2"
+  "defaultProvider": "fireworks",
+  "defaultModel": "z-ai/glm-5.3",
+  "skills": ["~/.agents/skills"]
 }

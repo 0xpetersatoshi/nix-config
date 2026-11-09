@@ -29,6 +29,10 @@ in {
           "openrouter": {
             "type": "api_key",
             "key": "${config.sops.placeholder.openrouter-api-key}"
+          },
+          "fireworks": {
+            "type": "api_key",
+            "key": "${config.sops.placeholder.fireworks-api-key}"
           }
         }
       '';
