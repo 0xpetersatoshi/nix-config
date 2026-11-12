@@ -51,10 +51,12 @@ with lib.${namespace}; let
     model=$(${pkgs.jq}/bin/jq -r '.model.display_name // "?"' <<<"$input")
     dir=$(${pkgs.jq}/bin/jq -r '.workspace.current_dir // .cwd // ""' <<<"$input")
     ctx=$(${pkgs.jq}/bin/jq -r '.context_window.used_percentage // empty | floor' <<<"$input")
+    cost=$(${pkgs.jq}/bin/jq -r '.cost.total_cost_usd // empty' <<<"$input")
     branch=$(${pkgs.git}/bin/git -C "$dir" --no-optional-locks branch --show-current 2>/dev/null)
     out="$model | ''${dir/#$HOME/\~}"
     [ -n "$branch" ] && out="$out | $branch"
     [ -n "$ctx" ] && out="$out | ctx $ctx%"
+    [ -n "$cost" ] && out="$out | $(printf '$%.2f' "$cost")"
     printf '%s' "$out"
   '';
 
