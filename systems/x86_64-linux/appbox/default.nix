@@ -30,7 +30,6 @@
     "/mnt/nextcloud"
     "/mnt/isos"
     "/mnt/appdb"
-    "/mnt/nugshare"
   ];
 in {
   imports = [
@@ -142,12 +141,6 @@ in {
   # Start Docker after /mnt/appdb mounts; stop Docker before /mnt/appdb unmounts.
   systemd.services.docker.unitConfig.RequiresMountsFor = ["/mnt/appdb"];
 
-  fileSystems."/mnt/nugshare" = {
-    device = "10.10.30.2:/mnt/flashpool/nugshare";
-    fsType = "nfs";
-    options = nfsMountOpts ["rsize=1048576" "wsize=1048576"];
-  };
-
   boot = {
     # Track the latest kernel instead of pinning a version: pinned kernels keep
     # getting removed from nixpkgs at EOL, which breaks evaluation entirely
@@ -179,6 +172,23 @@ in {
     8123
     8096
   ];
+
+  # IoT VLAN 70 leg (Proxmox net1) for Matter: matter-server needs L2 to the devices for mDNS
+  # and IPv6 link-local. Link-local only — no DHCPv4/SLAAC — so appbox isn't a routable host on
+  # the IoT VLAN. Sorts before the shared 40-wired (DHCP on en*), so it wins for ens19.
+  systemd.network.networks."30-iot" = {
+    matchConfig.Name = "ens19";
+    networkConfig = {
+      DHCP = "no";
+      LinkLocalAddressing = "ipv6";
+      IPv6AcceptRA = false;
+    };
+    linkConfig.RequiredForOnline = "no";
+  };
+
+  # mDNS + Matter. ponytail: the global allowedTCPPorts above still apply on ens19 too;
+  # add an ens19 drop rule in extraCommands if IoT devices must not reach them.
+  networking.firewall.interfaces.ens19.allowedUDPPorts = [5353 5540];
 
   # Generate SSH key for the user if it doesn't exist
   system.activationScripts.generateUserSSHKey = ''
