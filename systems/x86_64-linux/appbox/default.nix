@@ -186,9 +186,15 @@ in {
     linkConfig.RequiredForOnline = "no";
   };
 
-  # mDNS + Matter. ponytail: the global allowedTCPPorts above still apply on ens19 too;
-  # add an ens19 drop rule in extraCommands if IoT devices must not reach them.
+  # mDNS + Matter.
   networking.firewall.interfaces.ens19.allowedUDPPorts = [5353 5540];
+
+  # Global allowedTCPPorts (and sshd's 22) have no interface match, so they'd also accept IoT
+  # devices hitting appbox's ens19 link-local address — switched at L2, bypassing the UDM.
+  # Refuse new inbound TCP on ens19 ahead of them; Matter is UDP.
+  networking.firewall.extraCommands = ''
+    ip6tables -I nixos-fw -i ens19 -p tcp -m conntrack --ctstate NEW -j nixos-fw-refuse
+  '';
 
   # Generate SSH key for the user if it doesn't exist
   system.activationScripts.generateUserSSHKey = ''
