@@ -174,14 +174,22 @@ in {
   ];
 
   # IoT VLAN 70 leg (Proxmox net1) for Matter: matter-server needs L2 to the devices for mDNS
-  # and IPv6 link-local. Link-local only — no DHCPv4/SLAAC — so appbox isn't a routable host on
-  # the IoT VLAN. Sorts before the shared 40-wired (DHCP on en*), so it wins for ens19.
+  # and IPv6. No DHCPv4. RA is accepted for the prefix only (SLAAC ULA + on-link route, no
+  # gateway/DNS) because Matter devices advertise their ULA first; without an on-link route
+  # every attempt fails "Network is unreachable" before falling back to link-local. Default
+  # route stays on ens18. Sorts before the shared 40-wired (DHCP on en*), so it wins for ens19.
   systemd.network.networks."30-iot" = {
     matchConfig.Name = "ens19";
     networkConfig = {
       DHCP = "no";
       LinkLocalAddressing = "ipv6";
-      IPv6AcceptRA = false;
+      IPv6AcceptRA = true;
+    };
+    ipv6AcceptRAConfig = {
+      UseGateway = false;
+      UseRoutePrefix = false;
+      UseDNS = false;
+      UseDomains = false;
     };
     linkConfig.RequiredForOnline = "no";
   };
