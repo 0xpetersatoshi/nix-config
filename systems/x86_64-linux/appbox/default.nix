@@ -187,7 +187,7 @@ in {
     };
     ipv6AcceptRAConfig = {
       UseGateway = false;
-      UseRoutePrefix = false;
+      UseRoutePrefix = true; # Thread border-router RIO routes (e.g. Eve sensors behind Apple BRs)
       UseDNS = false;
       UseDomains = false;
     };
