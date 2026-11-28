@@ -173,35 +173,51 @@ in {
     8096
   ];
 
-  # IoT VLAN 70 leg (Proxmox net1) for Matter: matter-server needs L2 to the devices for mDNS
-  # and IPv6. No DHCPv4. RA is accepted for the prefix only (SLAAC ULA + on-link route, no
+  # IoT VLAN 70 (Proxmox net1, ens19) and trusted VLAN 20 (net2, ens20) legs for Matter:
+  # matter-server needs L2 to the devices for mDNS and IPv6. No DHCPv4. RA is accepted for
+  # prefixes and RIO routes only (SLAAC ULA + on-link route + Thread prefix route, no
   # gateway/DNS) because Matter devices advertise their ULA first; without an on-link route
   # every attempt fails "Network is unreachable" before falling back to link-local. Default
-  # route stays on ens18. Sorts before the shared 40-wired (DHCP on en*), so it wins for ens19.
-  systemd.network.networks."30-iot" = {
-    matchConfig.Name = "ens19";
-    networkConfig = {
-      DHCP = "no";
-      LinkLocalAddressing = "ipv6";
-      IPv6AcceptRA = true;
+  # route stays on ens18. Sorts before the shared 40-wired (DHCP on en*), so it wins.
+  #
+  # The Apple Thread border routers live on VLAN 20; the Aqara thermostat on VLAN 70 is also a
+  # border router for the same Thread network. Every BR advertises the same on-link ULA, so
+  # traffic to Thread devices must leave via ens20 (lower metric): replies come back through
+  # the Apple BRs, which can only reach appbox's VLAN 20 address. The on-link ULA route stays
+  # on ens19 only, so Wi-Fi Matter devices on VLAN 70 are still reached directly.
+  systemd.network.networks = let
+    matterLeg = name: metric: onLink: {
+      matchConfig.Name = name;
+      networkConfig = {
+        DHCP = "no";
+        LinkLocalAddressing = "ipv6";
+        IPv6AcceptRA = true;
+      };
+      ipv6AcceptRAConfig = {
+        UseGateway = false;
+        UseRoutePrefix = true;
+        UseDNS = false;
+        UseDomains = false;
+        UseOnLinkPrefix = onLink;
+        RouteMetric = metric;
+      };
+      linkConfig.RequiredForOnline = "no";
     };
-    ipv6AcceptRAConfig = {
-      UseGateway = false;
-      UseRoutePrefix = false;
-      UseDNS = false;
-      UseDomains = false;
-    };
-    linkConfig.RequiredForOnline = "no";
+  in {
+    "30-iot" = matterLeg "ens19" 1024 true;
+    "31-trusted" = matterLeg "ens20" 512 false;
   };
 
   # mDNS + Matter.
   networking.firewall.interfaces.ens19.allowedUDPPorts = [5353 5540];
+  networking.firewall.interfaces.ens20.allowedUDPPorts = [5353 5540];
 
   # Global allowedTCPPorts (and sshd's 22) have no interface match, so they'd also accept IoT
-  # devices hitting appbox's ens19 link-local address — switched at L2, bypassing the UDM.
-  # Refuse new inbound TCP on ens19 ahead of them; Matter is UDP.
+  # devices hitting appbox's ens19/ens20 addresses — switched at L2, bypassing the UDM.
+  # Refuse new inbound TCP on both legs ahead of them; Matter is UDP.
   networking.firewall.extraCommands = ''
     ip6tables -I nixos-fw -i ens19 -p tcp -m conntrack --ctstate NEW -j nixos-fw-refuse
+    ip6tables -I nixos-fw -i ens20 -p tcp -m conntrack --ctstate NEW -j nixos-fw-refuse
   '';
 
   # Generate SSH key for the user if it doesn't exist
